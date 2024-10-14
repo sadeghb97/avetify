@@ -15,7 +15,7 @@ function selectBabe($names, $ids, $imgs, $title, $key, $selectedPs = null, $sepa
     $addBabeCall = "addBabe($selArrayJSName, '$selArrayJSName', '$txtKey', '$selKey', '$hidKey', '$boobKey', '$babesListKey');";
     $delBabeCall = "delBabe(event, $selArrayJSName, \\\"$hidKey\\\", \\\"$boobKey\\\", \\\"$babesListKey\\\");";
 
-    echo '<script type="text/javascript" src="oldselect.js"></script>';
+    echo '<script type="text/javascript" src="lib/theme/oldselect.js"></script>';
 
     echo '<script type="text/javascript">';
     echo 'var ind=0;';
@@ -52,6 +52,7 @@ function selectBabe($names, $ids, $imgs, $title, $key, $selectedPs = null, $sepa
             for($j=0; count($ids) > $j; $j++){
                 if($ids[$j]==$p[$i]) echo $firstIndexJsName . '='.$j.";";
             }
+            //echo 'console.log(' . $firstIndexJsName . ');';
 
             $addProcess = '("<img src=\'"+imgs[' . $firstIndexJsName . ']+"\' id=\'"+ids[' . $firstIndexJsName . ']+"\' class=\'selimg\' title=\'"+babes[' . $firstIndexJsName . ']+"\' onclick=\'' . $delBabeCall . '\'>");';
 
