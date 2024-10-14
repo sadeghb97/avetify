@@ -9,8 +9,14 @@ require_once "externals/gumlet-image/ImageResizeException.php";
 
 require_once "models/Filename.php";
 
-require_once "utils/network_utils.php";
 require_once "utils/echo_utils.php";
+require_once "utils/time_utils.php";
+
+require_once "network/network_utils.php";
+require_once "network/NetworkFetcher.php";
+require_once "network/ProxyFetcher.php";
+require_once "network/HeadersFetcher.php";
+require_once "network/ProxyHeadersFetcher.php";
 
 require_once "entities/FFSet.php";
 require_once "entities/EntityField.php";
@@ -35,14 +41,15 @@ require_once "table/LinkFields.php";
 require_once "table/ImageFields.php";
 require_once "table/EditableFields.php";
 
+require_once "crawling/Scrapper.php";
+require_once "crawling/RawDocumentLoader.php";
+
 require_once "galrepo/GalleryRepo.php";
 require_once "galrepo/ManageGalleryLister.php";
 
 require_once "modules/HTMLInterface.php";
 require_once "modules/JSInterface.php";
 require_once "modules/Flusher.php";
-require_once "modules/Scrapper.php";
-require_once "modules/SBProxy.php";
 
 require_once "forms/FormUtils.php";
 

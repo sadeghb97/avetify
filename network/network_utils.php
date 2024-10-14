@@ -5,6 +5,7 @@ function curlGetContents($url, $proxy = null) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3");
+    curl_setopt($ch, CURLOPT_ENCODING, "");
 
     if($proxy){
         curl_setopt($ch, CURLOPT_PROXY, $proxy);
@@ -14,6 +15,7 @@ function curlGetContents($url, $proxy = null) {
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
+    echo $httpCode . br();
     if ($httpCode == 200 && $fileContent !== false) {
         return $fileContent;
     }
@@ -30,12 +32,17 @@ function downloadFile($fileUrl, $targetFile, $proxy = null) : bool {
     return false;
 }
 
-function fetchUrlWithHeaders($url, $headers) {
+function fetchUrlWithHeaders($url, $headers, $proxy = null) {
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_ENCODING, '');
+    curl_setopt($ch, CURLOPT_ENCODING, "");
+
+    if($proxy){
+        curl_setopt($ch, CURLOPT_PROXY, $proxy);
+    }
+
     $response = curl_exec($ch);
 
     if (curl_errno($ch)) {

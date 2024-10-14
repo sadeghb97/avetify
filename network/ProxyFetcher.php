@@ -1,13 +1,13 @@
 <?php
 
-class SBProxy {
+class ProxyFetcher extends NetworkFetcher {
     public function __construct(public string $proxy){}
 
     function enableProxy(){
         stream_context_set_default(['http'=>['proxy' => $this->proxy]]);
     }
 
-    function getContents($url) : string {
+    function fetch($url) : string {
         return curlGetContents($url, $this->proxy);
     }
 
