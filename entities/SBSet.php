@@ -1,6 +1,6 @@
 <?php
 
-class FFSet {
+class SBSet {
     public $set = [];
     private $map = [];
 
