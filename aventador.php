@@ -18,7 +18,7 @@ require_once "network/ProxyFetcher.php";
 require_once "network/HeadersFetcher.php";
 require_once "network/ProxyHeadersFetcher.php";
 
-require_once "entities/FFSet.php";
+require_once "entities/SBSet.php";
 require_once "entities/EntityField.php";
 require_once "entities/SBEntity.php";
 require_once "entities/EntityUtils.php";
