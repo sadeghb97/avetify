@@ -291,3 +291,33 @@ input[type=range]:focus::-ms-fill-upper {
 .context-menu-nice .item:hover {
 	background: #343434;
 }
+
+.magham-section {
+	margin-bottom: 24px;
+	margin-top: 24px;
+}
+
+.magham-title {
+	height: 35px; width: auto; margin-top: 20px;
+}
+
+.magham-degree {
+	font-size: 20pt;
+	font-weight: bold;
+	color: #660066;
+}
+
+.magham-box {
+}
+
+.lister-item-img {
+	height: 230px; width: 180px; display: block; margin: auto; object-fit: cover;
+}
+
+.lister-item-name {
+	font-size: 14pt;
+}
+
+.lister-item-rate {
+	font-size: 10pt;
+}

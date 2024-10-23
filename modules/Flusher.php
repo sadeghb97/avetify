@@ -6,7 +6,7 @@ class Flusher {
     public int $counter = 0;
     public $delayMs = 0;
 
-    public function __construct($key, $lim, $delayMs = 100){
+    public function __construct($key, $lim, $delayMs = 50){
         $this->key = $key;
         $this->limit = $lim;
         $this->counter = 0;

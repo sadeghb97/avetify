@@ -8,6 +8,7 @@ class RawDocumentLoader {
 
     public int $status = 0;
     public string $contents = "";
+    public bool $freshLoad = false;
 
     public function __construct(
         public string $remote,
@@ -19,7 +20,11 @@ class RawDocumentLoader {
         return true;
     }
 
-    public function load(int $dayLimit = 0) : void {
+    public function isLoaded() : bool {
+        return $this->status == self::$VALID;
+    }
+
+    public function load(int $dayLimit = 0, bool $localOnly = false) : void {
         if($dayLimit > 0 && file_exists($this->filename)){
             $contentsObjectRaw = file_get_contents($this->filename);
             $contentsObject = json_decode($contentsObjectRaw, true);
@@ -31,24 +36,29 @@ class RawDocumentLoader {
                     if($dayLimit > $sepDays){
                         $this->status = self::$VALID;
                         $this->contents = $contentsObject['body'];
+                        $this->freshLoad = false;
+                        return;
                     }
                 }
             }
         }
 
-        if($this->fetcher != null){
-            echo "TryProxy" . br();
-            $rc = $this->fetcher->fetch($this->remote);
-        }
-        else $rc = curlGetContents($this->remote);
-
-        if($rc){
-            $this->contents = $rc;
-            if($this->isValid($rc)) {
-                $this->status = self::$VALID;
-                $this->storeContents();
+        if(!$localOnly) {
+            if ($this->fetcher != null) {
+                $rc = $this->fetcher->fetch($this->remote);
             }
-            else $this->status = self::$INVALID;
+            else $rc = curlGetContents($this->remote);
+
+            if ($rc) {
+                $this->contents = $rc;
+                $this->freshLoad = true;
+
+                if ($this->isValid($rc)) {
+                    $this->status = self::$VALID;
+                    $this->storeContents();
+                }
+                else $this->status = self::$INVALID;
+            }
         }
     }
 

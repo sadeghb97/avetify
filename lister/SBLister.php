@@ -275,7 +275,13 @@ abstract class SBLister {
         echo '<div class="magham-box">';
         echo '<span class="magham-degree" id="' . $msecTitleID . '">' . $categoryTitle . '</span>';
         echo '</div>';
-        echo '<div id="gridDemo' . $category->index . '" class="row" style="overflow: auto; position: relative;">';
+        echo '<div id="gridDemo' . $category->index . '" class="row" ';
+        Styler::startAttribute();
+        Styler::addStyle("overflow", "auto");
+        Styler::addStyle("position", "relative");
+        Styler::addStyle("justify-content", "center");
+        Styler::closeAttribute();
+        echo ' >';
         $this->printCategoryCards($category, $cursor);
         echo '</div>';
         echo '<hr />';
@@ -291,7 +297,7 @@ abstract class SBLister {
         }
     }
 
-    public function printItemCard($item, SBListCategory $category, $itemRank){
+    public function printItemCard($item, SBListCategory | null $category, $itemRank){
         $itemId = $this->getItemId($item);
         echo '<div class="grid-square" id="lister-item_' . $itemId . '"';
         if($this->cardImageWidth != null){
@@ -403,38 +409,7 @@ abstract class SBLister {
             ThemesManager::importStyle(Routing::getAventadorRoot() . "lister/lister.css");
             ThemesManager::importJS(Routing::getAventadorRoot() . "lister/sortable.js");
 
-            echo '<style type="text/css">
-                .magham-section {
-                    margin-bottom: 24px;
-                    margin-top: 24px;
-                }
-        
-                .magham-title {
-                    height: 35px; width: auto; margin-top: 20px;
-                }
-        
-                .magham-degree {
-                    font-size: 20pt;
-                    font-weight: bold;
-                    color: #660066;
-                }
-        
-                .magham-box {
-                }
-        
-                .lister-item-img {
-                    height: 230px; width: 180px; display: block; margin: auto; object-fit: cover;
-                }
-        
-                .lister-item-name {
-                    font-size: 14pt;
-                }
-        
-                .lister-item-rate {
-                    font-size: 10pt;
-                }
-            </style>
-            </head>';
+            echo '</head>';
     }
 
     function renderBody(){

@@ -15,7 +15,6 @@ function curlGetContents($url, $proxy = null) {
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
-    echo $httpCode . br();
     if ($httpCode == 200 && $fileContent !== false) {
         return $fileContent;
     }

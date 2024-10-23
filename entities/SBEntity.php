@@ -313,7 +313,7 @@ abstract class SBEntity {
                 $record = $this->insertRecord($data);
                 if ($record) {
                     $entityPk = $record[$this->getSuperKey()];
-                    echo "Film Registered Successfully (";
+                    echo "Registered Successfully (";
                     $this->printEntityLinkedName($record);
                     echo ')<br>';
                 }

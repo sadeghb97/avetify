@@ -41,8 +41,9 @@ class FormUtils {
         echo '</form>';
     }
 
-    public static function placeSubmitButton($title, $marginTop = "6px"){
+    public static function placeSubmitButton($title, $marginTop = "6px", $onClick = null){
         echo '<button type="submit" class="btn btn-primary" ';
+        if($onClick) HTMLInterface::addAttribute("onclick", $onClick);
         Styler::startAttribute();
         Styler::addStyle("margin-top", $marginTop);
         Styler::closeAttribute();

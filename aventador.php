@@ -8,6 +8,7 @@ require_once "externals/gumlet-image/ImageResize.php";
 require_once "externals/gumlet-image/ImageResizeException.php";
 
 require_once "models/Filename.php";
+require_once "models/DataModel.php";
 
 require_once "utils/echo_utils.php";
 require_once "utils/time_utils.php";
@@ -26,6 +27,7 @@ require_once "entities/EntityUtils.php";
 require_once "components/Placeable.php";
 require_once "components/DialogField.php";
 require_once "components/Styler.php";
+require_once "components/HTMLModifier.php";
 require_once "components/NiceDiv.php";
 require_once "components/images/CroppableImage.php";
 require_once "components/images/CroppingImage.php";
@@ -47,9 +49,13 @@ require_once "crawling/RawDocumentLoader.php";
 require_once "galrepo/GalleryRepo.php";
 require_once "galrepo/ManageGalleryLister.php";
 
+require_once "standings/LeagueStandings.php";
+require_once "standings/Competitor.php";
+
 require_once "modules/HTMLInterface.php";
 require_once "modules/JSInterface.php";
 require_once "modules/Flusher.php";
+require_once "modules/SecureNetwork.php";
 
 require_once "forms/FormUtils.php";
 

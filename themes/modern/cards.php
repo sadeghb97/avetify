@@ -1,13 +1,25 @@
 <?php
 
 function printCard($img, $name, $description, $link, $options){
-    global $currentTime;
-    echo '<div class="card">';
+    echo '<div class="card" ';
+    if(!empty($options['image_mode'])){
+        Styler::startAttribute();
+        Styler::addStyle("height", $options['image_height']);
+        Styler::addStyle("width", $options['image_height'] * $options['width_multiplier']);
+        Styler::closeAttribute();
+    }
+    HTMLInterface::closeTag();
 
     if($img) {
         echo '<div class="card__header">
-        <img src="' . $img . '" alt="card__image" class="card__image" width="600">
-        </div>';
+        <img src="' . $img . '" alt="card__image" class="card__image" width="600" ';
+        Styler::startAttribute();
+        if(!empty($options['image_mode'])) {
+            Styler::imageWithHeight($options['image_height']);
+        }
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
+        echo '</div>';
     }
 
     echo '<div class="card__body">';

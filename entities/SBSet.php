@@ -86,4 +86,8 @@ class SBSet {
 
         return $out;
     }
+
+    public function length() : int {
+        return count($this->set);
+    }
 }
