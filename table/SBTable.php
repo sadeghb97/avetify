@@ -113,9 +113,11 @@ class SBTable {
         }
         self::closeTR();
 
-        foreach ($this->records as $recIndex => $record){
+        $recIndex = 1;
+        foreach ($this->records as $record){
             $this->openNormalTR($record);
-            if($this->printRowIndex) SBTableField::renderIndexTD($recIndex + 1);
+            if($this->printRowIndex) SBTableField::renderIndexTD($recIndex);
+            $recIndex++;
             foreach ($this->fields as $field){
                 $field->renderRecord($record);
             }

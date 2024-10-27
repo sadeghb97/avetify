@@ -1,6 +1,6 @@
 <?php
 
-abstract class SBTableField {
+class SBTableField {
     public bool $isNumeric = false;
     public bool $isPersian = false;
     public bool $isCentered = true;
@@ -17,7 +17,9 @@ abstract class SBTableField {
 
     public function __construct(public string $title, public string $key){}
 
-    public abstract function getValue($item) : string;
+    public function getValue($item) : string {
+        return ((array) $item)[$this->key];
+    }
 
     public function headerCellStyles(){
         if($this->isPersian) {

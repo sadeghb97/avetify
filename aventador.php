@@ -13,6 +13,7 @@ require_once "models/DataModel.php";
 require_once "utils/echo_utils.php";
 require_once "utils/time_utils.php";
 require_once "utils/file_utils.php";
+require_once "utils/number_utils.php";
 
 require_once "network/network_utils.php";
 require_once "network/NetworkFetcher.php";
@@ -43,6 +44,7 @@ require_once "table/SBTable.php";
 require_once "table/LinkFields.php";
 require_once "table/ImageFields.php";
 require_once "table/EditableFields.php";
+require_once "table/NumberFields.php";
 
 require_once "crawling/Scrapper.php";
 require_once "crawling/RawDocumentLoader.php";
