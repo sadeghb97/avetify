@@ -19,3 +19,9 @@ function bufferOut(){
     flush();
     usleep(10000);
 }
+
+function safeLog($l){
+    echo '<textarea style="width: 90%; height: auto; min-width: 600px; 
+        min-height: 320px; margin: 12px; padding-top: 8px; 
+        padding-bottom: 20px;">' . $l . '</textarea>' . br();
+}

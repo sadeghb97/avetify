@@ -12,6 +12,7 @@ require_once "models/DataModel.php";
 
 require_once "utils/echo_utils.php";
 require_once "utils/time_utils.php";
+require_once "utils/file_utils.php";
 
 require_once "network/network_utils.php";
 require_once "network/NetworkFetcher.php";

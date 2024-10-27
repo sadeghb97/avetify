@@ -36,10 +36,7 @@ class SBTable {
     public function sortRecords(){
         $sortFactor = $this->getSortFactor();
         if($sortFactor == null) return;
-
-        usort($this->records, function ($a, $b) use ($sortFactor){
-            return $sortFactor->compare($a, $b);
-        });
+        usort($this->records, [$sortFactor, 'compare']);
     }
 
     /** @return SortFactor[] An array of MyClass instances */

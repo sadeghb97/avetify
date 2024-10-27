@@ -1,7 +1,9 @@
 <?php
 
 abstract class SortFactor {
-    public function __construct(public string $title, public string $factorKey, public bool $isDescending){}
+    public function __construct(public string $title, public string $factorKey,
+                                public bool $isDescending, public bool $isNumeric = true){
+    }
 
     public function isQualified($item) : bool {
         $value = $this->getValue($item);
@@ -20,7 +22,7 @@ abstract class SortFactor {
         $va = $this->getValue($itemA);
         $vb = $this->getValue($itemB);
 
-        if(is_string($va)){
+        if(!$this->isNumeric){
             return $multiplier * strcmp($va, $vb);
         }
         if($va == $vb) return 0;
@@ -30,7 +32,8 @@ abstract class SortFactor {
 
 class SBTableSortField extends SortFactor {
     public function __construct(public SBTableField $field){
-        parent::__construct($this->field->title, $this->field->key, !$this->field->isAscending);
+        parent::__construct($this->field->title, $this->field->key, !$this->field->isAscending,
+            $this->field->isNumeric);
     }
 
     public function getValue($item): float|string {

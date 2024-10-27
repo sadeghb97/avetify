@@ -1,6 +1,7 @@
 <?php
 
 abstract class SBTableField {
+    public bool $isNumeric = false;
     public bool $isPersian = false;
     public bool $isCentered = true;
     public bool $isUnbreakable = false;
@@ -59,6 +60,11 @@ abstract class SBTableField {
 
     public function presentValue($item){
         echo $this->getValue($item);
+    }
+
+    public function setNumeric() : SBTableField {
+        $this->isNumeric = true;
+        return $this;
     }
 
     public function setPersian() : SBTableField {
