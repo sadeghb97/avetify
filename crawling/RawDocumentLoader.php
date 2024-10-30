@@ -24,6 +24,11 @@ class RawDocumentLoader {
         return $this->status == self::$VALID;
     }
 
+    public function getStatusCode() : int {
+        if($this->fetcher == null) return 0;
+        return $this->fetcher->lastStatusCode;
+    }
+
     public function load(int $dayLimit = 0, bool $localOnly = false) : void {
         if($dayLimit > 0 && file_exists($this->filename)){
             $contentsObjectRaw = file_get_contents($this->filename);
@@ -47,7 +52,7 @@ class RawDocumentLoader {
             if ($this->fetcher != null) {
                 $rc = $this->fetcher->fetch($this->remote);
             }
-            else $rc = curlGetContents($this->remote);
+            else $rc = file_get_contents($this->remote);
 
             if ($rc) {
                 $this->contents = $rc;

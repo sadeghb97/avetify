@@ -14,8 +14,8 @@ require_once "utils/echo_utils.php";
 require_once "utils/time_utils.php";
 require_once "utils/file_utils.php";
 require_once "utils/number_utils.php";
+require_once "utils/network_utils.php";
 
-require_once "network/network_utils.php";
 require_once "network/NetworkFetcher.php";
 require_once "network/ProxyFetcher.php";
 require_once "network/HeadersFetcher.php";
@@ -59,6 +59,7 @@ require_once "modules/HTMLInterface.php";
 require_once "modules/JSInterface.php";
 require_once "modules/Flusher.php";
 require_once "modules/SecureNetwork.php";
+require_once "modules/Printer.php";
 
 require_once "forms/FormUtils.php";
 
