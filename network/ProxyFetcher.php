@@ -8,10 +8,10 @@ class ProxyFetcher extends NetworkFetcher {
     }
 
     function fetch($url) : string {
-        return curlGetContents($url, $this->proxy);
+        return self::curlGetContents($url, $this->proxy);
     }
 
-    function downloadFile($imageUrl, $targetFile) : bool{
-        return downloadFile($imageUrl, $targetFile, $this->proxy);
+    function downloadFile($imageUrl, $targetFile) : bool {
+        return $this->_downloadFile($imageUrl, $targetFile, $this->proxy);
     }
 }

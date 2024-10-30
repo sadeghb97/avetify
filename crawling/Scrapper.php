@@ -128,8 +128,37 @@ class Scrapper {
         }
     }
 
+    public function trs() : string {
+        return trim($this->scrapped);
+    }
+
+    public function stripTrs() : string {
+        return strip_tags(trim($this->scrapped));
+    }
+
+    public function pruneTrs($separator) : string {
+        $scr = $this->scrapped;
+        if(str_contains($scr, $separator)){
+            $scr = str_replace($separator, "", $scr);
+        }
+
+        return trim($scr);
+    }
+
     public function contains($needle){
-        return strpos($this->contents, $needle) !== FALSE;
+        return str_contains($this->contents, $needle);
+    }
+
+    public function innerClone() : Scrapper {
+        $rem = $this->remains();
+        $firstClosePos = strpos($rem, '>');
+        $lastOpenPos = strrpos($rem, '<');
+
+        if($lastOpenPos > $firstClosePos){
+            return new Scrapper(substr($rem, $firstClosePos + 1, $lastOpenPos - $firstClosePos - 1));
+        }
+
+        return $this;
     }
 }
 

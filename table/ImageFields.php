@@ -1,6 +1,6 @@
 <?php
 
-abstract class SBTableAvatarField extends SBTableField {
+class SBTableAvatarField extends SBTableField {
     public function __construct(string $title, string $key, public null | string $imageWidth){
         parent::__construct($title, $key);
     }

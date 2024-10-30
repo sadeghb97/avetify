@@ -36,10 +36,7 @@ class SBTable {
     public function sortRecords(){
         $sortFactor = $this->getSortFactor();
         if($sortFactor == null) return;
-
-        usort($this->records, function ($a, $b) use ($sortFactor){
-            return $sortFactor->compare($a, $b);
-        });
+        usort($this->records, [$sortFactor, 'compare']);
     }
 
     /** @return SortFactor[] An array of MyClass instances */
@@ -116,9 +113,11 @@ class SBTable {
         }
         self::closeTR();
 
-        foreach ($this->records as $recIndex => $record){
+        $recIndex = 1;
+        foreach ($this->records as $record){
             $this->openNormalTR($record);
-            if($this->printRowIndex) SBTableField::renderIndexTD($recIndex + 1);
+            if($this->printRowIndex) SBTableField::renderIndexTD($recIndex);
+            $recIndex++;
             foreach ($this->fields as $field){
                 $field->renderRecord($record);
             }
