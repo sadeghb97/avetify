@@ -1,14 +1,18 @@
 <?php
 
 abstract class SetModifier {
+    public array $currentRecords = [];
+
+    public function __construct(public string $setKey){}
+
     public abstract function getEntityRecords() : array;
-
-    public abstract function setEntityRecords(array $records);
-
-    public abstract function getSortKey() : string;
 
     /** @return SortFactor[] An array of MyClass instances */
     public abstract function finalSortFactors() : array;
+
+    public function getSortKey() : string {
+        return $this->setKey . "_sort";
+    }
 
     public function getSortFactor() : SortFactor | null {
         if(!isset($_GET[$this->getSortKey()])) return null;
@@ -22,12 +26,19 @@ abstract class SetModifier {
         return null;
     }
 
-    public function sortRecords(){
+    private function sortRecords(){
         $sortFactor = $this->getSortFactor();
         if($sortFactor == null) return;
-        $records = $this->getEntityRecords();
-        usort($records, [$sortFactor, 'compare']);
-        $this->setEntityRecords($records);
+        usort($this->currentRecords, [$sortFactor, 'compare']);
+    }
+
+    private function filterRecords(){
+        $this->currentRecords = $this->getEntityRecords();
+    }
+
+    public function adjustRecords(){
+        $this->filterRecords();
+        $this->sortRecords();
     }
 
     public function renderSortLabels(){

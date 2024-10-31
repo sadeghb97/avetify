@@ -8,12 +8,11 @@ class SBTable extends SetModifier {
 
     public bool $isEditable = false;
     public bool $printRowIndex = true;
-    public string $sortKey = "sort";
 
-    public function __construct(array $fields, array $rawRecords, public string $key){
+    public function __construct(array $fields, array $rawRecords, string $key){
+        parent::__construct($key);
         $this->setFields($fields, true);
         $this->loadRawRecords($rawRecords);
-        $this->sortRecords();
     }
 
     public function setFields(array $fields, bool $adjustEditable = false){
@@ -22,7 +21,7 @@ class SBTable extends SetModifier {
         if($adjustEditable){
             foreach ($this->fields as $field){
                 if($field->isEditable()){
-                    if($field instanceof SBEditableField) $field->namespace = $this->key;
+                    if($field instanceof SBEditableField) $field->namespace = $this->setKey;
                     $this->isEditable = true;
                 }
             }
@@ -31,6 +30,7 @@ class SBTable extends SetModifier {
 
     public function loadRawRecords($rawRecords){
         $this->records = $rawRecords;
+        $this->adjustRecords();
     }
 
     /** @return SortFactor[] An array of MyClass instances */
@@ -58,7 +58,7 @@ class SBTable extends SetModifier {
         $allJSEditableFields = [];
         foreach ($this->fields as $field){
             if($field instanceof SBEditableField){
-                foreach ($this->records as $record){
+                foreach ($this->currentRecords as $record){
                     $allJSEditableFields[] = $field->getEditableFieldJSId($record);
                 }
             }
@@ -96,7 +96,7 @@ class SBTable extends SetModifier {
         self::closeTR();
 
         $recIndex = 1;
-        foreach ($this->records as $record){
+        foreach ($this->currentRecords as $record){
             $this->openNormalTR($record);
             if($this->printRowIndex) SBTableField::renderIndexTD($recIndex);
             $recIndex++;
@@ -192,13 +192,5 @@ class SBTable extends SetModifier {
 
     public function getEntityRecords(): array {
         return $this->records;
-    }
-
-    public function setEntityRecords(array $records) {
-        $this->records = $records;
-    }
-
-    public function getSortKey(): string {
-        return $this->sortKey;
     }
 }

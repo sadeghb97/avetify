@@ -1,6 +1,6 @@
 <?php
 
-class SBSet {
+class SBSet extends SetModifier {
     public $set = [];
     private $map = [];
 
@@ -89,5 +89,13 @@ class SBSet {
 
     public function length() : int {
         return count($this->set);
+    }
+
+    public function getEntityRecords(): array {
+        return $this->set;
+    }
+
+    public function finalSortFactors(): array {
+        return [];
     }
 }
