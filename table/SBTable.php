@@ -1,6 +1,6 @@
 <?php
 
-class SBTable {
+class SBTable extends SetModifier {
     public array $records;
 
     /** @var SBTableField[] $fields */
@@ -33,12 +33,6 @@ class SBTable {
         $this->records = $rawRecords;
     }
 
-    public function sortRecords(){
-        $sortFactor = $this->getSortFactor();
-        if($sortFactor == null) return;
-        usort($this->records, [$sortFactor, 'compare']);
-    }
-
     /** @return SortFactor[] An array of MyClass instances */
     public function getDefaultSortFactors() : array {
         $out = [];
@@ -58,18 +52,6 @@ class SBTable {
     /** @return SortFactor[] An array of MyClass instances */
     public function finalSortFactors() : array {
         return array_merge($this->getDefaultSortFactors(), $this->moreSortFactors());
-    }
-
-    public function getSortFactor() : SortFactor | null {
-        if(!isset($_GET[$this->sortKey])) return null;
-        $sortKey = $_GET[$this->sortKey];
-        $allSortFactors = $this->finalSortFactors();
-
-        foreach ($allSortFactors as $sf){
-            if($sf->factorKey == $sortKey) return $sf;
-        }
-
-        return null;
     }
 
     public function placeJSUtils(){
@@ -133,19 +115,6 @@ class SBTable {
             echo '</form>';
         }
         $this->placeJSUtils();
-    }
-
-    public function renderSortLabels(){
-        $allSortFactors = $this->finalSortFactors();
-        echo '<div style="text-align: center; margin-top: 2px;">';
-        $bg = 'Black';
-        $color = 'Cyan';
-        printLabel("Clear", Routing::currentPureLink(), $bg, $color);
-        foreach ($allSortFactors as $sortFactor){
-            printLabel($sortFactor->title, Routing::addParamToCurrentLink($this->sortKey, $sortFactor->factorKey), $bg, $color);
-        }
-
-        echo '</div>';
     }
 
     public function renderPage(){
@@ -219,5 +188,17 @@ class SBTable {
 
     public static function addStyle(string $key, string $value){
         echo $key . ': ' . $value . '; ';
+    }
+
+    public function getEntityRecords(): array {
+        return $this->records;
+    }
+
+    public function setEntityRecords(array $records) {
+        $this->records = $records;
+    }
+
+    public function getSortKey(): string {
+        return $this->sortKey;
     }
 }

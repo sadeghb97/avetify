@@ -25,6 +25,8 @@ require_once "entities/SBSet.php";
 require_once "entities/EntityField.php";
 require_once "entities/SBEntity.php";
 require_once "entities/EntityUtils.php";
+require_once "entities/SortFactor.php";
+require_once "entities/SetModifier.php";
 
 require_once "components/Placeable.php";
 require_once "components/DialogField.php";
