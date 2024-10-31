@@ -143,7 +143,9 @@ abstract class SBEntity {
     }
 
     public function getRecord($pk) {
-        return $this->conn->fetchRow($this->getRecordQuery($pk));
+        $record = $this->conn->fetchRow($this->getRecordQuery($pk));
+        if($record) $this->extendRecord($record);
+        return $record;
     }
 
     public function getCurrentRecord(){
@@ -207,6 +209,8 @@ abstract class SBEntity {
         echo '</a>';
     }
 
+    public function extendRecord(&$item){}
+
     public function printForm($options = null){
         $pk = !empty($_GET['pk']) ? $_GET['pk'] : null;
 
@@ -245,9 +249,17 @@ abstract class SBEntity {
                     echo '<input type="checkbox" value="1" name="' . $key . '"'
                         . ($value ? ' checked ' : '') . '/><br><br>';
                 }
-                else if($fieldType == "text"){
+                else if($fieldType == "text" || $fieldType == "set_text"){
+                    if($fieldType == "set_text"){
+                        $value = $value ? implode("\n", $value) : "";
+                    }
+
                     echo '<span style="font-weight: 14;">' . $title . '</span><br>';
-                    echo '<textarea name="' . $key . '" rows="8" cols="150">' . $value . '</textarea><br>';
+                    echo '<textarea ';
+                    Styler::startAttribute();
+                    Styler::addStyle("margin-bottom", "8px");
+                    Styler::closeAttribute();
+                    echo ' name="' . $key . '" rows="8" cols="150">' . $value . '</textarea><br>';
                 }
                 else {
                     echo '<input type="text" name="' . $key

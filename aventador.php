@@ -60,6 +60,7 @@ require_once "modules/JSInterface.php";
 require_once "modules/Flusher.php";
 require_once "modules/SecureNetwork.php";
 require_once "modules/Printer.php";
+require_once "modules/SetPlexer.php";
 
 require_once "forms/FormUtils.php";
 

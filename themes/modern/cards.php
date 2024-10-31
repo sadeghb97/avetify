@@ -30,17 +30,24 @@ function printCard($img, $name, $description, $link, $options){
         }
         if(isset($options['tag'])) echo '<span class="tag tag-blue">' . $options['tag'] . '</span>';
 
-        if($link || isset($options['icon_link'])) {
+        $iconLinkExists = isset($options['icon_link']) || isset($options['more_icon_links']);
+        if($link || $iconLinkExists) {
             echo '<div style="display: flex; background-color: #269abc; justify-content: center;">';
             if ($link) echo '<a href="' . $link . '" style="color: Black;">';
             echo '<h4>' . $name . '</h4>';
             if ($link) echo '</a>';
 
-            if (isset($options['icon_link'])) {
-                $optIconLink = $options['icon_link'];
-                echo '<a href="' . $optIconLink['link'] . '" target="_blanl" style="margin-left: 8px; margin-right: 8px;">';
-                echo '<img src="' . $optIconLink['icon'] . '" style="height: 21px; wisth: auto;" />';
-                echo '</a>';
+            if($iconLinkExists) {
+                $allIconLinks = [$options['icon_link']];
+                if (isset($options['more_icon_links']) && is_array($options['more_icon_links'])) {
+                    $allIconLinks = array_merge($allIconLinks, $options['more_icon_links']);
+                }
+
+                foreach ($allIconLinks as $iconLink) {
+                    echo '<a href="' . $iconLink['link'] . '" target="_blanl" style="margin-left: 8px;">';
+                    echo '<img src="' . $iconLink['icon'] . '" style="height: 21px; width: auto;" />';
+                    echo '</a>';
+                }
             }
             echo '</div>';
         }

@@ -214,7 +214,7 @@ function printTable($keys, $array, $options=Array()){
                     }
                     else if(!empty($item['warrior'])){
                         $name = $record[$item['key']];
-                        $link = "films.php?performer=" . $record['pfID'];
+                        $link = "fights.php?warrior=" . $record['pfID'];
                         echo $openTd . ' style="text-align: center; max-width: 150px;">';
                         printLinkedName($link, $name);
                         echo '</td>';

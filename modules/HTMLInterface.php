@@ -12,6 +12,10 @@
          echo '</div>';
      }
 
+     public static function closeLink(){
+         echo '</a>';
+     }
+
      public static function openContainer($width = "90%", $maxWidth = "90%", WebModifier | null $modifier = null){
          echo '<div ';
          HTMLInterface::addAttribute("class", "container");
@@ -24,12 +28,16 @@
          self::closeTag();
      }
 
-     public static function placeLink(string $href, string $title, WebModifier | null $modifier = null){
+     public static function openLink(string $href, WebModifier | null $modifier = null){
          echo '<a ';
          self::addAttribute("href", $href);
          if($modifier && $modifier->htmlModifier != null) $modifier->htmlModifier->applyModifiers();
          if($modifier && $modifier->styler != null) $modifier->styler->applyStyles();
          echo ' >';
+     }
+
+     public static function placeLink(string $href, string $title, WebModifier | null $modifier = null){
+         self::openLink($href, $modifier);
          echo $title;
          echo '</a>';
      }
