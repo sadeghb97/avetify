@@ -1,10 +1,15 @@
 <?php
 
-abstract class SBEntity {
+abstract class SBEntity extends SetModifier {
     public ?DBConnection $conn = null;
 
-    public function __construct($dbConnection){
+    public function __construct($dbConnection, string $key = "sbn"){
+        parent::__construct($key);
         $this->conn = $dbConnection;
+    }
+
+    public function getEntityRecords(): array {
+        return $this->getRecords();
     }
 
     public function insertDataExpression(array $data) : string {

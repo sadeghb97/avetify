@@ -22,6 +22,7 @@ require_once "network/HeadersFetcher.php";
 require_once "network/ProxyHeadersFetcher.php";
 
 require_once "entities/SetModifier.php";
+require_once "entities/SetRenderer.php";
 require_once "entities/SBSet.php";
 require_once "entities/EntityField.php";
 require_once "entities/SBEntity.php";
@@ -72,6 +73,7 @@ require_once "themes/ThemesManager.php";
 require_once "themes/classic/ClassicTheme.php";
 require_once "themes/green/GreenTheme.php";
 require_once "themes/modern/ModernTheme.php";
+require_once "themes/modern/ModernSetRenderer.php";
 require_once "themes/modern/print.php";
 require_once "themes/modern/cards.php";
 require_once "themes/modern/components.php";

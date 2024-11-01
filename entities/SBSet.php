@@ -1,12 +1,10 @@
 <?php
 
 class SBSet extends SetModifier {
-    public $set = [];
-    private $map = [];
+    private array $map = [];
 
-    public function __construct($set, public string $key = "set"){
+    public function __construct(public array $set, public string $key = "set"){
         parent::__construct($this->key);
-        $this->set = $set;
         $this->refreshMap();
     }
 
@@ -98,5 +96,14 @@ class SBSet extends SetModifier {
 
     public function finalSortFactors(): array {
         return [];
+    }
+
+    public function getRenderer() : SetRenderer | null {
+        return null;
+    }
+
+    public function renderPage(){
+        $renderer = $this->getRenderer();
+        if($renderer != null) $renderer->renderPage();
     }
 }
