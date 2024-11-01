@@ -68,23 +68,55 @@ class Routing {
         return $longPath;
     }
 
-    public static function currentPureLink() : string {
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443)
+    public static function getServerProtocol() : string {
+        return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443)
             ? "https://" : "http://";
+    }
+
+    public static function currentPureLink() : string {
+        $protocol = self::getServerProtocol();
         $host = $_SERVER['HTTP_HOST'];
         $uri = $_SERVER['REQUEST_URI'];
         $uriWithoutParams = strtok($uri, '?');
         return $protocol . $host . $uriWithoutParams;
     }
 
-    public static function addParamToCurrentLink($paramKey, $paramValue=""){
-        $serverProtocol = !(stripos($_SERVER['SERVER_PROTOCOL'], 'https') === false)
-            ? 'https://' :
-            (!(stripos($_SERVER['SERVER_PROTOCOL'], 'http') === false) ? 'http://' : "");
-        $httpHost = $_SERVER['HTTP_HOST'];
-        $requestUri = $_SERVER['REQUEST_URI'];
-        $newRequestUri = self::addParamToLink($requestUri, $paramKey, $paramValue);
-        return $serverProtocol . $httpHost . $newRequestUri;
+    public static function removeParamFromCurrentLink($paramKey) : string {
+        $protocol = self::getServerProtocol();
+        $host = $_SERVER['HTTP_HOST'];
+        $uri = $_SERVER['REQUEST_URI'];
+        $newRequestUri = self::removeQueryParamFromUrl($uri, $paramKey);
+        return $protocol . $host . $newRequestUri;
+    }
+
+    public static function addParamToCurrentLink($paramKey, $paramValue="") : string {
+        $protocol = self::getServerProtocol();
+        $host = $_SERVER['HTTP_HOST'];
+        $uri = $_SERVER['REQUEST_URI'];
+        $newRequestUri = self::addParamToLink($uri, $paramKey, $paramValue);
+        return $protocol . $host . $newRequestUri;
+    }
+
+    public static function removeQueryParamFromUrl(string $url, string $param) : string {
+        $parsedUrl = parse_url($url);
+        parse_str($parsedUrl['query'] ?? '', $queryParams);
+
+        if (isset($queryParams[$param])) {
+            unset($queryParams[$param]);
+        }
+
+        $newQueryString = implode('&', array_map(
+            fn($key, $value) => $value === '' ? $key : "{$key}=" . urlencode($value),
+            array_keys($queryParams),
+            $queryParams
+        ));
+
+        return
+            (isset($parsedUrl['scheme']) ? $parsedUrl['scheme'] . '://' : '') .
+            ($parsedUrl['host'] ?? '') .
+            ($parsedUrl['path'] ?? '') .
+            (!empty($newQueryString) ? '?' . $newQueryString : '') .
+            (isset($parsedUrl['fragment']) ? '#' . $parsedUrl['fragment'] : '');
     }
 
     public static function addParamToLink($requestUri, $paramKey, $paramValue){

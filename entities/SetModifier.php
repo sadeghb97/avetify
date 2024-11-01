@@ -74,7 +74,7 @@ abstract class SetModifier {
         echo '<div style="text-align: center; margin-top: 2px;">';
         $bg = 'Black';
         $color = 'Cyan';
-        printLabel("Clear", Routing::currentPureLink(), $bg, $color);
+        printLabel("Clear", Routing::removeParamFromCurrentLink($this->getSortKey()), $bg, $color);
         foreach ($allSortFactors as $sortFactor){
             printLabel($sortFactor->title, Routing::addParamToCurrentLink($this->getSortKey(),
                 $sortFactor->factorKey), $bg, $color);
