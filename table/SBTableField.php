@@ -18,7 +18,7 @@ class SBTableField {
     public function __construct(public string $title, public string $key){}
 
     public function getValue($item) : string {
-        return ((array) $item)[$this->key];
+        return EntityUtils::getSimpleValue($item, $this->key);
     }
 
     public function headerCellStyles(){

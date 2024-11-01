@@ -45,4 +45,19 @@ class EntityUtils {
         }
         return $isChanged;
     }
+
+    public static function defaultValueGetter($key) : ValueGetter {
+        return new class ($key) implements ValueGetter {
+            public function __construct(public string $key){
+            }
+
+            public function getValue($item): string | float {
+                return ((array) $item)[$this->key];
+            }
+        };
+    }
+
+    public static function getSimpleValue($item, $key): float | string {
+        return ((array) $item)[$key];
+    }
 }

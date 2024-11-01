@@ -29,3 +29,21 @@ abstract class SortFactor {
         return $multiplier * ($va > $vb ? 1 : -1);
     }
 }
+
+class SimpleSortFactor extends SortFactor {
+    public function getValue($item): float | string {
+        return EntityUtils::getSimpleValue($item, $this->factorKey);
+    }
+}
+
+class SimpleNumericSortFactor extends SimpleSortFactor {
+    public function __construct(string $title, string $factorKey, bool $isDescending){
+        parent::__construct($title, $factorKey, $isDescending, true);
+    }
+}
+
+class SimpleTextSortFactor extends SimpleSortFactor {
+    public function __construct(string $title, string $factorKey, bool $isDescending){
+        parent::__construct($title, $factorKey, $isDescending, false);
+    }
+}

@@ -4,7 +4,8 @@ class SBSet extends SetModifier {
     public $set = [];
     private $map = [];
 
-    public function __construct($set){
+    public function __construct($set, public string $key = "set"){
+        parent::__construct($this->key);
         $this->set = $set;
         $this->refreshMap();
     }

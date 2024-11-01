@@ -8,14 +8,29 @@ abstract class SetModifier {
     public abstract function getEntityRecords() : array;
 
     /** @return SortFactor[] An array of MyClass instances */
-    public abstract function finalSortFactors() : array;
+    public function finalSortFactors() : array {
+        return [];
+    }
+
+    /** @return FilterFactor[] An array of MyClass instances */
+    public function finalFilterFactors() : array {
+        return [];
+    }
 
     public function getSortKey() : string {
         return $this->setKey . "_sort";
     }
 
+    public function getFilterKey($factorKey) : string {
+        return $this->setKey . "_" . $factorKey;
+    }
+
+    public function getDefaultFactor() : SortFactor | null {
+        return null;
+    }
+
     public function getSortFactor() : SortFactor | null {
-        if(!isset($_GET[$this->getSortKey()])) return null;
+        if(!isset($_GET[$this->getSortKey()])) return $this->getDefaultFactor();
         $sortKey = $_GET[$this->getSortKey()];
         $allSortFactors = $this->finalSortFactors();
 
@@ -23,7 +38,7 @@ abstract class SetModifier {
             if($sf->factorKey == $sortKey) return $sf;
         }
 
-        return null;
+        return $this->getDefaultFactor();
     }
 
     private function sortRecords(){
@@ -33,7 +48,20 @@ abstract class SetModifier {
     }
 
     private function filterRecords(){
-        $this->currentRecords = $this->getEntityRecords();
+        $this->currentRecords = [];
+        foreach ($this->getEntityRecords() as $record){
+            $isQualified = true;
+
+            foreach ($this->finalFilterFactors() as $filterFactor){
+                $filterKey = $this->getFilterKey($filterFactor->key);
+                if(isset($_GET[$filterKey]) && !$filterFactor->isQualified($record, $_GET[$filterKey])){
+                    $isQualified = false;
+                    break;
+                }
+            }
+
+            if($isQualified) $this->currentRecords[] = $record;
+        }
     }
 
     public function adjustRecords(){
