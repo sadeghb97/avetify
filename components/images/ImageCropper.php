@@ -1,16 +1,18 @@
 <?php
 
-class CroppingImage extends CroppableImage {
+class ImageCropper extends CroppableImage {
+    public function __construct(string $src, string $id, float $ratio = 0, int $imageType = IMAGETYPE_JPEG,
+                                public string $targetSrc = ""){
+        parent::__construct($src, $id, $imageType, $ratio);
+    }
+
     public function handleSubmit($x, $y, $w, $h){
         try {
             $gumletImage = new \Gumlet\ImageResize($this->src);
             $orgFilename = new Filename($this->src);
-            $copyFn = Routing::serverRootPath('.avnfiles/')
-                . $orgFilename->pureName . '_' . time() . '.' . $orgFilename->extension;
             $gumletImage->freecrop($w, $h, $x, $y);
 
-            copy($this->src, $copyFn);
-            $gumletImage->save($this->src, $this->imageType);
+            $gumletImage->save($this->targetSrc, $this->imageType);
             $this->onCropSuccess();
         } catch (\Gumlet\ImageResizeException $e) {
             $this->onCropError($e->getMessage());

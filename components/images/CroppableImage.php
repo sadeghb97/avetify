@@ -1,15 +1,18 @@
 <?php
 
 class CroppableImage {
-    public function __construct(public string $src, public string $id){}
+    public function __construct(public string $src, public string $id,
+                                public int $imageType = IMAGETYPE_JPEG,
+                                public float $ratio = 0
+    ){}
 
-    public static function defaultTheme($title){
+    public function defaultTheme($title){
         $theme = new ExternalCropperClassicTheme();
         $theme->placeHeader($title);
-        self::initJS();
+        $this->initJS();
     }
 
-    public static function initJS(){
+    public function initJS(){
         ?>
 
         <script>
@@ -26,6 +29,7 @@ class CroppableImage {
 
                 let status = ""
                 const cropper = new Cropper(image, {
+                    aspectRatio: <?php echo $this->ratio; ?>,
                     viewMode: 1,
                     crop(event) {
                         const max_x = imageWidth - event.detail.width
