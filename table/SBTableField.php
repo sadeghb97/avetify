@@ -8,6 +8,7 @@ class SBTableField {
     public bool $isSortable = false;
     public bool $isAscending = false;
     protected bool $editable = false;
+    public SBEditableField | null $onCreateFiled = null;
     public string | null $backgroundColor = null;
     public string | null $color = null;
     public string | null $width = null;
@@ -23,21 +24,21 @@ class SBTableField {
 
     public function headerCellStyles(){
         if($this->isPersian) {
-            SBTable::addStyle("font-family", "IranSans");
-            SBTable::addStyle("direction", "rtl");
+            Styler::addStyle("font-family", "IranSans");
+            Styler::addStyle("direction", "rtl");
         }
-        if($this->isCentered) SBTable::addStyle("text-align", "center");
-        if($this->width != null) SBTable::addStyle("width", $this->width);
-        if($this->maxWidth != null) SBTable::addStyle("max-width", $this->maxWidth);
-        if(!$this->isUnbreakable) SBTable::addStyle("word-wrap", "break-word");
+        if($this->isCentered) Styler::addStyle("text-align", "center");
+        if($this->width != null) Styler::addStyle("width", $this->width);
+        if($this->maxWidth != null) Styler::addStyle("max-width", $this->maxWidth);
+        if(!$this->isUnbreakable) Styler::addStyle("word-wrap", "break-word");
     }
 
     public function normalCellStyles($item){
         $this->headerCellStyles();
-        if($this->backgroundColor != null) SBTable::addStyle("background-color", $this->backgroundColor);
-        if($this->color != null) SBTable::addStyle("color", $this->color);
-        if($this->fontSize != null) SBTable::addStyle("font-size", $this->fontSize);
-        if($this->fontWeight != null) SBTable::addStyle("font-weight", $this->fontWeight);
+        if($this->backgroundColor != null) Styler::addStyle("background-color", $this->backgroundColor);
+        if($this->color != null) Styler::addStyle("color", $this->color);
+        if($this->fontSize != null) Styler::addStyle("font-size", $this->fontSize);
+        if($this->fontWeight != null) Styler::addStyle("font-weight", $this->fontWeight);
     }
 
     public function renderHeaderTH(){
@@ -130,6 +131,14 @@ class SBTableField {
 
     public function isEditable() : bool {
         return $this->editable;
+    }
+
+    public function setEditableOnCreate(SBEditableField | null $editableField = null){
+        if($editableField == null){
+            if($this->isEditable()) $editableField = $this;
+            else $this->onCreateFiled = new SBEditableField($this->title, $this->key);
+        }
+        else $this->onCreateFiled = $editableField;
     }
 
     public static function renderIndexTH($rowTitle){

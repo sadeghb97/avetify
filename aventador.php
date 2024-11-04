@@ -9,6 +9,7 @@ require_once "externals/gumlet-image/ImageResizeException.php";
 
 require_once "models/Filename.php";
 require_once "models/DataModel.php";
+require_once "models/IDGetter.php";
 
 require_once "utils/echo_utils.php";
 require_once "utils/time_utils.php";
@@ -77,6 +78,9 @@ require_once "themes/modern/ModernSetRenderer.php";
 require_once "themes/modern/print.php";
 require_once "themes/modern/cards.php";
 require_once "themes/modern/components.php";
+
+require_once "renderers/PageRenderer.php";
+require_once "renderers/AventadorRenderer.php";
 
 $AVENTADOR_ROOT_PATH = "";
 

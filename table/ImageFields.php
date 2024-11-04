@@ -9,8 +9,8 @@ class SBTableAvatarField extends SBTableField {
         $image = $this->getValue($item);
         echo '<img src="' . $image . '" style="';
         if($this->imageWidth){
-            SBTable::addStyle("width", $this->imageWidth);
-            SBTable::addStyle("height", "auto");
+            Styler::addStyle("width", $this->imageWidth);
+            Styler::addStyle("height", "auto");
         }
         echo '" >';
     }

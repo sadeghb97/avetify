@@ -13,7 +13,7 @@ abstract class SBTableLinkField extends SBTableField {
         $title = $this->getValue($item);
         $link = $this->getLinkValue($item);
         echo '<a href="' . $link . '" style="';
-        if($this->color != null) SBTable::addStyle("color", $this->color);
+        if($this->color != null) Styler::addStyle("color", $this->color);
         echo '" >';
         echo $title;
         echo '</a>';

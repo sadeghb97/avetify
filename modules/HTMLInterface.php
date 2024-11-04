@@ -8,6 +8,10 @@
          echo ' >';
      }
 
+     public static function closeSingleTag(){
+         echo ' />';
+     }
+
      public static function closeDiv(){
          echo '</div>';
      }

@@ -5,24 +5,27 @@ class SBTable extends SetModifier {
 
     /** @var SBTableField[] $fields */
     public array $fields;
-
-    public bool $isEditable = false;
     public bool $printRowIndex = true;
 
-    public function __construct(array $fields, array $rawRecords, string $key){
+    public function __construct(array $fields, array $rawRecords, string $key,
+                                public bool $isEditable = false, public IDGetter | null $idGetter = null){
         parent::__construct($key);
-        $this->setFields($fields, true);
+        if($this->isEditable && $this->idGetter == null){
+            $this->idGetter = new SimpleIDGetter("id");
+        }
+        $this->setFields($fields);
         $this->loadRawRecords($rawRecords);
     }
 
-    public function setFields(array $fields, bool $adjustEditable = false){
+    public function setFields(array $fields){
         $this->fields = $fields;
 
-        if($adjustEditable){
-            foreach ($this->fields as $field){
-                if($field->isEditable()){
-                    if($field instanceof SBEditableField) $field->namespace = $this->setKey;
-                    $this->isEditable = true;
+        foreach ($this->fields as $field){
+            if($field->isEditable()){
+                if($field instanceof SBEditableField) $field->namespace = $this->setKey;
+                $field->idGetter = $this->idGetter;
+                if($field->onCreateFiled != null){
+                    $field->onCreateFiled->idGetter = $this->idGetter;
                 }
             }
         }
@@ -55,28 +58,25 @@ class SBTable extends SetModifier {
     }
 
     public function placeJSUtils(){
-        $allJSEditableFields = [];
-        foreach ($this->fields as $field){
-            if($field instanceof SBEditableField){
-                foreach ($this->currentRecords as $record){
-                    $allJSEditableFields[] = $field->getEditableFieldJSId($record);
+        if($this->isEditable) {
+            $allJSEditableFields = [];
+            foreach ($this->fields as $field) {
+                if ($field instanceof SBEditableField) {
+                    foreach ($this->currentRecords as $record) {
+                        $allJSEditableFields[] = $field->getEditableFieldIdentifier($record);
+                    }
                 }
             }
+
+            JSInterface::declareGlobalJSArgs($this->getJSArgsName());
+            FormUtils::readyFormToCatchNoNamedFields(
+                $this->getJSArgsName(),
+                $this->getTableFormName(),
+                $this->getRawTableFieldsName(),
+                $allJSEditableFields,
+                $this->isEditable
+            );
         }
-
-        JSInterface::declareGlobalJSArgs($this->getJSArgsName());
-        FormUtils::readyFormToCatchNoNamedFields(
-            $this->getJSArgsName(),
-            $this->getTableFormName(),
-            $this->getRawTableFieldsName(),
-            $allJSEditableFields,
-            $this->isEditable
-        );
-    }
-
-    public function setEditable() : SBTable {
-        $this->isEditable = true;
-        return $this;
     }
 
     public function renderTable(){
@@ -117,10 +117,16 @@ class SBTable extends SetModifier {
         $this->placeJSUtils();
     }
 
-    public function renderPage(){
+    public function renderPage(string $title){
+        $theme = $this->getTheme();
+        $theme->placeHeader($title);
         if($this->isEditable) $this->catchSubmittedFields();
         $this->renderSortLabels();
         $this->renderTable();
+    }
+
+    public function getTheme() : ThemesManager {
+        return new GreenTheme();
     }
 
     private function catchSubmittedFields(){
@@ -136,8 +142,8 @@ class SBTable extends SetModifier {
                     $itemId = substr($tableFieldRawKey, $lastPos + 1);
                     $remains = substr($tableFieldRawKey, 0, $lastPos);
 
-                    if(strlen($remains) > (strlen($this->key) + 1)) {
-                        $itemFieldKey = substr($remains, (strlen($this->key) + 1));
+                    if(strlen($remains) > (strlen($this->setKey) + 1)) {
+                        $itemFieldKey = substr($remains, (strlen($this->setKey) + 1));
                         if (!isset($itemsFields[$itemId])) $itemsFields[$itemId] = [];
                         $itemsFields[$itemId][$itemFieldKey] = $tableFieldValue;
                     }
@@ -171,23 +177,19 @@ class SBTable extends SetModifier {
     }
 
     public function getTableFormName() : string {
-        return $this->key . "_" . "table_form";
+        return $this->setKey . "_" . "table_form";
     }
 
     public function getRawTableFieldsName() : string {
-        return $this->key . "_" . "table_fields";
+        return $this->setKey . "_" . "table_fields";
     }
 
     public function getJSArgsName() : string {
-        return $this->key . "_" . "args";
+        return $this->setKey . "_" . "args";
     }
 
     private static function closeTR(){
         echo '</td>';
-    }
-
-    public static function addStyle(string $key, string $value){
-        echo $key . ': ' . $value . '; ';
     }
 
     public function getEntityRecords(): array {

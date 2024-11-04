@@ -27,7 +27,7 @@ class Styler {
         echo '" ';
     }
 
-    public static function addStyle($key, $value){
+    public static function addStyle(string $key, string $value){
         echo ' ' . $key . ': ' . $value . '; ';
     }
 
