@@ -1,7 +1,9 @@
 <?php
  class HTMLInterface {
-     public static function addAttribute($attr, $value){
-         echo ' ' . $attr . '="' . $value . '" ';
+     public static function addAttribute($attr, $value = null){
+         echo ' ' . $attr;
+         if($value) echo '="' . $value . '"';
+         echo ' ';
      }
 
      public static function closeTag(){

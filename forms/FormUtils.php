@@ -6,7 +6,9 @@ class FormUtils {
         string $formId,
         string $hiddenRawElementId,
         array $fields,
-        bool $isEditable = true
+        bool $isEditable = true,
+        string $hiddenSelectorElementId = null,
+        array $selectFields = null
     ){
         $allJSFieldsRaw = json_encode($fields);
         ?>
@@ -18,11 +20,31 @@ class FormUtils {
                     const values = {}
                     <?php echo $jsArgsName ?>.fields.forEach((fieldElementId) => {
                         const fieldElement = document.getElementById(fieldElementId)
-                        values[fieldElementId] = fieldElement.value
+                        if(fieldElement.type === "checkbox"){
+                            values[fieldElementId] = !!fieldElement.checked;
+                        }
+                        else values[fieldElementId] = fieldElement.value
                     })
-                    const valuesRaw = JSON.stringify(values)
-                    const tableFieldsRawElement = document.getElementById("<?php echo $hiddenRawElementId ?>")
-                    tableFieldsRawElement.value = valuesRaw
+                    const valuesRaw = JSON.stringify(values);
+                    const tableFieldsRawElement = document.getElementById("<?php echo $hiddenRawElementId ?>");
+                    tableFieldsRawElement.value = valuesRaw;
+
+                    <?php if($selectFields && $hiddenSelectorElementId){
+                        $allSelectFieldsRaw = json_encode($selectFields);
+                    ?>
+                        <?php echo $jsArgsName ?>.selectFields = <?php echo $allSelectFieldsRaw; ?>;
+                        const selectValues = [];
+                        <?php echo $jsArgsName ?>.selectFields.forEach((fieldElementId) => {
+                            const fieldElement = document.getElementById(fieldElementId);
+                            if(!!fieldElement.checked){
+                                selectValues.push(fieldElementId);
+                            }
+                        })
+                        const selectValuesRaw = JSON.stringify(selectValues);
+                        const tableSelectorRawElement = document.getElementById("<?php echo $hiddenSelectorElementId ?>");
+                        tableSelectorRawElement.value = selectValuesRaw;
+                        console.log(selectValues)
+                    <?php } ?>
                 });
                 <?php } ?>
             </script>

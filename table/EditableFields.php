@@ -21,6 +21,14 @@ class SBEditableField extends SBTableField {
         return $id;
     }
 
+    function setFieldIdentifiers($item){
+        if($this->idGetter != null) {
+            $fieldIdentifier = $this->getEditableFieldIdentifier($item);
+            if ($this->useIDIdentifier) HTMLInterface::addAttribute("id", $fieldIdentifier);
+            if ($this->useNameIdentifier) HTMLInterface::addAttribute("name", $fieldIdentifier);
+        }
+    }
+
     public function presentValue($item){
         echo '<input ';
         HTMLInterface::addAttribute("type", "text");
@@ -28,14 +36,51 @@ class SBEditableField extends SBTableField {
             HTMLInterface::addAttribute("value", $this->getValue($item));
         }
         HTMLInterface::addAttribute("placeholder", $this->title);
-        if($this->idGetter != null) {
-            $fieldIdentifier = $this->getEditableFieldIdentifier($item);
-            if ($this->useIDIdentifier) HTMLInterface::addAttribute("id", $fieldIdentifier);
-            if ($this->useNameIdentifier) HTMLInterface::addAttribute("name", $fieldIdentifier);
-        }
+        $this->setFieldIdentifiers($item);
         Styler::startAttribute();
         Styler::addStyle("height", "35px");
         Styler::closeAttribute();
         HTMLInterface::closeSingleTag();
+    }
+
+    public function onlyNameIdentifier(){
+        $this->useNameIdentifier = true;
+        $this->useIDIdentifier = false;
+    }
+
+    public function onlyIDIdentifier(){
+        $this->useIDIdentifier = true;
+        $this->useNameIdentifier = false;
+
+    }
+
+    public function bothIdentifier(){
+        $this->useIDIdentifier = true;
+        $this->useIDIdentifier = true;
+    }
+}
+
+class CheckboxField extends SBEditableField {
+    public function presentValue($item){
+        echo '<input ';
+        HTMLInterface::addAttribute("type", "checkbox");
+        if($item != null) {
+            $checked = !!$this->getValue($item);
+            if($checked) HTMLInterface::addAttribute("checked");
+        }
+        $this->setFieldIdentifiers($item);
+        Styler::startAttribute();
+        Styler::closeAttribute();
+        HTMLInterface::closeSingleTag();
+    }
+}
+
+class RecordSelectorField extends CheckboxField {
+    public function __construct(string $title, IDGetter $idGetter){
+        parent::__construct($title, "select_Record", $idGetter);
+    }
+
+    public function getValue($item): string {
+        return false;
     }
 }

@@ -5,7 +5,9 @@ class SBTable extends SetModifier {
 
     /** @var SBTableField[] $fields */
     public array $fields;
+    public RecordSelectorField | null $selectorField = null;
     public bool $printRowIndex = true;
+    public bool $enableSelectRecord = false;
     public bool $enableCreatingRow = false;
 
     public function __construct(array $fields, array $rawRecords, string $key,
@@ -28,8 +30,7 @@ class SBTable extends SetModifier {
                 if($field->onCreateField != null){
                     $field->onCreateField->namespace = $this->setKey;
                     $field->onCreateField->idGetter = $this->idGetter;
-                    $field->onCreateField->useIDIdentifier = false;
-                    $field->onCreateField->useNameIdentifier = true;
+                    $field->onCreateField->onlyNameIdentifier();
                 }
             }
         }
@@ -72,13 +73,23 @@ class SBTable extends SetModifier {
                 }
             }
 
+            $allSelectFields = null;
+            if($this->selectorField != null){
+                $allSelectFields = [];
+                foreach ($this->currentRecords as $record) {
+                    $allSelectFields[] = $this->selectorField->getEditableFieldIdentifier($record);
+                }
+            }
+
             JSInterface::declareGlobalJSArgs($this->getJSArgsName());
             FormUtils::readyFormToCatchNoNamedFields(
                 $this->getJSArgsName(),
                 $this->getTableFormName(),
                 $this->getRawTableFieldsName(),
                 $allJSEditableFields,
-                $this->isEditable
+                $this->isEditable,
+                $this->enableSelectRecord ? $this->getTableSelectorName() : null,
+                $allSelectFields
             );
         }
     }
@@ -96,6 +107,7 @@ class SBTable extends SetModifier {
             }
             else $this->placeEmptyTD();
         }
+        if($this->enableSelectRecord) $this->placeEmptyTD();
         self::closeTR();
     }
 
@@ -113,9 +125,15 @@ class SBTable extends SetModifier {
         foreach ($this->fields as $field){
             $field->renderHeaderTH();
         }
+        if($this->enableSelectRecord) SBTableField::renderIndexTH("Action");
         self::closeTR();
 
         $recIndex = 1;
+        if($this->enableSelectRecord) {
+            $this->selectorField = new RecordSelectorField("Action", $this->idGetter);
+            $this->selectorField->namespace = $this->setKey;
+            $this->selectorField->onlyIDIdentifier();
+        }
         foreach ($this->currentRecords as $record){
             $this->openNormalTR($record);
             if($this->printRowIndex) SBTableField::renderIndexTD($recIndex);
@@ -123,6 +141,7 @@ class SBTable extends SetModifier {
             foreach ($this->fields as $field){
                 $field->renderRecord($record);
             }
+            if($this->enableSelectRecord) $this->selectorField->renderRecord($record);
             self::closeTR();
         }
         if($this->enableCreatingRow) $this->renderCreatingTr();
@@ -130,9 +149,34 @@ class SBTable extends SetModifier {
         echo '</table>';
         echo '</div>';
         if($this->isEditable) {
-            echo '<input type="hidden" id="' . $this->getRawTableFieldsName() .
-                '" name="' . $this->getRawTableFieldsName() . '">';
-            echo '<button type="submit" class="btn btn-primary">Update</button>';
+            FormUtils::placeHiddenField($this->getRawTableFieldsName(), "", false);
+            FormUtils::placeHiddenField($this->getTableSelectorName(), "", false);
+
+            $div = new NiceDiv(8);
+            $div->open();
+            echo '<button ';
+            HTMLInterface::addAttribute("name", $this->getUpdateButtonID());
+            HTMLInterface::addAttribute("type", "submit");
+            HTMLInterface::addAttribute("class", "btn btn-primary");
+            HTMLInterface::addAttribute("value", "update");
+            HTMLInterface::closeTag();
+            echo "Update";
+            echo '</button>';
+
+            if($this->enableSelectRecord) {
+                $div->separate();
+                echo '<button ';
+                HTMLInterface::addAttribute("name", $this->getDeleteButtonID());
+                HTMLInterface::addAttribute("id", $this->getDeleteButtonID());
+                HTMLInterface::addAttribute("type", "submit");
+                HTMLInterface::addAttribute("class", "btn btn-primary");
+                HTMLInterface::addAttribute("value", "delete");
+                HTMLInterface::closeTag();
+                echo "Delete";
+                echo '</button>';
+            }
+
+            $div->close();
             echo '</form>';
         }
         $this->placeJSUtils();
@@ -151,42 +195,63 @@ class SBTable extends SetModifier {
     }
 
     private function catchSubmittedFields(){
-        if(isset($_POST[$this->getRawTableFieldsName()])){
-            $creatingFields = [];
-            foreach ($this->fields as $field){
-                if($field->onCreateField != null){
-                    $crFieldKey = $field->onCreateField->getEditableFieldIdentifier(null);
-                    $crKey = $field->onCreateField->key;
-                    $creatingFields[$crKey] = $_POST[$crFieldKey];
-                }
+        $selectedRecords = [];
+        if(!empty($_POST[$this->getTableSelectorName()])){
+            $activeSelectElements = json_decode($_POST[$this->getTableSelectorName()], true);
+            foreach ($activeSelectElements as $selectElementID){
+                $lastPos = strrpos($selectElementID, "_");
+                $itemId = substr($selectElementID, $lastPos + 1);
+                $selectedRecords[] = $itemId;
             }
-            $this->handleCreatingFields($creatingFields);
+        }
 
-            $itemsFields = [];
-            $tableFieldsRaw = $_POST[$this->getRawTableFieldsName()];
-            $tableFieldsList = json_decode($tableFieldsRaw, true);
-
-            foreach ($tableFieldsList as $tableFieldRawKey => $tableFieldValue){
-                $lastPos = strrpos($tableFieldRawKey, "_");
-                if(strlen($tableFieldRawKey) > ($lastPos + 1)){
-                    $itemId = substr($tableFieldRawKey, $lastPos + 1);
-                    $remains = substr($tableFieldRawKey, 0, $lastPos);
-
-                    if(strlen($remains) > (strlen($this->setKey) + 1)) {
-                        $itemFieldKey = substr($remains, (strlen($this->setKey) + 1));
-                        if (!isset($itemsFields[$itemId])) $itemsFields[$itemId] = [];
-                        $itemsFields[$itemId][$itemFieldKey] = $tableFieldValue;
+        if(!empty($_POST[$this->getDeleteButtonID()])) {
+            $this->handleDeletingFields($selectedRecords);
+        }
+        else {
+            if (isset($_POST[$this->getRawTableFieldsName()])) {
+                $creatingFields = [];
+                foreach ($this->fields as $field) {
+                    if ($field->onCreateField != null) {
+                        $crFieldKey = $field->onCreateField->getEditableFieldIdentifier(null);
+                        $crKey = $field->onCreateField->key;
+                        if ($field->onCreateField instanceof CheckboxField) {
+                            $creatingFields[$crKey] = empty($_POST[$crFieldKey]) ? false : true;
+                        } else {
+                            $creatingFields[$crKey] = $_POST[$crFieldKey];
+                        }
                     }
                 }
-            }
+                $this->handleCreatingFields($creatingFields);
 
-            $this->handleSubmittedFields($itemsFields);
+                $itemsFields = [];
+                $tableFieldsRaw = $_POST[$this->getRawTableFieldsName()];
+                $tableFieldsList = json_decode($tableFieldsRaw, true);
+
+                foreach ($tableFieldsList as $tableFieldRawKey => $tableFieldValue) {
+                    $lastPos = strrpos($tableFieldRawKey, "_");
+                    if (strlen($tableFieldRawKey) > ($lastPos + 1)) {
+                        $itemId = substr($tableFieldRawKey, $lastPos + 1);
+                        $remains = substr($tableFieldRawKey, 0, $lastPos);
+
+                        if (strlen($remains) > (strlen($this->setKey) + 1)) {
+                            $itemFieldKey = substr($remains, (strlen($this->setKey) + 1));
+                            if (!isset($itemsFields[$itemId])) $itemsFields[$itemId] = [];
+                            $itemsFields[$itemId][$itemFieldKey] = $tableFieldValue;
+                        }
+                    }
+                }
+
+                $this->handleSubmittedFields($itemsFields);
+            }
         }
     }
 
     public function handleSubmittedFields($itemsFields){}
 
     public function handleCreatingFields($creatingFields){}
+
+    public function handleDeletingFields($deletingFields){}
 
     public function tableStyles(){}
 
@@ -216,8 +281,20 @@ class SBTable extends SetModifier {
         return $this->setKey . "_" . "table_fields";
     }
 
+    public function getTableSelectorName() : string {
+        return $this->setKey . "_" . "selector_field";
+    }
+
     public function getJSArgsName() : string {
         return $this->setKey . "_" . "args";
+    }
+
+    public function getUpdateButtonID() : string {
+        return $this->setKey . '_update';
+    }
+
+    public function getDeleteButtonID() : string {
+        return $this->setKey . '_delete';
     }
 
     private static function closeTR(){

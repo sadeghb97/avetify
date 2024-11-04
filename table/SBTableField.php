@@ -19,6 +19,7 @@ class SBTableField {
     public function __construct(public string $title, public string $key){}
 
     public function getValue($item) : string {
+        if(!is_array($item) && !is_object($item)) return $item;
         return EntityUtils::getSimpleValue($item, $this->key);
     }
 
