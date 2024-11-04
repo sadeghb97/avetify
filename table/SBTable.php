@@ -6,6 +6,7 @@ class SBTable extends SetModifier {
     /** @var SBTableField[] $fields */
     public array $fields;
     public bool $printRowIndex = true;
+    public bool $enableCreatingRow = false;
 
     public function __construct(array $fields, array $rawRecords, string $key,
                                 public bool $isEditable = false, public IDGetter | null $idGetter = null){
@@ -24,8 +25,11 @@ class SBTable extends SetModifier {
             if($field->isEditable()){
                 if($field instanceof SBEditableField) $field->namespace = $this->setKey;
                 $field->idGetter = $this->idGetter;
-                if($field->onCreateFiled != null){
-                    $field->onCreateFiled->idGetter = $this->idGetter;
+                if($field->onCreateField != null){
+                    $field->onCreateField->namespace = $this->setKey;
+                    $field->onCreateField->idGetter = $this->idGetter;
+                    $field->onCreateField->useIDIdentifier = false;
+                    $field->onCreateField->useNameIdentifier = true;
                 }
             }
         }
@@ -79,6 +83,22 @@ class SBTable extends SetModifier {
         }
     }
 
+    private function placeEmptyTD(){
+        echo '<td></td>';
+    }
+
+    public function renderCreatingTr(){
+        $this->openNormalTR(null);
+        if($this->printRowIndex) $this->placeEmptyTD();
+        foreach ($this->fields as $field){
+            if($field->onCreateField != null){
+                $field->onCreateField->renderRecord(null);
+            }
+            else $this->placeEmptyTD();
+        }
+        self::closeTR();
+    }
+
     public function renderTable(){
         if($this->isEditable) echo '<form method="post" id="' . $this->getTableFormName() .
             '" name="' . $this->getTableFormName() . '">';
@@ -105,6 +125,7 @@ class SBTable extends SetModifier {
             }
             self::closeTR();
         }
+        if($this->enableCreatingRow) $this->renderCreatingTr();
 
         echo '</table>';
         echo '</div>';
@@ -131,8 +152,17 @@ class SBTable extends SetModifier {
 
     private function catchSubmittedFields(){
         if(isset($_POST[$this->getRawTableFieldsName()])){
-            $itemsFields = [];
+            $creatingFields = [];
+            foreach ($this->fields as $field){
+                if($field->onCreateField != null){
+                    $crFieldKey = $field->onCreateField->getEditableFieldIdentifier(null);
+                    $crKey = $field->onCreateField->key;
+                    $creatingFields[$crKey] = $_POST[$crFieldKey];
+                }
+            }
+            $this->handleCreatingFields($creatingFields);
 
+            $itemsFields = [];
             $tableFieldsRaw = $_POST[$this->getRawTableFieldsName()];
             $tableFieldsList = json_decode($tableFieldsRaw, true);
 
@@ -155,6 +185,8 @@ class SBTable extends SetModifier {
     }
 
     public function handleSubmittedFields($itemsFields){}
+
+    public function handleCreatingFields($creatingFields){}
 
     public function tableStyles(){}
 

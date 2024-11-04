@@ -8,7 +8,7 @@ class SBTableField {
     public bool $isSortable = false;
     public bool $isAscending = false;
     protected bool $editable = false;
-    public SBEditableField | null $onCreateFiled = null;
+    public SBEditableField | null $onCreateField = null;
     public string | null $backgroundColor = null;
     public string | null $color = null;
     public string | null $width = null;
@@ -133,12 +133,13 @@ class SBTableField {
         return $this->editable;
     }
 
-    public function setEditableOnCreate(SBEditableField | null $editableField = null){
+    public function setEditableOnCreate(SBEditableField | null $editableField = null) : SBTableField {
         if($editableField == null){
-            if($this->isEditable()) $editableField = $this;
-            else $this->onCreateFiled = new SBEditableField($this->title, $this->key);
+            if($this instanceof SBEditableField) $this->onCreateField = clone $this;
+            else $this->onCreateField = new SBEditableField($this->title, $this->key);
         }
-        else $this->onCreateFiled = $editableField;
+        else $this->onCreateField = $editableField;
+        return $this;
     }
 
     public static function renderIndexTH($rowTitle){
