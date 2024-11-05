@@ -6,8 +6,6 @@ class SBForm {
     /** @var FormHiddenProperty[] */
     public array $hiddenData;
 
-    public string $currentTrigger = "";
-
     public function __construct(public string $formIdentifier, public string $formMethod = "POST"){
     }
 
@@ -55,6 +53,10 @@ class SBForm {
 
     public function getTriggerHiddenId() : string {
         return $this->formIdentifier . "_" . "trigger";
+    }
+
+    public function getCurrentTrigger() : string {
+        return !empty($_POST[$this->getTriggerHiddenId()]) ? $_POST[$this->getTriggerHiddenId()] : "";
     }
 }
 

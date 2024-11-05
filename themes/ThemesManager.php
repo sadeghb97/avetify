@@ -59,6 +59,10 @@ class ThemesManager {
         self::importStyle($this->ROOT_PATH . "externals/bootstrap.min.css");
     }
 
+    public function importJoshButtons(){
+        self::importStyle($this->ROOT_PATH . "themes/assets/josh_buttons.css");
+    }
+
     public static function openHead(){
         echo '<head>';
     }

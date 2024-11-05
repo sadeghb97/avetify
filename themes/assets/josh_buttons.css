@@ -1,0 +1,37 @@
+.pushable {
+    background: hsl(210deg 100% 32%);
+    border: none;
+    border-radius: 12px;
+    padding: 0;
+    cursor: pointer;
+}
+.front {
+    display: block;
+    padding: 10px 35px;
+    border-radius: 12px;
+    font-size: 1rem;
+    background: hsl(215deg 100% 47%);
+    color: white;
+    will-change: transform;
+    transition: transform 250ms;
+}
+
+.pushable.warning {
+    background: hsl(340deg 100% 32%);
+}
+
+.pushable.warning .front {
+    background: hsl(345deg 100% 47%);
+}
+
+.pushable:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.pushable:hover .front {
+    transform: translateY(-6px);
+}
+
+.pushable:active .front {
+    transform: translateY(-2px);
+}

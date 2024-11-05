@@ -10,6 +10,7 @@ class SBTable extends SetModifier {
     public bool $printRowIndex = true;
     public bool $enableSelectRecord = false;
     public bool $enableCreatingRow = false;
+    public bool $useClassicButtons = false;
 
     public function __construct(array $fields, array $rawRecords, string $key,
                                 public bool $isEditable = false, public IDGetter | null $idGetter = null){
@@ -19,7 +20,6 @@ class SBTable extends SetModifier {
         }
         $this->setFields($fields);
         $this->loadRawRecords($rawRecords);
-        $this->initForm();
     }
 
     public function setFields(array $fields){
@@ -43,16 +43,22 @@ class SBTable extends SetModifier {
         $this->form->addHiddenElement(new FormHiddenProperty($this->getRawTableFieldsName(), ""));
         $this->form->addHiddenElement(new FormHiddenProperty($this->getTableSelectorName(), ""));
 
-        $this->form->addTrigger(new FormButton($this->getTableFormName(), $this->getUpdateButtonID(),
-            "Update"));
+        $deleteConfirmMessage = "Are you sure?";
+        if($this->useClassicButtons) {
+            $this->form->addTrigger(new FormButton($this->getTableFormName(), $this->getUpdateButtonID(),
+                "Update"));
 
-        $deleteTrigger = new FormButton($this->getTableFormName(), $this->getDeleteButtonID(),
-            "Delete");
-        $deleteTrigger->enableConfirmMessage("Are you sure?");
-        $this->form->addTrigger($deleteTrigger);
+            $deleteTrigger = new FormButton($this->getTableFormName(), $this->getDeleteButtonID(),
+                "Delete", "warning");
+            $deleteTrigger->enableConfirmMessage($deleteConfirmMessage);
+            $this->form->addTrigger($deleteTrigger);
+        }
+        else {
+            $this->form->addTrigger(new PrimaryFormButton($this->getTableFormName(), $this->getUpdateButtonID()));
 
-        if(!empty($_POST[$this->form->getTriggerHiddenId()])){
-            $this->form->currentTrigger = $_POST[$this->form->getTriggerHiddenId()];
+            $deleteTrigger = new DeleteFormButton($this->getTableFormName(), $this->getDeleteButtonID());
+            $deleteTrigger->enableConfirmMessage($deleteConfirmMessage);
+            $this->form->addTrigger($deleteTrigger);
         }
     }
 
@@ -132,7 +138,9 @@ class SBTable extends SetModifier {
     }
 
     public function renderTable(){
-        if($this->isEditable) $this->form->openForm();
+        if($this->isEditable){
+            $this->form->openForm();
+        }
         echo '<div class="tables_panel">';
         echo '<table class="table" style="';
         $this->tableStyles();
@@ -177,6 +185,7 @@ class SBTable extends SetModifier {
     public function renderPage(string $title){
         $theme = $this->getTheme();
         $theme->placeHeader($title);
+        $this->initForm();
         if($this->isEditable) $this->catchSubmittedFields();
         $this->renderSortLabels();
         $this->renderTable();
@@ -187,7 +196,7 @@ class SBTable extends SetModifier {
     }
 
     private function catchSubmittedFields(){
-        $currentTrigger = $this->form->currentTrigger;
+        $currentTrigger = $this->form->getCurrentTrigger();
 
         $selectedRecords = [];
         if(!empty($_POST[$this->getTableSelectorName()])){
