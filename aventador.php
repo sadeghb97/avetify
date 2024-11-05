@@ -47,6 +47,7 @@ require_once "lister/RankingList.php";
 require_once "table/SBTableField.php";
 require_once "table/SBTableSortField.php";
 require_once "table/SBTable.php";
+require_once "table/JSONTable.php";
 require_once "table/LinkFields.php";
 require_once "table/ImageFields.php";
 require_once "table/EditableFields.php";
@@ -69,6 +70,8 @@ require_once "modules/Printer.php";
 require_once "modules/SetPlexer.php";
 
 require_once "forms/FormUtils.php";
+require_once "forms/FormButton.php";
+require_once "forms/SBForm.php";
 
 require_once "themes/ThemesManager.php";
 require_once "themes/classic/ClassicTheme.php";

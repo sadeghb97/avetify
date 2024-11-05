@@ -6,6 +6,7 @@ class SBTable extends SetModifier {
     /** @var SBTableField[] $fields */
     public array $fields;
     public RecordSelectorField | null $selectorField = null;
+    public SBForm | null $form = null;
     public bool $printRowIndex = true;
     public bool $enableSelectRecord = false;
     public bool $enableCreatingRow = false;
@@ -18,6 +19,7 @@ class SBTable extends SetModifier {
         }
         $this->setFields($fields);
         $this->loadRawRecords($rawRecords);
+        $this->initForm();
     }
 
     public function setFields(array $fields){
@@ -33,6 +35,24 @@ class SBTable extends SetModifier {
                     $field->onCreateField->onlyNameIdentifier();
                 }
             }
+        }
+    }
+
+    public function initForm(){
+        $this->form = new SBForm($this->getTableFormName());
+        $this->form->addHiddenElement(new FormHiddenProperty($this->getRawTableFieldsName(), ""));
+        $this->form->addHiddenElement(new FormHiddenProperty($this->getTableSelectorName(), ""));
+
+        $this->form->addTrigger(new FormButton($this->getTableFormName(), $this->getUpdateButtonID(),
+            "Update"));
+
+        $deleteTrigger = new FormButton($this->getTableFormName(), $this->getDeleteButtonID(),
+            "Delete");
+        $deleteTrigger->enableConfirmMessage("Are you sure?");
+        $this->form->addTrigger($deleteTrigger);
+
+        if(!empty($_POST[$this->form->getTriggerHiddenId()])){
+            $this->form->currentTrigger = $_POST[$this->form->getTriggerHiddenId()];
         }
     }
 
@@ -112,8 +132,7 @@ class SBTable extends SetModifier {
     }
 
     public function renderTable(){
-        if($this->isEditable) echo '<form method="post" id="' . $this->getTableFormName() .
-            '" name="' . $this->getTableFormName() . '">';
+        if($this->isEditable) $this->form->openForm();
         echo '<div class="tables_panel">';
         echo '<table class="table" style="';
         $this->tableStyles();
@@ -149,35 +168,8 @@ class SBTable extends SetModifier {
         echo '</table>';
         echo '</div>';
         if($this->isEditable) {
-            FormUtils::placeHiddenField($this->getRawTableFieldsName(), "", false);
-            FormUtils::placeHiddenField($this->getTableSelectorName(), "", false);
-
-            $div = new NiceDiv(8);
-            $div->open();
-            echo '<button ';
-            HTMLInterface::addAttribute("name", $this->getUpdateButtonID());
-            HTMLInterface::addAttribute("type", "submit");
-            HTMLInterface::addAttribute("class", "btn btn-primary");
-            HTMLInterface::addAttribute("value", "update");
-            HTMLInterface::closeTag();
-            echo "Update";
-            echo '</button>';
-
-            if($this->enableSelectRecord) {
-                $div->separate();
-                echo '<button ';
-                HTMLInterface::addAttribute("name", $this->getDeleteButtonID());
-                HTMLInterface::addAttribute("id", $this->getDeleteButtonID());
-                HTMLInterface::addAttribute("type", "submit");
-                HTMLInterface::addAttribute("class", "btn btn-primary");
-                HTMLInterface::addAttribute("value", "delete");
-                HTMLInterface::closeTag();
-                echo "Delete";
-                echo '</button>';
-            }
-
-            $div->close();
-            echo '</form>';
+            $this->form->placeTriggers();
+            $this->form->closeForm();
         }
         $this->placeJSUtils();
     }
@@ -195,6 +187,8 @@ class SBTable extends SetModifier {
     }
 
     private function catchSubmittedFields(){
+        $currentTrigger = $this->form->currentTrigger;
+
         $selectedRecords = [];
         if(!empty($_POST[$this->getTableSelectorName()])){
             $activeSelectElements = json_decode($_POST[$this->getTableSelectorName()], true);
@@ -205,7 +199,7 @@ class SBTable extends SetModifier {
             }
         }
 
-        if(!empty($_POST[$this->getDeleteButtonID()])) {
+        if($currentTrigger == $this->getDeleteButtonID()) {
             $this->handleDeletingFields($selectedRecords);
         }
         else {
