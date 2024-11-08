@@ -25,11 +25,11 @@
      public static function openContainer($width = "90%", $maxWidth = "90%", WebModifier | null $modifier = null){
          echo '<div ';
          HTMLInterface::addAttribute("class", "container");
-         if($modifier && $modifier->htmlModifier != null) $modifier->htmlModifier->applyModifiers();
+         self::applyModifiers($modifier);
          Styler::startAttribute();
          Styler::addStyle("width", $width);
          Styler::addStyle("max-width", $maxWidth);
-         if($modifier && $modifier->styler != null) $modifier->styler->appendStyles();
+         self::appendStyles($modifier);
          Styler::closeAttribute();
          self::closeTag();
      }
@@ -37,7 +37,7 @@
      public static function openLink(string $href, WebModifier | null $modifier = null){
          echo '<a ';
          self::addAttribute("href", $href);
-         if($modifier && $modifier->htmlModifier != null) $modifier->htmlModifier->applyModifiers();
+         self::applyModifiers($modifier);
          if($modifier && $modifier->styler != null) $modifier->styler->applyStyles();
          echo ' >';
      }
@@ -51,10 +51,10 @@
      public static function placeImageWithWidth(string $src, int $width, WebModifier | null $modifier = null){
          echo '<img ';
          self::addAttribute("src", $src);
-         if($modifier && $modifier->htmlModifier != null) $modifier->htmlModifier->applyModifiers();
+         self::applyModifiers($modifier);
          Styler::startAttribute();
          Styler::imageWithWidth($width);
-         if($modifier && $modifier->styler != null) $modifier->styler->appendStyles();
+         self::appendStyles($modifier);
          Styler::closeAttribute();
          self::closeTag();
      }
@@ -62,11 +62,43 @@
      public static function placeImageWithHeight(string $src, int $height, WebModifier | null $modifier = null){
          echo '<img ';
          self::addAttribute("src", $src);
-         if($modifier && $modifier->htmlModifier != null) $modifier->htmlModifier->applyModifiers();
+         self::applyModifiers($modifier);
          Styler::startAttribute();
          Styler::imageWithHeight($height);
-         if($modifier && $modifier->styler != null) $modifier->styler->appendStyles();
+         self::appendStyles($modifier);
          Styler::closeAttribute();
          self::closeTag();
+     }
+
+     public static function placeElement(string $element, string $text, WebModifier | null $modifier = null){
+         echo '<';
+         echo $element . ' ';
+         self::applyModifiers($modifier);
+         self::applyStyles($modifier);
+         self::closeTag();
+         echo $text;
+         echo '</';
+         echo $element;
+         echo '>';
+     }
+
+     public static function placeSpan(string $text, WebModifier | null $modifier = null){
+         self::placeElement("span", $text, $modifier);
+     }
+
+     public static function placeDiv(string $text, WebModifier | null $modifier = null){
+         self::placeElement("div", $text, $modifier);
+     }
+
+     public static function appendStyles(WebModifier | null $modifier = null){
+         if($modifier && $modifier->styler != null) $modifier->styler->appendStyles();
+     }
+
+     public static function applyStyles(WebModifier | null $modifier = null){
+         if($modifier && $modifier->styler != null) $modifier->styler->applyStyles();
+     }
+
+     public static function applyModifiers(WebModifier | null $modifier = null){
+         if($modifier && $modifier->htmlModifier != null) $modifier->htmlModifier->applyModifiers();
      }
  }

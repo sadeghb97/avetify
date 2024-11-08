@@ -58,7 +58,15 @@ class EntityUtils {
     }
 
     public static function getSimpleValue($item, $key): float | string {
-        return ((array) $item)[$key];
+        $arrayItem = ((array) $item);
+        if(!str_contains($key, "~")) return $arrayItem[$key];
+
+        $keyPieces = explode("~", $key);
+        $out = $arrayItem;
+        foreach ($keyPieces as $kp){
+            $out = $out[$kp];
+        }
+        return $out;
     }
 
     public static function simpleSort(array &$records, string $key, bool $isAsc){
