@@ -47,6 +47,10 @@ abstract class SetModifier {
         usort($this->currentRecords, [$sortFactor, 'compare']);
     }
 
+    public function simpleSort(string $key, bool $isAsc = true){
+        EntityUtils::simpleSort($this->currentRecords, $key, $isAsc);
+    }
+
     private function filterRecords(){
         $this->currentRecords = [];
         foreach ($this->getEntityRecords() as $record){

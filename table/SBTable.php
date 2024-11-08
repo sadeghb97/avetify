@@ -11,6 +11,7 @@ class SBTable extends SetModifier {
     public bool $enableSelectRecord = false;
     public bool $enableCreatingRow = false;
     public bool $useClassicButtons = false;
+    public bool $isSortable = true;
 
     public function __construct(array $fields, array $rawRecords, string $key,
                                 public bool $isEditable = false, public IDGetter | null $idGetter = null){
@@ -138,6 +139,10 @@ class SBTable extends SetModifier {
     }
 
     public function renderTable(){
+        $this->initForm();
+        if($this->isEditable) $this->catchSubmittedFields();
+        if($this->isSortable) $this->renderSortLabels();
+
         if($this->isEditable){
             $this->form->openForm();
         }
@@ -182,12 +187,13 @@ class SBTable extends SetModifier {
         $this->placeJSUtils();
     }
 
-    public function renderPage(string $title){
+    public function openPage(string $title){
         $theme = $this->getTheme();
         $theme->placeHeader($title);
-        $this->initForm();
-        if($this->isEditable) $this->catchSubmittedFields();
-        $this->renderSortLabels();
+    }
+
+    public function renderPage(string $title){
+        $this->openPage($title);
         $this->renderTable();
     }
 

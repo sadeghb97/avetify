@@ -11,3 +11,22 @@ class PercentField extends SBTableSimpleField {
         echo $this->getValue($item) . '%';
     }
 }
+
+class ColoredField extends SBTableSimpleField {
+    public function __construct(string $title, string $key, public array $colors){
+        parent::__construct($title, $key);
+    }
+
+    public function normalCellStyles($item){
+        parent::normalCellStyles($item);
+        $val = $this->getValue($item);
+
+        $chosenColor = null;
+        foreach ($this->colors as $colorBound => $color){
+            $chosenColor = $color;
+            if($val < $colorBound) break;
+        }
+
+        Styler::addStyle("background-color", $chosenColor);
+    }
+}

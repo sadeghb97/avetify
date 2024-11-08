@@ -52,6 +52,7 @@ require_once "table/LinkFields.php";
 require_once "table/ImageFields.php";
 require_once "table/EditableFields.php";
 require_once "table/NumberFields.php";
+require_once "table/DateFields.php";
 
 require_once "crawling/Scrapper.php";
 require_once "crawling/RawDocumentLoader.php";
@@ -84,6 +85,9 @@ require_once "themes/modern/components.php";
 
 require_once "renderers/PageRenderer.php";
 require_once "renderers/AventadorRenderer.php";
+
+require_once "calc/DateStatsCalculator.php";
+require_once "calc/IRDateStatsCalculator.php";
 
 $AVENTADOR_ROOT_PATH = "";
 

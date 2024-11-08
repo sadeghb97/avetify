@@ -60,4 +60,16 @@ class EntityUtils {
     public static function getSimpleValue($item, $key): float | string {
         return ((array) $item)[$key];
     }
+
+    public static function simpleSort(array &$records, string $key, bool $isAsc){
+        usort($records, function ($a, $b) use ($key, $isAsc) {
+            $aVal = EntityUtils::getSimpleValue($a, $key);
+            $bVal = EntityUtils::getSimpleValue($b, $key);
+            if($aVal == $bVal) return 0;
+
+            $multiplier = $isAsc ? 1 : -1;
+            if($aVal < $bVal) return $multiplier * -1;
+            else return $multiplier * 1;
+        });
+    }
 }
