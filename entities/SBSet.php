@@ -8,6 +8,16 @@ class SBSet extends SetModifier {
         $this->refreshMap();
     }
 
+    public function loadFromFile($filename){
+        if(file_exists($filename)){
+            $tmpObject = json_decode(file_get_contents($filename), true);
+            if(is_array($tmpObject)){
+                $this->set = $tmpObject;
+                $this->refreshMap();
+            }
+        }
+    }
+
     public function getItemId($item){
         return $item['id'];
     }

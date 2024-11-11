@@ -49,13 +49,13 @@ abstract class DBConnection extends mysqli {
         return $out;
     }
 
-    public function fetchTable($tableName){
-        return $this->fetchSet("SELECT * FROM $tableName");
+    public function fetchProperty($table, $idKey, $idValue, $property){
+        $row = $this->fetchRow("SELECT $property FROM $table WHERE $idKey=$idValue");
+        if(!$row) return null;
+        return $row[$property];
     }
 
-    public function getQueendom($queendomId) : Queendom {
-        $qd = $this->fetchRow("SELECT * FROM queendom WHERE id=$queendomId");
-        $qdMap = $this->fetchMap("SELECT * FROM qdrel WHERE qd_id=$queendomId", "lady_id");
-        return new Queendom($qd, $qdMap);
+    public function fetchTable($tableName){
+        return $this->fetchSet("SELECT * FROM $tableName");
     }
 }
