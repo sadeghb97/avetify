@@ -48,6 +48,17 @@
          echo '</a>';
      }
 
+     public static function placeSimpleLink(string $href, string $title){
+         $htmlModifier = new HTMLModifier();
+         $stylesModifier = new Styler();
+         $webModifiers = new WebModifier($htmlModifier, $stylesModifier);
+         $stylesModifier->pushStyle("color", "black");
+
+         self::openLink($href, $webModifiers);
+         echo $title;
+         echo '</a>';
+     }
+
      public static function placeImageWithWidth(string $src, int $width, WebModifier | null $modifier = null){
          echo '<img ';
          self::addAttribute("src", $src);
