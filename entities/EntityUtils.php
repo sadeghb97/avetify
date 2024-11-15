@@ -58,26 +58,37 @@ class EntityUtils {
     }
 
     public static function getSimpleValue($item, $key): float | string {
-        $arrayItem = ((array) $item);
-        if(!str_contains($key, "~")) return $arrayItem[$key];
-
-        $keyPieces = explode("~", $key);
-        $out = $arrayItem;
-        foreach ($keyPieces as $kp){
-            $out = $out[$kp];
-        }
-        return $out;
+        return ((array) $item)[$key];
     }
 
     public static function simpleSort(array &$records, string $key, bool $isAsc){
-        usort($records, function ($a, $b) use ($key, $isAsc) {
-            $aVal = EntityUtils::getSimpleValue($a, $key);
-            $bVal = EntityUtils::getSimpleValue($b, $key);
+        self::multiSort($records, [new SortDetails($key, $isAsc)]);
+    }
+
+
+    /**
+     * @param array $records
+     * @param SortDetails[] $sortDetails */
+    public static function multiSort(array &$records, array $sortDetails){
+        usort($records, function ($a, $b) use ($sortDetails) {
+            $sdi = 0;
+            do {
+                $currentSortDetails = $sortDetails[$sdi];
+                $aVal = EntityUtils::getSimpleValue($a, $currentSortDetails->sortKey);
+                $bVal = EntityUtils::getSimpleValue($b, $currentSortDetails->sortKey);
+                $sdi++;
+            } while($aVal == $bVal && $sdi < count($sortDetails));
+
             if($aVal == $bVal) return 0;
 
-            $multiplier = $isAsc ? 1 : -1;
+            $multiplier = $currentSortDetails->isAsc ? 1 : -1;
             if($aVal < $bVal) return $multiplier * -1;
             else return $multiplier * 1;
         });
+    }
+}
+
+class SortDetails {
+    public function __construct(public string $sortKey, public bool $isAsc){
     }
 }
