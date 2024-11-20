@@ -2,6 +2,7 @@
 
 class FormButton implements Placeable {
     public string | null $confirmMessage = null;
+    public int $iconSize = 48;
 
     public function __construct(public string $formIdentifier,
                                 public string $triggerIdentifier,
@@ -57,7 +58,7 @@ class FormButton implements Placeable {
         echo '</button>';
     }
 
-    public function place() {
+    public function place(WebModifier $webModifier = null) {
         $this->renderButton();
         $this->initButtonJsActions();
     }
@@ -88,8 +89,8 @@ class AbsoluteFormButtons extends FormButton {
         echo '<img ';
         HTMLInterface::addAttribute("src", $this->img);
         HTMLInterface::addAttribute("alt", "Icon");
-        HTMLInterface::addAttribute("width", "48px");
-        HTMLInterface::addAttribute("height", "48px");
+        HTMLInterface::addAttribute("width", $this->iconSize . "px");
+        HTMLInterface::addAttribute("height", $this->iconSize . "px");
         HTMLInterface::closeSingleTag();
 
         HTMLInterface::closeDiv();

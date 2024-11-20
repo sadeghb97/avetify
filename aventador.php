@@ -38,11 +38,16 @@ require_once "components/JoshButton.php";
 require_once "components/Styler.php";
 require_once "components/HTMLModifier.php";
 require_once "components/NiceDiv.php";
+require_once "components/VertDiv.php";
+require_once "components/PlaceableTextField.php";
 require_once "components/JSField.php";
 require_once "components/SpecialField.php";
 require_once "components/SpecialTags.php";
+require_once "components/images/PlaceableImage.php";
+require_once "components/images/IconButton.php";
 require_once "components/images/CroppableImage.php";
 require_once "components/images/CroppingImage.php";
+require_once "components/images/ImageCropper.php";
 
 require_once "lister/SBListCategory.php";
 require_once "lister/SBLister.php";

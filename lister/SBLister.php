@@ -433,7 +433,7 @@ abstract class SBLister {
         </form>';
 
         if($this->isPrintRankEnabled() && $this->isRearrangeRanksEnabled()){
-            JSInterface::addAbsoluteIconButton(Routing::getAventadorRoot()
+            HTMLInterface::addAbsoluteIconButton(Routing::getAventadorRoot()
                 . 'assets/img/arrange.png',
                 [
                     "right" => "20px",

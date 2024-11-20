@@ -55,6 +55,10 @@ class ThemesManager {
         self::importJS($this->ROOT_PATH . "externals/cropper/cropper.min.js");
     }
 
+    public function importMainJSInterface(){
+        self::importJS($this->ROOT_PATH . "themes/assets/interface.js");
+    }
+
     public function importBootstrap(){
         self::importStyle($this->ROOT_PATH . "externals/bootstrap.min.css");
     }

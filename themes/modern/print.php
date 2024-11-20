@@ -792,6 +792,10 @@ function heightMargin(int $height){
     echo '<div style="height: ' . $height . 'px;"></div>';
 }
 
+function widthMargin(int $width){
+    echo '<span style="width: ' . $width . 'px;"></span>';
+}
+
 function echoTH($str, $col, $cspan = 0)
 {
     $num = $col - strlen($str);

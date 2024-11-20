@@ -112,4 +112,33 @@
      public static function applyModifiers(WebModifier | null $modifier = null){
          if($modifier && $modifier->htmlModifier != null) $modifier->htmlModifier->applyModifiers();
      }
+
+     public static function addAbsoluteIconButton(string $imageSrc, array $positionStyles, string $rawOnclick = ""){
+         echo '<div style=" ';
+         Styler::addStyle("position", "fixed");
+         Styler::addStyle("cursor", "pointer");
+         foreach ($positionStyles as $psKey => $psValue){
+             Styler::addStyle($psKey, $psValue);
+         }
+         Styler::closeAttribute();
+         HTMLInterface::addAttribute("class", "img-button");
+         if($rawOnclick) HTMLInterface::addAttribute("onclick", $rawOnclick);
+         echo ' >';
+         echo '<img src="' . $imageSrc . '" alt="Icon" style="width: 50px; height: 50px; border-radius: 50%;">';
+         echo '</div>';
+     }
+
+     public static function absPlace(Placeable $placeable,
+                 string $right = "", string $left = "", string $top = "", string $bottom = ""){
+
+         $styler = new Styler();
+         $styler->pushStyle("position", "fixed");
+         if($left) $styler->pushStyle("left", $left);
+         if($right) $styler->pushStyle("right", $right);
+         if($top) $styler->pushStyle("top", $top);
+         if($bottom) $styler->pushStyle("bottom", $bottom);
+
+         $webModifier = new WebModifier(null, $styler);
+         $placeable->place($webModifier);
+     }
  }

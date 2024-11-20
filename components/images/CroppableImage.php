@@ -12,11 +12,12 @@ class CroppableImage {
         $this->initJS();
     }
 
-    public function initJS(){
+    public static function initJS(){
         ?>
 
         <script>
-            function setCropConfigs(imageId){
+            let lastCropper = null;
+            function setCropConfigs(imageId, ratio){
                 const image = document.getElementById(imageId);
                 const imageHeight = image.naturalHeight
                 const imageWidth = image.naturalWidth
@@ -29,7 +30,8 @@ class CroppableImage {
 
                 let status = ""
                 const cropper = new Cropper(image, {
-                    aspectRatio: <?php echo $this->ratio; ?>,
+                    aspectRatio: ratio,
+                    zoomable: false,
                     viewMode: 1,
                     crop(event) {
                         const max_x = imageWidth - event.detail.width
@@ -50,6 +52,7 @@ class CroppableImage {
                             + cropWidth.value + "," + cropHeight.value + ")"
                     },
                 });
+                lastCropper = cropper;
 
                 document.onkeydown = function (evt) {
                     evt = evt || window.event;
@@ -68,13 +71,20 @@ class CroppableImage {
     }
 
     private function present(int $size, bool $withWidth = true){
+        ?>
+        <script>
+            <?php echo $this->getJSRatioVarName(); ?> = <?php echo $this->ratio; ?>;
+        </script>
+        <?php
+
         echo '<div>';
         echo '<img ';
 
         $imageSrc = $this->src . '?' . time();
         HTMLInterface::addAttribute("src", Routing::serverPathToBrowserPath($imageSrc));
         HTMLInterface::addAttribute("id", $this->id);
-        HTMLInterface::addAttribute("onclick", "setCropConfigs('" . $this->id . "')");
+        HTMLInterface::addAttribute("onclick", "setCropConfigs('" . $this->id .
+            "', " . $this->getJSRatioVarName() . ")");
         Styler::startAttribute();
         if($withWidth) Styler::imageWithWidth($size);
         else Styler::imageWithHeight($size);
@@ -122,4 +132,8 @@ class CroppableImage {
     }
 
     public function handleSubmit($x, $y, $w, $h){}
+
+    public function getJSRatioVarName() : string {
+        return $this->id . "__ration";
+    }
 }

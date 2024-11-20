@@ -31,7 +31,17 @@ class NiceDiv {
     }
 
     public function separate(){
-        echo '<span style="width: ' . $this->sepSize . ';"></span>';
+        $this->separateWith("width");
+    }
+
+    protected function separateWith($sepType){
+        $element = $sepType == "width" ? "span" : "div";
+        echo '<' . $element . ' ';
+        Styler::startAttribute();
+        Styler::addStyle($sepType, $this->sepSize);
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
+        echo '</' . $element . '>';
     }
 
     public function placeItem(Placeable $placeable){
