@@ -89,6 +89,7 @@ require_once "themes/classic/ClassicTheme.php";
 require_once "themes/green/GreenTheme.php";
 require_once "themes/modern/ModernTheme.php";
 require_once "themes/modern/ModernSetRenderer.php";
+require_once "themes/modern/ModernGallery.php";
 require_once "themes/modern/print.php";
 require_once "themes/modern/cards.php";
 require_once "themes/modern/components.php";
