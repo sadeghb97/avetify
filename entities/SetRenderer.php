@@ -38,4 +38,8 @@ abstract class SetRenderer {
     public abstract function openContainer();
     public abstract function closeContainer();
     public abstract function renderRecord($item, $index);
+
+    public function getItemBoxIdentifier($record) : string {
+        return $this->setModifier->setKey . "__box__" . $this->setModifier->getItemId($record);
+    }
 }

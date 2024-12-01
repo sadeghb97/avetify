@@ -2,6 +2,11 @@
 
 function printCard($img, $name, $description, $link, $options){
     echo '<div class="card" ';
+    if(!empty($options['context_menu'])){
+        $omc = $options['context_menu']->openMenuJSCall($options['cmr_id']);
+        HTMLInterface::addAttribute("oncontextmenu", $omc);
+    }
+
     if(!empty($options['image_mode'])){
         Styler::startAttribute();
         Styler::addStyle("height", $options['image_height']);
@@ -54,6 +59,12 @@ function printCard($img, $name, $description, $link, $options){
 
         if($description) {
             echo '<p>' . $description . '</p>';
+        }
+
+        if(!empty($options['placeables'])){
+            foreach ($options['placeables'] as $placeable){
+                $placeable->place();
+            }
         }
     echo '</div>';
 

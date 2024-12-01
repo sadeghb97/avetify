@@ -16,6 +16,7 @@ require_once "utils/time_utils.php";
 require_once "utils/file_utils.php";
 require_once "utils/number_utils.php";
 require_once "utils/network_utils.php";
+require_once "utils/string_utils.php";
 
 require_once "network/NetworkFetcher.php";
 require_once "network/ProxyFetcher.php";
@@ -25,6 +26,7 @@ require_once "network/ProxyHeadersFetcher.php";
 require_once "entities/SetModifier.php";
 require_once "entities/SetRenderer.php";
 require_once "entities/SBSet.php";
+require_once "entities/RecordContextMenu.php";
 require_once "entities/EntityField.php";
 require_once "entities/SBEntity.php";
 require_once "entities/EntityUtils.php";

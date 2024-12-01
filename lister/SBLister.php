@@ -407,6 +407,7 @@ abstract class SBLister {
             ClassicTheme::importMainStyles(Routing::getAventadorRoot());
 
             ThemesManager::importStyle(Routing::getAventadorRoot() . "lister/lister.css");
+            ThemesManager::importStyle(Routing::getAventadorRoot() . "themes/assets/context_menu.css");
             ThemesManager::importJS(Routing::getAventadorRoot() . "lister/sortable.js");
 
             echo '</head>';

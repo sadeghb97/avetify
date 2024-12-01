@@ -44,9 +44,10 @@ class NiceDiv {
         echo '</' . $element . '>';
     }
 
-    public function placeItem(Placeable $placeable){
+    public function placeItem(Placeable $placeable, WebModifier | null $webModifier = null){
         if($this->itemsCount > 0) $this->separate();
-        $placeable->place();
+        if($webModifier != null) $placeable->place($webModifier);
+        else $placeable->place();
         $this->itemsCount++;
     }
 

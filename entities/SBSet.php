@@ -18,10 +18,6 @@ class SBSet extends SetModifier {
         }
     }
 
-    public function getItemId($item){
-        return $item['id'];
-    }
-
     public function refreshMap(){
         $this->map = [];
         foreach ($this->set as $index => $item){

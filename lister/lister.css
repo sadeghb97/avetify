@@ -259,39 +259,6 @@ input[type=range]:focus::-ms-fill-upper {
 	background-color: #B7F8C7;
 }
 
-.context-menu-row {
-	display: flex;
-	flex-wrap: wrap;
-	box-sizing: border-box;
-}
-
-.context-menu-nice {
-	position: fixed;
-	z-index: 10000;
-	width: 230px;
-	background: #1b1a1a;
-	border-radius: 5px;
-	transform: scale(0);
-	transform-origin: top left;
-}
-
-.context-menu-nice.visible {
-	transform: scale(1);
-	transition: transform 200ms ease-in-out;
-}
-
-.context-menu-nice .item {
-	padding: 8px 10px;
-	font-size: 15px;
-	color: #eee;
-	cursor: pointer;
-	border-radius: inherit;
-}
-
-.context-menu-nice .item:hover {
-	background: #343434;
-}
-
 .magham-section {
 	margin-bottom: 24px;
 	margin-top: 24px;

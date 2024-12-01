@@ -7,6 +7,10 @@ abstract class SetModifier {
 
     public abstract function getEntityRecords() : array;
 
+    public function getItemId($item) : string {
+        return EntityUtils::getSimpleValue($item, "id");
+    }
+
     /** @return SortFactor[] An array of MyClass instances */
     public function finalSortFactors() : array {
         return [];

@@ -67,6 +67,10 @@ class ThemesManager {
         self::importStyle($this->ROOT_PATH . "themes/assets/josh_buttons.css");
     }
 
+    public function importContextMenuStyles(){
+        self::importStyle($this->ROOT_PATH . "themes/assets/context_menu.css");
+    }
+
     public static function openHead(){
         echo '<head>';
     }
