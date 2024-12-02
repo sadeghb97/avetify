@@ -31,7 +31,6 @@ abstract class SetRenderer {
         $allSortFactors = $this->setModifier->finalSortFactors();
         if(count($allSortFactors) > 0) $this->setModifier->renderSortLabels();
 
-
         $this->openContainer();
         $this->renderLeadingItems();
         $this->renderRecords();
