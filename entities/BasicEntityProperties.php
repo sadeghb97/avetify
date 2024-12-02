@@ -16,6 +16,10 @@ interface EntityLink {
     public function getItemLink($record) : string;
 }
 
+interface EntityAltLink {
+    public function getItemAltLink($record) : string;
+}
+
 trait DefaultEntityTitle {
     public function getItemTitle($record) : string {
         return EntityUtils::getSimpleValue($record, ["name", "title"]);

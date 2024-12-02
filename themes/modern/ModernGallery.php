@@ -1,6 +1,6 @@
 <?php
 
-abstract class ModernGallery extends ModernSetRenderer implements EntityImage, EntityTitle {
+abstract class ModernGallery extends ModernSetRenderer implements EntityImage, EntityTitle, EntityAltLink {
     public RecordContextMenu | null $contextMenu = null;
 
     public function __construct(SetModifier $setModifier, public string $title){
@@ -8,7 +8,8 @@ abstract class ModernGallery extends ModernSetRenderer implements EntityImage, E
     }
 
     public function renderRecord($item, $index) {
-        printCard($this->getItemImage($item), $this->getItemTitle($item), "",
+        $name = ($index + 1) . ": " . $this->getItemTitle($item);
+        printCard($this->getItemImage($item), $name, "",
             $this->getItemLink($item),
             $this->getCardOptions($item));
     }
@@ -19,10 +20,34 @@ abstract class ModernGallery extends ModernSetRenderer implements EntityImage, E
             $options['context_menu'] = $this->contextMenu;
             $options['cmr_id'] = $this->setModifier->getItemId($item);
         }
+        $altLink = $this->getItemAltLink($item);
+        $altLinkIcon = $this->getAltLinkIcon();
+        if($altLink && $altLinkIcon){
+            $options['icon_link'] = ["link" => $altLink, "icon" => $altLinkIcon];
+        }
+        if($this->smallerTitle()){
+            $options['smaller_title'] = true;
+        }
         return $options;
     }
 
     public function getTitle(): string {
         return $this->title;
+    }
+
+    public function getItemLink($record): string {
+        return "";
+    }
+
+    public function getItemAltLink($record): string {
+        return "";
+    }
+
+    public function getAltLinkIcon(): string {
+        return "";
+    }
+
+    public function smallerTitle() : bool {
+        return false;
     }
 }

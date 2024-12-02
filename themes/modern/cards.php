@@ -1,6 +1,7 @@
 <?php
 
 function printCard($img, $name, $description, $link, $options){
+    $smallerTitle = !empty($options['smaller_title']);
     echo '<div class="card" ';
     if(!empty($options['context_menu'])){
         $omc = $options['context_menu']->openMenuJSCall($options['cmr_id']);
@@ -38,20 +39,25 @@ function printCard($img, $name, $description, $link, $options){
         $descPrinted = false;
         $iconLinkExists = isset($options['icon_link']) || isset($options['more_icon_links']);
         if($link || $iconLinkExists) {
-            echo '<div ';
-            Styler::startAttribute();
-            Styler::addStyle("display", "flex");
-            Styler::addStyle("background-color", "#269abc");
-            Styler::addStyle("justify-content", "center");
-            Styler::closeAttribute();
-            HTMLInterface::addAttribute("class", "contextmenu-exception");
-            HTMLInterface::closeTag();
-            if ($link) echo '<a href="' . $link . '" style="color: Black;">';
+            $niceDiv = new NiceDiv(4);
+            $niceDiv->addStyle("background-color", "#269abc");
+            $niceDiv->addModifier("class", "contextmenu-exception");
+            $niceDiv->open();
+
+            if ($link){
+                echo '<a ';
+                HTMLInterface::addAttribute("href", $link);
+                Styler::startAttribute();
+                Styler::addStyle("color", "Black");
+                Styler::addStyle("width", "82%");
+                Styler::closeAttribute();
+                HTMLInterface::closeTag();
+            }
             if($name){
-                echo '<h4>' . $name . '</h4>';
+                printCardPureTitle($name, $smallerTitle);
             }
             else if($description){
-                echo '<h4>' . $description . '</h4>';
+                printCardPureTitle($description, $smallerTitle);
                 $descPrinted = true;
             }
             if ($link) echo '</a>';
@@ -63,17 +69,17 @@ function printCard($img, $name, $description, $link, $options){
                 }
 
                 foreach ($allIconLinks as $iconLink) {
-                    echo '<a href="' . $iconLink['link'] . '" target="_blanl" style="margin-left: 8px;">';
+                    echo '<a href="' . $iconLink['link'] . '" target="_blank" style="margin-left: 8px;">';
                     echo '<img src="' . $iconLink['icon'] . '" style="height: 21px; width: auto;" />';
                     echo '</a>';
                 }
             }
-            HTMLInterface::closeDiv();
+            $niceDiv->close();
         }
-        else echo '<h4>' . $name . '</h4>';
+        else printCardPureTitle($name, $smallerTitle);
 
         if($description && !$descPrinted) {
-            echo '<p>' . $description . '</p>';
+            printCardPureTitle($description, $smallerTitle);
         }
 
         if(!empty($options['placeables'])){
@@ -211,5 +217,24 @@ function printCard($img, $name, $description, $link, $options){
     </div>
     -->*/
 
+    echo '</div>';
+}
+
+function printCardPureTitle($title, $smallerMode = false){
+    echo '<div ';
+    Styler::startAttribute();
+    Styler::closeAttribute();
+    HTMLInterface::closeTag();
+    if(!$smallerMode) echo '<h4>' . $title . '</h4>';
+    else {
+        echo '<div ';
+        Styler::startAttribute();
+        Styler::addStyle("font-weight", "bold");
+        Styler::addStyle("font-size", "0.92rem");
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
+        echo $title;
+        HTMLInterface::closeDiv();
+    }
     echo '</div>';
 }

@@ -11,10 +11,15 @@ class NiceDiv {
         "gap" => "4px"
     ];
 
+    public array $htmlModifiers = [];
+
     public function __construct(public string $sepSize){}
 
     public function addStyle($key, $value){
         $this->styles[$key] = $value;
+    }
+    public function addModifier($key, $value){
+        $this->htmlModifiers[$key] = $value;
     }
 
     public function open(){
@@ -23,6 +28,9 @@ class NiceDiv {
         foreach ($this->styles as $key => $value)
         Styler::addStyle($key, $value);
         Styler::closeAttribute();
+        foreach ($this->htmlModifiers as $modifierKey => $modifierValue){
+            HTMLInterface::addAttribute($modifierKey, $modifierValue);
+        }
         echo ' >';
     }
 
@@ -31,7 +39,7 @@ class NiceDiv {
     }
 
     public function separate(){
-        $this->separateWith("width");
+        if($this->sepSize > 0) $this->separateWith("width");
     }
 
     protected function separateWith($sepType){
