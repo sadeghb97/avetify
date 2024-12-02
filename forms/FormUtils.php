@@ -78,7 +78,20 @@ class FormUtils {
         $button->place();
     }
 
-    public static function placeHiddenField($id, $value, $ignoreName = false){
+    public static function fastSubmitButton(string $icon){
+        $mainFormId = "main_form";
+        self::openPostForm($mainFormId);
+        $position = ["right" => "20px", "bottom" => "20px"];
+
+        $button = new AbsoluteFormButtons($mainFormId, "default", $position, $icon);
+        $button->iconSize = 60;
+        $button->place();
+
+        self::placeHiddenField("main_form_data");
+        self::closeForm();
+    }
+
+    public static function placeHiddenField($id, $value = "", $ignoreName = false){
         echo '<input type="hidden"';
         HTMLInterface::addAttribute("id", $id);
         if(!$ignoreName) HTMLInterface::addAttribute("name", $id);

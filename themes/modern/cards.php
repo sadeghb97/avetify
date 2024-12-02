@@ -35,11 +35,25 @@ function printCard($img, $name, $description, $link, $options){
         }
         if(isset($options['tag'])) echo '<span class="tag tag-blue">' . $options['tag'] . '</span>';
 
+        $descPrinted = false;
         $iconLinkExists = isset($options['icon_link']) || isset($options['more_icon_links']);
         if($link || $iconLinkExists) {
-            echo '<div style="display: flex; background-color: #269abc; justify-content: center;">';
+            echo '<div ';
+            Styler::startAttribute();
+            Styler::addStyle("display", "flex");
+            Styler::addStyle("background-color", "#269abc");
+            Styler::addStyle("justify-content", "center");
+            Styler::closeAttribute();
+            HTMLInterface::addAttribute("class", "contextmenu-exception");
+            HTMLInterface::closeTag();
             if ($link) echo '<a href="' . $link . '" style="color: Black;">';
-            echo '<h4>' . $name . '</h4>';
+            if($name){
+                echo '<h4>' . $name . '</h4>';
+            }
+            else if($description){
+                echo '<h4>' . $description . '</h4>';
+                $descPrinted = true;
+            }
             if ($link) echo '</a>';
 
             if($iconLinkExists) {
@@ -54,10 +68,11 @@ function printCard($img, $name, $description, $link, $options){
                     echo '</a>';
                 }
             }
-            echo '</div>';
+            HTMLInterface::closeDiv();
         }
+        else echo '<h4>' . $name . '</h4>';
 
-        if($description) {
+        if($description && !$descPrinted) {
             echo '<p>' . $description . '</p>';
         }
 

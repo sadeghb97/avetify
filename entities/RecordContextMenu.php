@@ -38,6 +38,11 @@ abstract class RecordContextMenu {
             }
 
             function <?php echo $this->openMenuName(); ?>(recordId, event){
+                if (event.target.closest('.contextmenu-exception')) {
+                    // Allow the default context menu for the exception
+                    return true;
+                }
+
                 event.preventDefault();
                 <?php echo $this->currentRecordVarName(); ?> = recordId;
                 <?php echo $this->menuVarName(); ?>.style.top = event.clientY + "px";

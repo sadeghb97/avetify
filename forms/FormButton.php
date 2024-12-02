@@ -20,6 +20,7 @@ class FormButton implements Placeable {
         ?>
         <script>
             document.getElementById("<?php echo $this->triggerIdentifier; ?>").onclick = function() {
+                loadFormData();
                 let isOk = true;
                 <?php if($this->confirmMessage != null) { ?>
                 isOk = confirm('<?php echo $this->confirmMessage; ?>');

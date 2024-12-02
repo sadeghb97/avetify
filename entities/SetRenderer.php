@@ -26,13 +26,20 @@ abstract class SetRenderer {
     public function renderPage(){
         $this->placeHeader();
         $this->setModifier->adjustRecords();
-        $this->setModifier->renderSortLabels();
+        $this->onRecordsAdjusted();
+
+        $allSortFactors = $this->setModifier->finalSortFactors();
+        if(count($allSortFactors) > 0) $this->setModifier->renderSortLabels();
+
+
         $this->openContainer();
         $this->renderLeadingItems();
         $this->renderRecords();
         $this->closeContainer();
         $this->renderFooter();
     }
+
+    public function onRecordsAdjusted() : void {}
 
     public abstract function getTitle() : string;
     public abstract function openContainer();

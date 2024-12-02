@@ -23,6 +23,7 @@ require_once "network/ProxyFetcher.php";
 require_once "network/HeadersFetcher.php";
 require_once "network/ProxyHeadersFetcher.php";
 
+require_once "entities/BasicEntityProperties.php";
 require_once "entities/SetModifier.php";
 require_once "entities/SetRenderer.php";
 require_once "entities/SBSet.php";
@@ -35,6 +36,7 @@ require_once "entities/FilterFactor.php";
 require_once "entities/ValueGetter.php";
 
 require_once "components/Placeable.php";
+require_once "components/Submittable.php";
 require_once "components/DialogField.php";
 require_once "components/JoshButton.php";
 require_once "components/Styler.php";
