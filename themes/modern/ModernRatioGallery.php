@@ -1,6 +1,6 @@
 <?php
 
-abstract class ModernRatioGallery extends SetRenderer implements EntityImage, EntityImageRatio {
+abstract class ModernRatioGallery extends SetRenderer implements EntityImage, EntityImageRatio, EntityLink {
     public RecordContextMenu | null $contextMenu = null;
     private float $curRowOffset = 0;
 
@@ -35,6 +35,13 @@ abstract class ModernRatioGallery extends SetRenderer implements EntityImage, En
             $this->openRowDiv();
         }
 
+        $link = $this->getItemLink($item);
+        if($link){
+            echo '<a ';
+            HTMLInterface::addAttribute("href", $link);
+            HTMLInterface::closeTag();
+        }
+
         echo '<img ';
         HTMLInterface::addAttribute("src", $this->getItemImage($item));
         Styler::startAttribute();
@@ -42,6 +49,10 @@ abstract class ModernRatioGallery extends SetRenderer implements EntityImage, En
         Styler::addStyle("width", "auto");
         Styler::closeAttribute();
         HTMLInterface::closeTag();
+
+        if($link){
+            echo '</a>';
+        }
 
         $this->curRowOffset += $itemWidthUnits;
     }
@@ -59,5 +70,9 @@ abstract class ModernRatioGallery extends SetRenderer implements EntityImage, En
 
     public function closeContainer(){
         HTMLInterface::closeDiv();
+    }
+
+    public function getItemLink($record): string {
+        return "";
     }
 }
