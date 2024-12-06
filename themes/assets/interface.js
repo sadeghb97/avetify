@@ -5,5 +5,7 @@ function redir(newUrl){
 
 function loadFormData(){
     const dataElement = document.getElementById("main_form_data");
-    dataElement.value = JSON.stringify(formData);
+    if(dataElement && formData) {
+        dataElement.value = JSON.stringify(formData);
+    }
 }

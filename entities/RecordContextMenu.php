@@ -3,7 +3,7 @@ abstract class RecordContextMenu {
     public int $singleWidth = 115;
     public string | null $currentRecord = null;
 
-    public function __construct(public array $options, public string $ctxId){
+    public function __construct(public array $options, public string $ctxId, public int $rowLength = 2){
     }
 
     public function placeMenu(){
@@ -12,18 +12,22 @@ abstract class RecordContextMenu {
         HTMLInterface::addAttribute("class", "context-menu-nice");
         echo '<div id="context-menu" class="context-menu-nice" ';
         Styler::startAttribute();
-        Styler::addStyle("width", ($this->singleWidth * 2) . "px");
+        Styler::addStyle("width", ($this->singleWidth * $this->rowLength) . "px");
         Styler::closeAttribute();
         HTMLInterface::closeTag();
         echo '<div class="context-menu-row">';
 
         foreach ($this->options as $rowOptions){
             if(!empty($rowOptions['key'])) {
-                $this->addMenuItem($rowOptions['key'], $rowOptions['title'], $this->singleWidth * 2);
+                $this->addMenuItem($rowOptions['key'], $rowOptions['title'], $this->singleWidth * $this->rowLength);
             }
             else {
-                foreach ($rowOptions as $option) {
-                    $this->addMenuItem($option['key'], $option['title'], $this->singleWidth);
+                foreach ($rowOptions as $index => $option) {
+                    $width = $this->singleWidth;
+                    if((($index + 1) >= count($rowOptions)) && (count($rowOptions) < $this->rowLength)){
+                        $width = ($this->rowLength - $index) * $this->singleWidth;
+                    }
+                    $this->addMenuItem($option['key'], $option['title'], $width);
                 }
             }
         }
@@ -64,6 +68,28 @@ abstract class RecordContextMenu {
         <?php
 
         $this->addExecutor();
+    }
+
+    public static function makeContextMenuOptions(array $singleDimOptions, int $rowLength) : array {
+        $options = [];
+        $rem = (count($singleDimOptions) % $rowLength);
+
+        $firstRow = [];
+        for($i=0; $rem > $i; $i++){
+            $firstRow[] = $singleDimOptions[$i];
+        }
+        if(count($firstRow) > 0) $options[] = $firstRow;
+
+        $remainedTags = $rem == 0 ? $singleDimOptions : array_slice($singleDimOptions, $rem);
+
+        for ($i=0; count($remainedTags) > ($rowLength * $i); $i++){
+            $rowOptions = [];
+            for($j=0; $rowLength > $j; $j++){
+                $rowOptions[] = $remainedTags[$i * $rowLength + $j];
+            }
+            $options[] = $rowOptions;
+        }
+        return $options;
     }
 
     protected function addMenuItem(string $key, string $title, int $width){

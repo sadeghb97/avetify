@@ -17,7 +17,11 @@ class CroppableImage {
 
         <script>
             let lastCropper = null;
-            function setCropConfigs(imageId, ratio){
+            let increasingMode = true;
+            function setCropConfigs(event, imageId, ratio){
+                const clickRelativeX = event.offsetX;
+                const clickRelativeY = event.offsetY;
+
                 const image = document.getElementById(imageId);
                 const imageHeight = image.naturalHeight
                 const imageWidth = image.naturalWidth
@@ -52,6 +56,17 @@ class CroppableImage {
                             + cropWidth.value + "," + cropHeight.value + ")"
                     },
                 });
+
+                setTimeout(() => {
+                    const newWidth = 200;
+                    const newHeight = 200 / ratio
+                    lastCropper.setCropBoxData({
+                        left: clickRelativeX - (newWidth / 2),
+                        top: clickRelativeY - (newHeight / 2),
+                        width: newWidth,
+                        height: newHeight
+                    })
+                }, 100)
                 lastCropper = cropper;
 
                 document.onkeydown = function (evt) {
@@ -83,7 +98,7 @@ class CroppableImage {
         $imageSrc = $this->src . '?' . time();
         HTMLInterface::addAttribute("src", Routing::serverPathToBrowserPath($imageSrc));
         HTMLInterface::addAttribute("id", $this->id);
-        HTMLInterface::addAttribute("onclick", "setCropConfigs('" . $this->id .
+        HTMLInterface::addAttribute("onclick", "setCropConfigs(event, '" . $this->id .
             "', " . $this->getJSRatioVarName() . ")");
         Styler::startAttribute();
         if($withWidth) Styler::imageWithWidth($size);
