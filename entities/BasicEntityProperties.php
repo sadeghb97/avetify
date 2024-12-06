@@ -20,6 +20,10 @@ interface EntityAltLink {
     public function getItemAltLink($record) : string;
 }
 
+interface EntityImageRatio {
+    public function getItemRatio($record) : float;
+}
+
 trait DefaultEntityTitle {
     public function getItemTitle($record) : string {
         return EntityUtils::getSimpleValue($record, ["name", "title"]);

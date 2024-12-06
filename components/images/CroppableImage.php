@@ -134,19 +134,20 @@ class CroppableImage {
         $this->present($size, false);
     }
 
-    public function checkSubmit(){
+    public function checkSubmit() : bool {
         $enabledFieldKey = $this->id . '_enabled';
         if(!empty($_POST[$enabledFieldKey])){
-            $this->handleSubmit(
+            return $this->handleSubmit(
                 (int) $_POST[$this->id . "_x"],
                 (int) $_POST[$this->id . "_y"],
                 (int) $_POST[$this->id . "_w"],
                 (int) $_POST[$this->id . "_h"],
             );
         }
+        return false;
     }
 
-    public function handleSubmit($x, $y, $w, $h){}
+    public function handleSubmit($x, $y, $w, $h) : bool {}
 
     public function getJSRatioVarName() : string {
         return $this->id . "__ration";

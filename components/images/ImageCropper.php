@@ -6,7 +6,7 @@ class ImageCropper extends CroppableImage {
         parent::__construct($src, $id, $imageType, $ratio);
     }
 
-    public function handleSubmit($x, $y, $w, $h){
+    public function handleSubmit($x, $y, $w, $h) : bool {
         try {
             $gumletImage = new \Gumlet\ImageResize($this->src);
             $orgFilename = new Filename($this->src);
@@ -14,8 +14,10 @@ class ImageCropper extends CroppableImage {
 
             $gumletImage->save($this->targetSrc, $this->imageType);
             $this->onCropSuccess();
+            return true;
         } catch (\Gumlet\ImageResizeException $e) {
             $this->onCropError($e->getMessage());
+            return false;
         }
     }
 

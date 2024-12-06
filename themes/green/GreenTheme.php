@@ -8,5 +8,6 @@ class GreenTheme extends ThemesManager {
         $this->importCropperJS();
         $this->importMainJSInterface();
         $this->importJoshButtons();
+        $this->importGalleryGrids();
     }
 }

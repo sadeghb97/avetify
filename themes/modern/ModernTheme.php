@@ -9,5 +9,6 @@ class ModernTheme extends ThemesManager {
         $this->importMainJSInterface();
         $this->importJoshButtons();
         $this->importContextMenuStyles();
+        $this->importGalleryGrids();
     }
 }
