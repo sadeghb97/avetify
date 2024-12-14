@@ -25,3 +25,29 @@ function safeLog($l){
         min-height: 320px; margin: 12px; padding-top: 8px; 
         padding-bottom: 20px;">' . $l . '</textarea>' . br();
 }
+
+function classicMenu(array $rows){
+    $fontSize = "14pt";
+    $splitterContents = "&nbsp;&nbsp;|&nbsp;&nbsp;";
+    $prBold=true;
+    $prNoDecor=true;
+    $prBlank=false;
+
+    $niceDiv = new NiceDiv(4);
+    $niceDiv->addStyle("margin-top", "16px");
+    $niceDiv->addStyle("font-size", $fontSize);
+
+    $niceDiv->open();
+
+    foreach ($rows as $row){
+        $color = $row['color'];
+        $splitter = '<span style="font-weight: bold; color: ' . $color . ';">' . $splitterContents . '</span>';
+
+        foreach ($row['links'] as $linkIndex => $link){
+            if($linkIndex > 0) echo $splitter;
+            prLink($link[1], $link[0], $color, $prBold, $prBlank, $prNoDecor);
+        }
+    }
+
+    $niceDiv->close();
+}
