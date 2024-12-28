@@ -26,20 +26,22 @@ function safeLog($l){
         padding-bottom: 20px;">' . $l . '</textarea>' . br();
 }
 
-function classicMenu(array $rows){
+function classicMenu(array $rows, $marginTop = 16){
     $fontSize = "14pt";
     $splitterContents = "&nbsp;&nbsp;|&nbsp;&nbsp;";
     $prBold=true;
     $prNoDecor=true;
     $prBlank=false;
 
-    $niceDiv = new NiceDiv(4);
-    $niceDiv->addStyle("margin-top", "16px");
-    $niceDiv->addStyle("font-size", $fontSize);
+    $vertDiv = new VertDiv(4);
+    $vertDiv->addStyle("margin-top", $marginTop . "px");
+    $vertDiv->addStyle("font-size", $fontSize);
 
-    $niceDiv->open();
+    $vertDiv->open();
 
-    foreach ($rows as $row){
+    foreach ($rows as $rowIndex => $row){
+        $niceDiv = new NiceDiv(0);
+        $niceDiv->open();
         $color = $row['color'];
         $splitter = '<span style="font-weight: bold; color: ' . $color . ';">' . $splitterContents . '</span>';
 
@@ -47,7 +49,8 @@ function classicMenu(array $rows){
             if($linkIndex > 0) echo $splitter;
             prLink($link[1], $link[0], $color, $prBold, $prBlank, $prNoDecor);
         }
+        $niceDiv->close();
     }
 
-    $niceDiv->close();
+    $vertDiv->close();
 }

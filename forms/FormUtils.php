@@ -91,6 +91,11 @@ class FormUtils {
         self::closeForm();
     }
 
+    public static function placeLinkButton(string $image, string $url, WebModifier $webModifier){
+        $linkButton = new IconButton($image, 60, "redir('" . $url . "')");
+        $linkButton->place($webModifier);
+    }
+
     public static function placeHiddenField($id, $value = "", $ignoreName = false){
         echo '<input type="hidden"';
         HTMLInterface::addAttribute("id", $id);

@@ -3,3 +3,7 @@
 function slugify(string $str) : string {
     return strtolower(str_replace(" ", "_", $str));
 }
+
+function titlify(string $str) : string {
+    return str_replace("_", " ", $str);
+}

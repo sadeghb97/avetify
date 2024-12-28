@@ -30,4 +30,8 @@ class Printer {
     public static function errorPrint($message){
         (new Printer(color: "red"))->print($message);
     }
+
+    public static function boldPrint($message){
+        (new Printer(fontWeight: "bold"))->print($message);
+    }
 }
