@@ -9,9 +9,16 @@ abstract class DBConnection extends mysqli {
     public abstract function getDBName() : string;
 
     public function __construct(){
-        parent::__construct($this->getHost(), $this->getUser(), $this->getPassword(), $this->getDBName());
-        if (mysqli_connect_errno()){
-            echo "Failed to connect to MySQL";
+        $message = "Database is not available";
+        $dbException = new Exception($message);
+        try {
+            parent::__construct($this->getHost(), $this->getUser(), $this->getPassword(), $this->getDBName());
+            if (mysqli_connect_errno()) {
+                throw $dbException;
+            }
+        }
+        catch (Exception $ex){
+            throw $dbException;
         }
     }
 
