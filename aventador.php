@@ -11,9 +11,10 @@ require_once "models/Filename.php";
 require_once "models/DataModel.php";
 require_once "models/IDGetter.php";
 
+require_once "files/file_utils.php";
+
 require_once "utils/echo_utils.php";
 require_once "utils/time_utils.php";
-require_once "utils/file_utils.php";
 require_once "utils/number_utils.php";
 require_once "utils/network_utils.php";
 require_once "utils/string_utils.php";
