@@ -90,4 +90,13 @@ abstract class SetModifier {
 
         echo '</div>';
     }
+
+    public function getCurrentRecordsIndexes() : array {
+        $map = [];
+        foreach ($this->currentRecords as $index => $record){
+            $id = $this->getItemId($record);
+            $map[$id] = $index;
+        }
+        return $map;
+    }
 }

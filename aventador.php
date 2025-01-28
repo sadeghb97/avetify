@@ -2,7 +2,7 @@
 require_once "routing/Routing.php";
 
 require_once "db/DBConnection.php";
-require_once "db/InsertQueryBuilder.php";
+require_once "db/QueryBuilder.php";
 
 require_once"externals/ImageManipulator.php";
 require_once"externals/jdf.php";
@@ -63,6 +63,7 @@ require_once "lister/RankingList.php";
 require_once "table/SBTableField.php";
 require_once "table/SBTableSortField.php";
 require_once "table/SBTable.php";
+require_once "table/DBTable.php";
 require_once "table/JSONTable.php";
 require_once "table/LinkFields.php";
 require_once "table/ImageFields.php";

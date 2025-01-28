@@ -22,6 +22,27 @@ abstract class DBConnection extends mysqli {
         }
     }
 
+    /** @param DBFilter[] $filters
+     * @return string
+     */
+    public function getFilteringQuery(array $filters) : string {
+        if(count($filters) < 1) return "";
+
+        $first = true;
+        $out = "WHERE ";
+
+        foreach ($filters as $filter){
+            if($first) $first = false;
+            else $out .= "AND ";
+
+            $out .= ($filter->key . " ");
+            $out .= ($filter->operator . " ");
+            $out .= ($filter->value . " ");
+        }
+
+        return $out;
+    }
+
     public function query($sql, $queryName = null) : mysqli_result | bool {
         $result = parent::query($sql);
         $this->lastQuery = $sql;
