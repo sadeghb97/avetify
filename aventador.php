@@ -1,6 +1,8 @@
 <?php
 require_once "routing/Routing.php";
+
 require_once "db/DBConnection.php";
+require_once "db/InsertQueryBuilder.php";
 
 require_once"externals/ImageManipulator.php";
 require_once"externals/jdf.php";
