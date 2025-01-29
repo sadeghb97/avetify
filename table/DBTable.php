@@ -16,6 +16,8 @@ abstract class DBTable extends SBTable {
         $queryBuilder = new QueryBuilder($this->conn, $this->dbTableName);
         $indexesMap = $this->getCurrentRecordsIndexes();
 
+        $titlePrinter = new Printer(color: "#1e8449");
+        $messagePrinter = new Printer();
         $queryDone = false;
         foreach ($itemsFields as $itemPk => $itemFields){
             $queryBuilder->clear();
@@ -29,28 +31,72 @@ abstract class DBTable extends SBTable {
 
             if($queryRequired) {
                 $sql = $queryBuilder->createUpdate(new QueryField($itemPk, true, "pk"));
-                echo $sql . br();
-                $queryDone = true;
+                if($this->conn->query($sql)) {
+                    $titlePrinter->print($this->getItemName($oldRecord));
+                    $messagePrinter->print(": Updated" . br());
+                    $queryDone = true;
+                }
             }
         }
 
-        if($queryDone) $this->updateRecords();
+        if($queryDone){
+            $this->updateRecords();
+            endline();
+        }
     }
 
     public function handleDeletingFields($deletingFields) {
         if(count($deletingFields) > 0) {
             $queryBuilder = new QueryBuilder($this->conn, $this->dbTableName);
+            $indexesMap = $this->getCurrentRecordsIndexes();
+
+            $titlePrinter = new Printer(color: "#c0392b");
+            $messagePrinter = new Printer();
 
             foreach ($deletingFields as $itemPk) {
+                $oldRecord = $this->currentRecords[$indexesMap[$itemPk]];
                 $sql = $queryBuilder->createDelete(new QueryField($itemPk, true, "pk"));
-                echo $sql . br();
+
+                if($this->conn->query($sql)) {
+                    $titlePrinter->print($this->getItemName($oldRecord));
+                    $messagePrinter->print(": Deleted" . br());
+                }
             }
+
             $this->updateRecords();
+            endline();
         }
     }
 
     public function handleCreatingFields($creatingFields) {
-        printPreArray($creatingFields);
+        $isEnoughToInsert = true;
+        foreach ($this->fields as $field){
+            if($field->onCreateField != null && $field->onCreateField->requiredOnCreate){
+               if(empty($creatingFields[$field->onCreateField->key])) {
+                   $isEnoughToInsert = false;
+                   break;
+               }
+            }
+        }
+
+        if($isEnoughToInsert){
+            $queryBuilder = new QueryBuilder($this->conn, $this->dbTableName);
+            $titlePrinter = new Printer(fontWeight: "bold", color: "#1e8449");
+            $messagePrinter = new Printer();
+
+            foreach ($creatingFields as $key => $value){
+                $queryBuilder->addField($value, false, $key);
+            }
+
+            $sql = $queryBuilder->createInsert(true);
+            if($this->conn->query($sql)) {
+                $titlePrinter->print($this->getItemName($creatingFields));
+                $messagePrinter->print(": Inserted" . br());
+
+                $this->updateRecords();
+                endline();
+            }
+        }
     }
 
     public function updateRecords (){

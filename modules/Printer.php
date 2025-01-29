@@ -2,13 +2,14 @@
 
 class Printer {
     public function __construct(public string $fontSize = "1rem", public string $fontWeight = "normal",
-                                public string $color = "black", public string $bgColor = ""){
+                                public string $color = "black", public string $bgColor = "",
+                                public bool $inline = true){
     }
 
     public function print($message){
         echo '<div ';
         Styler::startAttribute();
-        Styler::addStyle("display", "block");
+        Styler::addStyle("display", $this->inline ? "inline" : "block");
         Styler::addStyle("font-size", $this->fontSize);
         Styler::addStyle("font-weight", $this->fontWeight);
         Styler::addStyle("color", $this->color);

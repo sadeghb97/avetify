@@ -11,6 +11,10 @@ abstract class SetModifier {
         return EntityUtils::getSimpleValue($item, "id");
     }
 
+    public function getItemName($item) : string {
+        return EntityUtils::getSimpleValue($item, "name");
+    }
+
     /** @return SortFactor[] An array of MyClass instances */
     public function finalSortFactors() : array {
         return [];
