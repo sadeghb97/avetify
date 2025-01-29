@@ -15,6 +15,7 @@ abstract class DBTable extends SBTable {
     public function handleSubmittedFields($itemsFields) {
         $queryBuilder = new QueryBuilder($this->conn, $this->dbTableName);
         $indexesMap = $this->getCurrentRecordsIndexes();
+        $fieldsMap = $this->getFieldsMap();
 
         $titlePrinter = new Printer(color: "#1e8449");
         $messagePrinter = new Printer();
@@ -25,12 +26,15 @@ abstract class DBTable extends SBTable {
             $oldRecord = $this->currentRecords[$indexesMap[$itemPk]];
 
             foreach ($itemFields as $fk => $fv){
-                $queryBuilder->addField($fv, false, $fk);
+                $fieldDetails = $fieldsMap[$fk];
+                $isNumericField = $fieldDetails && $fieldDetails->isNumeric;
+                $queryBuilder->addField($fv, $isNumericField, $fk);
                 if(EntityUtils::getSimpleValue($oldRecord, $fk) != $fv) $queryRequired = true;
             }
 
             if($queryRequired) {
                 $sql = $queryBuilder->createUpdate(new QueryField($itemPk, true, "pk"));
+                echo $sql . br();
                 if($this->conn->query($sql)) {
                     $titlePrinter->print($this->getItemName($oldRecord));
                     $messagePrinter->print(": Updated" . br());
@@ -80,12 +84,15 @@ abstract class DBTable extends SBTable {
         }
 
         if($isEnoughToInsert){
+            $fieldsMap = $this->getFieldsMap();
             $queryBuilder = new QueryBuilder($this->conn, $this->dbTableName);
             $titlePrinter = new Printer(fontWeight: "bold", color: "#1e8449");
             $messagePrinter = new Printer();
 
             foreach ($creatingFields as $key => $value){
-                $queryBuilder->addField($value, false, $key);
+                $fieldDetails = $fieldsMap[$key];
+                $isNumericField = $fieldDetails && $fieldDetails->isNumeric;
+                $queryBuilder->addField($value, $isNumericField, $key);
             }
 
             $sql = $queryBuilder->createInsert(true);

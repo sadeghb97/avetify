@@ -38,7 +38,7 @@ class QueryBuilder {
             if($isFirst) $isFirst = false;
             else $sql .= ", ";
             if(!$field->isNumeric) $sql .= "'";
-            if($field->isNumeric) $sql .= $field->value;
+            if($field->isNumeric) $sql .= ($field->value ? $field->value : 0);
             else $sql .= ($field->value ? $this->conn->real_escape_string($field->value) : "");
             if(!$field->isNumeric) $sql .= "'";
         }
@@ -57,9 +57,10 @@ class QueryBuilder {
             $sql .= $field->key;
             $sql .= "=";
             if(!$field->isNumeric) $sql .= "'";
-            if($field->isNumeric) $sql .= $field->value;
+            if($field->isNumeric) $sql .= ($field->value ? $field->value : 0);
             else $sql .= ($field->value ? $this->conn->real_escape_string($field->value) : "");
-            if(!$field->isNumeric) $sql .= "' ";
+            if(!$field->isNumeric) $sql .= "'";
+            $sql .= " ";
         }
         $sql .= $this->createPrimaryWhere($primaryField);
         return $sql;
@@ -75,9 +76,10 @@ class QueryBuilder {
         $sql = "WHERE ";
         $sql .= ($primaryField->key . "=");
         if(!$primaryField->isNumeric) $sql .= "'";
-        if($primaryField->isNumeric) $sql .= $primaryField->value;
+        if($primaryField->isNumeric) $sql .= ($primaryField->value ? $primaryField->value : 0);
         else $sql .= ($primaryField->value ? $this->conn->real_escape_string($primaryField->value) : "");
         if(!$primaryField->isNumeric) $sql .= "'";
+        $sql .= " ";
         return $sql;
     }
 }
