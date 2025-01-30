@@ -25,32 +25,39 @@ function getFileExtension($filename) : string {
     return "";
 }
 
-function convertImage($filename, $targetExtension, $maxImageSize = null,
+function convertImage($filename, $targetExtension = null, $maxImageSize = null,
                       $forcedWidthRatio = null, $forcedHeightRatio = null){
+
+    $commandStart = "mogrify " . ($targetExtension ? "-format " . $targetExtension . " " : "");
+    $commandEnd = " " . $filename . ($targetExtension ? " && rm " . $filename : "");
+
+    $done = false;
     if($forcedWidthRatio && $forcedHeightRatio){
-        $format = 'mogrify -gravity center -crop %%[fx:min(w,h*%d/%d)]x%%[fx:min(h,w*%d/%d)]+0+0 +repage ';
-        if($maxImageSize) $format .= "-resize %s ";
-        $format .= "%s";
+        $targetRatio = $forcedWidthRatio / $forcedHeightRatio;
+        $imageSize = getimagesize($filename);
+        $imageWidth = $imageSize[0];
+        $imageHeight = $imageSize[1];
+        $imageRatio = $imageWidth / $imageHeight;
 
-        $command = sprintf(
-            $format,
-            $forcedWidthRatio,         // Multiply height by the width ratio
-            $forcedHeightRatio,        // Divide by height ratio
-            $forcedHeightRatio,        // Multiply width by the height ratio
-            $forcedWidthRatio,         // Divide by width ratio
-            escapeshellarg($maxImageSize),   // Ensure max size is safe
-            escapeshellarg($filename) // Secure the filename
-        );
+        $diff = abs($imageRatio - $targetRatio);
+        if($diff > 0.01) {
+            $cropSize = $imageRatio > $targetRatio ?
+                (((int)($imageHeight * $targetRatio)) . "x" . $imageHeight) :
+                ($imageWidth . "x" . ((int)($imageWidth / $targetRatio)));
 
-        echo $command . br();
-        exec($command);
+            $command = $commandStart;
+            $command .= "-gravity center -crop $cropSize+0+0 +repage ";
+            if ($maxImageSize) $command .= ("-resize " . $maxImageSize . " ");
+            $command .= $commandEnd;
+            exec($command);
+            $done = true;
+        }
     }
 
-    else {
-        $command = "mogrify -format " . $targetExtension . " ";
+    if(!$done && ($maxImageSize || $targetExtension)) {
+        $command = $commandStart;
         if ($maxImageSize) $command .= ("-resize " . $maxImageSize . " ");
-        $command .= $filename;
-        echo $command . br();
+        $command .= $commandEnd;
         exec($command);
     }
 }

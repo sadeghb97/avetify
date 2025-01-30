@@ -7,7 +7,8 @@ class EntityField
     public ?string $path = null;
     public ?string $extension = null;
     public ?string $maxImageSize = null;
-    public bool $printable = true;
+    public int $forcedWidthDimension = 0;
+    public int $forcedHeightDimension = 0;
     public $writable = false; // add field to edit and add forms
     public bool $required = false; // must have value in add and edit forms
     public bool $numeric = false;
@@ -63,6 +64,11 @@ class EntityField
 
     public function setMaxImageSize(string $imageSize) : EntityField {
         $this->maxImageSize = $imageSize;
+        return $this;
+    }
+    public function setImageForcedRatio(int $widthDim, int $heightDim) : EntityField {
+        $this->forcedWidthDimension = $widthDim;
+        $this->forcedHeightDimension = $heightDim;
         return $this;
     }
 

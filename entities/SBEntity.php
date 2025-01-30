@@ -362,9 +362,18 @@ abstract class SBEntity extends SetModifier {
                         $up = true;
                     }
 
-                    if($up && $orgExtension && $orgExtension != $af->extension){
-                        convertImage($targetFilename, $af->extension,
-                            $af->maxImageSize, 2, 3);
+                    if($up){
+                        $extensionRequired = ($orgExtension && $orgExtension != $af->extension);
+                        $convertRequired = $extensionRequired || $af->maxImageSize ||
+                            ($af->forcedWidthDimension > 0 && $af->forcedHeightDimension > 0);
+
+
+                        if($convertRequired) {
+                            convertImage($targetFilename,
+                                $extensionRequired ? $af->extension : null,
+                                $af->maxImageSize, $af->forcedWidthDimension,
+                                $af->forcedHeightDimension);
+                        }
                     }
                 }
             }
