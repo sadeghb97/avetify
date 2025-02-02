@@ -25,39 +25,12 @@ function getFileExtension($filename) : string {
     return "";
 }
 
-function convertImage($filename, $targetExtension = null, $maxImageSize = null,
-                      $forcedWidthRatio = null, $forcedHeightRatio = null){
+function getDirFiles(string $directory): array {
+    if (!is_dir($directory)) return [];
 
-    $commandStart = "mogrify " . ($targetExtension ? "-format " . $targetExtension . " " : "");
-    $commandEnd = " " . $filename . ($targetExtension ? " && rm " . $filename : "");
+    $files = array_filter(scandir($directory), function ($file) use ($directory) {
+        return is_file($directory . DIRECTORY_SEPARATOR . $file);
+    });
 
-    $done = false;
-    if($forcedWidthRatio && $forcedHeightRatio){
-        $targetRatio = $forcedWidthRatio / $forcedHeightRatio;
-        $imageSize = getimagesize($filename);
-        $imageWidth = $imageSize[0];
-        $imageHeight = $imageSize[1];
-        $imageRatio = $imageWidth / $imageHeight;
-
-        $diff = abs($imageRatio - $targetRatio);
-        if($diff > 0.01) {
-            $cropSize = $imageRatio > $targetRatio ?
-                (((int)($imageHeight * $targetRatio)) . "x" . $imageHeight) :
-                ($imageWidth . "x" . ((int)($imageWidth / $targetRatio)));
-
-            $command = $commandStart;
-            $command .= "-gravity center -crop $cropSize+0+0 +repage ";
-            if ($maxImageSize) $command .= ("-resize " . $maxImageSize . " ");
-            $command .= $commandEnd;
-            exec($command);
-            $done = true;
-        }
-    }
-
-    if(!$done && ($maxImageSize || $targetExtension)) {
-        $command = $commandStart;
-        if ($maxImageSize) $command .= ("-resize " . $maxImageSize . " ");
-        $command .= $commandEnd;
-        exec($command);
-    }
+    return array_values($files); // Re-index array
 }

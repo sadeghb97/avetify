@@ -14,6 +14,7 @@ require_once "models/DataModel.php";
 require_once "models/IDGetter.php";
 
 require_once "files/file_utils.php";
+require_once "files/image_utlis.php";
 
 require_once "utils/echo_utils.php";
 require_once "utils/time_utils.php";
@@ -108,6 +109,8 @@ require_once "renderers/AventadorRenderer.php";
 
 require_once "calc/DateStatsCalculator.php";
 require_once "calc/IRDateStatsCalculator.php";
+
+require_once "repo/countries/WorldCountries.php";
 
 $AVENTADOR_ROOT_PATH = "";
 
