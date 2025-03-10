@@ -7,17 +7,23 @@ class Printer {
     }
 
     public function print($message){
-        echo '<div ';
-        Styler::startAttribute();
-        Styler::addStyle("display", $this->inline ? "inline" : "block");
-        Styler::addStyle("font-size", $this->fontSize);
-        Styler::addStyle("font-weight", $this->fontWeight);
-        Styler::addStyle("color", $this->color);
-        if($this->bgColor) Styler::addStyle("background-color", $this->bgColor);
-        Styler::closeAttribute();
-        HTMLInterface::closeTag();
+        if(!isCli()) {
+            echo '<div ';
+            Styler::startAttribute();
+            Styler::addStyle("display", $this->inline ? "inline" : "block");
+            Styler::addStyle("font-size", $this->fontSize);
+            Styler::addStyle("font-weight", $this->fontWeight);
+            Styler::addStyle("color", $this->color);
+            if ($this->bgColor) Styler::addStyle("background-color", $this->bgColor);
+            Styler::closeAttribute();
+            HTMLInterface::closeTag();
+        }
+
         echo $message;
-        echo '</div>';
+
+        if(!isCli()) {
+            echo '</div>';
+        }
     }
 
     public static function basePrint($message){

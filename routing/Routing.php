@@ -6,13 +6,21 @@ class Routing {
         return $AVENTADOR_ROOT_PATH;
     }
 
+    public static function getAventadorPhysicalRoot() : string {
+        global $AVENTADOR_PHYSICAL_ROOT_PATH;
+        if(isCli()) return $AVENTADOR_PHYSICAL_ROOT_PATH;
+        return "";
+    }
+
     public static function serverPathFromAventador($path) : string {
-        return $_SERVER['DOCUMENT_ROOT'] . self::getAventadorRoot() . $path;
+        return self::getAventadorPhysicalRoot() .
+            $_SERVER['DOCUMENT_ROOT'] . self::getAventadorRoot() . $path;
     }
 
     public static function serverRootPath($path) : string {
-        return self::removeRedundantPath(
-            $_SERVER['DOCUMENT_ROOT'] . self::getAventadorRoot() . '../') . $path;
+        return self::getAventadorPhysicalRoot() .
+            self::removeRedundantPath($_SERVER['DOCUMENT_ROOT'] . self::getAventadorRoot() . '../') .
+            $path;
     }
 
     public static function browserPathFromAventador($path) : string {
