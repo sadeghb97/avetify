@@ -174,17 +174,23 @@ function printCard($img, $name, $description, $link, $options){
         }
     }
 
-    if(isset($options['more_medals'])){
+    if(isset($options['medals'])){
         echo '<div style="margin: auto; font-size: 16px; font-weight: bold; display: flex;">';
 
-        $iconStyle = "height: 64px; width: auto; margin-top: auto; margin-bottom: auto;";
-        $valueStyle = "margin-top: auto; margin-bottom: auto; margin-left: 8px;";
+        $iconStyle = "height: 48px; width: auto; margin-top: auto; margin-bottom: auto;";
+        $valueStyle = "margin-top: auto; margin-bottom: auto; margin-left: 8px; font-size: 1rem;";
 
-        foreach ($options['more_medals'] as $medal){
-            echo '<div style="margin-left: 2px; margin-right: 2px;">';
-            echo '<img src="' . $medal['medal']->medal->img . '" style="' . $iconStyle
-                . '" title="' . $medal['medal']->title . '" />';
-            echo '<span style="' . $valueStyle . ' color: #DC0083;">' . $medal['number'] . '</span>';
+        foreach ($options['medals'] as $medal){
+            echo '<div style="margin-left: 6px; margin-right: 6px;">';
+            if($medal->link){
+                echo '<a href="' . $medal->link . '" target="_blank">';
+            }
+            echo '<img src="' . $medal->icon . '" style="' . $iconStyle
+                . '" title="' . $medal->title . '" />';
+            if($medal->link){
+                echo '</a>';
+            }
+            echo '<span style="' . $valueStyle . ' color: #DC0083;">' . $medal->count . '</span>';
             echo '</div>';
         }
 

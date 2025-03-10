@@ -28,7 +28,17 @@ abstract class ModernGallery extends ModernSetRenderer implements EntityImage, E
         if($this->smallerTitle()){
             $options['smaller_title'] = true;
         }
+
+        $medals = $this->getMedals($item);
+        if(count($medals) > 0){
+            $options['medals'] = $medals;
+        }
         return $options;
+    }
+
+    /** @return ModernGallery[] */
+    public function getMedals($record) : array {
+        return [];
     }
 
     public function getTitle(): string {
@@ -49,5 +59,11 @@ abstract class ModernGallery extends ModernSetRenderer implements EntityImage, E
 
     public function smallerTitle() : bool {
         return false;
+    }
+}
+
+class ModernGalleryMedal {
+    public function __construct(public string $icon, public string $title,
+                                public int $count, public string $link = ""){
     }
 }
