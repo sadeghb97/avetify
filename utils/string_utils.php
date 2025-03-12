@@ -5,5 +5,5 @@ function slugify(string $str) : string {
 }
 
 function titlify(string $str) : string {
-    return str_replace("_", " ", $str);
+    return ucwords(str_replace("_", " ", $str));
 }

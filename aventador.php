@@ -41,6 +41,8 @@ require_once "entities/SortFactor.php";
 require_once "entities/FilterFactor.php";
 require_once "entities/ValueGetter.php";
 
+require_once "fields/APIMedalField.php";
+
 require_once "components/Placeable.php";
 require_once "components/Submittable.php";
 require_once "components/DialogField.php";

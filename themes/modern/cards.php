@@ -30,7 +30,7 @@ function printCard($img, $name, $description, $link, $options){
 
     echo '<div class="card__body">';
         if(isset($options['magham'])){
-            echo '<div style="margin-top: 8px; font-weight: bold; font-size: 12px; color: firebrick">';
+            echo '<div style="margin-top: -6px; font-weight: bold; font-size: 14px; color: firebrick">';
             echo $options['magham'];
             echo '</div>';
         }
@@ -195,6 +195,19 @@ function printCard($img, $name, $description, $link, $options){
         }
 
         echo '</div>';
+        heightMargin(12);
+    }
+
+    if(isset($options['api_medals'])){
+        $apiMedalsDiv = new NiceDiv(8);
+        $apiMedalsDiv->open();
+
+        foreach ($options['api_medals'] as $medalIndex => $apiMedal){
+            if($medalIndex > 0) $apiMedalsDiv->separate();
+            $apiMedal->present();
+        }
+
+        $apiMedalsDiv->close();
         heightMargin(12);
     }
 

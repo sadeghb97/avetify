@@ -33,12 +33,32 @@ abstract class ModernGallery extends ModernSetRenderer implements EntityImage, E
         if(count($medals) > 0){
             $options['medals'] = $medals;
         }
+
+        $apiMedals = $this->getApiMedals($item);
+        if(count($apiMedals) > 0){
+            $options['api_medals'] = $apiMedals;
+        }
+
+        $rarity = $this->getRarity($item);
+        if($rarity){
+            $options['magham'] = $rarity;
+        }
+
         return $options;
     }
 
     /** @return ModernGallery[] */
     public function getMedals($record) : array {
         return [];
+    }
+
+    /** @return APIMedalField[] */
+    public function getApiMedals($record) : array {
+        return [];
+    }
+
+    public function getRarity($record) : string {
+        return "";
     }
 
     public function getTitle(): string {
