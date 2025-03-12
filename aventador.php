@@ -17,6 +17,7 @@ require_once "utils/file_utils.php";
 require_once "utils/number_utils.php";
 require_once "utils/network_utils.php";
 
+require_once "network/URLBuilder.php";
 require_once "network/NetworkFetcher.php";
 require_once "network/ProxyFetcher.php";
 require_once "network/HeadersFetcher.php";
