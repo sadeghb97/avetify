@@ -55,12 +55,24 @@ class ThemesManager {
         self::importJS($this->ROOT_PATH . "externals/cropper/cropper.min.js");
     }
 
+    public function importMainJSInterface(){
+        self::importJS($this->ROOT_PATH . "themes/assets/interface.js");
+    }
+
     public function importBootstrap(){
         self::importStyle($this->ROOT_PATH . "externals/bootstrap.min.css");
     }
 
     public function importJoshButtons(){
         self::importStyle($this->ROOT_PATH . "themes/assets/josh_buttons.css");
+    }
+
+    public function importGalleryGrids(){
+        self::importStyle($this->ROOT_PATH . "themes/assets/gallery_grid.css");
+    }
+
+    public function importContextMenuStyles(){
+        self::importStyle($this->ROOT_PATH . "themes/assets/context_menu.css");
     }
 
     public static function openHead(){

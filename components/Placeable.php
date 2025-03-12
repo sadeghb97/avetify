@@ -1,5 +1,5 @@
 <?php
 
 interface Placeable {
-    public function place();
+    public function place(WebModifier $webModifier = null);
 }

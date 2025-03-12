@@ -61,6 +61,7 @@ class SBEditableField extends SBTableField {
 }
 
 class CheckboxField extends SBEditableField {
+    public bool $isNumeric = true;
     public function presentValue($item){
         echo '<input ';
         HTMLInterface::addAttribute("type", "checkbox");

@@ -256,6 +256,14 @@ class SBTable extends SetModifier {
         }
     }
 
+    public function getFieldsMap() : array {
+        $fieldsMap = [];
+        foreach ($this->fields as $field){
+            $fieldsMap[$field->key] = $field;
+        }
+        return $fieldsMap;
+    }
+
     public function handleSubmittedFields($itemsFields){}
 
     public function handleCreatingFields($creatingFields){}

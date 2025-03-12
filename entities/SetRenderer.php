@@ -26,7 +26,11 @@ abstract class SetRenderer {
     public function renderPage(){
         $this->placeHeader();
         $this->setModifier->adjustRecords();
-        $this->setModifier->renderSortLabels();
+        $this->onRecordsAdjusted();
+
+        $allSortFactors = $this->setModifier->finalSortFactors();
+        if(count($allSortFactors) > 0) $this->setModifier->renderSortLabels();
+
         $this->openContainer();
         $this->renderLeadingItems();
         $this->renderRecords();
@@ -34,8 +38,14 @@ abstract class SetRenderer {
         $this->renderFooter();
     }
 
+    public function onRecordsAdjusted() : void {}
+
     public abstract function getTitle() : string;
     public abstract function openContainer();
     public abstract function closeContainer();
     public abstract function renderRecord($item, $index);
+
+    public function getItemBoxIdentifier($record) : string {
+        return $this->setModifier->setKey . "__box__" . $this->setModifier->getItemId($record);
+    }
 }

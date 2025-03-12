@@ -96,7 +96,9 @@ abstract class SBEntity extends SetModifier {
             if ($exp) $exp .= " AND ";
             $exp .= $this->getSuperKey();
             $exp .= '=';
+            if(!$this->isSuperKeyNumeric()) $exp .= "'";
             $exp .= $pk;
+            if(!$this->isSuperKeyNumeric()) $exp .= "'";
         }
 
         return $exp . ' ';
@@ -239,7 +241,7 @@ abstract class SBEntity extends SetModifier {
 
                 if($field->avatar){
                     if($record){
-                        $avatarSrc = $field->path . "/" . $pk . '.jpg';
+                        $avatarSrc = $field->path . "/" . $pk . '.' . $field->extension;
                         if(file_exists($avatarSrc)){
                             echo '<img src="' . $avatarSrc . '?' . time() .
                                 '" style="height: 250px; width: auto;"<br><br>';
@@ -341,17 +343,37 @@ abstract class SBEntity extends SetModifier {
 
             if($entityPk && count($avatarFields) > 0){
                 foreach ($avatarFields as $af){
+                    $up = false;
+                    $targetFilename = $af->path . '/' . $entityPk;
                     if(!empty($_FILES[$af->key]['name'])){
                         $imageDetails = $_FILES[$af->key];
                         $tmpFilename = $imageDetails['tmp_name'];
                         $orgName = $imageDetails['name'];
-                        $targetFilename = $af->path . '/' . $entityPk . '.jpg';
-                        saveUploadedFileAsFormat($tmpFilename, $targetFilename, $orgName, "jpg");
+                        $orgExtension = getFileExtension($orgName);
+                        $targetFilename .= ('.' . $orgExtension);
+                        move_uploaded_file($tmpFilename, $targetFilename);
+                        $up = true;
                     }
                     else if(isset($data[$af->key])){
                         $avatarSrc = $data[$af->key];
-                        $targetFilename = $af->path . '/' . $entityPk . '.jpg';
-                        prxDownloadImage($avatarSrc, $targetFilename);
+                        $orgExtension = getFileExtension($avatarSrc);
+                        $targetFilename .= ('.' . $orgExtension);
+                        $this->getNetworkFetcher()->downloadFile($avatarSrc, $targetFilename);
+                        $up = true;
+                    }
+
+                    if($up){
+                        $extensionRequired = ($orgExtension && $orgExtension != $af->extension);
+                        $convertRequired = $extensionRequired || $af->maxImageSize ||
+                            ($af->forcedWidthDimension > 0 && $af->forcedHeightDimension > 0);
+
+
+                        if($convertRequired) {
+                            convertImage($targetFilename,
+                                $extensionRequired ? $af->extension : null,
+                                $af->maxImageSize, $af->forcedWidthDimension,
+                                $af->forcedHeightDimension);
+                        }
                     }
                 }
             }
@@ -375,6 +397,14 @@ abstract class SBEntity extends SetModifier {
 
     public function getTitleKey() : string {
         return "name";
+    }
+
+    public function getNetworkFetcher() : NetworkFetcher {
+        return new NetworkFetcher();
+    }
+
+    public function isSuperKeyNumeric() : bool {
+        return true;
     }
 
     abstract public function getSuperKey();

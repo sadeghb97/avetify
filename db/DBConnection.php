@@ -9,10 +9,38 @@ abstract class DBConnection extends mysqli {
     public abstract function getDBName() : string;
 
     public function __construct(){
-        parent::__construct($this->getHost(), $this->getUser(), $this->getPassword(), $this->getDBName());
-        if (mysqli_connect_errno()){
-            echo "Failed to connect to MySQL";
+        $message = "Database is not available";
+        $dbException = new Exception($message);
+        try {
+            parent::__construct($this->getHost(), $this->getUser(), $this->getPassword(), $this->getDBName());
+            if (mysqli_connect_errno()) {
+                throw $dbException;
+            }
         }
+        catch (Exception $ex){
+            throw $dbException;
+        }
+    }
+
+    /** @param DBFilter[] $filters
+     * @return string
+     */
+    public function getFilteringQuery(array $filters) : string {
+        if(count($filters) < 1) return "";
+
+        $first = true;
+        $out = "WHERE ";
+
+        foreach ($filters as $filter){
+            if($first) $first = false;
+            else $out .= "AND ";
+
+            $out .= ($filter->key . " ");
+            $out .= ($filter->operator . " ");
+            $out .= ($filter->value . " ");
+        }
+
+        return $out;
     }
 
     public function query($sql, $queryName = null) : mysqli_result | bool {
@@ -49,13 +77,13 @@ abstract class DBConnection extends mysqli {
         return $out;
     }
 
-    public function fetchTable($tableName){
-        return $this->fetchSet("SELECT * FROM $tableName");
+    public function fetchProperty($table, $idKey, $idValue, $property){
+        $row = $this->fetchRow("SELECT $property FROM $table WHERE $idKey=$idValue");
+        if(!$row) return null;
+        return $row[$property];
     }
 
-    public function getQueendom($queendomId) : Queendom {
-        $qd = $this->fetchRow("SELECT * FROM queendom WHERE id=$queendomId");
-        $qdMap = $this->fetchMap("SELECT * FROM qdrel WHERE qd_id=$queendomId", "lady_id");
-        return new Queendom($qd, $qdMap);
+    public function fetchTable($tableName){
+        return $this->fetchSet("SELECT * FROM $tableName");
     }
 }

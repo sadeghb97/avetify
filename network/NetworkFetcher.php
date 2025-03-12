@@ -28,7 +28,7 @@ class NetworkFetcher {
         return false;
     }
 
-    private function downloadFile($fileUrl, $targetFile) : bool {
+    public function downloadFile($fileUrl, $targetFile) : bool {
         return $this->_downloadFile($fileUrl, $targetFile);
     }
 

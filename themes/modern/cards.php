@@ -1,7 +1,13 @@
 <?php
 
 function printCard($img, $name, $description, $link, $options){
+    $smallerTitle = !empty($options['smaller_title']);
     echo '<div class="card" ';
+    if(!empty($options['context_menu'])){
+        $omc = $options['context_menu']->openMenuJSCall($options['cmr_id']);
+        HTMLInterface::addAttribute("oncontextmenu", $omc);
+    }
+
     if(!empty($options['image_mode'])){
         Styler::startAttribute();
         Styler::addStyle("height", $options['image_height']);
@@ -30,11 +36,30 @@ function printCard($img, $name, $description, $link, $options){
         }
         if(isset($options['tag'])) echo '<span class="tag tag-blue">' . $options['tag'] . '</span>';
 
+        $descPrinted = false;
         $iconLinkExists = isset($options['icon_link']) || isset($options['more_icon_links']);
         if($link || $iconLinkExists) {
-            echo '<div style="display: flex; background-color: #269abc; justify-content: center;">';
-            if ($link) echo '<a href="' . $link . '" style="color: Black;">';
-            echo '<h4>' . $name . '</h4>';
+            $niceDiv = new NiceDiv(4);
+            $niceDiv->addStyle("background-color", "#269abc");
+            $niceDiv->addModifier("class", "contextmenu-exception");
+            $niceDiv->open();
+
+            if ($link){
+                echo '<a ';
+                HTMLInterface::addAttribute("href", $link);
+                Styler::startAttribute();
+                Styler::addStyle("color", "Black");
+                Styler::addStyle("width", "82%");
+                Styler::closeAttribute();
+                HTMLInterface::closeTag();
+            }
+            if($name){
+                printCardPureTitle($name, $smallerTitle);
+            }
+            else if($description){
+                printCardPureTitle($description, $smallerTitle);
+                $descPrinted = true;
+            }
             if ($link) echo '</a>';
 
             if($iconLinkExists) {
@@ -44,16 +69,23 @@ function printCard($img, $name, $description, $link, $options){
                 }
 
                 foreach ($allIconLinks as $iconLink) {
-                    echo '<a href="' . $iconLink['link'] . '" target="_blanl" style="margin-left: 8px;">';
+                    echo '<a href="' . $iconLink['link'] . '" target="_blank" style="margin-left: 8px;">';
                     echo '<img src="' . $iconLink['icon'] . '" style="height: 21px; width: auto;" />';
                     echo '</a>';
                 }
             }
-            echo '</div>';
+            $niceDiv->close();
+        }
+        else printCardPureTitle($name, $smallerTitle);
+
+        if($description && !$descPrinted) {
+            printCardPureTitle($description, $smallerTitle);
         }
 
-        if($description) {
-            echo '<p>' . $description . '</p>';
+        if(!empty($options['placeables'])){
+            foreach ($options['placeables'] as $placeable){
+                $placeable->place();
+            }
         }
     echo '</div>';
 
@@ -142,17 +174,23 @@ function printCard($img, $name, $description, $link, $options){
         }
     }
 
-    if(isset($options['more_medals'])){
+    if(isset($options['medals'])){
         echo '<div style="margin: auto; font-size: 16px; font-weight: bold; display: flex;">';
 
-        $iconStyle = "height: 64px; width: auto; margin-top: auto; margin-bottom: auto;";
-        $valueStyle = "margin-top: auto; margin-bottom: auto; margin-left: 8px;";
+        $iconStyle = "height: 48px; width: auto; margin-top: auto; margin-bottom: auto;";
+        $valueStyle = "margin-top: auto; margin-bottom: auto; margin-left: 8px; font-size: 1rem;";
 
-        foreach ($options['more_medals'] as $medal){
-            echo '<div style="margin-left: 2px; margin-right: 2px;">';
-            echo '<img src="' . $medal['medal']->medal->img . '" style="' . $iconStyle
-                . '" title="' . $medal['medal']->title . '" />';
-            echo '<span style="' . $valueStyle . ' color: #DC0083;">' . $medal['number'] . '</span>';
+        foreach ($options['medals'] as $medal){
+            echo '<div style="margin-left: 6px; margin-right: 6px;">';
+            if($medal->link){
+                echo '<a href="' . $medal->link . '" target="_blank">';
+            }
+            echo '<img src="' . $medal->icon . '" style="' . $iconStyle
+                . '" title="' . $medal->title . '" />';
+            if($medal->link){
+                echo '</a>';
+            }
+            echo '<span style="' . $valueStyle . ' color: #DC0083;">' . $medal->count . '</span>';
             echo '</div>';
         }
 
@@ -185,5 +223,24 @@ function printCard($img, $name, $description, $link, $options){
     </div>
     -->*/
 
+    echo '</div>';
+}
+
+function printCardPureTitle($title, $smallerMode = false){
+    echo '<div ';
+    Styler::startAttribute();
+    Styler::closeAttribute();
+    HTMLInterface::closeTag();
+    if(!$smallerMode) echo '<h4>' . $title . '</h4>';
+    else {
+        echo '<div ';
+        Styler::startAttribute();
+        Styler::addStyle("font-weight", "bold");
+        Styler::addStyle("font-size", "0.92rem");
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
+        echo $title;
+        HTMLInterface::closeDiv();
+    }
     echo '</div>';
 }

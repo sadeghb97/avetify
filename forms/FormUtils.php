@@ -63,18 +63,40 @@ class FormUtils {
         echo '</form>';
     }
 
-    public static function placeSubmitButton($title, $marginTop = "6px", $onClick = null){
-        echo '<button type="submit" class="btn btn-primary" ';
-        if($onClick) HTMLInterface::addAttribute("onclick", $onClick);
-        Styler::startAttribute();
-        Styler::addStyle("margin-top", $marginTop);
-        Styler::closeAttribute();
-        echo ' >';
-        echo $title;
-        echo '</button>';
+    public static function placeSubmitButton(string $title, int $marginTop = 12,
+                                             string $buttonStyle = "", WebModifier $webModifier = null){
+        $joshButton = new JoshButton($title, "", $buttonStyle, "submit");
+        heightMargin($marginTop);
+        $joshButton->renderButton($webModifier);
     }
 
-    public static function placeHiddenField($id, $value, $ignoreName = false){
+    public static function placeAbsSubmitButton(string $icon, string $formId, string $triggerName,
+                                                int $iconSize = 60,
+                                                array $position = ["right" => "20px", "bottom" => "20px"]){
+        $button = new AbsoluteFormButtons($formId, $triggerName, $position, $icon);
+        $button->iconSize = $iconSize;
+        $button->place();
+    }
+
+    public static function fastSubmitButton(string $icon){
+        $mainFormId = "main_form";
+        self::openPostForm($mainFormId);
+        $position = ["right" => "20px", "bottom" => "20px"];
+
+        $button = new AbsoluteFormButtons($mainFormId, "default", $position, $icon);
+        $button->iconSize = 60;
+        $button->place();
+
+        self::placeHiddenField("main_form_data");
+        self::closeForm();
+    }
+
+    public static function placeLinkButton(string $image, string $url, WebModifier $webModifier){
+        $linkButton = new IconButton($image, 60, "redir('" . $url . "')");
+        $linkButton->place($webModifier);
+    }
+
+    public static function placeHiddenField($id, $value = "", $ignoreName = false){
         echo '<input type="hidden"';
         HTMLInterface::addAttribute("id", $id);
         if(!$ignoreName) HTMLInterface::addAttribute("name", $id);

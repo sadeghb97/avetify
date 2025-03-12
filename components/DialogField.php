@@ -24,7 +24,7 @@ abstract class DialogField implements Placeable {
         <?php
     }
 
-    public function place(){
+    public function place(WebModifier $webModifier = null){
         echo '<div id="' . $this->getBoxId() . '" ';
         Styler::startAttribute();
         $this->boxStyles();

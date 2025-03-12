@@ -2,6 +2,7 @@
 
 abstract class SBTableLinkField extends SBTableField {
     public null | string $color = "Black";
+    public bool $isBlank = false;
 
     public function __construct(string $title, string $key){
         parent::__construct($title, $key);
@@ -14,7 +15,9 @@ abstract class SBTableLinkField extends SBTableField {
         $link = $this->getLinkValue($item);
         echo '<a href="' . $link . '" style="';
         if($this->color != null) Styler::addStyle("color", $this->color);
-        echo '" >';
+        echo '" ';
+        if($this->isBlank) HTMLInterface::addAttribute("target", "_blank");
+        HTMLInterface::closeTag();
         echo $title;
         echo '</a>';
     }

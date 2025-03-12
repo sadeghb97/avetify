@@ -21,7 +21,7 @@ class Flusher {
     private function _bufferOut(){
         echo $this->key . " Flusher: " . $this->counter;
         endline();
-        if(php_sapi_name() != "cli") ob_flush();
+        if(!isCli()) ob_flush();
         flush();
         usleep($this->delayMs * 1000);
     }

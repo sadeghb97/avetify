@@ -5,7 +5,10 @@ class EntityField
     public ?string $title = null;
     public ?string $type = null;
     public ?string $path = null;
-    public bool $printable = true;
+    public ?string $extension = null;
+    public ?string $maxImageSize = null;
+    public int $forcedWidthDimension = 0;
+    public int $forcedHeightDimension = 0;
     public $writable = false; // add field to edit and add forms
     public bool $required = false; // must have value in add and edit forms
     public bool $numeric = false;
@@ -59,10 +62,22 @@ class EntityField
         return $this;
     }
 
-    public function setAvatar() : EntityField {
+    public function setMaxImageSize(string $imageSize) : EntityField {
+        $this->maxImageSize = $imageSize;
+        return $this;
+    }
+    public function setImageForcedRatio(int $widthDim, int $heightDim) : EntityField {
+        $this->forcedWidthDimension = $widthDim;
+        $this->forcedHeightDimension = $heightDim;
+        return $this;
+    }
+
+    public function setAvatar(string $path, string $extension = "jpg") : EntityField {
         $this->special = true;
         $this->writable = true;
         $this->avatar = true;
+        $this->path = $path;
+        $this->extension = $extension;
         return $this;
     }
 

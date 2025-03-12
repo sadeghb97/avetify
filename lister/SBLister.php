@@ -407,6 +407,7 @@ abstract class SBLister {
             ClassicTheme::importMainStyles(Routing::getAventadorRoot());
 
             ThemesManager::importStyle(Routing::getAventadorRoot() . "lister/lister.css");
+            ThemesManager::importStyle(Routing::getAventadorRoot() . "themes/assets/context_menu.css");
             ThemesManager::importJS(Routing::getAventadorRoot() . "lister/sortable.js");
 
             echo '</head>';
@@ -433,7 +434,7 @@ abstract class SBLister {
         </form>';
 
         if($this->isPrintRankEnabled() && $this->isRearrangeRanksEnabled()){
-            JSInterface::addAbsoluteIconButton(Routing::getAventadorRoot()
+            HTMLInterface::addAbsoluteIconButton(Routing::getAventadorRoot()
                 . 'assets/img/arrange.png',
                 [
                     "right" => "20px",

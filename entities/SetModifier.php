@@ -7,6 +7,14 @@ abstract class SetModifier {
 
     public abstract function getEntityRecords() : array;
 
+    public function getItemId($item) : string {
+        return EntityUtils::getSimpleValue($item, "id");
+    }
+
+    public function getItemName($item) : string {
+        return EntityUtils::getSimpleValue($item, "name");
+    }
+
     /** @return SortFactor[] An array of MyClass instances */
     public function finalSortFactors() : array {
         return [];
@@ -85,5 +93,14 @@ abstract class SetModifier {
         }
 
         echo '</div>';
+    }
+
+    public function getCurrentRecordsIndexes() : array {
+        $map = [];
+        foreach ($this->currentRecords as $index => $record){
+            $id = $this->getItemId($record);
+            $map[$id] = $index;
+        }
+        return $map;
     }
 }

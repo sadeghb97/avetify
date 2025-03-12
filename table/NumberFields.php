@@ -30,3 +30,26 @@ class ColoredField extends SBTableSimpleField {
         Styler::addStyle("background-color", $chosenColor);
     }
 }
+
+class ExactColoredField extends SBTableSimpleField {
+    public function __construct(string $title, string $key, public array $colors){
+        parent::__construct($title, $key);
+    }
+
+    public function normalCellStyles($item){
+        parent::normalCellStyles($item);
+        $val = $this->getValue($item);
+
+        $chosenColor = null;
+        foreach ($this->colors as $colorTargetKey => $color){
+            if($val == $colorTargetKey){
+                $chosenColor = $color;
+                break;
+            }
+        }
+
+        if($chosenColor != null) {
+            Styler::addStyle("background-color", $chosenColor);
+        }
+    }
+}

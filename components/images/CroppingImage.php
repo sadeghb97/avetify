@@ -1,7 +1,7 @@
 <?php
 
 class CroppingImage extends CroppableImage {
-    public function handleSubmit($x, $y, $w, $h){
+    public function handleSubmit($x, $y, $w, $h) : bool {
         try {
             $gumletImage = new \Gumlet\ImageResize($this->src);
             $orgFilename = new Filename($this->src);
@@ -12,8 +12,10 @@ class CroppingImage extends CroppableImage {
             copy($this->src, $copyFn);
             $gumletImage->save($this->src, $this->imageType);
             $this->onCropSuccess();
+            return true;
         } catch (\Gumlet\ImageResizeException $e) {
             $this->onCropError($e->getMessage());
+            return false;
         }
     }
 

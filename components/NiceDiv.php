@@ -11,10 +11,15 @@ class NiceDiv {
         "gap" => "4px"
     ];
 
+    public array $htmlModifiers = [];
+
     public function __construct(public string $sepSize){}
 
     public function addStyle($key, $value){
         $this->styles[$key] = $value;
+    }
+    public function addModifier($key, $value){
+        $this->htmlModifiers[$key] = $value;
     }
 
     public function open(){
@@ -23,6 +28,9 @@ class NiceDiv {
         foreach ($this->styles as $key => $value)
         Styler::addStyle($key, $value);
         Styler::closeAttribute();
+        foreach ($this->htmlModifiers as $modifierKey => $modifierValue){
+            HTMLInterface::addAttribute($modifierKey, $modifierValue);
+        }
         echo ' >';
     }
 
@@ -31,12 +39,23 @@ class NiceDiv {
     }
 
     public function separate(){
-        echo '<span style="width: ' . $this->sepSize . ';"></span>';
+        if($this->sepSize > 0) $this->separateWith("width");
     }
 
-    public function placeItem(Placeable $placeable){
+    protected function separateWith($sepType){
+        $element = $sepType == "width" ? "span" : "div";
+        echo '<' . $element . ' ';
+        Styler::startAttribute();
+        Styler::addStyle($sepType, $this->sepSize);
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
+        echo '</' . $element . '>';
+    }
+
+    public function placeItem(Placeable $placeable, WebModifier | null $webModifier = null){
         if($this->itemsCount > 0) $this->separate();
-        $placeable->place();
+        if($webModifier != null) $placeable->place($webModifier);
+        else $placeable->place();
         $this->itemsCount++;
     }
 

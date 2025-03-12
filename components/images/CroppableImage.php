@@ -12,11 +12,16 @@ class CroppableImage {
         $this->initJS();
     }
 
-    public function initJS(){
+    public static function initJS(){
         ?>
 
         <script>
-            function setCropConfigs(imageId){
+            let lastCropper = null;
+            let increasingMode = true;
+            function setCropConfigs(event, imageId, ratio){
+                const clickRelativeX = event.offsetX;
+                const clickRelativeY = event.offsetY;
+
                 const image = document.getElementById(imageId);
                 const imageHeight = image.naturalHeight
                 const imageWidth = image.naturalWidth
@@ -29,7 +34,8 @@ class CroppableImage {
 
                 let status = ""
                 const cropper = new Cropper(image, {
-                    aspectRatio: <?php echo $this->ratio; ?>,
+                    aspectRatio: ratio,
+                    zoomable: false,
                     viewMode: 1,
                     crop(event) {
                         const max_x = imageWidth - event.detail.width
@@ -51,6 +57,18 @@ class CroppableImage {
                     },
                 });
 
+                setTimeout(() => {
+                    const newWidth = 200;
+                    const newHeight = 200 / ratio
+                    lastCropper.setCropBoxData({
+                        left: clickRelativeX - (newWidth / 2),
+                        top: clickRelativeY - (newHeight / 2),
+                        width: newWidth,
+                        height: newHeight
+                    })
+                }, 100)
+                lastCropper = cropper;
+
                 document.onkeydown = function (evt) {
                     evt = evt || window.event;
                     if (evt.keyCode === 27) {
@@ -68,13 +86,20 @@ class CroppableImage {
     }
 
     private function present(int $size, bool $withWidth = true){
+        ?>
+        <script>
+            <?php echo $this->getJSRatioVarName(); ?> = <?php echo $this->ratio; ?>;
+        </script>
+        <?php
+
         echo '<div>';
         echo '<img ';
 
         $imageSrc = $this->src . '?' . time();
         HTMLInterface::addAttribute("src", Routing::serverPathToBrowserPath($imageSrc));
         HTMLInterface::addAttribute("id", $this->id);
-        HTMLInterface::addAttribute("onclick", "setCropConfigs('" . $this->id . "')");
+        HTMLInterface::addAttribute("onclick", "setCropConfigs(event, '" . $this->id .
+            "', " . $this->getJSRatioVarName() . ")");
         Styler::startAttribute();
         if($withWidth) Styler::imageWithWidth($size);
         else Styler::imageWithHeight($size);
@@ -109,17 +134,22 @@ class CroppableImage {
         $this->present($size, false);
     }
 
-    public function checkSubmit(){
+    public function checkSubmit() : bool {
         $enabledFieldKey = $this->id . '_enabled';
         if(!empty($_POST[$enabledFieldKey])){
-            $this->handleSubmit(
+            return $this->handleSubmit(
                 (int) $_POST[$this->id . "_x"],
                 (int) $_POST[$this->id . "_y"],
                 (int) $_POST[$this->id . "_w"],
                 (int) $_POST[$this->id . "_h"],
             );
         }
+        return false;
     }
 
-    public function handleSubmit($x, $y, $w, $h){}
+    public function handleSubmit($x, $y, $w, $h) : bool {}
+
+    public function getJSRatioVarName() : string {
+        return $this->id . "__ration";
+    }
 }

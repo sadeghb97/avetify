@@ -9,6 +9,7 @@ class SBTableField {
     public bool $isAscending = false;
     protected bool $editable = false;
     public SBEditableField | null $onCreateField = null;
+    public bool $requiredOnCreate = false;
     public string | null $backgroundColor = null;
     public string | null $color = null;
     public string | null $width = null;
@@ -134,10 +135,11 @@ class SBTableField {
         return $this->editable;
     }
 
-    public function setEditableOnCreate(SBEditableField | null $editableField = null) : SBTableField {
+    public function setEditableOnCreate(bool $required = false, SBEditableField | null $editableField = null) : SBTableField {
         if($editableField == null){
             if($this instanceof SBEditableField) $this->onCreateField = clone $this;
             else $this->onCreateField = new SBEditableField($this->title, $this->key);
+            $this->onCreateField->requiredOnCreate = $required;
         }
         else $this->onCreateField = $editableField;
         return $this;

@@ -19,3 +19,8 @@ function formatMegaNumber($number) : string {
 
     return (int) $number;
 }
+
+function formatDecimals(float $number, int $decimals) : float {
+    $p = pow(10, $decimals);
+    return ((int)($number * $p)) / $p;
+}
