@@ -1,7 +1,9 @@
 <?php
 
 abstract class SetRenderer {
-    public function __construct(public SetModifier $setModifier, public ThemesManager | null $theme){}
+    public function __construct(public SetModifier $setModifier,
+                                public ThemesManager | null $theme,
+                                public bool | int $limit = false){}
 
     public function placeHeader(){
         $this->theme->placeHeader($this->getTitle());
@@ -12,6 +14,7 @@ abstract class SetRenderer {
         foreach ($this->setModifier->currentRecords as $index => $record){
             if(!$this->isQualified($record)) continue;
             $this->renderRecord($record, $itemIndex++);
+            if($this->limit && ($index + 1) >= $this->limit) break;
         }
     }
 

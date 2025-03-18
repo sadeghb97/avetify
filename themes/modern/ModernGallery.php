@@ -3,8 +3,8 @@
 abstract class ModernGallery extends ModernSetRenderer implements EntityImage, EntityTitle, EntityAltLink {
     public RecordContextMenu | null $contextMenu = null;
 
-    public function __construct(SetModifier $setModifier, public string $title){
-        parent::__construct($setModifier);
+    public function __construct(SetModifier $setModifier, public string $title, bool | int $limit = false){
+        parent::__construct($setModifier, $limit);
     }
 
     public function renderRecord($item, $index) {
