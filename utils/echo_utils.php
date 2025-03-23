@@ -26,7 +26,7 @@ function safeLog($l){
         padding-bottom: 20px;">' . $l . '</textarea>' . br();
 }
 
-function classicMenu(array $rows, $marginTop = 16){
+function classicMenu(array $rows, $margin = 16){
     $fontSize = "14pt";
     $splitterContents = "&nbsp;&nbsp;|&nbsp;&nbsp;";
     $prBold=true;
@@ -34,7 +34,8 @@ function classicMenu(array $rows, $marginTop = 16){
     $prBlank=false;
 
     $vertDiv = new VertDiv(4);
-    $vertDiv->addStyle("margin-top", $marginTop . "px");
+    $vertDiv->addStyle("margin-top", $margin . "px");
+    $vertDiv->addStyle("margin-bottom", $margin . "px");
     $vertDiv->addStyle("font-size", $fontSize);
 
     $vertDiv->open();

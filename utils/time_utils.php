@@ -58,7 +58,7 @@ function getFormattedRecentTime(int $now, int $time, bool $isSummary = true) : s
     if($recent->years > 0){
         if($isSummary){
             $formatted = _formatRecentTime($recent->years, $recent->months,
-                "y", "m", "");
+                "Y", "M", "");
         }
         else {
             $formatted = _formatRecentTime($recent->years, $recent->months,
@@ -69,7 +69,7 @@ function getFormattedRecentTime(int $now, int $time, bool $isSummary = true) : s
     else if($recent->months > 0){
         if($isSummary){
             $formatted = _formatRecentTime($recent->months, $recent->days,
-                "m", "d", "");
+                "M", "D", "");
         }
         else {
             $formatted = _formatRecentTime($recent->months, $recent->days,
@@ -80,7 +80,7 @@ function getFormattedRecentTime(int $now, int $time, bool $isSummary = true) : s
     else if($recent->days > 0){
         if($isSummary){
             $formatted = _formatRecentTime($recent->days, $recent->hours,
-                "d", "h", "");
+                "D", "h", "");
         }
         else {
             $formatted = _formatRecentTime($recent->days, $recent->hours,
