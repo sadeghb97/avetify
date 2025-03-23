@@ -18,7 +18,7 @@ abstract class SortFactor {
         $qb = $this->isQualified($itemB);
         if($qa != $qb) return $qa ? -1 : 1;
 
-        $multiplier = $this->isDescending ? 1 : -1;
+        $multiplier = $this->isDescending ? -1 : 1;
         $va = $this->getValue($itemA);
         $vb = $this->getValue($itemB);
 
