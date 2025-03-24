@@ -60,10 +60,15 @@ class EntityUtils {
     public static function getSimpleValue($item, $keys): float | string | null {
         $finalKeys = is_array($keys) ? $keys : [$keys];
         $ar = ((array) $item);
+
         foreach ($finalKeys as $finalKey){
-            if(isset($ar[$finalKey])) return $ar[$finalKey];
+            if(!isset($ar[$finalKey])) return "";
+            else $ar = $ar[$finalKey];
+
+            if(is_object($ar)) $ar = ((array) $ar);
         }
-        return null;
+
+        return $ar;
     }
 
     public static function simpleSort(array &$records, string $key, bool $isAsc){

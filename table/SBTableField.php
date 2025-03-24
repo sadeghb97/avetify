@@ -22,7 +22,9 @@ class SBTableField {
 
     public function getValue($item) : string {
         if(!is_array($item) && !is_object($item)) return $item;
-        return EntityUtils::getSimpleValue($item, $this->key);
+        if(str_contains($this->key, "&")) $finalKeys = explode("&", $this->key);
+        else $finalKeys = $this->key;
+        return EntityUtils::getSimpleValue($item, $finalKeys);
     }
 
     public function headerCellStyles(){
@@ -172,15 +174,4 @@ class SBTableField {
     }
 }
 
-class SBTableSimpleField extends SBTableField {
-    public function getValue($item): string {
-        return self::getValueByKey($item, $this->key);
-    }
-
-    public static function getValueByKey($item, $key) : string {
-        if(is_array($item) && isset($item[$key])) return $item[$key];
-        $arItem = (array) $item;
-        if(isset($arItem[$key])) return $arItem[$key];
-        return "";
-    }
-}
+class SBTableSimpleField extends SBTableField {}
