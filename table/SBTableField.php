@@ -8,6 +8,7 @@ class SBTableField {
     public bool $isSortable = false;
     public bool $isAscending = false;
     protected bool $editable = false;
+    public bool $skipEmpties = false;
     public SBEditableField | null $onCreateField = null;
     public bool $requiredOnCreate = false;
     public string | null $backgroundColor = null;
@@ -124,6 +125,11 @@ class SBTableField {
 
     public function setFontWeight(string | null $fw) : SBTableField {
         $this->fontWeight = $fw;
+        return $this;
+    }
+
+    public function setSkipEmpties() : SBTableField {
+        $this->skipEmpties = true;
         return $this;
     }
 

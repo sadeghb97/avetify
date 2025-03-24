@@ -2,10 +2,13 @@
 
 abstract class SortFactor {
     public function __construct(public string $title, public string $factorKey,
-                                public bool $isDescending, public bool $isNumeric = true){
+                                public bool $isDescending,
+                                public bool $isNumeric = true,
+                                public bool $skipEmpties = false){
     }
 
     public function isQualified($item) : bool {
+        if(!$this->skipEmpties) return true;
         $value = $this->getValue($item);
         if(!$value) return false;
         return true;
