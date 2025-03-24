@@ -55,7 +55,7 @@ function getRecentTime(int $now, int $time) : RecentTime {
     return getRecentTimeFromDuration($now - $time);
 }
 
-function getFormattedDurationTime(int $duration, bool $isSummary = true, bool $durationMode = false) : string {
+function getFormattedDurationTime(int $duration, bool $isSummary = true, bool $durationMode = true) : string {
     $recent = getRecentTimeFromDuration($duration);
 
     if($recent->years > 0){
