@@ -20,3 +20,16 @@ class RecentField extends SBTableSimpleField {
         echo $timeStr;
     }
 }
+
+class DurationField extends SBTableSimpleField {
+    public function __construct(string $title, string $key, public bool $isGlobal = true){
+        parent::__construct($title, $key);
+    }
+
+    public function presentValue($item) {
+        $val = $this->getValue($item);
+        $timeStr = $this->isGlobal ?
+            getFormattedDurationTime((int) $val) : getIRFormattedDurationTime((int) $val);
+        echo $timeStr;
+    }
+}

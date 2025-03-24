@@ -31,16 +31,15 @@ function getIRSimpleDate(int $time) : string {
     return jdate("Y-m-d", $time, '', 'Asia/Tehran', 'en');
 }
 
-function getRecentTime(int $now, int $time) : RecentTime {
-    $recent = $now - $time;
+function getRecentTimeFromDuration(int $duration) : RecentTime {
     $minuteLength = 60;
     $hourLength = 3600;
     $dayLength = 24 * $hourLength;
     $monthLength = 30 * $dayLength;
     $yearLength = 365 * $dayLength;
 
-    $y = (int) ($recent / $yearLength);
-    $rem = $recent % $yearLength;
+    $y = (int) ($duration / $yearLength);
+    $rem = $duration % $yearLength;
     $m = (int) ($rem / $monthLength);
     $rem = $rem % $monthLength;
     $d = (int) ($rem / $dayLength);
@@ -52,8 +51,12 @@ function getRecentTime(int $now, int $time) : RecentTime {
     return new RecentTime($y, $m, $d, $h, $min, $s);
 }
 
-function getFormattedRecentTime(int $now, int $time, bool $isSummary = true) : string {
-    $recent = getRecentTime($now, $time);
+function getRecentTime(int $now, int $time) : RecentTime {
+    return getRecentTimeFromDuration($now - $time);
+}
+
+function getFormattedDurationTime(int $duration, bool $isSummary = true, bool $durationMode = false) : string {
+    $recent = getRecentTimeFromDuration($duration);
 
     if($recent->years > 0){
         if($isSummary){
@@ -120,13 +123,16 @@ function getFormattedRecentTime(int $now, int $time, bool $isSummary = true) : s
                 "Second", "", "s");
         }
     }
-    else return "Just Now";
+    else {
+        if($durationMode) return "0s";
+        return "Just Now";
+    }
 
-    return $formatted . " ago";
+    return $formatted . ($durationMode ? "" : " ago");
 }
 
-function getIRFormattedRecentTime(int $now, int $time) : string {
-    $recent = getRecentTime($now, $time);
+function getIRFormattedDurationTime(int $duration) : string {
+    $recent = getRecentTimeFromDuration($duration);
 
     if($recent->years > 0){
         return _formatRecentTime($recent->years, $recent->months,
@@ -158,6 +164,14 @@ function getIRFormattedRecentTime(int $now, int $time) : string {
             "ثانیه", "");
     }
     else return "همین الان";
+}
+
+function getFormattedRecentTime(int $now, int $time, bool $isSummary = true, bool $durationMode = false) : string {
+    return getFormattedDurationTime($now - $time, $isSummary, $durationMode);
+}
+
+function getIRFormattedRecentTime(int $now, int $time) : string {
+    return getIRFormattedDurationTime($now - $time);
 }
 
 function _formatRecentTime($bigValue, $smallValue, $bigUnit, $smallUnit, $pluralSymbol = "") : string {
