@@ -40,4 +40,9 @@ class Styler {
         self::addStyle("width", $width);
         self::addStyle("height", "auto");
     }
+
+    public static function imageSquare($size){
+        self::addStyle("height", $size);
+        self::addStyle("width", $size);
+    }
 }

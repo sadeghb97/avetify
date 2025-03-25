@@ -60,6 +60,7 @@ require_once "components/images/IconButton.php";
 require_once "components/images/CroppableImage.php";
 require_once "components/images/CroppingImage.php";
 require_once "components/images/ImageCropper.php";
+require_once "components/modifiers/ImageModifiers.php";
 
 require_once "lister/SBListCategory.php";
 require_once "lister/SBLister.php";

@@ -175,6 +175,8 @@ class SBTable extends SetModifier {
             }
             if($this->enableSelectRecord) $this->selectorField->renderRecord($record);
             self::closeTR();
+
+            if($recIndex > $this->recordsLimit()) break;
         }
         if($this->enableCreatingRow) $this->renderCreatingTr();
 
@@ -320,5 +322,9 @@ class SBTable extends SetModifier {
 
     public function getEntityRecords(): array {
         return $this->records;
+    }
+
+    public function recordsLimit() : int {
+        return 5000;
     }
 }

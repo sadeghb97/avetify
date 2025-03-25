@@ -19,8 +19,10 @@ class ThemesManager {
         $this->importBootstrap();
     }
 
-    public static function importFavicon($path, $type){
-        echo '<link rel="icon" href="' . $path . '" type="' . $type . '" sizes="16x16">';
+    public function loadFavicon(){}
+
+    public static function importFavicon($path, $type = "image/png", $sizes = "32x32"){
+        echo '<link rel="icon" href="' . $path . '" type="' . $type . '" sizes="' . $sizes . '">';
     }
 
     public static function importStyle($path){

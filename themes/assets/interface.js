@@ -9,3 +9,11 @@ function loadFormData(){
         dataElement.value = JSON.stringify(formData);
     }
 }
+
+function copyToClipboard(text){
+    navigator.clipboard.writeText(text)
+}
+
+function openUrlOnNewTab(url){
+    window.open(url, '_blank');
+}

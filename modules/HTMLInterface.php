@@ -59,6 +59,14 @@
          echo '</a>';
      }
 
+     public static function placeImage(string $src, WebModifier | null $modifier = null){
+         echo '<img ';
+         self::addAttribute("src", $src);
+         self::applyModifiers($modifier);
+         self::applyStyles($modifier);
+         self::closeTag();
+     }
+
      public static function placeImageWithWidth(string $src, int $width, WebModifier | null $modifier = null){
          echo '<img ';
          self::addAttribute("src", $src);
@@ -76,6 +84,17 @@
          self::applyModifiers($modifier);
          Styler::startAttribute();
          Styler::imageWithHeight($height);
+         self::appendStyles($modifier);
+         Styler::closeAttribute();
+         self::closeTag();
+     }
+
+     public static function placeSquareImage(string $src, int $size, WebModifier | null $modifier = null){
+         echo '<img ';
+         self::addAttribute("src", $src);
+         self::applyModifiers($modifier);
+         Styler::startAttribute();
+         Styler::imageSquare($size);
          self::appendStyles($modifier);
          Styler::closeAttribute();
          self::closeTag();
