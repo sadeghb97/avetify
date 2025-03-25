@@ -143,6 +143,13 @@ class SBTableField {
         return $this->editable;
     }
 
+    public function isQualified($item) : bool {
+        if(!$this->skipEmpties) return true;
+        $value = $this->getValue($item);
+        if(!$value) return false;
+        return true;
+    }
+
     public function setEditableOnCreate(bool $required = false, SBEditableField | null $editableField = null) : SBTableField {
         if($editableField == null){
             if($this instanceof SBEditableField) $this->onCreateField = clone $this;

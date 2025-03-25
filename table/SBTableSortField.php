@@ -9,4 +9,8 @@ class SBTableSortField extends SortFactor {
     public function getValue($item): float|string {
         return $this->field->getValue($item);
     }
+
+    public function isQualified($item): bool {
+        return $this->field->isQualified($item);
+    }
 }
