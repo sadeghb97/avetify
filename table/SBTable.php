@@ -138,15 +138,21 @@ class SBTable extends SetModifier {
         self::closeTR();
     }
 
-    public function renderTable(){
+    public function renderTable(WebModifier $webModifier = null, int $marginTop = 0){
         $this->initForm();
+        if($marginTop > 0){
+            echo '<div style="height: ' . $marginTop . 'px;"></div>';
+        }
+
         if($this->isEditable) $this->catchSubmittedFields();
         if($this->isSortable) $this->renderSortLabels();
 
         if($this->isEditable){
             $this->form->openForm();
         }
-        echo '<div class="tables_panel">';
+        echo '<div class="tables_panel" ';
+        if($webModifier != null) $webModifier->apply();
+        HTMLInterface::closeTag();
         echo '<table class="table" style="';
         $this->tableStyles();
         echo '"';

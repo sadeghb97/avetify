@@ -18,4 +18,9 @@ class WebModifier {
     public function __construct(public HTMLModifier | null $htmlModifier = null,
                                 public Styler | null $styler = null){
     }
+
+    public function apply(){
+        if($this->htmlModifier != null) $this->htmlModifier->applyModifiers();
+        if($this->styler != null) $this->styler->applyStyles();
+    }
 }

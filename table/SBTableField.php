@@ -22,7 +22,7 @@ class SBTableField {
 
     public function getValue($item) : string {
         if(!is_array($item) && !is_object($item)) return $item;
-        if(str_contains($this->key, "&")) $finalKeys = explode("&", $this->key);
+        if(str_contains($this->key, "~")) $finalKeys = explode("~", $this->key);
         else $finalKeys = $this->key;
         return EntityUtils::getSimpleValue($item, $finalKeys);
     }
