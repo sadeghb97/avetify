@@ -31,6 +31,10 @@ function getIRSimpleDate(int $time) : string {
     return jdate("Y-m-d", $time, '', 'Asia/Tehran', 'en');
 }
 
+function getIRYearMonthDate(int $time) : string {
+    return jdate("Y-m", $time, '', 'Asia/Tehran', 'en');
+}
+
 function getRecentTimeFromDuration(int $duration) : RecentTime {
     $minuteLength = 60;
     $hourLength = 3600;
