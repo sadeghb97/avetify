@@ -422,7 +422,7 @@ li {
     float: left;
 }
 
-li a {
+li .navlink {
     display: block;
     color: white;
     text-align: center;
@@ -430,10 +430,13 @@ li a {
     text-decoration: none;
 }
 
-li a:hover:not(.active) {
+li .navlink:hover:not(.active) {
     background-color: #111;
+    color: white;
 }
 
 .active {
     background-color: #04AA6D;
+    color: white;
+    text-decoration: none;
 }

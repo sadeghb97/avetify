@@ -68,8 +68,10 @@ class GreenTheme extends ThemesManager {
         HTMLInterface::closeTag();
 
         echo '<a ';
+        $classes = "navlink";
+        if($isActive) $classes .= " active";
         HTMLInterface::addAttribute("href", $link);
-        if($isActive) HTMLInterface::addAttribute("class", "active");
+        HTMLInterface::addAttribute("class", $classes);
         HTMLInterface::closeTag();
         echo $title;
         echo '</a>';

@@ -112,6 +112,15 @@
          echo '>';
      }
 
+     public static function placeVerticalDivider(int $height){
+         echo '<div ';
+         Styler::startAttribute();
+         Styler::addStyle("height", $height . "px");
+         Styler::closeAttribute();
+         HTMLInterface::closeTag();
+         HTMLInterface::closeDiv();
+     }
+
      public static function placeSpan(string $text, WebModifier | null $modifier = null){
          self::placeElement("span", $text, $modifier);
      }
