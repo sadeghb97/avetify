@@ -198,6 +198,7 @@ class SBTable extends SetModifier {
     public function openPage(string $title){
         $theme = $this->getTheme();
         $theme->placeHeader($title);
+        $theme->loadHeaderElements();
     }
 
     public function renderPage(string $title){

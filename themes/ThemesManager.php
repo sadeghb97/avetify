@@ -21,6 +21,8 @@ class ThemesManager {
 
     public function loadFavicon(){}
 
+    public function loadHeaderElements(){}
+
     public static function importFavicon($path, $type = "image/png", $sizes = "32x32"){
         echo '<link rel="icon" href="' . $path . '" type="' . $type . '" sizes="' . $sizes . '">';
     }
