@@ -1,10 +1,22 @@
 <?php
 
 abstract class SortFactor {
+    public bool $alterDirection = false;
+
     public function __construct(public string $title, public string $factorKey,
-                                public bool $isDescending,
+                                public bool $descIsDefault,
                                 public bool $isNumeric = true,
                                 public bool $skipEmpties = false){
+    }
+
+    public function toggleDirection(){
+        $this->alterDirection = !$this->alterDirection;
+    }
+
+    public function isDescending() : bool {
+        $isDescending = $this->descIsDefault;
+        if($this->alterDirection) $isDescending = !$isDescending;
+        return $isDescending;
     }
 
     public function isQualified($item) : bool {
@@ -17,11 +29,12 @@ abstract class SortFactor {
     abstract public function getValue($item) : float | string;
 
     public function compare($itemA, $itemB) : int {
+        $isDescending = $this->isDescending();
         $qa = $this->isQualified($itemA);
         $qb = $this->isQualified($itemB);
         if($qa != $qb) return $qa ? -1 : 1;
 
-        $multiplier = $this->isDescending ? -1 : 1;
+        $multiplier = $isDescending ? -1 : 1;
         $va = $this->getValue($itemA);
         $vb = $this->getValue($itemB);
 
@@ -40,14 +53,14 @@ class SimpleSortFactor extends SortFactor {
 }
 
 class SimpleNumericSortFactor extends SimpleSortFactor {
-    public function __construct(string $title, string $factorKey, bool $isDescending){
-        parent::__construct($title, $factorKey, $isDescending, true);
+    public function __construct(string $title, string $factorKey, bool $descIsDefault){
+        parent::__construct($title, $factorKey, $descIsDefault, true);
     }
 }
 
 class SimpleTextSortFactor extends SimpleSortFactor {
-    public function __construct(string $title, string $factorKey, bool $isDescending){
-        parent::__construct($title, $factorKey, $isDescending, false);
+    public function __construct(string $title, string $factorKey, bool $descIsDefault){
+        parent::__construct($title, $factorKey, $descIsDefault, false);
     }
 }
 

@@ -39,11 +39,17 @@ abstract class SetModifier {
 
     public function getSortFactor() : SortFactor | null {
         if(!isset($_GET[$this->getSortKey()])) return $this->getDefaultFactor();
-        $sortKey = $_GET[$this->getSortKey()];
+        $sortFactorKey = $_GET[$this->getSortKey()];
+        $startWithMinus = str_starts_with($sortFactorKey, "-");
+        $pureSortFactorKey = $startWithMinus ? substr($sortFactorKey, 1) : $sortFactorKey;
         $allSortFactors = $this->finalSortFactors();
 
         foreach ($allSortFactors as $sf){
-            if($sf->factorKey == $sortKey) return $sf;
+            if($sf->factorKey == $pureSortFactorKey){
+                $nextIsDescending = $startWithMinus;
+                if($sf->isDescending() != $nextIsDescending) $sf->toggleDirection();
+                return $sf;
+            }
         }
 
         return $this->getDefaultFactor();
@@ -84,12 +90,34 @@ abstract class SetModifier {
     public function renderSortLabels(){
         $allSortFactors = $this->finalSortFactors();
         echo '<div style="text-align: center; margin-top: 2px;">';
-        $bg = 'Black';
-        $color = 'Cyan';
-        printLabel("Clear", Routing::removeParamFromCurrentLink($this->getSortKey()), $bg, $color);
+        $defaultBg = 'Black';
+        $defaultColor = 'Cyan';
+        $alterBg = 'Black';
+        $alterColor = 'GoldenRod';
+        printLabel("Clear", Routing::removeParamFromCurrentLink($this->getSortKey()), $defaultBg, $defaultColor);
+
+        $currentSort = isset($_GET[$this->getSortKey()]) ? $_GET[$this->getSortKey()] : null;
+        $startWithMinus = $currentSort ? str_starts_with($currentSort, "-") : false;
+        $pureSort = null;
+        if($currentSort != null){
+            $pureSort = $startWithMinus ? substr($currentSort, 1) : $currentSort;
+        }
+
         foreach ($allSortFactors as $sortFactor){
-            printLabel($sortFactor->title, Routing::addParamToCurrentLink($this->getSortKey(),
-                $sortFactor->factorKey), $bg, $color);
+            $finalBg = $defaultBg;
+            $finalColor = $defaultColor;
+            $finalTitle = $sortFactor->title;
+            $nextDescending = $sortFactor->descIsDefault;
+            if($currentSort && $pureSort == $sortFactor->factorKey){
+                $nextDescending = !$startWithMinus;
+                $finalBg = $alterBg;
+                $finalColor = $alterColor;
+                $finalTitle .= ($startWithMinus ? " ↓" : " ↑");
+            }
+            $finalSortFactor = ($nextDescending ? "-" : "") . $sortFactor->factorKey;
+
+            printLabel($finalTitle, Routing::addParamToCurrentLink($this->getSortKey(),
+                $finalSortFactor), $finalBg, $finalColor);
         }
 
         echo '</div>';
