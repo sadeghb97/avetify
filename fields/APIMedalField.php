@@ -10,12 +10,12 @@ class APIMedalField {
         ThemesManager::importJS(Routing::getAventadorRoot() . "fields/api_medals.js");
     }
 
-    public function geiFieldIdentifier() : string {
+    public function getFieldIdentifier() : string {
         return $this->medalKey . "_" . $this->recordKey;
     }
 
     public function clickAction() : string {
-        return 'apiMedalClickAction(\'' . $this->geiFieldIdentifier() . '\', \'' . $this->recordKey .
+        return 'apiMedalClickAction(\'' . $this->getFieldIdentifier() . '\', \'' . $this->recordKey .
             '\', \'' . $this->medalKey . '\', \'' . $this->medalInitValue .
             '\', \'' . $this->apiEndpoint . '\')';
     }
@@ -33,7 +33,7 @@ class APIMedalField {
         Styler::startAttribute();
         Styler::addStyle("font-weight", "bold");
         Styler::closeAttribute();
-        HTMLInterface::addAttribute("id", $this->geiFieldIdentifier());
+        HTMLInterface::addAttribute("id", $this->getFieldIdentifier());
         HTMLInterface::closeTag();
         echo $this->medalInitValue;
         echo '</span>';

@@ -9,7 +9,7 @@ abstract class DBTable extends SBTable {
     }
 
     public function getItemId($item): string {
-        return $item->pk;
+        return EntityUtils::getSimpleValue($item, "pk");
     }
 
     public function handleSubmittedFields($itemsFields) {

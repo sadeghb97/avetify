@@ -39,6 +39,16 @@ abstract class ModernGallery extends ModernSetRenderer implements EntityImage, E
             $options['api_medals'] = $apiMedals;
         }
 
+        $spanTexts = $this->getSpanTexts($item);
+        $recordId = $this->setModifier->getItemId($item);
+        $options['span_texts'] = $spanTexts;
+        $options['stpk'] = $recordId;
+
+        $apiTexts = $this->getApiTexts($item);
+        if(count($apiTexts) > 0){
+            $options['api_texts'] = $apiTexts;
+        }
+
         $rarity = $this->getRarity($item);
         if($rarity){
             $options['magham'] = $rarity;
@@ -54,6 +64,16 @@ abstract class ModernGallery extends ModernSetRenderer implements EntityImage, E
 
     /** @return APIMedalField[] */
     public function getApiMedals($record) : array {
+        return [];
+    }
+
+    /** @return APITextField[] */
+    public function getApiTexts($record) : array {
+        return [];
+    }
+
+    /** @return APISpanField[] */
+    public function getSpanTexts($record) : array {
         return [];
     }
 

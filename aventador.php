@@ -42,6 +42,9 @@ require_once "entities/FilterFactor.php";
 require_once "entities/ValueGetter.php";
 
 require_once "fields/APIMedalField.php";
+require_once "fields/APITextField.php";
+require_once "fields/APIACTextField.php";
+require_once "fields/APISpanField.php";
 
 require_once "components/Placeable.php";
 require_once "components/Submittable.php";

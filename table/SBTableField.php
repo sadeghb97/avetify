@@ -150,13 +150,18 @@ class SBTableField {
         return true;
     }
 
-    public function setEditableOnCreate(bool $required = false, SBEditableField | null $editableField = null) : SBTableField {
+    public function setEditableOnCreate(bool $required = false,
+                            SBEditableField | null $editableField = null,
+                            IDGetter | null $idGetter = null) : SBTableField {
         if($editableField == null){
             if($this instanceof SBEditableField) $this->onCreateField = clone $this;
             else $this->onCreateField = new SBEditableField($this->title, $this->key);
-            $this->onCreateField->requiredOnCreate = $required;
+            $this->onCreateField->idGetter = $idGetter;
         }
         else $this->onCreateField = $editableField;
+
+        $this->onCreateField->requiredOnCreate = $required;
+        $this->onCreateField->useNameIdentifier = true;
         return $this;
     }
 

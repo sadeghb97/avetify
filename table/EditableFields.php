@@ -60,6 +60,25 @@ class SBEditableField extends SBTableField {
     }
 }
 
+class TextAreaTableField extends SBEditableField {
+    public function presentValue($item) {
+        echo '<textarea ';
+        HTMLInterface::addAttribute("placeholder", $this->title);
+        HTMLInterface::addAttribute("rows", "10");
+        HTMLInterface::addAttribute("cols", "50");
+        $this->setFieldIdentifiers($item);
+        Styler::startAttribute();
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
+
+        if($item != null) {
+            echo $this->getValue($item);
+        }
+
+        echo '</textarea>';
+    }
+}
+
 class CheckboxField extends SBEditableField {
     public bool $isNumeric = true;
     public function presentValue($item){

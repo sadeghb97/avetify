@@ -121,6 +121,30 @@
          HTMLInterface::closeDiv();
      }
 
+     public static function placeFullACText(string $id, string $listId, array $list){
+         self::placeACText($id, $listId);
+         self::placeDatalist($listId, $list);
+     }
+
+     public static function placeACText(string $id, string $listId){
+         echo '<input ';
+         HTMLInterface::addAttribute("list", $listId);
+         HTMLInterface::addAttribute("id", $id);
+         HTMLInterface::closeSingleTag();
+     }
+
+     public static function placeDatalist(string $listId, array $list){
+         echo '<datalist ';
+         HTMLInterface::addAttribute("id", $listId);
+         HTMLInterface::closeTag();
+         foreach ($list as $item){
+             echo '<option ';
+             HTMLInterface::addAttribute("value", $item);
+             HTMLInterface::closeTag();
+         }
+         echo '</datalist>';
+     }
+
      public static function placeSpan(string $text, WebModifier | null $modifier = null){
          self::placeElement("span", $text, $modifier);
      }

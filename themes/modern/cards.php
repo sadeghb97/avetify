@@ -211,6 +211,34 @@ function printCard($img, $name, $description, $link, $options){
         heightMargin(12);
     }
 
+    if(isset($options['span_texts'])){
+        $tagsDiv = new NiceDiv(4);
+        $tagsDiv->addModifier("id",
+            (isset($options['stpk']) ? $options['stpk'] : slugify($name)) . "_" . "spans");
+        $tagsDiv->open();
+
+        foreach ($options['span_texts'] as $sptIndex => $spanText){
+            if($sptIndex > 0) $tagsDiv->separate();
+            $spanText->present();
+        }
+
+        $tagsDiv->close();
+        heightMargin(12);
+    }
+
+    if(isset($options['api_texts'])){
+        $apiTextsDiv = new VertDiv(6);
+        $apiTextsDiv->open();
+
+        foreach ($options['api_texts'] as $fieldIndex => $apiText){
+            if($fieldIndex > 0) $apiTextsDiv->separate();
+            $apiText->present();
+        }
+
+        $apiTextsDiv->close();
+        heightMargin(12);
+    }
+
     if(!empty($options['details'])){
         foreach ($options['details'] as $key => $value){
             echo '<div>';

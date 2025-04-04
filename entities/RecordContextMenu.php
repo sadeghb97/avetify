@@ -1,6 +1,7 @@
 <?php
 abstract class RecordContextMenu {
     public int $singleWidth = 115;
+    public int $singleHeight = 35;
     public string | null $currentRecord = null;
 
     public function __construct(public array $options, public string $ctxId, public int $rowLength = 2){
@@ -48,9 +49,18 @@ abstract class RecordContextMenu {
                 }
 
                 event.preventDefault();
+                const menuWidth = <?php echo $this->rowLength * $this->singleWidth ?>;
+                const menuHeight = <?php echo count($this->options) * $this->singleHeight ?>;
+                const screenWidth = window.innerWidth;
+                const screenHeight = window.innerHeight;
+                const xMenu = ((event.clientX + menuWidth) > screenWidth) ?
+                    screenWidth - menuWidth : event.clientX;
+                const yMenu = ((event.clientY + menuHeight) > screenHeight) ?
+                    screenHeight - menuHeight : event.clientY;
+
                 <?php echo $this->currentRecordVarName(); ?> = recordId;
-                <?php echo $this->menuVarName(); ?>.style.top = event.clientY + "px";
-                <?php echo $this->menuVarName(); ?>.style.left = event.clientX + "px";
+                <?php echo $this->menuVarName(); ?>.style.top = yMenu + "px";
+                <?php echo $this->menuVarName(); ?>.style.left = xMenu + "px";
 
                 <?php echo $this->menuVarName(); ?>.classList.remove("visible");
                 setTimeout(() => {
@@ -97,6 +107,7 @@ abstract class RecordContextMenu {
         HTMLInterface::addAttribute("class", "item");
         Styler::startAttribute();
         Styler::addStyle("width", $width . "px");
+        Styler::addStyle("height", $this->singleHeight . "px");
         Styler::closeAttribute();
         HTMLInterface::addAttribute("onclick",
             $this->provokerActionName() . "('" . $key . "')");
