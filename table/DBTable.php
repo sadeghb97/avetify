@@ -34,7 +34,6 @@ abstract class DBTable extends SBTable {
 
             if($queryRequired) {
                 $sql = $queryBuilder->createUpdate(new QueryField($itemPk, true, "pk"));
-                echo $sql . br();
                 if($this->conn->query($sql)) {
                     $titlePrinter->print($this->getItemName($oldRecord));
                     $messagePrinter->print(": Updated" . br());

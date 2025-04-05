@@ -394,7 +394,7 @@ abstract class SBLister {
             "listerArgs",
             "lister_form",
             "lister_params",
-            $allFieldIds
+            json_encode($allFieldIds)
         );
     }
 

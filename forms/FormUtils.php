@@ -5,18 +5,17 @@ class FormUtils {
         string $jsArgsName,
         string $formId,
         string $hiddenRawElementId,
-        array $fields,
+        string $allJSFieldsRaw,
         bool $isEditable = true,
         string $hiddenSelectorElementId = null,
         array $selectFields = null
     ){
-        $allJSFieldsRaw = json_encode($fields);
         ?>
             <script>
                 <?php echo $jsArgsName ?>.fields = <?php echo $allJSFieldsRaw; ?>;
 
                 <?php if($isEditable){ ?>
-                document.getElementById("<?php echo $formId ?>").addEventListener("submit", function(event) {
+                document.getElementById("<?php echo $formId; ?>").addEventListener("submit", function(event) {
                     const values = {}
                     <?php echo $jsArgsName ?>.fields.forEach((fieldElementId) => {
                         const fieldElement = document.getElementById(fieldElementId)
@@ -43,7 +42,6 @@ class FormUtils {
                         const selectValuesRaw = JSON.stringify(selectValues);
                         const tableSelectorRawElement = document.getElementById("<?php echo $hiddenSelectorElementId ?>");
                         tableSelectorRawElement.value = selectValuesRaw;
-                        console.log(selectValues)
                     <?php } ?>
                 });
                 <?php } ?>

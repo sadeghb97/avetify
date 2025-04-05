@@ -1,11 +1,12 @@
 <?php
 
 class SBEditableField extends SBTableField {
-    public string | null $namespace = null;
     public bool $useIDIdentifier = true;
     public bool $useNameIdentifier = false;
 
-    public function __construct(string $title, string $key, public IDGetter | null $idGetter = null){
+    public function __construct(string $title, string $key,
+                                public IDGetter | null $idGetter = null,
+                                public string | null $namespace = null){
         parent::__construct($title, $key);
         $this->editable = true;
     }

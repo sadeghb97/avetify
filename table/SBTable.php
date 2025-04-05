@@ -10,6 +10,7 @@ class SBTable extends SetModifier {
     public bool $printRowIndex = true;
     public bool $enableSelectRecord = false;
     public bool $enableCreatingRow = false;
+    public bool $forcePatchRecords = false;
     public bool $useClassicButtons = false;
     public bool $isSortable = true;
 
@@ -93,11 +94,16 @@ class SBTable extends SetModifier {
         if($this->isEditable) {
             $allJSEditableFields = [];
             foreach ($this->fields as $field) {
-                if ($field instanceof SBEditableField) {
-                    foreach ($this->currentRecords as $record) {
+                foreach ($this->currentRecords as $record) {
+                    if ($field instanceof SBEditableField) {
                         $allJSEditableFields[] = $field->getEditableFieldIdentifier($record);
                     }
+                    else if($this->forcePatchRecords && $field->onCreateField != null){
+                        $feField = $field->getForcedEditableClone();
+                        $allJSEditableFields[] = $feField->getEditableFieldIdentifier($record);
+                    }
                 }
+
             }
 
             $allSelectFields = null;
@@ -113,7 +119,7 @@ class SBTable extends SetModifier {
                 $this->getJSArgsName(),
                 $this->getTableFormName(),
                 $this->getRawTableFieldsName(),
-                $allJSEditableFields,
+                json_encode($allJSEditableFields),
                 $this->isEditable,
                 $this->enableSelectRecord ? $this->getTableSelectorName() : null,
                 $allSelectFields
@@ -177,7 +183,11 @@ class SBTable extends SetModifier {
             if($this->printRowIndex) SBTableField::renderIndexTD($recIndex);
             $recIndex++;
             foreach ($this->fields as $field){
-                $field->renderRecord($record);
+                if($this->forcePatchRecords && !$field->isEditable() && $field->onCreateField != null){
+                    $feField = $field->getForcedEditableClone();
+                    $feField->renderRecord($record);
+                }
+                else $field->renderRecord($record);
             }
             if($this->enableSelectRecord) $this->selectorField->renderRecord($record);
             self::closeTR();

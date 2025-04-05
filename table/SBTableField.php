@@ -151,18 +151,33 @@ class SBTableField {
     }
 
     public function setEditableOnCreate(bool $required = false,
-                            SBEditableField | null $editableField = null,
-                            IDGetter | null $idGetter = null) : SBTableField {
-        if($editableField == null){
-            if($this instanceof SBEditableField) $this->onCreateField = clone $this;
-            else $this->onCreateField = new SBEditableField($this->title, $this->key);
-            $this->onCreateField->idGetter = $idGetter;
-        }
-        else $this->onCreateField = $editableField;
+                            SBEditableField | null $editableField = null) : SBTableField {
+
+        $this->onCreateField = $editableField;
+        $this->onCreateField->requiredOnCreate = $required;
+        $this->onCreateField->useNameIdentifier = true;
+        return $this;
+    }
+
+    public function autoEditableOnCreate(bool $required = false,
+                                        IDGetter | null $idGetter = null,
+                                        string | null $namespace = null) : SBTableField {
+
+        if($this instanceof SBEditableField) $this->onCreateField = clone $this;
+        else $this->onCreateField = new SBEditableField($this->title, $this->key);
+        $this->onCreateField->idGetter = $idGetter;
+        $this->onCreateField->namespace = $namespace;
 
         $this->onCreateField->requiredOnCreate = $required;
         $this->onCreateField->useNameIdentifier = true;
         return $this;
+    }
+
+    public function getForcedEditableClone() : SBEditableField {
+        $feField = clone $this->onCreateField;
+        $feField->useNameIdentifier = false;
+        $feField->useIDIdentifier = true;
+        return $feField;
     }
 
     public static function renderIndexTH($rowTitle){
