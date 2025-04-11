@@ -16,6 +16,10 @@ function getMonth(int $unixTime): int {
     return (int) date("m", $unixTime);
 }
 
+function defaultShamsiFormat(int $unixTime) : string {
+    return jdate("Y/m/d - H:i:s", $unixTime, '', 'Asia/Tehran', 'en');
+}
+
 function formattedTimeToUnixTimestamp($date, $time, $separator = '-', $timezone = 'UTC') : int {
     $formattedDate = $separator != "-" ? str_replace($separator, '-', $date) : $date;
     $datetime = $formattedDate . ' ' . $time;
