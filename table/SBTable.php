@@ -236,8 +236,8 @@ class SBTable extends SetModifier {
         if($currentTrigger == $this->getDeleteButtonID()) {
             $this->handleDeletingFields($selectedRecords);
         }
-        else {
-            if (isset($_POST[$this->getRawTableFieldsName()])) {
+        else if (isset($_POST[$this->getRawTableFieldsName()])) {
+            if($this->enableCreatingRow) {
                 $creatingFields = [];
                 foreach ($this->fields as $field) {
                     if ($field->onCreateField != null) {
@@ -251,27 +251,27 @@ class SBTable extends SetModifier {
                     }
                 }
                 $this->handleCreatingFields($creatingFields);
+            }
 
-                $itemsFields = [];
-                $tableFieldsRaw = $_POST[$this->getRawTableFieldsName()];
-                $tableFieldsList = json_decode($tableFieldsRaw, true);
+            $itemsFields = [];
+            $tableFieldsRaw = $_POST[$this->getRawTableFieldsName()];
+            $tableFieldsList = json_decode($tableFieldsRaw, true);
 
-                foreach ($tableFieldsList as $tableFieldRawKey => $tableFieldValue) {
-                    $lastPos = strrpos($tableFieldRawKey, "_");
-                    if (strlen($tableFieldRawKey) > ($lastPos + 1)) {
-                        $itemId = substr($tableFieldRawKey, $lastPos + 1);
-                        $remains = substr($tableFieldRawKey, 0, $lastPos);
+            foreach ($tableFieldsList as $tableFieldRawKey => $tableFieldValue) {
+                $lastPos = strrpos($tableFieldRawKey, "_");
+                if (strlen($tableFieldRawKey) > ($lastPos + 1)) {
+                    $itemId = substr($tableFieldRawKey, $lastPos + 1);
+                    $remains = substr($tableFieldRawKey, 0, $lastPos);
 
-                        if (strlen($remains) > (strlen($this->setKey) + 1)) {
-                            $itemFieldKey = substr($remains, (strlen($this->setKey) + 1));
-                            if (!isset($itemsFields[$itemId])) $itemsFields[$itemId] = [];
-                            $itemsFields[$itemId][$itemFieldKey] = $tableFieldValue;
-                        }
+                    if (strlen($remains) > (strlen($this->setKey) + 1)) {
+                        $itemFieldKey = substr($remains, (strlen($this->setKey) + 1));
+                        if (!isset($itemsFields[$itemId])) $itemsFields[$itemId] = [];
+                        $itemsFields[$itemId][$itemFieldKey] = $tableFieldValue;
                     }
                 }
-
-                $this->handleSubmittedFields($itemsFields);
             }
+
+            $this->handleSubmittedFields($itemsFields);
         }
     }
 

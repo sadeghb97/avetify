@@ -150,9 +150,7 @@ class SBTableField {
         return true;
     }
 
-    public function setEditableOnCreate(bool $required = false,
-                            SBEditableField | null $editableField = null) : SBTableField {
-
+    public function setEditableOnCreate(bool $required, SBEditableField $editableField) : SBTableField {
         $this->onCreateField = $editableField;
         $this->onCreateField->requiredOnCreate = $required;
         $this->onCreateField->useNameIdentifier = true;
