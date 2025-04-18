@@ -2,7 +2,7 @@
 
 class SBTableField {
     public bool $isNumeric = false;
-    public bool $isPersian = false;
+    public bool $rtl = false;
     public bool $isCentered = true;
     public bool $isUnbreakable = false;
     public bool $isSortable = false;
@@ -28,7 +28,7 @@ class SBTableField {
     }
 
     public function headerCellStyles(){
-        if($this->isPersian) {
+        if($this->rtl) {
             Styler::addStyle("font-family", "IranSans");
             Styler::addStyle("direction", "rtl");
         }
@@ -75,8 +75,8 @@ class SBTableField {
         return $this;
     }
 
-    public function setPersian() : SBTableField {
-        $this->isPersian = true;
+    public function setRtl() : SBTableField {
+        $this->rtl = true;
         return $this;
     }
 
@@ -165,6 +165,7 @@ class SBTableField {
         else $this->onCreateField = new SBEditableField($this->title, $this->key);
         $this->onCreateField->idGetter = $idGetter;
         $this->onCreateField->namespace = $namespace;
+        $this->onCreateField->rtl = $this->rtl;
 
         $this->onCreateField->requiredOnCreate = $required;
         $this->onCreateField->useNameIdentifier = true;

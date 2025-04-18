@@ -283,10 +283,23 @@ abstract class SBEntity extends SetModifier {
                     echo ' name="' . $key . '" rows="8" cols="150">' . $value . '</textarea><br>';
                 }
                 else {
-                    echo '<input type="text" name="' . $key
-                        . '" value="'
-                        . ($value ? $value : "")
-                        . '" placeholder="' . $title . '" class="empty" style="width: 80%; font-size: 14pt" /><br><br>';
+                    echo '<input ';
+                    HTMLInterface::addAttribute("type", "text");
+                    HTMLInterface::addAttribute("name", $key);
+                    HTMLInterface::addAttribute("value", $value ? $value : "");
+                    HTMLInterface::addAttribute("placeholder", $title);
+                    HTMLInterface::addAttribute("class", "empty");
+                    Styler::startAttribute();
+                    Styler::addStyle("width", "80%");
+                    Styler::addStyle("font-size", "14pt");
+                    Styler::addStyle("margin-bottom", "12px");
+                    Styler::addStyle("margin-bottom", "12px");
+                    if($field->rtl) {
+                        Styler::addStyle("font-family", "IranSans");
+                        Styler::addStyle("direction", "rtl");
+                    }
+                    Styler::closeAttribute();
+                    HTMLInterface::closeSingleTag();
                 }
             }
             else if($pk && $field->printable) {

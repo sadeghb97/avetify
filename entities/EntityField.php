@@ -9,6 +9,7 @@ class EntityField
     public ?string $maxImageSize = null;
     public int $forcedWidthDimension = 0;
     public int $forcedHeightDimension = 0;
+    public bool $rtl = false;
     public bool $writable = false; // add field to edit and add forms
     public bool $printable = true; // print in forms
     public bool $required = false; // must have value in add and edit forms
@@ -30,6 +31,11 @@ class EntityField
 
     public function setPath(string $path) : EntityField {
         $this->path = $path;
+        return $this;
+    }
+
+    public function setRtl() : EntityField {
+        $this->rtl = true;
         return $this;
     }
 
