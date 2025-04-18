@@ -41,9 +41,10 @@ require_once "entities/SortFactor.php";
 require_once "entities/FilterFactor.php";
 require_once "entities/ValueGetter.php";
 
+require_once "fields/JSInputField.php";
 require_once "fields/APIMedalField.php";
-require_once "fields/APITextField.php";
-require_once "fields/APIACTextField.php";
+require_once "fields/JSTextField.php";
+require_once "fields/JSACTextField.php";
 require_once "fields/APISpanField.php";
 
 require_once "components/Placeable.php";

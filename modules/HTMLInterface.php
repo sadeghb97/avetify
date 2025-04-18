@@ -48,6 +48,17 @@
          echo '</a>';
      }
 
+     public static function placeText(string $content, WebModifier | null $modifier = null){
+         echo '<span ';
+         if($modifier && $modifier->htmlModifier) $modifier->htmlModifier->applyModifiers();
+         Styler::startAttribute();
+         if($modifier && $modifier->styler) $modifier->styler->appendStyles();
+         Styler::closeAttribute();
+         HTMLInterface::closeTag();
+         echo $content;
+         echo '</span>';
+     }
+
      public static function placeSimpleLink(string $href, string $title){
          $htmlModifier = new HTMLModifier();
          $stylesModifier = new Styler();
@@ -121,6 +132,16 @@
          HTMLInterface::closeDiv();
      }
 
+     public static function placeHorizontalDivider(int $width){
+         echo '<span ';
+         Styler::startAttribute();
+         Styler::addStyle("display", "inline-block");
+         Styler::addStyle("width", $width . "px");
+         Styler::closeAttribute();
+         HTMLInterface::closeTag();
+         echo '</span>';
+     }
+
      public static function placeFullACText(string $id, string $listId, array $list){
          self::placeACText($id, $listId);
          self::placeDatalist($listId, $list);
@@ -133,6 +154,67 @@
          HTMLInterface::closeSingleTag();
      }
 
+     public static function placeHiddenField(string $id, string $value, WebModifier | null $modifier = null){
+         echo '<input ';
+         HTMLInterface::addAttribute("type", "hidden");
+         self::applyInputIdentifiers(true, true, $id);
+         HTMLInterface::addAttribute("value", $value);
+         if($modifier && $modifier->htmlModifier) $modifier->htmlModifier->applyModifiers();
+         HTMLInterface::closeSingleTag();
+     }
+
+     public static function placeSimpleInput(string $id, string $value, string $label = "",
+                                             WebModifier | null $modifier = null,
+                                             $idSet = true, $nameSet = true){
+         echo '<input ';
+         HTMLInterface::addAttribute("type", "text");
+         self::applyInputIdentifiers($idSet, $nameSet, $id);
+         HTMLInterface::addAttribute("value", $value);
+         if($label) HTMLInterface::addAttribute("placeholder", $label);
+         if($modifier && $modifier->htmlModifier) $modifier->htmlModifier->applyModifiers();
+
+         Styler::startAttribute();
+         if($modifier && $modifier->styler) $modifier->styler->appendStyles();
+         Styler::closeAttribute();
+         HTMLInterface::closeSingleTag();
+     }
+
+     public static function placeSimpleCheckBox(string $id, string $value, string $label = "",
+                                                WebModifier | null $modifier = null,
+                                                $idSet = true, $nameSet = true){
+         if($label) echo $label . "&nbsp;";
+         echo '<input ';
+         HTMLInterface::addAttribute("type", "checkbox");
+         self::applyInputIdentifiers($idSet, $nameSet, $id);
+         if(!empty($value)) HTMLInterface::addAttribute("checked", "true");
+         if($modifier && $modifier->htmlModifier) $modifier->htmlModifier->applyModifiers();
+
+         Styler::startAttribute();
+         if($modifier && $modifier->styler) $modifier->styler->appendStyles();
+         Styler::closeAttribute();
+         HTMLInterface::closeSingleTag();
+     }
+
+     public static function placePostInput(string $id, string $value, string $label = "",
+                                           WebModifier | null $modifier = null){
+         self::placeSimpleInput($id, $value, $label, $modifier, false, true);
+     }
+
+     public static function placeFormInput(string $id, string $value, string $label = "",
+                                           WebModifier | null $modifier = null){
+         self::placeSimpleInput($id, $value, $label, $modifier, true, false);
+     }
+
+     public static function placePostCheckbox(string $id, string $value, string $label = "",
+                                              WebModifier | null $modifier = null){
+         self::placeSimpleCheckBox($id, $value, $label, $modifier, false, true);
+     }
+
+     public static function placeFormCheckbox(string $id, string $value, string $label = "",
+                                              WebModifier | null $modifier = null){
+         self::placeSimpleCheckBox($id, $value, $label, $modifier, true, false);
+     }
+
      public static function placeDatalist(string $listId, array $list){
          echo '<datalist ';
          HTMLInterface::addAttribute("id", $listId);
@@ -143,6 +225,11 @@
              HTMLInterface::closeTag();
          }
          echo '</datalist>';
+     }
+
+     public static function applyInputIdentifiers($idSet, $nameSet, $identifier){
+         if($idSet) HTMLInterface::addAttribute("name", $identifier);
+         if($nameSet) HTMLInterface::addAttribute("id", $identifier);
      }
 
      public static function placeSpan(string $text, WebModifier | null $modifier = null){

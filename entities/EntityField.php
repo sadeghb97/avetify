@@ -9,7 +9,8 @@ class EntityField
     public ?string $maxImageSize = null;
     public int $forcedWidthDimension = 0;
     public int $forcedHeightDimension = 0;
-    public $writable = false; // add field to edit and add forms
+    public bool $writable = false; // add field to edit and add forms
+    public bool $printable = true; // print in forms
     public bool $required = false; // must have value in add and edit forms
     public bool $numeric = false;
     public bool $special = false; //ignore in auto insert and update queries

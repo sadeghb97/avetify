@@ -1,12 +1,8 @@
 <?php
 
-class APISpanField {
+class APISpanField extends JSInputField {
     public function __construct(public string $recordKey, public string $fieldKey,
                                 public string $initValue, public string $apiEndpoint){
-    }
-
-    public static function initJs(){
-        ThemesManager::importJS(Routing::getAventadorRoot() . "fields/api_medals.js");
     }
 
     public function getFieldIdentifier() : string {

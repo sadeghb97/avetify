@@ -2,6 +2,7 @@
 
 abstract class SBEntity extends SetModifier {
     public ?DBConnection $conn = null;
+    public $latestFetchedRecord = null;
 
     public function __construct($dbConnection, string $key = "sbn"){
         parent::__construct($key);
@@ -155,9 +156,24 @@ abstract class SBEntity extends SetModifier {
         return $record;
     }
 
-    public function getCurrentRecord(){
-        if(isset($_GET['pk'])) return $this->getRecord($_GET['pk']);
+    public function getCurrentRecordPk() : string | null {
+        if(isset($_GET['pk'])) return $_GET['pk'];
         return null;
+    }
+
+    public function getCurrentRecord(){
+        $pk = $this->getCurrentRecordPk();
+        if($pk){
+            $this->latestFetchedRecord = $this->getRecord($_GET['pk']);
+            return $this->latestFetchedRecord;
+        }
+        return null;
+    }
+
+    public function fastCurrentRecord(){
+        $lr = $this->latestFetchedRecord;
+        if($lr != null) return $lr;
+        return $this->getCurrentRecord();
     }
 
     public function checkData($data, $createMode) : bool {
@@ -219,19 +235,17 @@ abstract class SBEntity extends SetModifier {
     public function extendRecord(&$item){}
 
     public function printForm($options = null){
-        $pk = !empty($_GET['pk']) ? $_GET['pk'] : null;
+        $pk = $this->getCurrentRecordPk();
 
         echo '<div style="height: 12px;"></div>';
         echo '<div style="width: 80%; margin: auto;">
-        <form method="post" name="mbform" enctype="multipart/form-data"><fieldset><legend>Insert & Update</legend>';
+        <form method="post" name="mbform" enctype="multipart/form-data" onsubmit="' . $this->jsValidateForm() . '">
+        <fieldset><legend>Insert & Update</legend>';
 
-        $record = null;
-        if($pk){
-            echo '<input type="hidden" name="entity_pk" id="entity_pk" value="' . $pk . '" />';
-            $record = $this->getRecord($pk);
-            if(!$record) return;
-        }
+        $record = $this->getCurrentRecord();
+        if(!$record) return;
 
+        echo '<input type="hidden" name="entity_pk" id="entity_pk" value="' . $pk . '" />';
         foreach ($this->dataFields() as $field){
             if($field->writable === True || ($field->writable && !$pk) ){
                 $fieldType = $field->type;
@@ -282,10 +296,14 @@ abstract class SBEntity extends SetModifier {
             }
         }
 
-        $this->formExtension($options);
+        $this->formMainExtension($options);
+        echo '</fieldset>';
+
+        $this->formMoreExtension($options);
 
         echo '<div style="text-align: center; margin-top: 24px;">' .
-            '<button type="submit" name="entity_form" value="submit" style="width: 110px; height: 30px;" >Submit</button>';
+            '<button type="submit" name="entity_form" value="submit" 
+                style="width: 110px; height: 30px;" >Submit</button>';
 
         foreach ($this->altTriggers() as $triggerKey => $triggerValue){
             echo '<button type="submit" name="entity_form" value="' . $triggerKey .
@@ -293,7 +311,6 @@ abstract class SBEntity extends SetModifier {
         }
         echo '</div>';
 
-        echo '</fieldset>';
         echo '</form>';
     }
 
@@ -338,9 +355,6 @@ abstract class SBEntity extends SetModifier {
                 }
             }
 
-            //printPreArray($data);
-            //printPreArray($_FILES);
-
             if($entityPk && count($avatarFields) > 0){
                 foreach ($avatarFields as $af){
                     $up = false;
@@ -378,13 +392,24 @@ abstract class SBEntity extends SetModifier {
                 }
             }
 
+            $this->manualHandleForm();
         }
     }
 
-    public function formExtension($options){}
+    //extension inside main legend
+    public function formMainExtension($options){}
+
+    //extension in new legends
+    public function formMoreExtension($options){}
+
+    public function manualHandleForm(){}
 
     public function entityPage() : string {
         return "";
+    }
+
+    public function jsValidateForm() : string {
+        return "return true;";
     }
 
     public function adjustCreateData(&$data, $options = null){}
@@ -405,6 +430,28 @@ abstract class SBEntity extends SetModifier {
 
     public function isSuperKeyNumeric() : bool {
         return true;
+    }
+
+    public function openEntityPage(){
+        $record = $this->getCurrentRecord();
+        $title = $record ? $this->getPageTitle($record) : "Add Record";
+
+        $theme = $this->getTheme();
+        $theme->placeHeader($title);
+    }
+
+    public function renderEntityPage(){
+        $this->openEntityPage();
+        $this->handleForm();
+        $this->printForm();
+    }
+
+    public function getTheme() : ThemesManager {
+        return new GreenTheme();
+    }
+
+    public function getPageTitle($item) : string {
+        return $this->getItemName($item);
     }
 
     abstract public function getSuperKey();

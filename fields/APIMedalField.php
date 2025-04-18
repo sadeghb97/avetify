@@ -1,13 +1,9 @@
 <?php
 
-class APIMedalField {
+class APIMedalField extends JSInputField {
     public function __construct(public string $recordKey, public string $medalKey,
                                 public string $icon, public int $medalInitValue,
                                 public string $apiEndpoint){
-    }
-
-    public static function initJs(){
-        ThemesManager::importJS(Routing::getAventadorRoot() . "fields/api_medals.js");
     }
 
     public function getFieldIdentifier() : string {

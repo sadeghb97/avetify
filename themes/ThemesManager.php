@@ -59,6 +59,10 @@ class ThemesManager {
         self::importJS($this->ROOT_PATH . "externals/cropper/cropper.min.js");
     }
 
+    public function importAvnJSFields(){
+        self::importJS($this->ROOT_PATH . "fields/fields.js");
+    }
+
     public function importMainJSInterface(){
         self::importJS($this->ROOT_PATH . "themes/assets/interface.js");
     }
