@@ -70,17 +70,17 @@ require_once "lister/SBListCategory.php";
 require_once "lister/SBLister.php";
 require_once "lister/RankingList.php";
 
-require_once "table/SBTableField.php";
-require_once "table/SBTableSortField.php";
 require_once "table/SBTable.php";
 require_once "table/DBTable.php";
 require_once "table/JSONTable.php";
-require_once "table/LinkFields.php";
-require_once "table/ImageFields.php";
-require_once "table/EditableFields.php";
-require_once "table/NumberFields.php";
-require_once "table/DateFields.php";
-require_once "table/TextFields.php";
+require_once "table/fields/SBTableField.php";
+require_once "table/fields/SBTableSortField.php";
+require_once "table/fields/LinkFields.php";
+require_once "table/fields/ImageFields.php";
+require_once "table/fields/EditableFields.php";
+require_once "table/fields/NumberFields.php";
+require_once "table/fields/DateFields.php";
+require_once "table/fields/TextFields.php";
 
 require_once "crawling/Scrapper.php";
 require_once "crawling/RawDocumentLoader.php";

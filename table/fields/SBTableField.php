@@ -184,9 +184,22 @@ class SBTableField {
         echo '</th>';
     }
 
-    public static function renderIndexTD($value){
+    public static function renderIndexTD($value, $link = ""){
         echo '<td style="text-align: center">';
+
+        if($link) {
+            echo '<a ';
+            HTMLInterface::addAttribute("target", "_blank");
+            HTMLInterface::addAttribute("href", $link);
+            Styler::startAttribute();
+            Styler::addStyle("color", "black");
+            Styler::closeAttribute();
+            HTMLInterface::closeTag();
+        }
+
         echo $value;
+
+        if($link) echo '</a>';
         echo '</td>';
     }
 

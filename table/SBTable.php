@@ -1,6 +1,6 @@
 <?php
 
-class SBTable extends SetModifier {
+class SBTable extends SetModifier implements EntityLink {
     public array $records;
 
     /** @var SBTableField[] $fields */
@@ -180,7 +180,7 @@ class SBTable extends SetModifier {
         }
         foreach ($this->currentRecords as $record){
             $this->openNormalTR($record);
-            if($this->printRowIndex) SBTableField::renderIndexTD($recIndex);
+            if($this->printRowIndex) SBTableField::renderIndexTD($recIndex, $this->getItemLink($record));
             $recIndex++;
             foreach ($this->fields as $field){
                 if($this->forcePatchRecords && !$field->isEditable() && $field->onCreateField != null){
@@ -343,5 +343,9 @@ class SBTable extends SetModifier {
 
     public function recordsLimit() : int {
         return 5000;
+    }
+
+    public function getItemLink($record): string {
+        return "";
     }
 }
