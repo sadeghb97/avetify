@@ -292,8 +292,12 @@ abstract class SBEntity extends SetModifier {
                     Styler::startAttribute();
                     Styler::addStyle("width", "80%");
                     Styler::addStyle("font-size", "14pt");
-                    Styler::addStyle("margin-bottom", "12px");
-                    Styler::addStyle("margin-bottom", "12px");
+                    Styler::addStyle("margin-top", "8px");
+                    Styler::addStyle("margin-bottom", "8px");
+                    Styler::addStyle("padding-left", "8px");
+                    Styler::addStyle("padding-right", "8px");
+                    Styler::addStyle("padding-top", "4px");
+                    Styler::addStyle("padding-bottom", "4px");
                     if($field->rtl) {
                         Styler::addStyle("font-family", "IranSans");
                         Styler::addStyle("direction", "rtl");
