@@ -2,6 +2,7 @@
 require_once "routing/Routing.php";
 
 require_once "db/DBConnection.php";
+require_once "db/DBFilter.php";
 require_once "db/QueryBuilder.php";
 
 require_once"externals/ImageManipulator.php";
@@ -82,6 +83,7 @@ require_once "table/fields/EditableFields.php";
 require_once "table/fields/NumberFields.php";
 require_once "table/fields/DateFields.php";
 require_once "table/fields/TextFields.php";
+require_once "table/fields/FlagFields.php";
 
 require_once "crawling/Scrapper.php";
 require_once "crawling/RawDocumentLoader.php";
@@ -121,6 +123,7 @@ require_once "calc/DateStatsCalculator.php";
 require_once "calc/IRDateStatsCalculator.php";
 
 require_once "repo/countries/WorldCountries.php";
+require_once "repo/countries/World.php";
 
 $AVENTADOR_ROOT_PATH = "";
 $AVENTADOR_PHYSICAL_ROOT_PATH = "";

@@ -37,7 +37,11 @@ abstract class DBConnection extends mysqli {
 
             $out .= ($filter->key . " ");
             $out .= ($filter->operator . " ");
-            $out .= ($filter->value . " ");
+
+            if(!$filter->isNumeric) $out .= "'";
+            $out .= $filter->value;
+            if(!$filter->isNumeric) $out .= "'";
+            $out .= " ";
         }
 
         return $out;

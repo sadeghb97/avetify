@@ -31,4 +31,8 @@ class WorldCountries {
 
         return $this->getCountryFlag($details['dep']);
     }
+
+    public function countriesClone() : array {
+        return array_merge([], $this->map);
+    }
 }

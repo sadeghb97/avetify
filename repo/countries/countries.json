@@ -1,1 +1,3868 @@
-[{"alpha2":"AD","alpha3":"AND","continent":"Europe","currency_code":"EUR","long_name":"The Principality of Andorra","short_name":"Andorra","languages":["ca"],"nationality":"Andorran","region":"Europe","subregion":"Southern Europe"},{"alpha2":"AE","alpha3":"ARE","continent":"Asia","currency_code":"AED","long_name":"The United Arab Emirates","short_name":"United Arab Emirates","languages":["ar"],"nationality":"Emirian","region":"Asia","subregion":"Western Asia"},{"alpha2":"AF","alpha3":"AFG","continent":"Asia","currency_code":"AFN","long_name":"The Islamic Republic of Afghanistan","short_name":"Afghanistan","languages":["ps","uz","tk"],"nationality":"Afghan","region":"Asia","subregion":"Southern Asia"},{"alpha2":"AG","alpha3":"ATG","continent":"North America","currency_code":"XCD","long_name":"Antigua and Barbuda","short_name":"Antigua and Barbuda","languages":["en"],"nationality":"Antiguan, Barbudan","region":"Americas","subregion":"Caribbean"},{"alpha2":"AI","alpha3":"AIA","continent":"North America","currency_code":"XCD","long_name":"Anguilla","short_name":"Anguilla","languages":["en"],"nationality":"Anguillian","region":"Americas","subregion":"Caribbean"},{"alpha2":"AL","alpha3":"ALB","continent":"Europe","currency_code":"ALL","long_name":"The Republic of Albania","short_name":"Albania","languages":["sq"],"nationality":"Albanian","region":"Europe","subregion":"Southern Europe"},{"alpha2":"AM","alpha3":"ARM","continent":"Asia","currency_code":"AMD","long_name":"The Republic of Armenia","short_name":"Armenia","languages":["hy","ru"],"nationality":"Armenian","region":"Asia","subregion":"Western Asia"},{"alpha2":"AO","alpha3":"AGO","continent":"Africa","currency_code":"AOA","long_name":"The Republic of Angola","short_name":"Angola","languages":["pt"],"nationality":"Angolan","region":"Africa","subregion":"Middle Africa"},{"alpha2":"AQ","alpha3":"ATA","continent":"Antarctica","currency_code":"USD","long_name":"Antarctica","short_name":"Antarctica","languages":[],"nationality":"","region":"","subregion":"","dep":true},{"alpha2":"AR","alpha3":"ARG","continent":"South America","currency_code":"ARS","long_name":"The Argentine Republic","short_name":"Argentina","languages":["es","gn"],"nationality":"Argentinean","region":"Americas","subregion":"South America"},{"alpha2":"AS","alpha3":"ASM","continent":"Australia","currency_code":"USD","long_name":"The Territory of American Samoa","short_name":"American Samoa","languages":["en","sm"],"nationality":"American Samoan","region":"Oceania","subregion":"Polynesia"},{"alpha2":"AT","alpha3":"AUT","continent":"Europe","currency_code":"EUR","long_name":"The Republic of Austria","short_name":"Austria","languages":["de"],"nationality":"Austrian","region":"Europe","subregion":"Western Europe"},{"alpha2":"AU","alpha3":"AUS","continent":"Australia","currency_code":"AUD","long_name":"The Commonwealth of Australia","short_name":"Australia","languages":["en"],"nationality":"Australian","region":"Oceania","subregion":"Australia and New Zealand"},{"alpha2":"AW","alpha3":"ABW","continent":"North America","currency_code":"AWG","long_name":"Aruba","short_name":"Aruba","languages":["nl"],"nationality":"Aruban","region":"Americas","subregion":"Caribbean"},{"alpha2":"AX","alpha3":"ALA","continent":"Europe","currency_code":"EUR","long_name":"\u00c5land","short_name":"\u00c5land Islands","languages":["sv"],"nationality":"Swedish","region":"Europe","subregion":"Northern Europe"},{"alpha2":"AZ","alpha3":"AZE","continent":"Asia","currency_code":"AZN","long_name":"The Republic of Azerbaijan","short_name":"Azerbaijan","languages":["az","hy"],"nationality":"Azerbaijani","region":"Asia","subregion":"Western Asia"},{"alpha2":"BA","alpha3":"BIH","continent":"Europe","currency_code":"BAM","long_name":"Bosnia and Herzegovina","short_name":"Bosnia and Herzegovina","languages":["bs","hr","sr"],"nationality":"Bosnian, Herzegovinian","region":"Europe","subregion":"Southern Europe"},{"alpha2":"BB","alpha3":"BRB","continent":"North America","currency_code":"BBD","long_name":"Barbados","short_name":"Barbados","languages":["en"],"nationality":"Barbadian","region":"Americas","subregion":"Caribbean"},{"alpha2":"BD","alpha3":"BGD","continent":"Asia","currency_code":"BDT","long_name":"The People's Republic of Bangladesh","short_name":"Bangladesh","languages":["bn"],"nationality":"Bangladeshi","region":"Asia","subregion":"Southern Asia"},{"alpha2":"BE","alpha3":"BEL","continent":"Europe","currency_code":"EUR","long_name":"The Kingdom of Belgium","short_name":"Belgium","languages":["nl","fr","de"],"nationality":"Belgian","region":"Europe","subregion":"Western Europe"},{"alpha2":"BF","alpha3":"BFA","continent":"Africa","currency_code":"XOF","long_name":"Burkina Faso","short_name":"Burkina Faso","languages":["fr","ff"],"nationality":"Burkinabe","region":"Africa","subregion":"Western Africa"},{"alpha2":"BG","alpha3":"BGR","continent":"Europe","currency_code":"BGN","long_name":"The Republic of Bulgaria","short_name":"Bulgaria","languages":["bg"],"nationality":"Bulgarian","region":"Europe","subregion":"Eastern Europe"},{"alpha2":"BH","alpha3":"BHR","continent":"Asia","currency_code":"BHD","long_name":"The Kingdom of Bahrain","short_name":"Bahrain","languages":["ar"],"nationality":"Bahraini","region":"Asia","subregion":"Western Asia"},{"alpha2":"BI","alpha3":"BDI","continent":"Africa","currency_code":"BIF","long_name":"The Republic of Burundi","short_name":"Burundi","languages":["fr","rn"],"nationality":"Burundian","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"BJ","alpha3":"BEN","continent":"Africa","currency_code":"XOF","long_name":"The Republic of Benin","short_name":"Benin","languages":["fr"],"nationality":"Beninese","region":"Africa","subregion":"Western Africa"},{"alpha2":"BL","alpha3":"BLM","continent":"North America","currency_code":"EUR","long_name":"The Collectivity of Saint-Barth\u00e9lemy","short_name":"Saint Barth\u00e9lemy","languages":["fr"],"nationality":"Saint Barth\u00e9lemy Islander","region":"Americas","subregion":"Caribbean","dep":true},{"alpha2":"BM","alpha3":"BMU","continent":"North America","currency_code":"BMD","long_name":"Bermuda","short_name":"Bermuda","languages":["en"],"nationality":"Bermudian","region":"Americas","subregion":"Northern America"},{"alpha2":"BN","alpha3":"BRN","continent":"Asia","currency_code":"BND","long_name":"The Nation of Brunei, the Abode of Peace","short_name":"Brunei Darussalam","languages":["ms"],"nationality":"Bruneian","region":"Asia","subregion":"South-Eastern Asia"},{"alpha2":"BO","alpha3":"BOL","continent":"South America","currency_code":"BOB","long_name":"The Plurinational State of Bolivia","short_name":"Bolivia (Plurinational State of)","languages":["es","ay","qu"],"nationality":"Bolivian","region":"Americas","subregion":"South America"},{"alpha2":"BQ","alpha3":"BES","continent":"North America","currency_code":"USD","long_name":"Bonaire, Sint Eustatius and Saba","short_name":"Bonaire, Sint Eustatius and Saba","languages":["nl","en"],"nationality":"Dutch","region":"Americas","subregion":"Caribbean","dep":true},{"alpha2":"BR","alpha3":"BRA","continent":"South America","currency_code":"BRL","long_name":"The Federative Republic of Brazil","short_name":"Brazil","languages":["pt"],"nationality":"Brazilian","region":"Americas","subregion":"South America"},{"alpha2":"BS","alpha3":"BHS","continent":"North America","currency_code":"BSD","long_name":"The Commonwealth of The Bahamas","short_name":"Bahamas","languages":["en"],"nationality":"Bahamian","region":"Americas","subregion":"Caribbean"},{"alpha2":"BT","alpha3":"BTN","continent":"Asia","currency_code":"BTN","long_name":"The Kingdom of Bhutan","short_name":"Bhutan","languages":["dz"],"nationality":"Bhutanese","region":"Asia","subregion":"Southern Asia"},{"alpha2":"BV","alpha3":"BVT","continent":"Antarctica","currency_code":"NOK","long_name":"Bouvet Island","short_name":"Bouvet Island","languages":[],"nationality":"","region":"","subregion":"","dep":"NO"},{"alpha2":"BW","alpha3":"BWA","continent":"Africa","currency_code":"BWP","long_name":"The Republic of Botswana","short_name":"Botswana","languages":["en","tn"],"nationality":"Motswana","region":"Africa","subregion":"Southern Africa"},{"alpha2":"BY","alpha3":"BLR","continent":"Europe","currency_code":"BYN","long_name":"The Republic of Belarus","short_name":"Belarus","languages":["be","ru"],"nationality":"Belarusian","region":"Europe","subregion":"Eastern Europe"},{"alpha2":"BZ","alpha3":"BLZ","continent":"North America","currency_code":"BZD","long_name":"Belize","short_name":"Belize","languages":["en","es"],"nationality":"Belizean","region":"Americas","subregion":"Central America"},{"alpha2":"CA","alpha3":"CAN","continent":"North America","currency_code":"CAD","long_name":"Canada","short_name":"Canada","languages":["en","fr"],"nationality":"Canadian","region":"Americas","subregion":"Northern America"},{"alpha2":"CC","alpha3":"CCK","continent":"Asia","currency_code":"AUD","long_name":"The Territory of Cocos (Keeling) Islands","short_name":"Cocos (Keeling) Islands","languages":["en"],"nationality":"Cocos Islander","region":"Oceania","subregion":"Australia and New Zealand","dep":true},{"alpha2":"CD","alpha3":"COD","continent":"Africa","currency_code":"CDF","long_name":"The Democratic Republic of the Congo","short_name":"Congo (Democratic Republic of the)","languages":["fr","ln","kg","sw","lu"],"nationality":"Congolese","region":"Africa","subregion":"Middle Africa"},{"alpha2":"CF","alpha3":"CAF","continent":"Africa","currency_code":"XAF","long_name":"The Central African Republic","short_name":"Central African Republic","languages":["fr","sg"],"nationality":"Central African","region":"Africa","subregion":"Middle Africa"},{"alpha2":"CG","alpha3":"COG","continent":"Africa","currency_code":"XAF","long_name":"The Republic of the Congo","short_name":"Congo","languages":["fr","ln"],"nationality":"Congolese","region":"Africa","subregion":"Middle Africa"},{"alpha2":"CH","alpha3":"CHE","continent":"Europe","currency_code":"CHF","long_name":"The Swiss Confederation","short_name":"Switzerland","languages":["de","fr","it"],"nationality":"Swiss","region":"Europe","subregion":"Western Europe"},{"alpha2":"CI","alpha3":"CIV","continent":"Africa","currency_code":"XOF","long_name":"The Republic of C\u00f4te d'Ivoire","short_name":"C\u00f4te d'Ivoire","languages":["fr"],"nationality":"Ivorian","region":"Africa","subregion":"Western Africa"},{"alpha2":"CK","alpha3":"COK","continent":"Australia","currency_code":"NZD","long_name":"The Cook Islands","short_name":"Cook Islands","languages":["en"],"nationality":"Cook Islander","region":"Oceania","subregion":"Polynesia","dep":true},{"alpha2":"CL","alpha3":"CHL","continent":"South America","currency_code":"CLP","long_name":"The Republic of Chile","short_name":"Chile","languages":["es"],"nationality":"Chilean","region":"Americas","subregion":"South America"},{"alpha2":"CM","alpha3":"CMR","continent":"Africa","currency_code":"XAF","long_name":"The Republic of Cameroon","short_name":"Cameroon","languages":["en","fr"],"nationality":"Cameroonian","region":"Africa","subregion":"Middle Africa"},{"alpha2":"CN","alpha3":"CHN","continent":"Asia","currency_code":"CNY","long_name":"The People's Republic of China","short_name":"China","languages":["zh"],"nationality":"Chinese","region":"Asia","subregion":"Eastern Asia"},{"alpha2":"CO","alpha3":"COL","continent":"South America","currency_code":"COP","long_name":"The Republic of Colombia","short_name":"Colombia","languages":["es"],"nationality":"Colombian","region":"Americas","subregion":"South America"},{"alpha2":"CR","alpha3":"CRI","continent":"North America","currency_code":"CRC","long_name":"The Republic of Costa Rica","short_name":"Costa Rica","languages":["es"],"nationality":"Costa Rican","region":"Americas","subregion":"Central America"},{"alpha2":"CU","alpha3":"CUB","continent":"North America","currency_code":"CUP","long_name":"The Republic of Cuba","short_name":"Cuba","languages":["es"],"nationality":"Cuban","region":"Americas","subregion":"Caribbean"},{"alpha2":"CV","alpha3":"CPV","continent":"Africa","currency_code":"CVE","long_name":"The Republic of Cabo Verde","short_name":"Cabo Verde","languages":["pt"],"nationality":"Cape Verdian","region":"Africa","subregion":"Western Africa"},{"alpha2":"CW","alpha3":"CUW","continent":"North America","currency_code":"ANG","long_name":"The Country of Cura\u00e7ao","short_name":"Cura\u00e7ao","languages":["nl"],"nationality":"Dutch","region":"Americas","subregion":"Caribbean"},{"alpha2":"CX","alpha3":"CXR","continent":"Asia","currency_code":"AUD","long_name":"The Territory of Christmas Island","short_name":"Christmas Island","languages":["en","zh","ms"],"nationality":"Christmas Island","region":"Oceania","subregion":"Australia and New Zealand","dep":true},{"alpha2":"CY","alpha3":"CYP","continent":"Asia","currency_code":"EUR","long_name":"The Republic of Cyprus","short_name":"Cyprus","languages":["el","tr","hy"],"nationality":"Cypriot","region":"Asia","subregion":"Western Asia"},{"alpha2":"CZ","alpha3":"CZE","continent":"Europe","currency_code":"CZK","long_name":"The Czech Republic","short_name":"Czechia","languages":["cs","sk"],"nationality":"Czech","region":"Europe","subregion":"Eastern Europe"},{"alpha2":"DE","alpha3":"DEU","continent":"Europe","currency_code":"EUR","long_name":"The Federal Republic of Germany","short_name":"Germany","languages":["de"],"nationality":"German","region":"Europe","subregion":"Western Europe"},{"alpha2":"DJ","alpha3":"DJI","continent":"Africa","currency_code":"DJF","long_name":"The Republic of Djibouti","short_name":"Djibouti","languages":["ar","fr"],"nationality":"Djibouti","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"DK","alpha3":"DNK","continent":"Europe","currency_code":"DKK","long_name":"The Kingdom of Denmark","short_name":"Denmark","languages":["da"],"nationality":"Danish","region":"Europe","subregion":"Northern Europe"},{"alpha2":"DM","alpha3":"DMA","continent":"North America","currency_code":"XCD","long_name":"The Commonwealth of Dominica","short_name":"Dominica","languages":["en"],"nationality":"Dominican","region":"Americas","subregion":"Caribbean"},{"alpha2":"DO","alpha3":"DOM","continent":"North America","currency_code":"DOP","long_name":"The Dominican Republic","short_name":"Dominican Republic","languages":["es"],"nationality":"Dominican","region":"Americas","subregion":"Caribbean"},{"alpha2":"DZ","alpha3":"DZA","continent":"Africa","currency_code":"DZD","long_name":"The People's Democratic Republic of Algeria","short_name":"Algeria","languages":["ar"],"nationality":"Algerian","region":"Africa","subregion":"Northern Africa"},{"alpha2":"EC","alpha3":"ECU","continent":"South America","currency_code":"USD","long_name":"The Republic of Ecuador","short_name":"Ecuador","languages":["es"],"nationality":"Ecuadorean","region":"Americas","subregion":"South America"},{"alpha2":"EE","alpha3":"EST","continent":"Europe","currency_code":"EUR","long_name":"The Republic of Estonia","short_name":"Estonia","languages":["et"],"nationality":"Estonian","region":"Europe","subregion":"Northern Europe"},{"alpha2":"EG","alpha3":"EGY","continent":"Africa","currency_code":"EGP","long_name":"The Arab Republic of Egypt","short_name":"Egypt","languages":["ar"],"nationality":"Egyptian","region":"Africa","subregion":"Northern Africa"},{"alpha2":"EH","alpha3":"ESH","continent":"Africa","currency_code":"MAD","long_name":"The Sahrawi Arab Democratic Republic","short_name":"Western Sahara","languages":["es","fr"],"nationality":"Sahrawi","region":"Africa","subregion":"Northern Africa"},{"alpha2":"ER","alpha3":"ERI","continent":"Africa","currency_code":"ETB","long_name":"The State of Eritrea","short_name":"Eritrea","languages":["en","ar","ti"],"nationality":"Eritrean","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"ES","alpha3":"ESP","continent":"Europe","currency_code":"EUR","long_name":"The Kingdom of Spain","short_name":"Spain","languages":["es"],"nationality":"Spanish","region":"Europe","subregion":"Southern Europe"},{"alpha2":"ET","alpha3":"ETH","continent":"Africa","currency_code":"ETB","long_name":"The Federal Democratic Republic of Ethiopia","short_name":"Ethiopia","languages":["am"],"nationality":"Ethiopian","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"FI","alpha3":"FIN","continent":"Europe","currency_code":"EUR","long_name":"The Republic of Finland","short_name":"Finland","languages":["fi","sv"],"nationality":"Finnish","region":"Europe","subregion":"Northern Europe"},{"alpha2":"FJ","alpha3":"FJI","continent":"Australia","currency_code":"FJD","long_name":"The Republic of Fiji","short_name":"Fiji","languages":["en","fj","hi","ur"],"nationality":"Fijian","region":"Oceania","subregion":"Melanesia"},{"alpha2":"FK","alpha3":"FLK","continent":"South America","currency_code":"FKP","long_name":"The Falkland Islands","short_name":"Falkland Islands (Malvinas)","languages":["en"],"nationality":"Falkland Islander","region":"Americas","subregion":"South America"},{"alpha2":"FM","alpha3":"FSM","continent":"Australia","currency_code":"USD","long_name":"The Federated States of Micronesia","short_name":"Micronesia (Federated States of)","languages":["en"],"nationality":"Micronesian","region":"Oceania","subregion":"Micronesia"},{"alpha2":"FO","alpha3":"FRO","continent":"Europe","currency_code":"DKK","long_name":"The Faroe Islands","short_name":"Faroe Islands","languages":["fo"],"nationality":"Faroese","region":"Europe","subregion":"Northern Europe"},{"alpha2":"FR","alpha3":"FRA","continent":"Europe","currency_code":"EUR","long_name":"The French Republic","short_name":"France","languages":["fr"],"nationality":"French","region":"Europe","subregion":"Western Europe"},{"alpha2":"GA","alpha3":"GAB","continent":"Africa","currency_code":"XAF","long_name":"The Gabonese Republic","short_name":"Gabon","languages":["fr"],"nationality":"Gabonese","region":"Africa","subregion":"Middle Africa"},{"alpha2":"GB","alpha3":"GBR","continent":"Europe","currency_code":"GBP","long_name":"The United Kingdom of Great Britain and Northern Ireland","short_name":"United Kingdom of Great Britain and Northern Ireland","languages":["en"],"nationality":"British","region":"Europe","subregion":"Northern Europe"},{"alpha2":"GD","alpha3":"GRD","continent":"North America","currency_code":"XCD","long_name":"Grenada","short_name":"Grenada","languages":["en"],"nationality":"Grenadian","region":"Americas","subregion":"Caribbean"},{"alpha2":"GE","alpha3":"GEO","continent":"Asia","currency_code":"GEL","long_name":"Georgia","short_name":"Georgia","languages":["ka"],"nationality":"Georgian","region":"Asia","subregion":"Western Asia"},{"alpha2":"GF","alpha3":"GUF","continent":"South America","currency_code":"EUR","long_name":"Guyane","short_name":"French Guiana","languages":["fr"],"nationality":"French Guianan","region":"Americas","subregion":"South America"},{"alpha2":"GG","alpha3":"GGY","continent":"Europe","currency_code":"GBP","long_name":"The Bailiwick of Guernsey","short_name":"Guernsey","languages":["en","fr"],"nationality":"Channel Islander","region":"Europe","subregion":"Northern Europe"},{"alpha2":"GH","alpha3":"GHA","continent":"Africa","currency_code":"GHS","long_name":"The Republic of Ghana","short_name":"Ghana","languages":["en"],"nationality":"Ghanaian","region":"Africa","subregion":"Western Africa"},{"alpha2":"GI","alpha3":"GIB","continent":"Europe","currency_code":"GIP","long_name":"Gibraltar","short_name":"Gibraltar","languages":["en"],"nationality":"Gibraltar","region":"Europe","subregion":"Southern Europe"},{"alpha2":"GL","alpha3":"GRL","continent":"North America","currency_code":"DKK","long_name":"Kalaallit Nunaat","short_name":"Greenland","languages":["kl"],"nationality":"Greenlandic","region":"Americas","subregion":"Northern America"},{"alpha2":"GM","alpha3":"GMB","continent":"Africa","currency_code":"GMD","long_name":"The Republic of The Gambia","short_name":"Gambia","languages":["en"],"nationality":"Gambian","region":"Africa","subregion":"Western Africa"},{"alpha2":"GN","alpha3":"GIN","continent":"Africa","currency_code":"GNF","long_name":"The Republic of Guinea","short_name":"Guinea","languages":["fr","ff"],"nationality":"Guinean","region":"Africa","subregion":"Western Africa"},{"alpha2":"GP","alpha3":"GLP","continent":"North America","currency_code":"EUR","long_name":"Guadeloupe","short_name":"Guadeloupe","languages":["fr"],"nationality":"French","region":"Americas","subregion":"Caribbean"},{"alpha2":"GQ","alpha3":"GNQ","continent":"Africa","currency_code":"XAF","long_name":"The Republic of Equatorial Guinea","short_name":"Equatorial Guinea","languages":["es","fr"],"nationality":"Equatorial Guinean","region":"Africa","subregion":"Middle Africa"},{"alpha2":"GR","alpha3":"GRC","continent":"Europe","currency_code":"EUR","long_name":"The Hellenic Republic","short_name":"Greece","languages":["el"],"nationality":"Greek","region":"Europe","subregion":"Southern Europe"},{"alpha2":"GS","alpha3":"SGS","continent":"Antarctica","currency_code":"GBP","long_name":"South Georgia and the South Sandwich Islands","short_name":"South Georgia and the South Sandwich Islands","languages":["en"],"nationality":"South Georgia and the South Sandwich Islander","region":"Americas","subregion":"South America"},{"alpha2":"GT","alpha3":"GTM","continent":"North America","currency_code":"GTQ","long_name":"The Republic of Guatemala","short_name":"Guatemala","languages":["es"],"nationality":"Guatemalan","region":"Americas","subregion":"Central America"},{"alpha2":"GU","alpha3":"GUM","continent":"Australia","currency_code":"USD","long_name":"The Territory of Guam","short_name":"Guam","languages":["en","ch","es"],"nationality":"Guamanian","region":"Oceania","subregion":"Micronesia"},{"alpha2":"GW","alpha3":"GNB","continent":"Africa","currency_code":"XOF","long_name":"The Republic of Guinea-Bissau","short_name":"Guinea-Bissau","languages":["pt"],"nationality":"Guinea-Bissauan","region":"Africa","subregion":"Western Africa"},{"alpha2":"GY","alpha3":"GUY","continent":"South America","currency_code":"GYD","long_name":"The Co-operative Republic of Guyana","short_name":"Guyana","languages":["en"],"nationality":"Guyanese","region":"Americas","subregion":"South America"},{"alpha2":"HK","alpha3":"HKG","continent":"Asia","currency_code":"HKD","long_name":"The Hong Kong Special Administrative Region of China","short_name":"Hong Kong","languages":["en","zh"],"nationality":"Hong Kongese","region":"Asia","subregion":"Eastern Asia"},{"alpha2":"HM","alpha3":"HMD","continent":"Antarctica","currency_code":"AUD","long_name":"The Territory of Heard Island and McDonald Islands","short_name":"Heard Island and McDonald Islands","languages":["en"],"nationality":"Heard and McDonald Islander","region":"","subregion":"","dep":"AU"},{"alpha2":"HN","alpha3":"HND","continent":"North America","currency_code":"HNL","long_name":"The Republic of Honduras","short_name":"Honduras","languages":["es"],"nationality":"Honduran","region":"Americas","subregion":"Central America"},{"alpha2":"HR","alpha3":"HRV","continent":"Europe","currency_code":"EUR","long_name":"The Republic of Croatia","short_name":"Croatia","languages":["hr"],"nationality":"Croatian","region":"Europe","subregion":"Southern Europe"},{"alpha2":"HT","alpha3":"HTI","continent":"North America","currency_code":"HTG","long_name":"The Republic of Haiti","short_name":"Haiti","languages":["fr","ht"],"nationality":"Haitian","region":"Americas","subregion":"Caribbean"},{"alpha2":"HU","alpha3":"HUN","continent":"Europe","currency_code":"HUF","long_name":"Hungary","short_name":"Hungary","languages":["hu"],"nationality":"Hungarian","region":"Europe","subregion":"Eastern Europe"},{"alpha2":"ID","alpha3":"IDN","continent":"Asia","currency_code":"IDR","long_name":"The Republic of Indonesia","short_name":"Indonesia","languages":["id"],"nationality":"Indonesian","region":"Asia","subregion":"South-Eastern Asia"},{"alpha2":"IE","alpha3":"IRL","continent":"Europe","currency_code":"EUR","long_name":"Ireland","short_name":"Ireland","languages":["en","ga"],"nationality":"Irish","region":"Europe","subregion":"Northern Europe"},{"alpha2":"IL","alpha3":"ISR","continent":"Asia","currency_code":"ILS","long_name":"The State of Israel","short_name":"Israel","languages":["he","ar"],"nationality":"Israeli","region":"Asia","subregion":"Western Asia"},{"alpha2":"IM","alpha3":"IMN","continent":"Europe","currency_code":"GBP","long_name":"The Isle of Man","short_name":"Isle of Man","languages":["en","gv"],"nationality":"Manx","region":"Europe","subregion":"Northern Europe"},{"alpha2":"IN","alpha3":"IND","continent":"Asia","currency_code":"INR","long_name":"The Republic of India","short_name":"India","languages":["hi","en"],"nationality":"Indian","region":"Asia","subregion":"Southern Asia"},{"alpha2":"IO","alpha3":"IOT","continent":"Asia","currency_code":"USD","long_name":"The British Indian Ocean Territory","short_name":"British Indian Ocean Territory","languages":["en"],"nationality":"Indian","region":"Africa","subregion":"Eastern Africa","dep":true},{"alpha2":"IQ","alpha3":"IRQ","continent":"Asia","currency_code":"IQD","long_name":"The Republic of Iraq","short_name":"Iraq","languages":["ar"],"nationality":"Iraqi","region":"Asia","subregion":"Western Asia"},{"alpha2":"IR","alpha3":"IRN","continent":"Asia","currency_code":"IRR","long_name":"The Islamic Republic of Iran","short_name":"Iran (Islamic Republic of)","languages":["fa"],"nationality":"Iranian","region":"Asia","subregion":"Southern Asia"},{"alpha2":"IS","alpha3":"ISL","continent":"Europe","currency_code":"ISK","long_name":"Iceland","short_name":"Iceland","languages":["is"],"nationality":"Icelander","region":"Europe","subregion":"Northern Europe"},{"alpha2":"IT","alpha3":"ITA","continent":"Europe","currency_code":"EUR","long_name":"The Italian Republic","short_name":"Italy","languages":["it"],"nationality":"Italian","region":"Europe","subregion":"Southern Europe"},{"alpha2":"JE","alpha3":"JEY","continent":"Europe","currency_code":"GBP","long_name":"The Bailiwick of Jersey","short_name":"Jersey","languages":["en","fr"],"nationality":"Channel Islander","region":"Europe","subregion":"Northern Europe"},{"alpha2":"JM","alpha3":"JAM","continent":"North America","currency_code":"JMD","long_name":"Jamaica","short_name":"Jamaica","languages":["en"],"nationality":"Jamaican","region":"Americas","subregion":"Caribbean"},{"alpha2":"JO","alpha3":"JOR","continent":"Asia","currency_code":"JOD","long_name":"The Hashemite Kingdom of Jordan","short_name":"Jordan","languages":["ar"],"nationality":"Jordanian","region":"Asia","subregion":"Western Asia"},{"alpha2":"JP","alpha3":"JPN","continent":"Asia","currency_code":"JPY","long_name":"Japan","short_name":"Japan","languages":["ja"],"nationality":"Japanese","region":"Asia","subregion":"Eastern Asia"},{"alpha2":"KE","alpha3":"KEN","continent":"Africa","currency_code":"KES","long_name":"The Republic of Kenya","short_name":"Kenya","languages":["en","sw"],"nationality":"Kenyan","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"KG","alpha3":"KGZ","continent":"Asia","currency_code":"KGS","long_name":"The Kyrgyz Republic","short_name":"Kyrgyzstan","languages":["ky","ru"],"nationality":"Kirghiz","region":"Asia","subregion":"Central Asia"},{"alpha2":"KH","alpha3":"KHM","continent":"Asia","currency_code":"KHR","long_name":"The Kingdom of Cambodia","short_name":"Cambodia","languages":["km"],"nationality":"Cambodian","region":"Asia","subregion":"South-Eastern Asia"},{"alpha2":"KI","alpha3":"KIR","continent":"Australia","currency_code":"AUD","long_name":"The Republic of Kiribati","short_name":"Kiribati","languages":["en"],"nationality":"I-Kiribati","region":"Oceania","subregion":"Micronesia"},{"alpha2":"KM","alpha3":"COM","continent":"Africa","currency_code":"KMF","long_name":"The Union of the Comoros","short_name":"Comoros","languages":["ar","fr"],"nationality":"Comoran","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"KN","alpha3":"KNA","continent":"North America","currency_code":"XCD","long_name":"Saint Kitts and Nevis","short_name":"Saint Kitts and Nevis","languages":["en"],"nationality":"Kittian and Nevisian","region":"Americas","subregion":"Caribbean"},{"alpha2":"KP","alpha3":"PRK","continent":"Asia","currency_code":"KPW","long_name":"The Democratic People's Republic of Korea","short_name":"Korea (Democratic People's Republic of)","languages":["ko"],"nationality":"North Korean","region":"Asia","subregion":"Eastern Asia"},{"alpha2":"KR","alpha3":"KOR","continent":"Asia","currency_code":"KRW","long_name":"The Republic of Korea","short_name":"Korea (Republic of)","languages":["ko"],"nationality":"South Korean","region":"Asia","subregion":"Eastern Asia"},{"alpha2":"KW","alpha3":"KWT","continent":"Asia","currency_code":"KWD","long_name":"The State of Kuwait","short_name":"Kuwait","languages":["ar"],"nationality":"Kuwaiti","region":"Asia","subregion":"Western Asia"},{"alpha2":"KY","alpha3":"CYM","continent":"North America","currency_code":"KYD","long_name":"The Cayman Islands","short_name":"Cayman Islands","languages":["en"],"nationality":"Caymanian","region":"Americas","subregion":"Caribbean"},{"alpha2":"KZ","alpha3":"KAZ","continent":"Asia","currency_code":"KZT","long_name":"The Republic of Kazakhstan","short_name":"Kazakhstan","languages":["kk","ru"],"nationality":"Kazakhstani","region":"Asia","subregion":"Central Asia"},{"alpha2":"LA","alpha3":"LAO","continent":"Asia","currency_code":"LAK","long_name":"The Lao People's Democratic Republic","short_name":"Lao People's Democratic Republic","languages":["lo"],"nationality":"Laotian","region":"Asia","subregion":"South-Eastern Asia"},{"alpha2":"LB","alpha3":"LBN","continent":"Asia","currency_code":"LBP","long_name":"The Lebanese Republic","short_name":"Lebanon","languages":["ar","fr"],"nationality":"Lebanese","region":"Asia","subregion":"Western Asia"},{"alpha2":"LC","alpha3":"LCA","continent":"North America","currency_code":"XCD","long_name":"Saint Lucia","short_name":"Saint Lucia","languages":["en"],"nationality":"Saint Lucian","region":"Americas","subregion":"Caribbean"},{"alpha2":"LI","alpha3":"LIE","continent":"Europe","currency_code":"CHF","long_name":"The Principality of Liechtenstein","short_name":"Liechtenstein","languages":["de"],"nationality":"Liechtensteiner","region":"Europe","subregion":"Western Europe"},{"alpha2":"LK","alpha3":"LKA","continent":"Asia","currency_code":"LKR","long_name":"The Democratic Socialist Republic of Sri Lanka","short_name":"Sri Lanka","languages":["si","ta"],"nationality":"Sri Lankan","region":"Asia","subregion":"Southern Asia"},{"alpha2":"LR","alpha3":"LBR","continent":"Africa","currency_code":"LRD","long_name":"The Republic of Liberia","short_name":"Liberia","languages":["en"],"nationality":"Liberian","region":"Africa","subregion":"Western Africa"},{"alpha2":"LS","alpha3":"LSO","continent":"Africa","currency_code":"LSL","long_name":"The Kingdom of Lesotho","short_name":"Lesotho","languages":["en","st"],"nationality":"Mosotho","region":"Africa","subregion":"Southern Africa"},{"alpha2":"LT","alpha3":"LTU","continent":"Europe","currency_code":"EUR","long_name":"The Republic of Lithuania","short_name":"Lithuania","languages":["lt"],"nationality":"Lithuanian","region":"Europe","subregion":"Northern Europe"},{"alpha2":"LU","alpha3":"LUX","continent":"Europe","currency_code":"EUR","long_name":"The Grand Duchy of Luxembourg","short_name":"Luxembourg","languages":["fr","de","lb"],"nationality":"Luxembourger","region":"Europe","subregion":"Western Europe"},{"alpha2":"LV","alpha3":"LVA","continent":"Europe","currency_code":"EUR","long_name":"The Republic of Latvia","short_name":"Latvia","languages":["lv"],"nationality":"Latvian","region":"Europe","subregion":"Northern Europe"},{"alpha2":"LY","alpha3":"LBY","continent":"Africa","currency_code":"LYD","long_name":"The State of Libya","short_name":"Libya","languages":["ar"],"nationality":"Libyan","region":"Africa","subregion":"Northern Africa"},{"alpha2":"MA","alpha3":"MAR","continent":"Africa","currency_code":"MAD","long_name":"The Kingdom of Morocco","short_name":"Morocco","languages":["ar"],"nationality":"Moroccan","region":"Africa","subregion":"Northern Africa"},{"alpha2":"MC","alpha3":"MCO","continent":"Europe","currency_code":"EUR","long_name":"The Principality of Monaco","short_name":"Monaco","languages":["fr"],"nationality":"Monegasque","region":"Europe","subregion":"Western Europe"},{"alpha2":"MD","alpha3":"MDA","continent":"Europe","currency_code":"MDL","long_name":"The Republic of Moldova","short_name":"Moldova (Republic of)","languages":["ro"],"nationality":"Moldovan","region":"Europe","subregion":"Eastern Europe"},{"alpha2":"ME","alpha3":"MNE","continent":"Europe","currency_code":"EUR","long_name":"Montenegro","short_name":"Montenegro","languages":["sr","bs","sq","hr"],"nationality":"Montenegrin","region":"Europe","subregion":"Southern Europe"},{"alpha2":"MF","alpha3":"MAF","continent":"North America","currency_code":"EUR","long_name":"The Collectivity of Saint-Martin","short_name":"Saint Martin (French part)","languages":["en","fr","nl"],"nationality":"French","region":"Americas","subregion":"Caribbean","dep":"FR"},{"alpha2":"MG","alpha3":"MDG","continent":"Africa","currency_code":"MGA","long_name":"The Republic of Madagascar","short_name":"Madagascar","languages":["fr","mg"],"nationality":"Malagasy","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"MH","alpha3":"MHL","continent":"Australia","currency_code":"USD","long_name":"The Republic of the Marshall Islands","short_name":"Marshall Islands","languages":["en","mh"],"nationality":"Marshallese","region":"Oceania","subregion":"Micronesia"},{"alpha2":"MK","alpha3":"MKD","continent":"Europe","currency_code":"MKD","long_name":"The Republic of North Macedonia","short_name":"North Macedonia","languages":["mk"],"nationality":"Macedonian","region":"Europe","subregion":"Southern Europe"},{"alpha2":"ML","alpha3":"MLI","continent":"Africa","currency_code":"XOF","long_name":"The Republic of Mali","short_name":"Mali","languages":["fr"],"nationality":"Malian","region":"Africa","subregion":"Western Africa"},{"alpha2":"MM","alpha3":"MMR","continent":"Asia","currency_code":"MMK","long_name":"The Republic of the Union of Myanmar","short_name":"Myanmar","languages":["my"],"nationality":"Myanmarian","region":"Asia","subregion":"South-Eastern Asia"},{"alpha2":"MN","alpha3":"MNG","continent":"Asia","currency_code":"MNT","long_name":"Mongolia","short_name":"Mongolia","languages":["mn"],"nationality":"Mongolian","region":"Asia","subregion":"Eastern Asia"},{"alpha2":"MO","alpha3":"MAC","continent":"Asia","currency_code":"MOP","long_name":"The Macao Special Administrative Region of China","short_name":"Macao","languages":["zh","pt"],"nationality":"Chinese","region":"Asia","subregion":"Eastern Asia"},{"alpha2":"MP","alpha3":"MNP","continent":"Australia","currency_code":"USD","long_name":"The Commonwealth of the Northern Mariana Islands","short_name":"Northern Mariana Islands","languages":["en","ch"],"nationality":"American","region":"Oceania","subregion":"Micronesia","dep":true},{"alpha2":"MQ","alpha3":"MTQ","continent":"North America","currency_code":"EUR","long_name":"Martinique","short_name":"Martinique","languages":["fr"],"nationality":"French","region":"Americas","subregion":"Caribbean"},{"alpha2":"MR","alpha3":"MRT","continent":"Africa","currency_code":"MRU","long_name":"The Islamic Republic of Mauritania","short_name":"Mauritania","languages":["ar","fr"],"nationality":"Mauritanian","region":"Africa","subregion":"Western Africa"},{"alpha2":"MS","alpha3":"MSR","continent":"North America","currency_code":"XCD","long_name":"Montserrat","short_name":"Montserrat","languages":["en"],"nationality":"Montserratian","region":"Americas","subregion":"Caribbean"},{"alpha2":"MT","alpha3":"MLT","continent":"Europe","currency_code":"EUR","long_name":"The Republic of Malta","short_name":"Malta","languages":["mt","en"],"nationality":"Maltese","region":"Europe","subregion":"Southern Europe"},{"alpha2":"MU","alpha3":"MUS","continent":"Africa","currency_code":"MUR","long_name":"The Republic of Mauritius","short_name":"Mauritius","languages":["en"],"nationality":"Mauritian","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"MV","alpha3":"MDV","continent":"Asia","currency_code":"MVR","long_name":"The Republic of Maldives","short_name":"Maldives","languages":["dv"],"nationality":"Maldivan","region":"Asia","subregion":"Southern Asia"},{"alpha2":"MW","alpha3":"MWI","continent":"Africa","currency_code":"MWK","long_name":"The Republic of Malawi","short_name":"Malawi","languages":["en","ny"],"nationality":"Malawian","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"MX","alpha3":"MEX","continent":"North America","currency_code":"MXN","long_name":"The United Mexican States","short_name":"Mexico","languages":["es"],"nationality":"Mexican","region":"Americas","subregion":"Central America"},{"alpha2":"MY","alpha3":"MYS","continent":"Asia","currency_code":"MYR","long_name":"Malaysia","short_name":"Malaysia","languages":["ms","en"],"nationality":"Malaysian","region":"Asia","subregion":"South-Eastern Asia"},{"alpha2":"MZ","alpha3":"MOZ","continent":"Africa","currency_code":"MZN","long_name":"The Republic of Mozambique","short_name":"Mozambique","languages":["pt"],"nationality":"Mozambican","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"NA","alpha3":"NAM","continent":"Africa","currency_code":"NAD","long_name":"The Republic of Namibia","short_name":"Namibia","languages":["en","af"],"nationality":"Namibian","region":"Africa","subregion":"Southern Africa"},{"alpha2":"NC","alpha3":"NCL","continent":"Australia","currency_code":"XPF","long_name":"New Caledonia","short_name":"New Caledonia","languages":["fr"],"nationality":"New Caledonian","region":"Oceania","subregion":"Melanesia"},{"alpha2":"NE","alpha3":"NER","continent":"Africa","currency_code":"XOF","long_name":"The Republic of the Niger","short_name":"Niger","languages":["fr"],"nationality":"Nigerian","region":"Africa","subregion":"Western Africa"},{"alpha2":"NF","alpha3":"NFK","continent":"Australia","currency_code":"AUD","long_name":"The Territory of Norfolk Island","short_name":"Norfolk Island","languages":["en"],"nationality":"Norfolk Islander","region":"Oceania","subregion":"Australia and New Zealand","dep":true},{"alpha2":"NG","alpha3":"NGA","continent":"Africa","currency_code":"NGN","long_name":"The Federal Republic of Nigeria","short_name":"Nigeria","languages":["en"],"nationality":"Nigerian","region":"Africa","subregion":"Western Africa"},{"alpha2":"NI","alpha3":"NIC","continent":"North America","currency_code":"NIO","long_name":"The Republic of Nicaragua","short_name":"Nicaragua","languages":["es"],"nationality":"Nicaraguan","region":"Americas","subregion":"Central America"},{"alpha2":"NL","alpha3":"NLD","continent":"Europe","currency_code":"EUR","long_name":"The Kingdom of the Netherlands","short_name":"Netherlands","languages":["nl"],"nationality":"Dutch","region":"Europe","subregion":"Western Europe"},{"alpha2":"NO","alpha3":"NOR","continent":"Europe","currency_code":"NOK","long_name":"The Kingdom of Norway","short_name":"Norway","languages":["nb","nn"],"nationality":"Norwegian","region":"Europe","subregion":"Northern Europe"},{"alpha2":"NP","alpha3":"NPL","continent":"Asia","currency_code":"NPR","long_name":"The Federal Democratic Republic of Nepal","short_name":"Nepal","languages":["ne"],"nationality":"Nepalese","region":"Asia","subregion":"Southern Asia"},{"alpha2":"NR","alpha3":"NRU","continent":"Australia","currency_code":"AUD","long_name":"The Republic of Nauru","short_name":"Nauru","languages":["en","na"],"nationality":"Nauruan","region":"Oceania","subregion":"Micronesia"},{"alpha2":"NU","alpha3":"NIU","continent":"Australia","currency_code":"NZD","long_name":"Niue","short_name":"Niue","languages":["en"],"nationality":"Niuean","region":"Oceania","subregion":"Polynesia"},{"alpha2":"NZ","alpha3":"NZL","continent":"Australia","currency_code":"NZD","long_name":"New Zealand","short_name":"New Zealand","languages":["en"],"nationality":"New Zealander","region":"Oceania","subregion":"Australia and New Zealand"},{"alpha2":"OM","alpha3":"OMN","continent":"Asia","currency_code":"OMR","long_name":"The Sultanate of Oman","short_name":"Oman","languages":["ar"],"nationality":"Omani","region":"Asia","subregion":"Western Asia"},{"alpha2":"PA","alpha3":"PAN","continent":"North America","currency_code":"PAB","long_name":"The Republic of Panam\u00e1","short_name":"Panama","languages":["es"],"nationality":"Panamanian","region":"Americas","subregion":"Central America"},{"alpha2":"PE","alpha3":"PER","continent":"South America","currency_code":"PEN","long_name":"The Republic of Per\u00fa","short_name":"Peru","languages":["es"],"nationality":"Peruvian","region":"Americas","subregion":"South America"},{"alpha2":"PF","alpha3":"PYF","continent":"Australia","currency_code":"XPF","long_name":"French Polynesia","short_name":"French Polynesia","languages":["fr"],"nationality":"French Polynesian","region":"Oceania","subregion":"Polynesia"},{"alpha2":"PG","alpha3":"PNG","continent":"Australia","currency_code":"PGK","long_name":"The Independent State of Papua New Guinea","short_name":"Papua New Guinea","languages":["en"],"nationality":"Papua New Guinean","region":"Oceania","subregion":"Melanesia"},{"alpha2":"PH","alpha3":"PHL","continent":"Asia","currency_code":"PHP","long_name":"The Republic of the Philippines","short_name":"Philippines","languages":["tl","en"],"nationality":"Filipino","region":"Asia","subregion":"South-Eastern Asia"},{"alpha2":"PK","alpha3":"PAK","continent":"Asia","currency_code":"PKR","long_name":"The Islamic Republic of Pakistan","short_name":"Pakistan","languages":["en","ur"],"nationality":"Pakistani","region":"Asia","subregion":"Southern Asia"},{"alpha2":"PL","alpha3":"POL","continent":"Europe","currency_code":"PLN","long_name":"The Republic of Poland","short_name":"Poland","languages":["pl"],"nationality":"Polish","region":"Europe","subregion":"Eastern Europe"},{"alpha2":"PM","alpha3":"SPM","continent":"North America","currency_code":"EUR","long_name":"The Overseas Collectivity of Saint-Pierre and Miquelon","short_name":"Saint Pierre and Miquelon","languages":["fr"],"nationality":"French","region":"Americas","subregion":"Northern America"},{"alpha2":"PN","alpha3":"PCN","continent":"Australia","currency_code":"NZD","long_name":"The Pitcairn, Henderson, Ducie and Oeno Islands","short_name":"Pitcairn","languages":["en"],"nationality":"Pitcairn Islander","region":"Oceania","subregion":"Polynesia","dep":true},{"alpha2":"PR","alpha3":"PRI","continent":"North America","currency_code":"USD","long_name":"The Commonwealth of Puerto Rico","short_name":"Puerto Rico","languages":["es","en"],"nationality":"Puerto Rican","region":"Americas","subregion":"Caribbean"},{"alpha2":"PS","alpha3":"PSE","continent":"Asia","currency_code":"ILS","long_name":"The State of Palestine","short_name":"Palestine, State of","languages":["ar","he","en"],"nationality":"Palestinian","region":"Asia","subregion":"Western Asia"},{"alpha2":"PT","alpha3":"PRT","continent":"Europe","currency_code":"EUR","long_name":"The Portuguese Republic","short_name":"Portugal","languages":["pt"],"nationality":"Portuguese","region":"Europe","subregion":"Southern Europe"},{"alpha2":"PW","alpha3":"PLW","continent":"Australia","currency_code":"USD","long_name":"The Republic of Palau","short_name":"Palau","languages":["en"],"nationality":"Palauan","region":"Oceania","subregion":"Micronesia"},{"alpha2":"PY","alpha3":"PRY","continent":"South America","currency_code":"PYG","long_name":"The Republic of Paraguay","short_name":"Paraguay","languages":["es","gn"],"nationality":"Paraguayan","region":"Americas","subregion":"South America"},{"alpha2":"QA","alpha3":"QAT","continent":"Asia","currency_code":"QAR","long_name":"The State of Qatar","short_name":"Qatar","languages":["ar"],"nationality":"Qatari","region":"Asia","subregion":"Western Asia"},{"alpha2":"RE","alpha3":"REU","continent":"Africa","currency_code":"EUR","long_name":"R\u00e9union","short_name":"R\u00e9union","languages":["fr"],"nationality":"French","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"RO","alpha3":"ROU","continent":"Europe","currency_code":"RON","long_name":"Romania","short_name":"Romania","languages":["ro"],"nationality":"Romanian","region":"Europe","subregion":"Eastern Europe"},{"alpha2":"RS","alpha3":"SRB","continent":"Europe","currency_code":"RSD","long_name":"The Republic of Serbia","short_name":"Serbia","languages":["sr"],"nationality":"Serbian","region":"Europe","subregion":"Southern Europe"},{"alpha2":"RU","alpha3":"RUS","continent":"Europe","currency_code":"RUB","long_name":"The Russian Federation","short_name":"Russian Federation","languages":["ru"],"nationality":"Russian","region":"Europe","subregion":"Eastern Europe"},{"alpha2":"RW","alpha3":"RWA","continent":"Africa","currency_code":"RWF","long_name":"The Republic of Rwanda","short_name":"Rwanda","languages":["rw","en","fr"],"nationality":"Rwandan","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"SA","alpha3":"SAU","continent":"Asia","currency_code":"SAR","long_name":"The Kingdom of Saudi Arabia","short_name":"Saudi Arabia","languages":["ar"],"nationality":"Saudi Arabian","region":"Asia","subregion":"Western Asia"},{"alpha2":"SB","alpha3":"SLB","continent":"Australia","currency_code":"SBD","long_name":"The Solomon Islands","short_name":"Solomon Islands","languages":["en"],"nationality":"Solomon Islander","region":"Oceania","subregion":"Melanesia"},{"alpha2":"SC","alpha3":"SYC","continent":"Africa","currency_code":"SCR","long_name":"The Republic of Seychelles","short_name":"Seychelles","languages":["fr","en"],"nationality":"Seychellois","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"SD","alpha3":"SDN","continent":"Africa","currency_code":"SDG","long_name":"The Republic of the Sudan","short_name":"Sudan","languages":["ar","en"],"nationality":"Sudanese","region":"Africa","subregion":"Northern Africa"},{"alpha2":"SE","alpha3":"SWE","continent":"Europe","currency_code":"SEK","long_name":"The Kingdom of Sweden","short_name":"Sweden","languages":["sv"],"nationality":"Swedish","region":"Europe","subregion":"Northern Europe"},{"alpha2":"SG","alpha3":"SGP","continent":"Asia","currency_code":"SGD","long_name":"The Republic of Singapore","short_name":"Singapore","languages":["en","ms","ta"],"nationality":"Singaporean","region":"Asia","subregion":"South-Eastern Asia"},{"alpha2":"SH","alpha3":"SHN","continent":"Africa","currency_code":"SHP","long_name":"Saint Helena, Ascension and Tristan da Cunha","short_name":"Saint Helena, Ascension and Tristan da Cunha","languages":["en"],"nationality":"Saint Helenian","region":"Africa","subregion":"Western Africa","dep":"GB"},{"alpha2":"SI","alpha3":"SVN","continent":"Europe","currency_code":"EUR","long_name":"The Republic of Slovenia","short_name":"Slovenia","languages":["sl"],"nationality":"Slovene","region":"Europe","subregion":"Southern Europe"},{"alpha2":"SJ","alpha3":"SJM","continent":"Europe","currency_code":"NOK","long_name":"Svalbard and Jan Mayen","short_name":"Svalbard and Jan Mayen","languages":["no"],"nationality":"Norwegian","region":"Europe","subregion":"Northern Europe","dep":"NO"},{"alpha2":"SK","alpha3":"SVK","continent":"Europe","currency_code":"EUR","long_name":"The Slovak Republic","short_name":"Slovakia","languages":["sk"],"nationality":"Slovak","region":"Europe","subregion":"Eastern Europe"},{"alpha2":"SL","alpha3":"SLE","continent":"Africa","currency_code":"SLL","long_name":"The Republic of Sierra Leone","short_name":"Sierra Leone","languages":["en"],"nationality":"Sierra Leonean","region":"Africa","subregion":"Western Africa"},{"alpha2":"SM","alpha3":"SMR","continent":"Europe","currency_code":"EUR","long_name":"The Republic of San Marino","short_name":"San Marino","languages":["it"],"nationality":"Sammarinese","region":"Europe","subregion":"Southern Europe"},{"alpha2":"SN","alpha3":"SEN","continent":"Africa","currency_code":"XOF","long_name":"The Republic of Senegal","short_name":"Senegal","languages":["fr"],"nationality":"Senegalese","region":"Africa","subregion":"Western Africa"},{"alpha2":"SO","alpha3":"SOM","continent":"Africa","currency_code":"SOS","long_name":"The Federal Republic of Somalia","short_name":"Somalia","languages":["so","ar"],"nationality":"Somali","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"SR","alpha3":"SUR","continent":"South America","currency_code":"SRD","long_name":"The Republic of Suriname","short_name":"Suriname","languages":["nl"],"nationality":"Surinamer","region":"Americas","subregion":"South America"},{"alpha2":"SS","alpha3":"SSD","continent":"Africa","currency_code":"SSP","long_name":"The Republic of South Sudan","short_name":"South Sudan","languages":["ar","en"],"nationality":"South Sudanese","region":"Africa","subregion":"Northern Africa"},{"alpha2":"ST","alpha3":"STP","continent":"Africa","currency_code":"STD","long_name":"The Democratic Republic of S\u00e3o Tom\u00e9 and Pr\u00edncipe","short_name":"Sao Tome and Principe","languages":["pt"],"nationality":"Sao Tomean","region":"Africa","subregion":"Middle Africa"},{"alpha2":"SV","alpha3":"SLV","continent":"North America","currency_code":"USD","long_name":"The Republic of El Salvador","short_name":"El Salvador","languages":["es"],"nationality":"Salvadoran","region":"Americas","subregion":"Central America"},{"alpha2":"SX","alpha3":"SXM","continent":"North America","currency_code":"ANG","long_name":"Sint Maarten","short_name":"Sint Maarten (Dutch part)","languages":["nl","en"],"nationality":"Dutch","region":"Americas","subregion":"Caribbean"},{"alpha2":"SY","alpha3":"SYR","continent":"Asia","currency_code":"SYP","long_name":"The Syrian Arab Republic","short_name":"Syrian Arab Republic","languages":["ar"],"nationality":"Syrian","region":"Asia","subregion":"Western Asia"},{"alpha2":"SZ","alpha3":"SWZ","continent":"Africa","currency_code":"SZL","long_name":"The Kingdom of Eswatini","short_name":"Eswatini","languages":["en","ss"],"nationality":"Swazi","region":"Africa","subregion":"Southern Africa"},{"alpha2":"TC","alpha3":"TCA","continent":"North America","currency_code":"USD","long_name":"The Turks and Caicos Islands","short_name":"Turks and Caicos Islands","languages":["en"],"nationality":"Turks and Caicos Islander","region":"Americas","subregion":"Caribbean"},{"alpha2":"TD","alpha3":"TCD","continent":"Africa","currency_code":"XAF","long_name":"The Republic of Chad","short_name":"Chad","languages":["ar","fr"],"nationality":"Chadian","region":"Africa","subregion":"Middle Africa"},{"alpha2":"TF","alpha3":"ATF","continent":"Africa","currency_code":"EUR","long_name":"The French Southern and Antarctic Lands","short_name":"French Southern Territories","languages":["fr"],"nationality":"French","region":"Africa","subregion":"Eastern Africa","dep":true},{"alpha2":"TG","alpha3":"TGO","continent":"Africa","currency_code":"XOF","long_name":"The Togolese Republic","short_name":"Togo","languages":["fr"],"nationality":"Togolese","region":"Africa","subregion":"Western Africa"},{"alpha2":"TH","alpha3":"THA","continent":"Asia","currency_code":"THB","long_name":"The Kingdom of Thailand","short_name":"Thailand","languages":["th"],"nationality":"Thai","region":"Asia","subregion":"South-Eastern Asia"},{"alpha2":"TJ","alpha3":"TJK","continent":"Asia","currency_code":"TJS","long_name":"The Republic of Tajikistan","short_name":"Tajikistan","languages":["tg","ru"],"nationality":"Tadzhik","region":"Asia","subregion":"Central Asia"},{"alpha2":"TK","alpha3":"TKL","continent":"Australia","currency_code":"NZD","long_name":"Tokelau","short_name":"Tokelau","languages":["en"],"nationality":"Tokelauan","region":"Oceania","subregion":"Polynesia","dep":true},{"alpha2":"TL","alpha3":"TLS","continent":"Asia","currency_code":"IDR","long_name":"The Democratic Republic of Timor-Leste","short_name":"Timor-Leste","languages":["pt"],"nationality":"East Timorese","region":"Asia","subregion":"South-Eastern Asia"},{"alpha2":"TM","alpha3":"TKM","continent":"Asia","currency_code":"TMT","long_name":"Turkmenistan","short_name":"Turkmenistan","languages":["tk"],"nationality":"Turkmen","region":"Asia","subregion":"Central Asia"},{"alpha2":"TN","alpha3":"TUN","continent":"Africa","currency_code":"TND","long_name":"The Republic of Tunisia","short_name":"Tunisia","languages":["ar","fr"],"nationality":"Tunisian","region":"Africa","subregion":"Northern Africa"},{"alpha2":"TO","alpha3":"TON","continent":"Australia","currency_code":"TOP","long_name":"The Kingdom of Tonga","short_name":"Tonga","languages":["en","to"],"nationality":"Tongan","region":"Oceania","subregion":"Polynesia"},{"alpha2":"TR","alpha3":"TUR","continent":"Europe","currency_code":"TRY","long_name":"The Republic of T\u00fcrkiye","short_name":"T\u00fcrkiye","languages":["tr"],"nationality":"Turkish","region":"Asia","subregion":"Western Asia"},{"alpha2":"TT","alpha3":"TTO","continent":"North America","currency_code":"TTD","long_name":"The Republic of Trinidad and Tobago","short_name":"Trinidad and Tobago","languages":["en"],"nationality":"Trinidadian","region":"Americas","subregion":"Caribbean"},{"alpha2":"TV","alpha3":"TUV","continent":"Australia","currency_code":"AUD","long_name":"Tuvalu","short_name":"Tuvalu","languages":["en"],"nationality":"Tuvaluan","region":"Oceania","subregion":"Polynesia"},{"alpha2":"TW","alpha3":"TWN","continent":"Asia","currency_code":"TWD","long_name":"Taiwan, Province of China","short_name":"Taiwan, Province of China","languages":["zh"],"nationality":"Taiwanese","region":"Asia","subregion":"Eastern Asia"},{"alpha2":"TZ","alpha3":"TZA","continent":"Africa","currency_code":"TZS","long_name":"The United Republic of Tanzania","short_name":"Tanzania, United Republic of","languages":["sw","en"],"nationality":"Tanzanian","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"UA","alpha3":"UKR","continent":"Europe","currency_code":"UAH","long_name":"Ukraine","short_name":"Ukraine","languages":["uk"],"nationality":"Ukrainian","region":"Europe","subregion":"Eastern Europe"},{"alpha2":"UG","alpha3":"UGA","continent":"Africa","currency_code":"UGX","long_name":"The Republic of Uganda","short_name":"Uganda","languages":["en","sw"],"nationality":"Ugandan","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"UM","alpha3":"UMI","continent":"Australia","currency_code":"USD","long_name":"United States Minor Outlying Islands","short_name":"United States Minor Outlying Islands","languages":["en"],"nationality":"American","region":"Americas","subregion":"Northern America","dep":"US"},{"alpha2":"US","alpha3":"USA","continent":"North America","currency_code":"USD","long_name":"The United States of America","short_name":"United States of America","languages":["en"],"nationality":"American","region":"Americas","subregion":"Northern America"},{"alpha2":"UY","alpha3":"URY","continent":"South America","currency_code":"UYU","long_name":"The Oriental Republic of Uruguay","short_name":"Uruguay","languages":["es"],"nationality":"Uruguayan","region":"Americas","subregion":"South America"},{"alpha2":"UZ","alpha3":"UZB","continent":"Asia","currency_code":"UZS","long_name":"The Republic of Uzbekistan","short_name":"Uzbekistan","languages":["uz","ru"],"nationality":"Uzbekistani","region":"Asia","subregion":"Central Asia"},{"alpha2":"VA","alpha3":"VAT","continent":"Europe","currency_code":"EUR","long_name":"The Holy See","short_name":"Holy See","languages":["it","la"],"nationality":"Italian","region":"Europe","subregion":"Southern Europe"},{"alpha2":"VC","alpha3":"VCT","continent":"North America","currency_code":"XCD","long_name":"Saint Vincent and the Grenadines","short_name":"Saint Vincent and the Grenadines","languages":["en"],"nationality":"Saint Vincentian","region":"Americas","subregion":"Caribbean"},{"alpha2":"VE","alpha3":"VEN","continent":"South America","currency_code":"VES","long_name":"The Bolivarian Republic of Venezuela","short_name":"Venezuela (Bolivarian Republic of)","languages":["es"],"nationality":"Venezuelan","region":"Americas","subregion":"South America"},{"alpha2":"VG","alpha3":"VGB","continent":"North America","currency_code":"USD","long_name":"The Virgin Islands","short_name":"Virgin Islands (British)","languages":["en"],"nationality":"Virgin Islander","region":"Americas","subregion":"Caribbean"},{"alpha2":"VI","alpha3":"VIR","continent":"North America","currency_code":"USD","long_name":"The Virgin Islands of the United States","short_name":"Virgin Islands (U.S.)","languages":["en"],"nationality":"Virgin Islander","region":"Americas","subregion":"Caribbean"},{"alpha2":"VN","alpha3":"VNM","continent":"Asia","currency_code":"VND","long_name":"The Socialist Republic of Viet Nam","short_name":"Viet Nam","languages":["vi"],"nationality":"Vietnamese","region":"Asia","subregion":"South-Eastern Asia"},{"alpha2":"VU","alpha3":"VUT","continent":"Australia","currency_code":"VUV","long_name":"The Republic of Vanuatu","short_name":"Vanuatu","languages":["bi","en","fr"],"nationality":"Ni-Vanuatu","region":"Oceania","subregion":"Melanesia"},{"alpha2":"WF","alpha3":"WLF","continent":"Australia","currency_code":"XPF","long_name":"The Territory of the Wallis and Futuna Islands","short_name":"Wallis and Futuna","languages":["fr"],"nationality":"Wallis and Futuna Islander","region":"Oceania","subregion":"Polynesia","dep":"FR"},{"alpha2":"WS","alpha3":"WSM","continent":"Australia","currency_code":"WST","long_name":"The Independent State of Samoa","short_name":"Samoa","languages":["sm","en"],"nationality":"Samoan","region":"Oceania","subregion":"Polynesia"},{"alpha2":"YE","alpha3":"YEM","continent":"Asia","currency_code":"YER","long_name":"The Republic of Yemen","short_name":"Yemen","languages":["ar"],"nationality":"Yemeni","region":"Asia","subregion":"Western Asia"},{"alpha2":"YT","alpha3":"MYT","continent":"Africa","currency_code":"EUR","long_name":"The Department of Mayotte","short_name":"Mayotte","languages":["fr"],"nationality":"French","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"ZA","alpha3":"ZAF","continent":"Africa","currency_code":"ZAR","long_name":"The Republic of South Africa","short_name":"South Africa","languages":["af","en","nr","st","ss","tn","ts","ve","xh","zu"],"nationality":"South African","region":"Africa","subregion":"Southern Africa"},{"alpha2":"ZM","alpha3":"ZMB","continent":"Africa","currency_code":"ZMW","long_name":"The Republic of Zambia","short_name":"Zambia","languages":["en"],"nationality":"Zambian","region":"Africa","subregion":"Eastern Africa"},{"alpha2":"ZW","alpha3":"ZWE","continent":"Africa","currency_code":"USD","long_name":"The Republic of Zimbabwe","short_name":"Zimbabwe","languages":["en","sn","nd"],"nationality":"Zimbabwean","region":"Africa","subregion":"Eastern Africa"}]
+[
+  {
+    "alpha2": "AD",
+    "alpha3": "AND",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Principality of Andorra",
+    "short_name": "Andorra",
+    "per_name": "آندورا",
+    "languages": [
+      "ca"
+    ],
+    "nationality": "Andorran",
+    "region": "Europe",
+    "subregion": "Southern Europe"
+  },
+  {
+    "alpha2": "AE",
+    "alpha3": "ARE",
+    "continent": "Asia",
+    "currency_code": "AED",
+    "long_name": "The United Arab Emirates",
+    "short_name": "United Arab Emirates",
+    "per_name": "امارات",
+    "languages": [
+      "ar"
+    ],
+    "nationality": "Emirian",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "AF",
+    "alpha3": "AFG",
+    "continent": "Asia",
+    "currency_code": "AFN",
+    "long_name": "The Islamic Republic of Afghanistan",
+    "short_name": "Afghanistan",
+    "per_name": "افغانستان",
+    "languages": [
+      "ps",
+      "uz",
+      "tk"
+    ],
+    "nationality": "Afghan",
+    "region": "Asia",
+    "subregion": "Southern Asia"
+  },
+  {
+    "alpha2": "AG",
+    "alpha3": "ATG",
+    "continent": "North America",
+    "currency_code": "XCD",
+    "long_name": "Antigua and Barbuda",
+    "short_name": "Antigua and Barbuda",
+    "per_name": "آنتیگوآ و باربودا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Antiguan, Barbudan",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "AI",
+    "alpha3": "AIA",
+    "continent": "North America",
+    "currency_code": "XCD",
+    "long_name": "Anguilla",
+    "short_name": "Anguilla",
+    "per_name": "آنگویلا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Anguillian",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "AL",
+    "alpha3": "ALB",
+    "continent": "Europe",
+    "currency_code": "ALL",
+    "long_name": "The Republic of Albania",
+    "short_name": "Albania",
+    "per_name": "آلبانی",
+    "languages": [
+      "sq"
+    ],
+    "nationality": "Albanian",
+    "region": "Europe",
+    "subregion": "Southern Europe"
+  },
+  {
+    "alpha2": "AM",
+    "alpha3": "ARM",
+    "continent": "Asia",
+    "currency_code": "AMD",
+    "long_name": "The Republic of Armenia",
+    "short_name": "Armenia",
+    "per_name": "ارمنستان",
+    "languages": [
+      "hy",
+      "ru"
+    ],
+    "nationality": "Armenian",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "AO",
+    "alpha3": "AGO",
+    "continent": "Africa",
+    "currency_code": "AOA",
+    "long_name": "The Republic of Angola",
+    "short_name": "Angola",
+    "per_name": "آنگولا",
+    "languages": [
+      "pt"
+    ],
+    "nationality": "Angolan",
+    "region": "Africa",
+    "subregion": "Middle Africa"
+  },
+  {
+    "alpha2": "AQ",
+    "alpha3": "ATA",
+    "continent": "Antarctica",
+    "currency_code": "USD",
+    "long_name": "Antarctica",
+    "short_name": "Antarctica",
+    "per_name": "جنوبگان",
+    "languages": [],
+    "nationality": "",
+    "region": "",
+    "subregion": "",
+    "dep": true
+  },
+  {
+    "alpha2": "AR",
+    "alpha3": "ARG",
+    "continent": "South America",
+    "currency_code": "ARS",
+    "long_name": "The Argentine Republic",
+    "short_name": "Argentina",
+    "per_name": "آرژانتین",
+    "languages": [
+      "es",
+      "gn"
+    ],
+    "nationality": "Argentinean",
+    "region": "Americas",
+    "subregion": "South America"
+  },
+  {
+    "alpha2": "AS",
+    "alpha3": "ASM",
+    "continent": "Australia",
+    "currency_code": "USD",
+    "long_name": "The Territory of American Samoa",
+    "short_name": "ساموآی آمریکا",
+    "per_name": "",
+    "languages": [
+      "en",
+      "sm"
+    ],
+    "nationality": "American Samoan",
+    "region": "Oceania",
+    "subregion": "Polynesia"
+  },
+  {
+    "alpha2": "AT",
+    "alpha3": "AUT",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Republic of Austria",
+    "short_name": "Austria",
+    "per_name": "اتریش",
+    "languages": [
+      "de"
+    ],
+    "nationality": "Austrian",
+    "region": "Europe",
+    "subregion": "Western Europe"
+  },
+  {
+    "alpha2": "AU",
+    "alpha3": "AUS",
+    "continent": "Australia",
+    "currency_code": "AUD",
+    "long_name": "The Commonwealth of Australia",
+    "short_name": "Australia",
+    "per_name": "استرالیا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Australian",
+    "region": "Oceania",
+    "subregion": "Australia and New Zealand"
+  },
+  {
+    "alpha2": "AW",
+    "alpha3": "ABW",
+    "continent": "North America",
+    "currency_code": "AWG",
+    "long_name": "Aruba",
+    "short_name": "Aruba",
+    "per_name": "آروبا",
+    "languages": [
+      "nl"
+    ],
+    "nationality": "Aruban",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "AX",
+    "alpha3": "ALA",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "Åland",
+    "short_name": "Åland Islands",
+    "per_name": "جزایر الند",
+    "languages": [
+      "sv"
+    ],
+    "nationality": "Swedish",
+    "region": "Europe",
+    "subregion": "Northern Europe"
+  },
+  {
+    "alpha2": "AZ",
+    "alpha3": "AZE",
+    "continent": "Asia",
+    "currency_code": "AZN",
+    "long_name": "The Republic of Azerbaijan",
+    "short_name": "Azerbaijan",
+    "per_name": "آذربایجان",
+    "languages": [
+      "az",
+      "hy"
+    ],
+    "nationality": "Azerbaijani",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "BA",
+    "alpha3": "BIH",
+    "continent": "Europe",
+    "currency_code": "BAM",
+    "long_name": "Bosnia and Herzegovina",
+    "short_name": "Bosnia and Herzegovina",
+    "per_name": "بوسنی و هرزگوین",
+    "languages": [
+      "bs",
+      "hr",
+      "sr"
+    ],
+    "nationality": "Bosnian, Herzegovinian",
+    "region": "Europe",
+    "subregion": "Southern Europe"
+  },
+  {
+    "alpha2": "BB",
+    "alpha3": "BRB",
+    "continent": "North America",
+    "currency_code": "BBD",
+    "long_name": "Barbados",
+    "short_name": "Barbados",
+    "per_name": "باربادوس",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Barbadian",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "BD",
+    "alpha3": "BGD",
+    "continent": "Asia",
+    "currency_code": "BDT",
+    "long_name": "The People's Republic of Bangladesh",
+    "short_name": "Bangladesh",
+    "per_name": "بنگلادش",
+    "languages": [
+      "bn"
+    ],
+    "nationality": "Bangladeshi",
+    "region": "Asia",
+    "subregion": "Southern Asia"
+  },
+  {
+    "alpha2": "BE",
+    "alpha3": "BEL",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Kingdom of Belgium",
+    "short_name": "Belgium",
+    "per_name": "بلژیک",
+    "languages": [
+      "nl",
+      "fr",
+      "de"
+    ],
+    "nationality": "Belgian",
+    "region": "Europe",
+    "subregion": "Western Europe"
+  },
+  {
+    "alpha2": "BF",
+    "alpha3": "BFA",
+    "continent": "Africa",
+    "currency_code": "XOF",
+    "long_name": "Burkina Faso",
+    "short_name": "Burkina Faso",
+    "per_name": "بورکینافاسو",
+    "languages": [
+      "fr",
+      "ff"
+    ],
+    "nationality": "Burkinabe",
+    "region": "Africa",
+    "subregion": "Western Africa"
+  },
+  {
+    "alpha2": "BG",
+    "alpha3": "BGR",
+    "continent": "Europe",
+    "currency_code": "BGN",
+    "long_name": "The Republic of Bulgaria",
+    "short_name": "Bulgaria",
+    "per_name": "بلغارستان",
+    "languages": [
+      "bg"
+    ],
+    "nationality": "Bulgarian",
+    "region": "Europe",
+    "subregion": "Eastern Europe"
+  },
+  {
+    "alpha2": "BH",
+    "alpha3": "BHR",
+    "continent": "Asia",
+    "currency_code": "BHD",
+    "long_name": "The Kingdom of Bahrain",
+    "short_name": "Bahrain",
+    "per_name": "بحرین",
+    "languages": [
+      "ar"
+    ],
+    "nationality": "Bahraini",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "BI",
+    "alpha3": "BDI",
+    "continent": "Africa",
+    "currency_code": "BIF",
+    "long_name": "The Republic of Burundi",
+    "short_name": "Burundi",
+    "per_name": "بوروندی",
+    "languages": [
+      "fr",
+      "rn"
+    ],
+    "nationality": "Burundian",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "BJ",
+    "alpha3": "BEN",
+    "continent": "Africa",
+    "currency_code": "XOF",
+    "long_name": "The Republic of Benin",
+    "short_name": "Benin",
+    "per_name": "بنین",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "Beninese",
+    "region": "Africa",
+    "subregion": "Western Africa"
+  },
+  {
+    "alpha2": "BL",
+    "alpha3": "BLM",
+    "continent": "North America",
+    "currency_code": "EUR",
+    "long_name": "The Collectivity of Saint-Barthélemy",
+    "short_name": "Saint Barthélemy",
+    "per_name": "سن بارتلمی",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "Saint Barthélemy Islander",
+    "region": "Americas",
+    "subregion": "Caribbean",
+    "dep": true
+  },
+  {
+    "alpha2": "BM",
+    "alpha3": "BMU",
+    "continent": "North America",
+    "currency_code": "BMD",
+    "long_name": "Bermuda",
+    "short_name": "Bermuda",
+    "per_name": "برمودا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Bermudian",
+    "region": "Americas",
+    "subregion": "Northern America"
+  },
+  {
+    "alpha2": "BN",
+    "alpha3": "BRN",
+    "continent": "Asia",
+    "currency_code": "BND",
+    "long_name": "The Nation of Brunei, the Abode of Peace",
+    "short_name": "Brunei Darussalam",
+    "per_name": "برونئی",
+    "languages": [
+      "ms"
+    ],
+    "nationality": "Bruneian",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia"
+  },
+  {
+    "alpha2": "BO",
+    "alpha3": "BOL",
+    "continent": "South America",
+    "currency_code": "BOB",
+    "long_name": "The Plurinational State of Bolivia",
+    "short_name": "Bolivia",
+    "per_name": "بولیوی",
+    "languages": [
+      "es",
+      "ay",
+      "qu"
+    ],
+    "nationality": "Bolivian",
+    "region": "Americas",
+    "subregion": "South America"
+  },
+  {
+    "alpha2": "BQ",
+    "alpha3": "BES",
+    "continent": "North America",
+    "currency_code": "USD",
+    "long_name": "Bonaire, Sint Eustatius and Saba",
+    "short_name": "Bonaire, Sint Eustatius and Saba",
+    "per_name": "جزایر کارائیب هلند",
+    "languages": [
+      "nl",
+      "en"
+    ],
+    "nationality": "Dutch",
+    "region": "Americas",
+    "subregion": "Caribbean",
+    "dep": true
+  },
+  {
+    "alpha2": "BR",
+    "alpha3": "BRA",
+    "continent": "South America",
+    "currency_code": "BRL",
+    "long_name": "The Federative Republic of Brazil",
+    "short_name": "Brazil",
+    "per_name": "برزیل",
+    "languages": [
+      "pt"
+    ],
+    "nationality": "Brazilian",
+    "region": "Americas",
+    "subregion": "South America"
+  },
+  {
+    "alpha2": "BS",
+    "alpha3": "BHS",
+    "continent": "North America",
+    "currency_code": "BSD",
+    "long_name": "The Commonwealth of The Bahamas",
+    "short_name": "Bahamas",
+    "per_name": "باهاماس",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Bahamian",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "BT",
+    "alpha3": "BTN",
+    "continent": "Asia",
+    "currency_code": "BTN",
+    "long_name": "The Kingdom of Bhutan",
+    "short_name": "Bhutan",
+    "per_name": "بوتان",
+    "languages": [
+      "dz"
+    ],
+    "nationality": "Bhutanese",
+    "region": "Asia",
+    "subregion": "Southern Asia"
+  },
+  {
+    "alpha2": "BV",
+    "alpha3": "BVT",
+    "continent": "Antarctica",
+    "currency_code": "NOK",
+    "long_name": "Bouvet Island",
+    "short_name": "Bouvet Island",
+    "per_name": "جزیره بووه",
+    "languages": [],
+    "nationality": "",
+    "region": "",
+    "subregion": "",
+    "dep": "NO"
+  },
+  {
+    "alpha2": "BW",
+    "alpha3": "BWA",
+    "continent": "Africa",
+    "currency_code": "BWP",
+    "long_name": "The Republic of Botswana",
+    "short_name": "Botswana",
+    "per_name": "بوتسوانا",
+    "languages": [
+      "en",
+      "tn"
+    ],
+    "nationality": "Motswana",
+    "region": "Africa",
+    "subregion": "Southern Africa"
+  },
+  {
+    "alpha2": "BY",
+    "alpha3": "BLR",
+    "continent": "Europe",
+    "currency_code": "BYN",
+    "long_name": "The Republic of Belarus",
+    "short_name": "Belarus",
+    "per_name": "بلاروس",
+    "languages": [
+      "be",
+      "ru"
+    ],
+    "nationality": "Belarusian",
+    "region": "Europe",
+    "subregion": "Eastern Europe"
+  },
+  {
+    "alpha2": "BZ",
+    "alpha3": "BLZ",
+    "continent": "North America",
+    "currency_code": "BZD",
+    "long_name": "Belize",
+    "short_name": "Belize",
+    "per_name": "بلیز",
+    "languages": [
+      "en",
+      "es"
+    ],
+    "nationality": "Belizean",
+    "region": "Americas",
+    "subregion": "Central America"
+  },
+  {
+    "alpha2": "CA",
+    "alpha3": "CAN",
+    "continent": "North America",
+    "currency_code": "CAD",
+    "long_name": "Canada",
+    "short_name": "Canada",
+    "per_name": "کانادا",
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "nationality": "Canadian",
+    "region": "Americas",
+    "subregion": "Northern America"
+  },
+  {
+    "alpha2": "CC",
+    "alpha3": "CCK",
+    "continent": "Asia",
+    "currency_code": "AUD",
+    "long_name": "The Territory of Cocos (Keeling) Islands",
+    "short_name": "Cocos (Keeling) Islands",
+    "per_name": "جزایر کوکوس",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Cocos Islander",
+    "region": "Oceania",
+    "subregion": "Australia and New Zealand",
+    "dep": true
+  },
+  {
+    "alpha2": "CD",
+    "alpha3": "COD",
+    "continent": "Africa",
+    "currency_code": "CDF",
+    "long_name": "The Democratic Republic of the Congo",
+    "short_name": "Congo (Democratic Republic of the)",
+    "per_name": "جمهوری دموکراتیک کنگو",
+    "languages": [
+      "fr",
+      "ln",
+      "kg",
+      "sw",
+      "lu"
+    ],
+    "nationality": "Congolese",
+    "region": "Africa",
+    "subregion": "Middle Africa"
+  },
+  {
+    "alpha2": "CF",
+    "alpha3": "CAF",
+    "continent": "Africa",
+    "currency_code": "XAF",
+    "long_name": "The Central African Republic",
+    "short_name": "Central African Republic",
+    "per_name": "جمهوری آفریقای مرکزی",
+    "languages": [
+      "fr",
+      "sg"
+    ],
+    "nationality": "Central African",
+    "region": "Africa",
+    "subregion": "Middle Africa"
+  },
+  {
+    "alpha2": "CG",
+    "alpha3": "COG",
+    "continent": "Africa",
+    "currency_code": "XAF",
+    "long_name": "The Republic of the Congo",
+    "short_name": "Congo",
+    "per_name": "جمهوری کنگو",
+    "languages": [
+      "fr",
+      "ln"
+    ],
+    "nationality": "Congolese",
+    "region": "Africa",
+    "subregion": "Middle Africa"
+  },
+  {
+    "alpha2": "CH",
+    "alpha3": "CHE",
+    "continent": "Europe",
+    "currency_code": "CHF",
+    "long_name": "The Swiss Confederation",
+    "short_name": "Switzerland",
+    "per_name": "سوئیس",
+    "languages": [
+      "de",
+      "fr",
+      "it"
+    ],
+    "nationality": "Swiss",
+    "region": "Europe",
+    "subregion": "Western Europe"
+  },
+  {
+    "alpha2": "CI",
+    "alpha3": "CIV",
+    "continent": "Africa",
+    "currency_code": "XOF",
+    "long_name": "The Republic of Côte d'Ivoire",
+    "short_name": "Côte d'Ivoire",
+    "per_name": "ساحل عاج",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "Ivorian",
+    "region": "Africa",
+    "subregion": "Western Africa"
+  },
+  {
+    "alpha2": "CK",
+    "alpha3": "COK",
+    "continent": "Australia",
+    "currency_code": "NZD",
+    "long_name": "The Cook Islands",
+    "short_name": "Cook Islands",
+    "per_name": "جزایر کوک",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Cook Islander",
+    "region": "Oceania",
+    "subregion": "Polynesia",
+    "dep": true
+  },
+  {
+    "alpha2": "CL",
+    "alpha3": "CHL",
+    "continent": "South America",
+    "currency_code": "CLP",
+    "long_name": "The Republic of Chile",
+    "short_name": "Chile",
+    "per_name": "شیلی",
+    "languages": [
+      "es"
+    ],
+    "nationality": "Chilean",
+    "region": "Americas",
+    "subregion": "South America"
+  },
+  {
+    "alpha2": "CM",
+    "alpha3": "CMR",
+    "continent": "Africa",
+    "currency_code": "XAF",
+    "long_name": "The Republic of Cameroon",
+    "short_name": "Cameroon",
+    "per_name": "کامرون",
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "nationality": "Cameroonian",
+    "region": "Africa",
+    "subregion": "Middle Africa"
+  },
+  {
+    "alpha2": "CN",
+    "alpha3": "CHN",
+    "continent": "Asia",
+    "currency_code": "CNY",
+    "long_name": "The People's Republic of China",
+    "short_name": "China",
+    "per_name": "چین",
+    "languages": [
+      "zh"
+    ],
+    "nationality": "Chinese",
+    "region": "Asia",
+    "subregion": "Eastern Asia"
+  },
+  {
+    "alpha2": "CO",
+    "alpha3": "COL",
+    "continent": "South America",
+    "currency_code": "COP",
+    "long_name": "The Republic of Colombia",
+    "short_name": "Colombia",
+    "per_name": "کلمبیا",
+    "languages": [
+      "es"
+    ],
+    "nationality": "Colombian",
+    "region": "Americas",
+    "subregion": "South America"
+  },
+  {
+    "alpha2": "CR",
+    "alpha3": "CRI",
+    "continent": "North America",
+    "currency_code": "CRC",
+    "long_name": "The Republic of Costa Rica",
+    "short_name": "Costa Rica",
+    "per_name": "کاستاریکا",
+    "languages": [
+      "es"
+    ],
+    "nationality": "Costa Rican",
+    "region": "Americas",
+    "subregion": "Central America"
+  },
+  {
+    "alpha2": "CU",
+    "alpha3": "CUB",
+    "continent": "North America",
+    "currency_code": "CUP",
+    "long_name": "The Republic of Cuba",
+    "short_name": "Cuba",
+    "per_name": "کوبا",
+    "languages": [
+      "es"
+    ],
+    "nationality": "Cuban",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "CV",
+    "alpha3": "CPV",
+    "continent": "Africa",
+    "currency_code": "CVE",
+    "long_name": "The Republic of Cabo Verde",
+    "short_name": "Cabo Verde",
+    "per_name": "کیپ ورد",
+    "languages": [
+      "pt"
+    ],
+    "nationality": "Cape Verdian",
+    "region": "Africa",
+    "subregion": "Western Africa"
+  },
+  {
+    "alpha2": "CW",
+    "alpha3": "CUW",
+    "continent": "North America",
+    "currency_code": "ANG",
+    "long_name": "The Country of Curaçao",
+    "short_name": "Curaçao",
+    "per_name": "کوراسائو",
+    "languages": [
+      "nl"
+    ],
+    "nationality": "Dutch",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "CX",
+    "alpha3": "CXR",
+    "continent": "Asia",
+    "currency_code": "AUD",
+    "long_name": "The Territory of Christmas Island",
+    "short_name": "Christmas Island",
+    "per_name": "جزیره کریسمس",
+    "languages": [
+      "en",
+      "zh",
+      "ms"
+    ],
+    "nationality": "Christmas Island",
+    "region": "Oceania",
+    "subregion": "Australia and New Zealand",
+    "dep": true
+  },
+  {
+    "alpha2": "CY",
+    "alpha3": "CYP",
+    "continent": "Asia",
+    "currency_code": "EUR",
+    "long_name": "The Republic of Cyprus",
+    "short_name": "Cyprus",
+    "per_name": "قبرس",
+    "languages": [
+      "el",
+      "tr",
+      "hy"
+    ],
+    "nationality": "Cypriot",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "CZ",
+    "alpha3": "CZE",
+    "continent": "Europe",
+    "currency_code": "CZK",
+    "long_name": "The Czech Republic",
+    "short_name": "Czech Republic",
+    "per_name": "جمهوری چک",
+    "languages": [
+      "cs",
+      "sk"
+    ],
+    "nationality": "Czech",
+    "region": "Europe",
+    "subregion": "Eastern Europe"
+  },
+  {
+    "alpha2": "DE",
+    "alpha3": "DEU",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Federal Republic of Germany",
+    "short_name": "Germany",
+    "per_name": "آلمان",
+    "languages": [
+      "de"
+    ],
+    "nationality": "German",
+    "region": "Europe",
+    "subregion": "Western Europe"
+  },
+  {
+    "alpha2": "DJ",
+    "alpha3": "DJI",
+    "continent": "Africa",
+    "currency_code": "DJF",
+    "long_name": "The Republic of Djibouti",
+    "short_name": "Djibouti",
+    "per_name": "جیبوتی",
+    "languages": [
+      "ar",
+      "fr"
+    ],
+    "nationality": "Djibouti",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "DK",
+    "alpha3": "DNK",
+    "continent": "Europe",
+    "currency_code": "DKK",
+    "long_name": "The Kingdom of Denmark",
+    "short_name": "Denmark",
+    "per_name": "دانمارک",
+    "languages": [
+      "da"
+    ],
+    "nationality": "Danish",
+    "region": "Europe",
+    "subregion": "Northern Europe"
+  },
+  {
+    "alpha2": "DM",
+    "alpha3": "DMA",
+    "continent": "North America",
+    "currency_code": "XCD",
+    "long_name": "The Commonwealth of Dominica",
+    "short_name": "Dominica",
+    "per_name": "دومینیکا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Dominican",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "DO",
+    "alpha3": "DOM",
+    "continent": "North America",
+    "currency_code": "DOP",
+    "long_name": "The Dominican Republic",
+    "short_name": "Dominican Republic",
+    "per_name": "جمهوری دومینیکن",
+    "languages": [
+      "es"
+    ],
+    "nationality": "Dominican",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "DZ",
+    "alpha3": "DZA",
+    "continent": "Africa",
+    "currency_code": "DZD",
+    "long_name": "The People's Democratic Republic of Algeria",
+    "short_name": "Algeria",
+    "per_name": "الجزایر",
+    "languages": [
+      "ar"
+    ],
+    "nationality": "Algerian",
+    "region": "Africa",
+    "subregion": "Northern Africa"
+  },
+  {
+    "alpha2": "EC",
+    "alpha3": "ECU",
+    "continent": "South America",
+    "currency_code": "USD",
+    "long_name": "The Republic of Ecuador",
+    "short_name": "Ecuador",
+    "per_name": "اکوادور",
+    "languages": [
+      "es"
+    ],
+    "nationality": "Ecuadorean",
+    "region": "Americas",
+    "subregion": "South America"
+  },
+  {
+    "alpha2": "EE",
+    "alpha3": "EST",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Republic of Estonia",
+    "short_name": "Estonia",
+    "per_name": "استونی",
+    "languages": [
+      "et"
+    ],
+    "nationality": "Estonian",
+    "region": "Europe",
+    "subregion": "Northern Europe"
+  },
+  {
+    "alpha2": "EG",
+    "alpha3": "EGY",
+    "continent": "Africa",
+    "currency_code": "EGP",
+    "long_name": "The Arab Republic of Egypt",
+    "short_name": "Egypt",
+    "per_name": "مصر",
+    "languages": [
+      "ar"
+    ],
+    "nationality": "Egyptian",
+    "region": "Africa",
+    "subregion": "Northern Africa"
+  },
+  {
+    "alpha2": "EH",
+    "alpha3": "ESH",
+    "continent": "Africa",
+    "currency_code": "MAD",
+    "long_name": "The Sahrawi Arab Democratic Republic",
+    "short_name": "Western Sahara",
+    "per_name": "صحرای غربی",
+    "languages": [
+      "es",
+      "fr"
+    ],
+    "nationality": "Sahrawi",
+    "region": "Africa",
+    "subregion": "Northern Africa"
+  },
+  {
+    "alpha2": "ER",
+    "alpha3": "ERI",
+    "continent": "Africa",
+    "currency_code": "ETB",
+    "long_name": "The State of Eritrea",
+    "short_name": "Eritrea",
+    "per_name": "اریتره",
+    "languages": [
+      "en",
+      "ar",
+      "ti"
+    ],
+    "nationality": "Eritrean",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "ES",
+    "alpha3": "ESP",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Kingdom of Spain",
+    "short_name": "Spain",
+    "per_name": "اسپانیا",
+    "languages": [
+      "es"
+    ],
+    "nationality": "Spanish",
+    "region": "Europe",
+    "subregion": "Southern Europe"
+  },
+  {
+    "alpha2": "ET",
+    "alpha3": "ETH",
+    "continent": "Africa",
+    "currency_code": "ETB",
+    "long_name": "The Federal Democratic Republic of Ethiopia",
+    "short_name": "Ethiopia",
+    "per_name": "اتیوپی",
+    "languages": [
+      "am"
+    ],
+    "nationality": "Ethiopian",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "FI",
+    "alpha3": "FIN",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Republic of Finland",
+    "short_name": "Finland",
+    "per_name": "فنلاند",
+    "languages": [
+      "fi",
+      "sv"
+    ],
+    "nationality": "Finnish",
+    "region": "Europe",
+    "subregion": "Northern Europe"
+  },
+  {
+    "alpha2": "FJ",
+    "alpha3": "FJI",
+    "continent": "Australia",
+    "currency_code": "FJD",
+    "long_name": "The Republic of Fiji",
+    "short_name": "Fiji",
+    "per_name": "فیجی",
+    "languages": [
+      "en",
+      "fj",
+      "hi",
+      "ur"
+    ],
+    "nationality": "Fijian",
+    "region": "Oceania",
+    "subregion": "Melanesia"
+  },
+  {
+    "alpha2": "FK",
+    "alpha3": "FLK",
+    "continent": "South America",
+    "currency_code": "FKP",
+    "long_name": "The Falkland Islands",
+    "short_name": "Falkland Islands (Malvinas)",
+    "per_name": "جزایر فالکلند",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Falkland Islander",
+    "region": "Americas",
+    "subregion": "South America"
+  },
+  {
+    "alpha2": "FM",
+    "alpha3": "FSM",
+    "continent": "Australia",
+    "currency_code": "USD",
+    "long_name": "The Federated States of Micronesia",
+    "short_name": "Micronesia (Federated States of)",
+    "per_name": "ایالات فدرال میکرونزی",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Micronesian",
+    "region": "Oceania",
+    "subregion": "Micronesia"
+  },
+  {
+    "alpha2": "FO",
+    "alpha3": "FRO",
+    "continent": "Europe",
+    "currency_code": "DKK",
+    "long_name": "The Faroe Islands",
+    "short_name": "Faroe Islands",
+    "per_name": "جزایر فارو",
+    "languages": [
+      "fo"
+    ],
+    "nationality": "Faroese",
+    "region": "Europe",
+    "subregion": "Northern Europe"
+  },
+  {
+    "alpha2": "FR",
+    "alpha3": "FRA",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The French Republic",
+    "short_name": "France",
+    "per_name": "فرانسه",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "French",
+    "region": "Europe",
+    "subregion": "Western Europe"
+  },
+  {
+    "alpha2": "GA",
+    "alpha3": "GAB",
+    "continent": "Africa",
+    "currency_code": "XAF",
+    "long_name": "The Gabonese Republic",
+    "short_name": "Gabon",
+    "per_name": "گابن",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "Gabonese",
+    "region": "Africa",
+    "subregion": "Middle Africa"
+  },
+  {
+    "alpha2": "GB",
+    "alpha3": "GBR",
+    "continent": "Europe",
+    "currency_code": "GBP",
+    "long_name": "The United Kingdom of Great Britain and Northern Ireland",
+    "short_name": "United Kingdom",
+    "per_name": "بریتانیا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "British",
+    "region": "Europe",
+    "subregion": "Northern Europe"
+  },
+  {
+    "alpha2": "GD",
+    "alpha3": "GRD",
+    "continent": "North America",
+    "currency_code": "XCD",
+    "long_name": "Grenada",
+    "short_name": "Grenada",
+    "per_name": "گرنادا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Grenadian",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "GE",
+    "alpha3": "GEO",
+    "continent": "Asia",
+    "currency_code": "GEL",
+    "long_name": "Georgia",
+    "short_name": "Georgia",
+    "per_name": "گرجستان",
+    "languages": [
+      "ka"
+    ],
+    "nationality": "Georgian",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "GF",
+    "alpha3": "GUF",
+    "continent": "South America",
+    "currency_code": "EUR",
+    "long_name": "Guyane",
+    "short_name": "French Guiana",
+    "per_name": "گویان فرانسه",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "French Guianan",
+    "region": "Americas",
+    "subregion": "South America"
+  },
+  {
+    "alpha2": "GG",
+    "alpha3": "GGY",
+    "continent": "Europe",
+    "currency_code": "GBP",
+    "long_name": "The Bailiwick of Guernsey",
+    "short_name": "Guernsey",
+    "per_name": "گرنزی",
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "nationality": "Channel Islander",
+    "region": "Europe",
+    "subregion": "Northern Europe"
+  },
+  {
+    "alpha2": "GH",
+    "alpha3": "GHA",
+    "continent": "Africa",
+    "currency_code": "GHS",
+    "long_name": "The Republic of Ghana",
+    "short_name": "Ghana",
+    "per_name": "غنا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Ghanaian",
+    "region": "Africa",
+    "subregion": "Western Africa"
+  },
+  {
+    "alpha2": "GI",
+    "alpha3": "GIB",
+    "continent": "Europe",
+    "currency_code": "GIP",
+    "long_name": "Gibraltar",
+    "short_name": "Gibraltar",
+    "per_name": "جبل\u200Cالطارق",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Gibraltar",
+    "region": "Europe",
+    "subregion": "Southern Europe"
+  },
+  {
+    "alpha2": "GL",
+    "alpha3": "GRL",
+    "continent": "North America",
+    "currency_code": "DKK",
+    "long_name": "Kalaallit Nunaat",
+    "short_name": "Greenland",
+    "per_name": "گرینلند",
+    "languages": [
+      "kl"
+    ],
+    "nationality": "Greenlandic",
+    "region": "Americas",
+    "subregion": "Northern America"
+  },
+  {
+    "alpha2": "GM",
+    "alpha3": "GMB",
+    "continent": "Africa",
+    "currency_code": "GMD",
+    "long_name": "The Republic of The Gambia",
+    "short_name": "Gambia",
+    "per_name": "گامبیا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Gambian",
+    "region": "Africa",
+    "subregion": "Western Africa"
+  },
+  {
+    "alpha2": "GN",
+    "alpha3": "GIN",
+    "continent": "Africa",
+    "currency_code": "GNF",
+    "long_name": "The Republic of Guinea",
+    "short_name": "Guinea",
+    "per_name": "گینه",
+    "languages": [
+      "fr",
+      "ff"
+    ],
+    "nationality": "Guinean",
+    "region": "Africa",
+    "subregion": "Western Africa"
+  },
+  {
+    "alpha2": "GP",
+    "alpha3": "GLP",
+    "continent": "North America",
+    "currency_code": "EUR",
+    "long_name": "Guadeloupe",
+    "short_name": "Guadeloupe",
+    "per_name": "گوادلوپ",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "French",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "GQ",
+    "alpha3": "GNQ",
+    "continent": "Africa",
+    "currency_code": "XAF",
+    "long_name": "The Republic of Equatorial Guinea",
+    "short_name": "Equatorial Guinea",
+    "per_name": "گینه استوایی",
+    "languages": [
+      "es",
+      "fr"
+    ],
+    "nationality": "Equatorial Guinean",
+    "region": "Africa",
+    "subregion": "Middle Africa"
+  },
+  {
+    "alpha2": "GR",
+    "alpha3": "GRC",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Hellenic Republic",
+    "short_name": "Greece",
+    "per_name": "یونان",
+    "languages": [
+      "el"
+    ],
+    "nationality": "Greek",
+    "region": "Europe",
+    "subregion": "Southern Europe"
+  },
+  {
+    "alpha2": "GS",
+    "alpha3": "SGS",
+    "continent": "Antarctica",
+    "currency_code": "GBP",
+    "long_name": "South Georgia and the South Sandwich Islands",
+    "short_name": "South Georgia and the South Sandwich Islands",
+    "per_name": "جزایر جورجیای جنوبی و ساندویچ جنوبی",
+    "languages": [
+      "en"
+    ],
+    "nationality": "South Georgia and the South Sandwich Islander",
+    "region": "Americas",
+    "subregion": "South America"
+  },
+  {
+    "alpha2": "GT",
+    "alpha3": "GTM",
+    "continent": "North America",
+    "currency_code": "GTQ",
+    "long_name": "The Republic of Guatemala",
+    "short_name": "Guatemala",
+    "per_name": "گواتمالا",
+    "languages": [
+      "es"
+    ],
+    "nationality": "Guatemalan",
+    "region": "Americas",
+    "subregion": "Central America"
+  },
+  {
+    "alpha2": "GU",
+    "alpha3": "GUM",
+    "continent": "Australia",
+    "currency_code": "USD",
+    "long_name": "The Territory of Guam",
+    "short_name": "Guam",
+    "per_name": "گوام",
+    "languages": [
+      "en",
+      "ch",
+      "es"
+    ],
+    "nationality": "Guamanian",
+    "region": "Oceania",
+    "subregion": "Micronesia"
+  },
+  {
+    "alpha2": "GW",
+    "alpha3": "GNB",
+    "continent": "Africa",
+    "currency_code": "XOF",
+    "long_name": "The Republic of Guinea-Bissau",
+    "short_name": "Guinea-Bissau",
+    "per_name": "گینه بیسائو",
+    "languages": [
+      "pt"
+    ],
+    "nationality": "Guinea-Bissauan",
+    "region": "Africa",
+    "subregion": "Western Africa"
+  },
+  {
+    "alpha2": "GY",
+    "alpha3": "GUY",
+    "continent": "South America",
+    "currency_code": "GYD",
+    "long_name": "The Co-operative Republic of Guyana",
+    "short_name": "Guyana",
+    "per_name": "گویان",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Guyanese",
+    "region": "Americas",
+    "subregion": "South America"
+  },
+  {
+    "alpha2": "HK",
+    "alpha3": "HKG",
+    "continent": "Asia",
+    "currency_code": "HKD",
+    "long_name": "The Hong Kong Special Administrative Region of China",
+    "short_name": "Hong Kong",
+    "per_name": "هنگ‌کنگ",
+    "languages": [
+      "en",
+      "zh"
+    ],
+    "nationality": "Hong Kongese",
+    "region": "Asia",
+    "subregion": "Eastern Asia"
+  },
+  {
+    "alpha2": "HM",
+    "alpha3": "HMD",
+    "continent": "Antarctica",
+    "currency_code": "AUD",
+    "long_name": "The Territory of Heard Island and McDonald Islands",
+    "short_name": "Heard Island and McDonald Islands",
+    "per_name": "جزیره هرد و جزایر مک\u200Cدونالد",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Heard and McDonald Islander",
+    "region": "",
+    "subregion": "",
+    "dep": "AU"
+  },
+  {
+    "alpha2": "HN",
+    "alpha3": "HND",
+    "continent": "North America",
+    "currency_code": "HNL",
+    "long_name": "The Republic of Honduras",
+    "short_name": "Honduras",
+    "per_name": "هندوراس",
+    "languages": [
+      "es"
+    ],
+    "nationality": "Honduran",
+    "region": "Americas",
+    "subregion": "Central America"
+  },
+  {
+    "alpha2": "HR",
+    "alpha3": "HRV",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Republic of Croatia",
+    "short_name": "Croatia",
+    "per_name": "کرواسی",
+    "languages": [
+      "hr"
+    ],
+    "nationality": "Croatian",
+    "region": "Europe",
+    "subregion": "Southern Europe"
+  },
+  {
+    "alpha2": "HT",
+    "alpha3": "HTI",
+    "continent": "North America",
+    "currency_code": "HTG",
+    "long_name": "The Republic of Haiti",
+    "short_name": "Haiti",
+    "per_name": "هائیتی",
+    "languages": [
+      "fr",
+      "ht"
+    ],
+    "nationality": "Haitian",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "HU",
+    "alpha3": "HUN",
+    "continent": "Europe",
+    "currency_code": "HUF",
+    "long_name": "Hungary",
+    "short_name": "Hungary",
+    "per_name": "مجارستان",
+    "languages": [
+      "hu"
+    ],
+    "nationality": "Hungarian",
+    "region": "Europe",
+    "subregion": "Eastern Europe"
+  },
+  {
+    "alpha2": "ID",
+    "alpha3": "IDN",
+    "continent": "Asia",
+    "currency_code": "IDR",
+    "long_name": "The Republic of Indonesia",
+    "short_name": "Indonesia",
+    "per_name": "اندونزی",
+    "languages": [
+      "id"
+    ],
+    "nationality": "Indonesian",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia"
+  },
+  {
+    "alpha2": "IE",
+    "alpha3": "IRL",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "Ireland",
+    "short_name": "Ireland",
+    "per_name": "ایرلند",
+    "languages": [
+      "en",
+      "ga"
+    ],
+    "nationality": "Irish",
+    "region": "Europe",
+    "subregion": "Northern Europe"
+  },
+  {
+    "alpha2": "IL",
+    "alpha3": "ISR",
+    "continent": "Asia",
+    "currency_code": "ILS",
+    "long_name": "The State of Israel",
+    "short_name": "Israel",
+    "per_name": "اسرائیل",
+    "languages": [
+      "he",
+      "ar"
+    ],
+    "nationality": "Israeli",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "IM",
+    "alpha3": "IMN",
+    "continent": "Europe",
+    "currency_code": "GBP",
+    "long_name": "The Isle of Man",
+    "short_name": "Isle of Man",
+    "per_name": "جزیره من",
+    "languages": [
+      "en",
+      "gv"
+    ],
+    "nationality": "Manx",
+    "region": "Europe",
+    "subregion": "Northern Europe"
+  },
+  {
+    "alpha2": "IN",
+    "alpha3": "IND",
+    "continent": "Asia",
+    "currency_code": "INR",
+    "long_name": "The Republic of India",
+    "short_name": "India",
+    "per_name": "هند",
+    "languages": [
+      "hi",
+      "en"
+    ],
+    "nationality": "Indian",
+    "region": "Asia",
+    "subregion": "Southern Asia"
+  },
+  {
+    "alpha2": "IO",
+    "alpha3": "IOT",
+    "continent": "Asia",
+    "currency_code": "USD",
+    "long_name": "The British Indian Ocean Territory",
+    "short_name": "British Indian Ocean Territory",
+    "per_name": "قلمرو اقیانوس هند بریتانیا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Indian",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "dep": true
+  },
+  {
+    "alpha2": "IQ",
+    "alpha3": "IRQ",
+    "continent": "Asia",
+    "currency_code": "IQD",
+    "long_name": "The Republic of Iraq",
+    "short_name": "Iraq",
+    "per_name": "عراق",
+    "languages": [
+      "ar"
+    ],
+    "nationality": "Iraqi",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "IR",
+    "alpha3": "IRN",
+    "continent": "Asia",
+    "currency_code": "IRR",
+    "long_name": "The Islamic Republic of Iran",
+    "short_name": "Iran (Islamic Republic of)",
+    "per_name": "ایران",
+    "languages": [
+      "fa"
+    ],
+    "nationality": "Iranian",
+    "region": "Asia",
+    "subregion": "Southern Asia"
+  },
+  {
+    "alpha2": "IS",
+    "alpha3": "ISL",
+    "continent": "Europe",
+    "currency_code": "ISK",
+    "long_name": "Iceland",
+    "short_name": "Iceland",
+    "per_name": "ایسلند",
+    "languages": [
+      "is"
+    ],
+    "nationality": "Icelander",
+    "region": "Europe",
+    "subregion": "Northern Europe"
+  },
+  {
+    "alpha2": "IT",
+    "alpha3": "ITA",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Italian Republic",
+    "short_name": "Italy",
+    "per_name": "ایتالیا",
+    "languages": [
+      "it"
+    ],
+    "nationality": "Italian",
+    "region": "Europe",
+    "subregion": "Southern Europe"
+  },
+  {
+    "alpha2": "JE",
+    "alpha3": "JEY",
+    "continent": "Europe",
+    "currency_code": "GBP",
+    "long_name": "The Bailiwick of Jersey",
+    "short_name": "Jersey",
+    "per_name": "جرزی",
+    "languages": [
+      "en",
+      "fr"
+    ],
+    "nationality": "Channel Islander",
+    "region": "Europe",
+    "subregion": "Northern Europe"
+  },
+  {
+    "alpha2": "JM",
+    "alpha3": "JAM",
+    "continent": "North America",
+    "currency_code": "JMD",
+    "long_name": "Jamaica",
+    "short_name": "Jamaica",
+    "per_name": "جامائیکا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Jamaican",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "JO",
+    "alpha3": "JOR",
+    "continent": "Asia",
+    "currency_code": "JOD",
+    "long_name": "The Hashemite Kingdom of Jordan",
+    "short_name": "Jordan",
+    "per_name": "اردن",
+    "languages": [
+      "ar"
+    ],
+    "nationality": "Jordanian",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "JP",
+    "alpha3": "JPN",
+    "continent": "Asia",
+    "currency_code": "JPY",
+    "long_name": "Japan",
+    "short_name": "Japan",
+    "per_name": "ژاپن",
+    "languages": [
+      "ja"
+    ],
+    "nationality": "Japanese",
+    "region": "Asia",
+    "subregion": "Eastern Asia"
+  },
+  {
+    "alpha2": "KE",
+    "alpha3": "KEN",
+    "continent": "Africa",
+    "currency_code": "KES",
+    "long_name": "The Republic of Kenya",
+    "short_name": "Kenya",
+    "per_name": "کنیا",
+    "languages": [
+      "en",
+      "sw"
+    ],
+    "nationality": "Kenyan",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "KG",
+    "alpha3": "KGZ",
+    "continent": "Asia",
+    "currency_code": "KGS",
+    "long_name": "The Kyrgyz Republic",
+    "short_name": "Kyrgyzstan",
+    "per_name": "قرقیزستان",
+    "languages": [
+      "ky",
+      "ru"
+    ],
+    "nationality": "Kirghiz",
+    "region": "Asia",
+    "subregion": "Central Asia"
+  },
+  {
+    "alpha2": "KH",
+    "alpha3": "KHM",
+    "continent": "Asia",
+    "currency_code": "KHR",
+    "long_name": "The Kingdom of Cambodia",
+    "short_name": "Cambodia",
+    "per_name": "کامبوج",
+    "languages": [
+      "km"
+    ],
+    "nationality": "Cambodian",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia"
+  },
+  {
+    "alpha2": "KI",
+    "alpha3": "KIR",
+    "continent": "Australia",
+    "currency_code": "AUD",
+    "long_name": "The Republic of Kiribati",
+    "short_name": "Kiribati",
+    "per_name": "کیریباتی",
+    "languages": [
+      "en"
+    ],
+    "nationality": "I-Kiribati",
+    "region": "Oceania",
+    "subregion": "Micronesia"
+  },
+  {
+    "alpha2": "KM",
+    "alpha3": "COM",
+    "continent": "Africa",
+    "currency_code": "KMF",
+    "long_name": "The Union of the Comoros",
+    "short_name": "Comoros",
+    "per_name": "کومور",
+    "languages": [
+      "ar",
+      "fr"
+    ],
+    "nationality": "Comoran",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "KN",
+    "alpha3": "KNA",
+    "continent": "North America",
+    "currency_code": "XCD",
+    "long_name": "Saint Kitts and Nevis",
+    "short_name": "Saint Kitts and Nevis",
+    "per_name": "سنت کیتس و نویس",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Kittian and Nevisian",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "KP",
+    "alpha3": "PRK",
+    "continent": "Asia",
+    "currency_code": "KPW",
+    "long_name": "The Democratic People's Republic of Korea",
+    "short_name": "North Korea",
+    "per_name": "کره شمالی",
+    "languages": [
+      "ko"
+    ],
+    "nationality": "North Korean",
+    "region": "Asia",
+    "subregion": "Eastern Asia"
+  },
+  {
+    "alpha2": "KR",
+    "alpha3": "KOR",
+    "continent": "Asia",
+    "currency_code": "KRW",
+    "long_name": "The Republic of Korea",
+    "short_name": "South Korea",
+    "per_name": "کره جنوبی",
+    "languages": [
+      "ko"
+    ],
+    "nationality": "South Korean",
+    "region": "Asia",
+    "subregion": "Eastern Asia"
+  },
+  {
+    "alpha2": "KW",
+    "alpha3": "KWT",
+    "continent": "Asia",
+    "currency_code": "KWD",
+    "long_name": "The State of Kuwait",
+    "short_name": "Kuwait",
+    "per_name": "کویت",
+    "languages": [
+      "ar"
+    ],
+    "nationality": "Kuwaiti",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "KY",
+    "alpha3": "CYM",
+    "continent": "North America",
+    "currency_code": "KYD",
+    "long_name": "The Cayman Islands",
+    "short_name": "Cayman Islands",
+    "per_name": "جزایر کیمن",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Caymanian",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "KZ",
+    "alpha3": "KAZ",
+    "continent": "Asia",
+    "currency_code": "KZT",
+    "long_name": "The Republic of Kazakhstan",
+    "short_name": "Kazakhstan",
+    "per_name": "قزاقستان",
+    "languages": [
+      "kk",
+      "ru"
+    ],
+    "nationality": "Kazakhstani",
+    "region": "Asia",
+    "subregion": "Central Asia"
+  },
+  {
+    "alpha2": "LA",
+    "alpha3": "LAO",
+    "continent": "Asia",
+    "currency_code": "LAK",
+    "long_name": "The Lao People's Democratic Republic",
+    "short_name": "Laos",
+    "per_name": "لائوس",
+    "languages": [
+      "lo"
+    ],
+    "nationality": "Laotian",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia"
+  },
+  {
+    "alpha2": "LB",
+    "alpha3": "LBN",
+    "continent": "Asia",
+    "currency_code": "LBP",
+    "long_name": "The Lebanese Republic",
+    "short_name": "Lebanon",
+    "per_name": "لبنان",
+    "languages": [
+      "ar",
+      "fr"
+    ],
+    "nationality": "Lebanese",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "LC",
+    "alpha3": "LCA",
+    "continent": "North America",
+    "currency_code": "XCD",
+    "long_name": "Saint Lucia",
+    "short_name": "Saint Lucia",
+    "per_name": "سنت لوسیا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Saint Lucian",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "LI",
+    "alpha3": "LIE",
+    "continent": "Europe",
+    "currency_code": "CHF",
+    "long_name": "The Principality of Liechtenstein",
+    "short_name": "Liechtenstein",
+    "per_name": "لیختن\u200Cاشتاین",
+    "languages": [
+      "de"
+    ],
+    "nationality": "Liechtensteiner",
+    "region": "Europe",
+    "subregion": "Western Europe"
+  },
+  {
+    "alpha2": "LK",
+    "alpha3": "LKA",
+    "continent": "Asia",
+    "currency_code": "LKR",
+    "long_name": "The Democratic Socialist Republic of Sri Lanka",
+    "short_name": "Sri Lanka",
+    "per_name": "سریلانکا",
+    "languages": [
+      "si",
+      "ta"
+    ],
+    "nationality": "Sri Lankan",
+    "region": "Asia",
+    "subregion": "Southern Asia"
+  },
+  {
+    "alpha2": "LR",
+    "alpha3": "LBR",
+    "continent": "Africa",
+    "currency_code": "LRD",
+    "long_name": "The Republic of Liberia",
+    "short_name": "Liberia",
+    "per_name": "لیبریا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Liberian",
+    "region": "Africa",
+    "subregion": "Western Africa"
+  },
+  {
+    "alpha2": "LS",
+    "alpha3": "LSO",
+    "continent": "Africa",
+    "currency_code": "LSL",
+    "long_name": "The Kingdom of Lesotho",
+    "short_name": "Lesotho",
+    "per_name": "لسوتو",
+    "languages": [
+      "en",
+      "st"
+    ],
+    "nationality": "Mosotho",
+    "region": "Africa",
+    "subregion": "Southern Africa"
+  },
+  {
+    "alpha2": "LT",
+    "alpha3": "LTU",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Republic of Lithuania",
+    "short_name": "Lithuania",
+    "per_name": "لیتوانی",
+    "languages": [
+      "lt"
+    ],
+    "nationality": "Lithuanian",
+    "region": "Europe",
+    "subregion": "Northern Europe"
+  },
+  {
+    "alpha2": "LU",
+    "alpha3": "LUX",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Grand Duchy of Luxembourg",
+    "short_name": "Luxembourg",
+    "per_name": "لوکزامبورگ",
+    "languages": [
+      "fr",
+      "de",
+      "lb"
+    ],
+    "nationality": "Luxembourger",
+    "region": "Europe",
+    "subregion": "Western Europe"
+  },
+  {
+    "alpha2": "LV",
+    "alpha3": "LVA",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Republic of Latvia",
+    "short_name": "Latvia",
+    "per_name": "لتونی",
+    "languages": [
+      "lv"
+    ],
+    "nationality": "Latvian",
+    "region": "Europe",
+    "subregion": "Northern Europe"
+  },
+  {
+    "alpha2": "LY",
+    "alpha3": "LBY",
+    "continent": "Africa",
+    "currency_code": "LYD",
+    "long_name": "The State of Libya",
+    "short_name": "Libya",
+    "per_name": "لیبی",
+    "languages": [
+      "ar"
+    ],
+    "nationality": "Libyan",
+    "region": "Africa",
+    "subregion": "Northern Africa"
+  },
+  {
+    "alpha2": "MA",
+    "alpha3": "MAR",
+    "continent": "Africa",
+    "currency_code": "MAD",
+    "long_name": "The Kingdom of Morocco",
+    "short_name": "Morocco",
+    "per_name": "مراکش",
+    "languages": [
+      "ar"
+    ],
+    "nationality": "Moroccan",
+    "region": "Africa",
+    "subregion": "Northern Africa"
+  },
+  {
+    "alpha2": "MC",
+    "alpha3": "MCO",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Principality of Monaco",
+    "short_name": "Monaco",
+    "per_name": "موناکو",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "Monegasque",
+    "region": "Europe",
+    "subregion": "Western Europe"
+  },
+  {
+    "alpha2": "MD",
+    "alpha3": "MDA",
+    "continent": "Europe",
+    "currency_code": "MDL",
+    "long_name": "The Republic of Moldova",
+    "short_name": "Moldova (Republic of)",
+    "per_name": "مولداوی",
+    "languages": [
+      "ro"
+    ],
+    "nationality": "Moldovan",
+    "region": "Europe",
+    "subregion": "Eastern Europe"
+  },
+  {
+    "alpha2": "ME",
+    "alpha3": "MNE",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "Montenegro",
+    "short_name": "Montenegro",
+    "per_name": "مونته‌نگرو",
+    "languages": [
+      "sr",
+      "bs",
+      "sq",
+      "hr"
+    ],
+    "nationality": "Montenegrin",
+    "region": "Europe",
+    "subregion": "Southern Europe"
+  },
+  {
+    "alpha2": "MF",
+    "alpha3": "MAF",
+    "continent": "North America",
+    "currency_code": "EUR",
+    "long_name": "The Collectivity of Saint-Martin",
+    "short_name": "Saint Martin (French part)",
+    "per_name": "جزیره سن مارتن",
+    "languages": [
+      "en",
+      "fr",
+      "nl"
+    ],
+    "nationality": "French",
+    "region": "Americas",
+    "subregion": "Caribbean",
+    "dep": "FR"
+  },
+  {
+    "alpha2": "MG",
+    "alpha3": "MDG",
+    "continent": "Africa",
+    "currency_code": "MGA",
+    "long_name": "The Republic of Madagascar",
+    "short_name": "Madagascar",
+    "per_name": "ماداگاسکار",
+    "languages": [
+      "fr",
+      "mg"
+    ],
+    "nationality": "Malagasy",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "MH",
+    "alpha3": "MHL",
+    "continent": "Australia",
+    "currency_code": "USD",
+    "long_name": "The Republic of the Marshall Islands",
+    "short_name": "Marshall Islands",
+    "per_name": "جزایر مارشال",
+    "languages": [
+      "en",
+      "mh"
+    ],
+    "nationality": "Marshallese",
+    "region": "Oceania",
+    "subregion": "Micronesia"
+  },
+  {
+    "alpha2": "MK",
+    "alpha3": "MKD",
+    "continent": "Europe",
+    "currency_code": "MKD",
+    "long_name": "The Republic of North Macedonia",
+    "short_name": "North Macedonia",
+    "per_name": "مقدونیه شمالی",
+    "languages": [
+      "mk"
+    ],
+    "nationality": "Macedonian",
+    "region": "Europe",
+    "subregion": "Southern Europe"
+  },
+  {
+    "alpha2": "ML",
+    "alpha3": "MLI",
+    "continent": "Africa",
+    "currency_code": "XOF",
+    "long_name": "The Republic of Mali",
+    "short_name": "Mali",
+    "per_name": "مالی",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "Malian",
+    "region": "Africa",
+    "subregion": "Western Africa"
+  },
+  {
+    "alpha2": "MM",
+    "alpha3": "MMR",
+    "continent": "Asia",
+    "currency_code": "MMK",
+    "long_name": "The Republic of the Union of Myanmar",
+    "short_name": "Myanmar",
+    "per_name": "میانمار",
+    "languages": [
+      "my"
+    ],
+    "nationality": "Myanmarian",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia"
+  },
+  {
+    "alpha2": "MN",
+    "alpha3": "MNG",
+    "continent": "Asia",
+    "currency_code": "MNT",
+    "long_name": "Mongolia",
+    "short_name": "Mongolia",
+    "per_name": "مغولستان",
+    "languages": [
+      "mn"
+    ],
+    "nationality": "Mongolian",
+    "region": "Asia",
+    "subregion": "Eastern Asia"
+  },
+  {
+    "alpha2": "MO",
+    "alpha3": "MAC",
+    "continent": "Asia",
+    "currency_code": "MOP",
+    "long_name": "The Macao Special Administrative Region of China",
+    "short_name": "Macao",
+    "per_name": "ماکائو",
+    "languages": [
+      "zh",
+      "pt"
+    ],
+    "nationality": "Chinese",
+    "region": "Asia",
+    "subregion": "Eastern Asia"
+  },
+  {
+    "alpha2": "MP",
+    "alpha3": "MNP",
+    "continent": "Australia",
+    "currency_code": "USD",
+    "long_name": "The Commonwealth of the Northern Mariana Islands",
+    "short_name": "Northern Mariana Islands",
+    "per_name": "جزایر ماریانای شمالی",
+    "languages": [
+      "en",
+      "ch"
+    ],
+    "nationality": "American",
+    "region": "Oceania",
+    "subregion": "Micronesia",
+    "dep": true
+  },
+  {
+    "alpha2": "MQ",
+    "alpha3": "MTQ",
+    "continent": "North America",
+    "currency_code": "EUR",
+    "long_name": "Martinique",
+    "short_name": "Martinique",
+    "per_name": "مارتینیک",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "French",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "MR",
+    "alpha3": "MRT",
+    "continent": "Africa",
+    "currency_code": "MRU",
+    "long_name": "The Islamic Republic of Mauritania",
+    "short_name": "Mauritania",
+    "per_name": "موریتانی",
+    "languages": [
+      "ar",
+      "fr"
+    ],
+    "nationality": "Mauritanian",
+    "region": "Africa",
+    "subregion": "Western Africa"
+  },
+  {
+    "alpha2": "MS",
+    "alpha3": "MSR",
+    "continent": "North America",
+    "currency_code": "XCD",
+    "long_name": "Montserrat",
+    "short_name": "Montserrat",
+    "per_name": "مونتسرات",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Montserratian",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "MT",
+    "alpha3": "MLT",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Republic of Malta",
+    "short_name": "Malta",
+    "per_name": "مالت",
+    "languages": [
+      "mt",
+      "en"
+    ],
+    "nationality": "Maltese",
+    "region": "Europe",
+    "subregion": "Southern Europe"
+  },
+  {
+    "alpha2": "MU",
+    "alpha3": "MUS",
+    "continent": "Africa",
+    "currency_code": "MUR",
+    "long_name": "The Republic of Mauritius",
+    "short_name": "Mauritius",
+    "per_name": "موریس",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Mauritian",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "MV",
+    "alpha3": "MDV",
+    "continent": "Asia",
+    "currency_code": "MVR",
+    "long_name": "The Republic of Maldives",
+    "short_name": "Maldives",
+    "per_name": "مالدیو",
+    "languages": [
+      "dv"
+    ],
+    "nationality": "Maldivan",
+    "region": "Asia",
+    "subregion": "Southern Asia"
+  },
+  {
+    "alpha2": "MW",
+    "alpha3": "MWI",
+    "continent": "Africa",
+    "currency_code": "MWK",
+    "long_name": "The Republic of Malawi",
+    "short_name": "Malawi",
+    "per_name": "مالاوی",
+    "languages": [
+      "en",
+      "ny"
+    ],
+    "nationality": "Malawian",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "MX",
+    "alpha3": "MEX",
+    "continent": "North America",
+    "currency_code": "MXN",
+    "long_name": "The United Mexican States",
+    "short_name": "Mexico",
+    "per_name": "مکزیک",
+    "languages": [
+      "es"
+    ],
+    "nationality": "Mexican",
+    "region": "Americas",
+    "subregion": "Central America"
+  },
+  {
+    "alpha2": "MY",
+    "alpha3": "MYS",
+    "continent": "Asia",
+    "currency_code": "MYR",
+    "long_name": "Malaysia",
+    "short_name": "Malaysia",
+    "per_name": "مالزی",
+    "languages": [
+      "ms",
+      "en"
+    ],
+    "nationality": "Malaysian",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia"
+  },
+  {
+    "alpha2": "MZ",
+    "alpha3": "MOZ",
+    "continent": "Africa",
+    "currency_code": "MZN",
+    "long_name": "The Republic of Mozambique",
+    "short_name": "Mozambique",
+    "per_name": "موزامبیک",
+    "languages": [
+      "pt"
+    ],
+    "nationality": "Mozambican",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "NA",
+    "alpha3": "NAM",
+    "continent": "Africa",
+    "currency_code": "NAD",
+    "long_name": "The Republic of Namibia",
+    "short_name": "Namibia",
+    "per_name": "نامبیا",
+    "languages": [
+      "en",
+      "af"
+    ],
+    "nationality": "Namibian",
+    "region": "Africa",
+    "subregion": "Southern Africa"
+  },
+  {
+    "alpha2": "NC",
+    "alpha3": "NCL",
+    "continent": "Australia",
+    "currency_code": "XPF",
+    "long_name": "New Caledonia",
+    "short_name": "New Caledonia",
+    "per_name": "کالدونیای جدید",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "New Caledonian",
+    "region": "Oceania",
+    "subregion": "Melanesia"
+  },
+  {
+    "alpha2": "NE",
+    "alpha3": "NER",
+    "continent": "Africa",
+    "currency_code": "XOF",
+    "long_name": "The Republic of the Niger",
+    "short_name": "Niger",
+    "per_name": "نیجر",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "Nigerian",
+    "region": "Africa",
+    "subregion": "Western Africa"
+  },
+  {
+    "alpha2": "NF",
+    "alpha3": "NFK",
+    "continent": "Australia",
+    "currency_code": "AUD",
+    "long_name": "The Territory of Norfolk Island",
+    "short_name": "Norfolk Island",
+    "per_name": "جزیره نورفک",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Norfolk Islander",
+    "region": "Oceania",
+    "subregion": "Australia and New Zealand",
+    "dep": true
+  },
+  {
+    "alpha2": "NG",
+    "alpha3": "NGA",
+    "continent": "Africa",
+    "currency_code": "NGN",
+    "long_name": "The Federal Republic of Nigeria",
+    "short_name": "Nigeria",
+    "per_name": "نیجریه",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Nigerian",
+    "region": "Africa",
+    "subregion": "Western Africa"
+  },
+  {
+    "alpha2": "NI",
+    "alpha3": "NIC",
+    "continent": "North America",
+    "currency_code": "NIO",
+    "long_name": "The Republic of Nicaragua",
+    "short_name": "Nicaragua",
+    "per_name": "نیکاراگوئه",
+    "languages": [
+      "es"
+    ],
+    "nationality": "Nicaraguan",
+    "region": "Americas",
+    "subregion": "Central America"
+  },
+  {
+    "alpha2": "NL",
+    "alpha3": "NLD",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Kingdom of the Netherlands",
+    "short_name": "Netherlands",
+    "per_name": "هلند",
+    "languages": [
+      "nl"
+    ],
+    "nationality": "Dutch",
+    "region": "Europe",
+    "subregion": "Western Europe"
+  },
+  {
+    "alpha2": "NO",
+    "alpha3": "NOR",
+    "continent": "Europe",
+    "currency_code": "NOK",
+    "long_name": "The Kingdom of Norway",
+    "short_name": "Norway",
+    "per_name": "نروژ",
+    "languages": [
+      "nb",
+      "nn"
+    ],
+    "nationality": "Norwegian",
+    "region": "Europe",
+    "subregion": "Northern Europe"
+  },
+  {
+    "alpha2": "NP",
+    "alpha3": "NPL",
+    "continent": "Asia",
+    "currency_code": "NPR",
+    "long_name": "The Federal Democratic Republic of Nepal",
+    "short_name": "Nepal",
+    "per_name": "نپال",
+    "languages": [
+      "ne"
+    ],
+    "nationality": "Nepalese",
+    "region": "Asia",
+    "subregion": "Southern Asia"
+  },
+  {
+    "alpha2": "NR",
+    "alpha3": "NRU",
+    "continent": "Australia",
+    "currency_code": "AUD",
+    "long_name": "The Republic of Nauru",
+    "short_name": "Nauru",
+    "per_name": "نائورو",
+    "languages": [
+      "en",
+      "na"
+    ],
+    "nationality": "Nauruan",
+    "region": "Oceania",
+    "subregion": "Micronesia"
+  },
+  {
+    "alpha2": "NU",
+    "alpha3": "NIU",
+    "continent": "Australia",
+    "currency_code": "NZD",
+    "long_name": "Niue",
+    "short_name": "Niue",
+    "per_name": "نیووی",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Niuean",
+    "region": "Oceania",
+    "subregion": "Polynesia"
+  },
+  {
+    "alpha2": "NZ",
+    "alpha3": "NZL",
+    "continent": "Australia",
+    "currency_code": "NZD",
+    "long_name": "New Zealand",
+    "short_name": "New Zealand",
+    "per_name": "نیوزیلند",
+    "languages": [
+      "en"
+    ],
+    "nationality": "New Zealander",
+    "region": "Oceania",
+    "subregion": "Australia and New Zealand"
+  },
+  {
+    "alpha2": "OM",
+    "alpha3": "OMN",
+    "continent": "Asia",
+    "currency_code": "OMR",
+    "long_name": "The Sultanate of Oman",
+    "short_name": "Oman",
+    "per_name": "عمان",
+    "languages": [
+      "ar"
+    ],
+    "nationality": "Omani",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "PA",
+    "alpha3": "PAN",
+    "continent": "North America",
+    "currency_code": "PAB",
+    "long_name": "The Republic of Panamá",
+    "short_name": "Panama",
+    "per_name": "پاناما",
+    "languages": [
+      "es"
+    ],
+    "nationality": "Panamanian",
+    "region": "Americas",
+    "subregion": "Central America"
+  },
+  {
+    "alpha2": "PE",
+    "alpha3": "PER",
+    "continent": "South America",
+    "currency_code": "PEN",
+    "long_name": "The Republic of Perú",
+    "short_name": "Peru",
+    "per_name": "پرو",
+    "languages": [
+      "es"
+    ],
+    "nationality": "Peruvian",
+    "region": "Americas",
+    "subregion": "South America"
+  },
+  {
+    "alpha2": "PF",
+    "alpha3": "PYF",
+    "continent": "Australia",
+    "currency_code": "XPF",
+    "long_name": "French Polynesia",
+    "short_name": "French Polynesia",
+    "per_name": "پلی\u200Cنزی فرانسه",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "French Polynesian",
+    "region": "Oceania",
+    "subregion": "Polynesia"
+  },
+  {
+    "alpha2": "PG",
+    "alpha3": "PNG",
+    "continent": "Australia",
+    "currency_code": "PGK",
+    "long_name": "The Independent State of Papua New Guinea",
+    "short_name": "Papua New Guinea",
+    "per_name": "پاپوآ گینه نو",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Papua New Guinean",
+    "region": "Oceania",
+    "subregion": "Melanesia"
+  },
+  {
+    "alpha2": "PH",
+    "alpha3": "PHL",
+    "continent": "Asia",
+    "currency_code": "PHP",
+    "long_name": "The Republic of the Philippines",
+    "short_name": "Philippines",
+    "per_name": "فیلیپین",
+    "languages": [
+      "tl",
+      "en"
+    ],
+    "nationality": "Filipino",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia"
+  },
+  {
+    "alpha2": "PK",
+    "alpha3": "PAK",
+    "continent": "Asia",
+    "currency_code": "PKR",
+    "long_name": "The Islamic Republic of Pakistan",
+    "short_name": "Pakistan",
+    "per_name": "پاکستان",
+    "languages": [
+      "en",
+      "ur"
+    ],
+    "nationality": "Pakistani",
+    "region": "Asia",
+    "subregion": "Southern Asia"
+  },
+  {
+    "alpha2": "PL",
+    "alpha3": "POL",
+    "continent": "Europe",
+    "currency_code": "PLN",
+    "long_name": "The Republic of Poland",
+    "short_name": "Poland",
+    "per_name": "لهستان",
+    "languages": [
+      "pl"
+    ],
+    "nationality": "Polish",
+    "region": "Europe",
+    "subregion": "Eastern Europe"
+  },
+  {
+    "alpha2": "PM",
+    "alpha3": "SPM",
+    "continent": "North America",
+    "currency_code": "EUR",
+    "long_name": "The Overseas Collectivity of Saint-Pierre and Miquelon",
+    "short_name": "Saint Pierre and Miquelon",
+    "per_name": "سن-پیر و میکلون",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "French",
+    "region": "Americas",
+    "subregion": "Northern America"
+  },
+  {
+    "alpha2": "PN",
+    "alpha3": "PCN",
+    "continent": "Australia",
+    "currency_code": "NZD",
+    "long_name": "The Pitcairn, Henderson, Ducie and Oeno Islands",
+    "short_name": "Pitcairn",
+    "per_name": "جزایر پیت\u200Cکرن",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Pitcairn Islander",
+    "region": "Oceania",
+    "subregion": "Polynesia",
+    "dep": true
+  },
+  {
+    "alpha2": "PR",
+    "alpha3": "PRI",
+    "continent": "North America",
+    "currency_code": "USD",
+    "long_name": "The Commonwealth of Puerto Rico",
+    "short_name": "Puerto Rico",
+    "per_name": "پورتوریکو",
+    "languages": [
+      "es",
+      "en"
+    ],
+    "nationality": "Puerto Rican",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "PS",
+    "alpha3": "PSE",
+    "continent": "Asia",
+    "currency_code": "ILS",
+    "long_name": "The State of Palestine",
+    "short_name": "Palestine, State of",
+    "per_name": "فلسطین",
+    "languages": [
+      "ar",
+      "he",
+      "en"
+    ],
+    "nationality": "Palestinian",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "PT",
+    "alpha3": "PRT",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Portuguese Republic",
+    "short_name": "Portugal",
+    "per_name": "پرتغال",
+    "languages": [
+      "pt"
+    ],
+    "nationality": "Portuguese",
+    "region": "Europe",
+    "subregion": "Southern Europe"
+  },
+  {
+    "alpha2": "PW",
+    "alpha3": "PLW",
+    "continent": "Australia",
+    "currency_code": "USD",
+    "long_name": "The Republic of Palau",
+    "short_name": "Palau",
+    "per_name": "پالائو",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Palauan",
+    "region": "Oceania",
+    "subregion": "Micronesia"
+  },
+  {
+    "alpha2": "PY",
+    "alpha3": "PRY",
+    "continent": "South America",
+    "currency_code": "PYG",
+    "long_name": "The Republic of Paraguay",
+    "short_name": "Paraguay",
+    "per_name": "پاراگوئه",
+    "languages": [
+      "es",
+      "gn"
+    ],
+    "nationality": "Paraguayan",
+    "region": "Americas",
+    "subregion": "South America"
+  },
+  {
+    "alpha2": "QA",
+    "alpha3": "QAT",
+    "continent": "Asia",
+    "currency_code": "QAR",
+    "long_name": "The State of Qatar",
+    "short_name": "Qatar",
+    "per_name": "قطر",
+    "languages": [
+      "ar"
+    ],
+    "nationality": "Qatari",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "RE",
+    "alpha3": "REU",
+    "continent": "Africa",
+    "currency_code": "EUR",
+    "long_name": "Réunion",
+    "short_name": "Réunion",
+    "per_name": "رئونیون",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "French",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "RO",
+    "alpha3": "ROU",
+    "continent": "Europe",
+    "currency_code": "RON",
+    "long_name": "Romania",
+    "short_name": "Romania",
+    "per_name": "رومانی",
+    "languages": [
+      "ro"
+    ],
+    "nationality": "Romanian",
+    "region": "Europe",
+    "subregion": "Eastern Europe"
+  },
+  {
+    "alpha2": "RS",
+    "alpha3": "SRB",
+    "continent": "Europe",
+    "currency_code": "RSD",
+    "long_name": "The Republic of Serbia",
+    "short_name": "Serbia",
+    "per_name": "صربستان",
+    "languages": [
+      "sr"
+    ],
+    "nationality": "Serbian",
+    "region": "Europe",
+    "subregion": "Southern Europe"
+  },
+  {
+    "alpha2": "RU",
+    "alpha3": "RUS",
+    "continent": "Europe",
+    "currency_code": "RUB",
+    "long_name": "The Russian Federation",
+    "short_name": "Russia",
+    "per_name": "روسیه",
+    "languages": [
+      "ru"
+    ],
+    "nationality": "Russian",
+    "region": "Europe",
+    "subregion": "Eastern Europe"
+  },
+  {
+    "alpha2": "RW",
+    "alpha3": "RWA",
+    "continent": "Africa",
+    "currency_code": "RWF",
+    "long_name": "The Republic of Rwanda",
+    "short_name": "Rwanda",
+    "per_name": "رواندا",
+    "languages": [
+      "rw",
+      "en",
+      "fr"
+    ],
+    "nationality": "Rwandan",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "SA",
+    "alpha3": "SAU",
+    "continent": "Asia",
+    "currency_code": "SAR",
+    "long_name": "The Kingdom of Saudi Arabia",
+    "short_name": "Saudi Arabia",
+    "per_name": "عربستان سعودی",
+    "languages": [
+      "ar"
+    ],
+    "nationality": "Saudi Arabian",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "SB",
+    "alpha3": "SLB",
+    "continent": "Australia",
+    "currency_code": "SBD",
+    "long_name": "The Solomon Islands",
+    "short_name": "Solomon Islands",
+    "per_name": "جزایر سلیمان",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Solomon Islander",
+    "region": "Oceania",
+    "subregion": "Melanesia"
+  },
+  {
+    "alpha2": "SC",
+    "alpha3": "SYC",
+    "continent": "Africa",
+    "currency_code": "SCR",
+    "long_name": "The Republic of Seychelles",
+    "short_name": "Seychelles",
+    "per_name": "سیشل",
+    "languages": [
+      "fr",
+      "en"
+    ],
+    "nationality": "Seychellois",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "SD",
+    "alpha3": "SDN",
+    "continent": "Africa",
+    "currency_code": "SDG",
+    "long_name": "The Republic of the Sudan",
+    "short_name": "Sudan",
+    "per_name": "سودان",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "nationality": "Sudanese",
+    "region": "Africa",
+    "subregion": "Northern Africa"
+  },
+  {
+    "alpha2": "SE",
+    "alpha3": "SWE",
+    "continent": "Europe",
+    "currency_code": "SEK",
+    "long_name": "The Kingdom of Sweden",
+    "short_name": "Sweden",
+    "per_name": "سوئد",
+    "languages": [
+      "sv"
+    ],
+    "nationality": "Swedish",
+    "region": "Europe",
+    "subregion": "Northern Europe"
+  },
+  {
+    "alpha2": "SG",
+    "alpha3": "SGP",
+    "continent": "Asia",
+    "currency_code": "SGD",
+    "long_name": "The Republic of Singapore",
+    "short_name": "Singapore",
+    "per_name": "سنگاپور",
+    "languages": [
+      "en",
+      "ms",
+      "ta"
+    ],
+    "nationality": "Singaporean",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia"
+  },
+  {
+    "alpha2": "SH",
+    "alpha3": "SHN",
+    "continent": "Africa",
+    "currency_code": "SHP",
+    "long_name": "Saint Helena, Ascension and Tristan da Cunha",
+    "short_name": "Saint Helena, Ascension and Tristan da Cunha",
+    "per_name": "سنت هلنا، اسنشن و تریستان دا کونا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Saint Helenian",
+    "region": "Africa",
+    "subregion": "Western Africa",
+    "dep": "GB"
+  },
+  {
+    "alpha2": "SI",
+    "alpha3": "SVN",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Republic of Slovenia",
+    "short_name": "Slovenia",
+    "per_name": "اسلوونی",
+    "languages": [
+      "sl"
+    ],
+    "nationality": "Slovene",
+    "region": "Europe",
+    "subregion": "Southern Europe"
+  },
+  {
+    "alpha2": "SJ",
+    "alpha3": "SJM",
+    "continent": "Europe",
+    "currency_code": "NOK",
+    "long_name": "Svalbard and Jan Mayen",
+    "short_name": "Svalbard and Jan Mayen",
+    "per_name": "سوالبارد و یان ماین",
+    "languages": [
+      "no"
+    ],
+    "nationality": "Norwegian",
+    "region": "Europe",
+    "subregion": "Northern Europe",
+    "dep": "NO"
+  },
+  {
+    "alpha2": "SK",
+    "alpha3": "SVK",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Slovak Republic",
+    "short_name": "Slovakia",
+    "per_name": "اسلواکی",
+    "languages": [
+      "sk"
+    ],
+    "nationality": "Slovak",
+    "region": "Europe",
+    "subregion": "Eastern Europe"
+  },
+  {
+    "alpha2": "SL",
+    "alpha3": "SLE",
+    "continent": "Africa",
+    "currency_code": "SLL",
+    "long_name": "The Republic of Sierra Leone",
+    "short_name": "Sierra Leone",
+    "per_name": "سیرالئون",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Sierra Leonean",
+    "region": "Africa",
+    "subregion": "Western Africa"
+  },
+  {
+    "alpha2": "SM",
+    "alpha3": "SMR",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Republic of San Marino",
+    "short_name": "San Marino",
+    "per_name": "سن مارینو",
+    "languages": [
+      "it"
+    ],
+    "nationality": "Sammarinese",
+    "region": "Europe",
+    "subregion": "Southern Europe"
+  },
+  {
+    "alpha2": "SN",
+    "alpha3": "SEN",
+    "continent": "Africa",
+    "currency_code": "XOF",
+    "long_name": "The Republic of Senegal",
+    "short_name": "Senegal",
+    "per_name": "سنگال",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "Senegalese",
+    "region": "Africa",
+    "subregion": "Western Africa"
+  },
+  {
+    "alpha2": "SO",
+    "alpha3": "SOM",
+    "continent": "Africa",
+    "currency_code": "SOS",
+    "long_name": "The Federal Republic of Somalia",
+    "short_name": "Somalia",
+    "per_name": "سومالیا",
+    "languages": [
+      "so",
+      "ar"
+    ],
+    "nationality": "Somali",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "SR",
+    "alpha3": "SUR",
+    "continent": "South America",
+    "currency_code": "SRD",
+    "long_name": "The Republic of Suriname",
+    "short_name": "Suriname",
+    "per_name": "سورینام",
+    "languages": [
+      "nl"
+    ],
+    "nationality": "Surinamer",
+    "region": "Americas",
+    "subregion": "South America"
+  },
+  {
+    "alpha2": "SS",
+    "alpha3": "SSD",
+    "continent": "Africa",
+    "currency_code": "SSP",
+    "long_name": "The Republic of South Sudan",
+    "short_name": "South Sudan",
+    "per_name": "سودان جنوبی",
+    "languages": [
+      "ar",
+      "en"
+    ],
+    "nationality": "South Sudanese",
+    "region": "Africa",
+    "subregion": "Northern Africa"
+  },
+  {
+    "alpha2": "ST",
+    "alpha3": "STP",
+    "continent": "Africa",
+    "currency_code": "STD",
+    "long_name": "The Democratic Republic of São Tomé and Príncipe",
+    "short_name": "Sao Tome and Principe",
+    "per_name": "سائوتومه و پرنسیپ",
+    "languages": [
+      "pt"
+    ],
+    "nationality": "Sao Tomean",
+    "region": "Africa",
+    "subregion": "Middle Africa"
+  },
+  {
+    "alpha2": "SV",
+    "alpha3": "SLV",
+    "continent": "North America",
+    "currency_code": "USD",
+    "long_name": "The Republic of El Salvador",
+    "short_name": "El Salvador",
+    "per_name": "السالوادور",
+    "languages": [
+      "es"
+    ],
+    "nationality": "Salvadoran",
+    "region": "Americas",
+    "subregion": "Central America"
+  },
+  {
+    "alpha2": "SX",
+    "alpha3": "SXM",
+    "continent": "North America",
+    "currency_code": "ANG",
+    "long_name": "Sint Maarten",
+    "short_name": "Sint Maarten (Dutch part)",
+    "per_name": "سن مارتن",
+    "languages": [
+      "nl",
+      "en"
+    ],
+    "nationality": "Dutch",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "SY",
+    "alpha3": "SYR",
+    "continent": "Asia",
+    "currency_code": "SYP",
+    "long_name": "The Syrian Arab Republic",
+    "short_name": "Syria",
+    "per_name": "سوریه",
+    "languages": [
+      "ar"
+    ],
+    "nationality": "Syrian",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "SZ",
+    "alpha3": "SWZ",
+    "continent": "Africa",
+    "currency_code": "SZL",
+    "long_name": "The Kingdom of Eswatini",
+    "short_name": "Eswatini",
+    "per_name": "اسواتینی",
+    "languages": [
+      "en",
+      "ss"
+    ],
+    "nationality": "Swazi",
+    "region": "Africa",
+    "subregion": "Southern Africa"
+  },
+  {
+    "alpha2": "TC",
+    "alpha3": "TCA",
+    "continent": "North America",
+    "currency_code": "USD",
+    "long_name": "The Turks and Caicos Islands",
+    "short_name": "Turks and Caicos Islands",
+    "per_name": "جزایر تورکس و کایکوس",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Turks and Caicos Islander",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "TD",
+    "alpha3": "TCD",
+    "continent": "Africa",
+    "currency_code": "XAF",
+    "long_name": "The Republic of Chad",
+    "short_name": "Chad",
+    "per_name": "چاد",
+    "languages": [
+      "ar",
+      "fr"
+    ],
+    "nationality": "Chadian",
+    "region": "Africa",
+    "subregion": "Middle Africa"
+  },
+  {
+    "alpha2": "TF",
+    "alpha3": "ATF",
+    "continent": "Africa",
+    "currency_code": "EUR",
+    "long_name": "The French Southern and Antarctic Lands",
+    "short_name": "French Southern Territories",
+    "per_name": "سرزمین\u200Cهای جنوبی و جنوبگانی فرانسه",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "French",
+    "region": "Africa",
+    "subregion": "Eastern Africa",
+    "dep": true
+  },
+  {
+    "alpha2": "TG",
+    "alpha3": "TGO",
+    "continent": "Africa",
+    "currency_code": "XOF",
+    "long_name": "The Togolese Republic",
+    "short_name": "Togo",
+    "per_name": "توگو",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "Togolese",
+    "region": "Africa",
+    "subregion": "Western Africa"
+  },
+  {
+    "alpha2": "TH",
+    "alpha3": "THA",
+    "continent": "Asia",
+    "currency_code": "THB",
+    "long_name": "The Kingdom of Thailand",
+    "short_name": "Thailand",
+    "per_name": "تایلند",
+    "languages": [
+      "th"
+    ],
+    "nationality": "Thai",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia"
+  },
+  {
+    "alpha2": "TJ",
+    "alpha3": "TJK",
+    "continent": "Asia",
+    "currency_code": "TJS",
+    "long_name": "The Republic of Tajikistan",
+    "short_name": "Tajikistan",
+    "per_name": "تاجیکستان",
+    "languages": [
+      "tg",
+      "ru"
+    ],
+    "nationality": "Tadzhik",
+    "region": "Asia",
+    "subregion": "Central Asia"
+  },
+  {
+    "alpha2": "TK",
+    "alpha3": "TKL",
+    "continent": "Australia",
+    "currency_code": "NZD",
+    "long_name": "Tokelau",
+    "short_name": "Tokelau",
+    "per_name": "توکلائو",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Tokelauan",
+    "region": "Oceania",
+    "subregion": "Polynesia",
+    "dep": true
+  },
+  {
+    "alpha2": "TL",
+    "alpha3": "TLS",
+    "continent": "Asia",
+    "currency_code": "IDR",
+    "long_name": "The Democratic Republic of Timor-Leste",
+    "short_name": "Timor-Leste",
+    "per_name": "تیمور شرقی",
+    "languages": [
+      "pt"
+    ],
+    "nationality": "East Timorese",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia"
+  },
+  {
+    "alpha2": "TM",
+    "alpha3": "TKM",
+    "continent": "Asia",
+    "currency_code": "TMT",
+    "long_name": "Turkmenistan",
+    "short_name": "Turkmenistan",
+    "per_name": "ترکمنستان",
+    "languages": [
+      "tk"
+    ],
+    "nationality": "Turkmen",
+    "region": "Asia",
+    "subregion": "Central Asia"
+  },
+  {
+    "alpha2": "TN",
+    "alpha3": "TUN",
+    "continent": "Africa",
+    "currency_code": "TND",
+    "long_name": "The Republic of Tunisia",
+    "short_name": "Tunisia",
+    "per_name": "تونس",
+    "languages": [
+      "ar",
+      "fr"
+    ],
+    "nationality": "Tunisian",
+    "region": "Africa",
+    "subregion": "Northern Africa"
+  },
+  {
+    "alpha2": "TO",
+    "alpha3": "TON",
+    "continent": "Australia",
+    "currency_code": "TOP",
+    "long_name": "The Kingdom of Tonga",
+    "short_name": "Tonga",
+    "per_name": "تونگا",
+    "languages": [
+      "en",
+      "to"
+    ],
+    "nationality": "Tongan",
+    "region": "Oceania",
+    "subregion": "Polynesia"
+  },
+  {
+    "alpha2": "TR",
+    "alpha3": "TUR",
+    "continent": "Europe",
+    "currency_code": "TRY",
+    "long_name": "The Republic of Türkiye",
+    "short_name": "Türkiye",
+    "per_name": "ترکیه",
+    "languages": [
+      "tr"
+    ],
+    "nationality": "Turkish",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "TT",
+    "alpha3": "TTO",
+    "continent": "North America",
+    "currency_code": "TTD",
+    "long_name": "The Republic of Trinidad and Tobago",
+    "short_name": "Trinidad and Tobago",
+    "per_name": "ترینیداد و توباگو",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Trinidadian",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "TV",
+    "alpha3": "TUV",
+    "continent": "Australia",
+    "currency_code": "AUD",
+    "long_name": "Tuvalu",
+    "short_name": "Tuvalu",
+    "per_name": "تووالو",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Tuvaluan",
+    "region": "Oceania",
+    "subregion": "Polynesia"
+  },
+  {
+    "alpha2": "TW",
+    "alpha3": "TWN",
+    "continent": "Asia",
+    "currency_code": "TWD",
+    "long_name": "Taiwan, Province of China",
+    "short_name": "Taiwan, Province of China",
+    "per_name": "تایوان",
+    "languages": [
+      "zh"
+    ],
+    "nationality": "Taiwanese",
+    "region": "Asia",
+    "subregion": "Eastern Asia"
+  },
+  {
+    "alpha2": "TZ",
+    "alpha3": "TZA",
+    "continent": "Africa",
+    "currency_code": "TZS",
+    "long_name": "The United Republic of Tanzania",
+    "short_name": "Tanzania, United Republic of",
+    "per_name": "تانزانیا",
+    "languages": [
+      "sw",
+      "en"
+    ],
+    "nationality": "Tanzanian",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "UA",
+    "alpha3": "UKR",
+    "continent": "Europe",
+    "currency_code": "UAH",
+    "long_name": "Ukraine",
+    "short_name": "Ukraine",
+    "per_name": "اوکراین",
+    "languages": [
+      "uk"
+    ],
+    "nationality": "Ukrainian",
+    "region": "Europe",
+    "subregion": "Eastern Europe"
+  },
+  {
+    "alpha2": "UG",
+    "alpha3": "UGA",
+    "continent": "Africa",
+    "currency_code": "UGX",
+    "long_name": "The Republic of Uganda",
+    "short_name": "Uganda",
+    "per_name": "اوگاندا",
+    "languages": [
+      "en",
+      "sw"
+    ],
+    "nationality": "Ugandan",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "UM",
+    "alpha3": "UMI",
+    "continent": "Australia",
+    "currency_code": "USD",
+    "long_name": "United States Minor Outlying Islands",
+    "short_name": "United States Minor Outlying Islands",
+    "per_name": "جزایر کوچک دورافتاده ایالات متحده آمریکا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "American",
+    "region": "Americas",
+    "subregion": "Northern America",
+    "dep": "US"
+  },
+  {
+    "alpha2": "US",
+    "alpha3": "USA",
+    "continent": "North America",
+    "currency_code": "USD",
+    "long_name": "The United States of America",
+    "short_name": "United States of America",
+    "per_name": "آمریکا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "American",
+    "region": "Americas",
+    "subregion": "Northern America"
+  },
+  {
+    "alpha2": "UY",
+    "alpha3": "URY",
+    "continent": "South America",
+    "currency_code": "UYU",
+    "long_name": "The Oriental Republic of Uruguay",
+    "short_name": "Uruguay",
+    "per_name": "اروگوئه",
+    "languages": [
+      "es"
+    ],
+    "nationality": "Uruguayan",
+    "region": "Americas",
+    "subregion": "South America"
+  },
+  {
+    "alpha2": "UZ",
+    "alpha3": "UZB",
+    "continent": "Asia",
+    "currency_code": "UZS",
+    "long_name": "The Republic of Uzbekistan",
+    "short_name": "Uzbekistan",
+    "per_name": "ازبکستان",
+    "languages": [
+      "uz",
+      "ru"
+    ],
+    "nationality": "Uzbekistani",
+    "region": "Asia",
+    "subregion": "Central Asia"
+  },
+  {
+    "alpha2": "VA",
+    "alpha3": "VAT",
+    "continent": "Europe",
+    "currency_code": "EUR",
+    "long_name": "The Holy See",
+    "short_name": "Holy See",
+    "per_name": "سریر مقدس",
+    "languages": [
+      "it",
+      "la"
+    ],
+    "nationality": "Italian",
+    "region": "Europe",
+    "subregion": "Southern Europe"
+  },
+  {
+    "alpha2": "VC",
+    "alpha3": "VCT",
+    "continent": "North America",
+    "currency_code": "XCD",
+    "long_name": "Saint Vincent and the Grenadines",
+    "short_name": "Saint Vincent and the Grenadines",
+    "per_name": "سنت وینسنت و گرنادین\u200Cها",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Saint Vincentian",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "VE",
+    "alpha3": "VEN",
+    "continent": "South America",
+    "currency_code": "VES",
+    "long_name": "The Bolivarian Republic of Venezuela",
+    "short_name": "Venezuela (Bolivarian Republic of)",
+    "per_name": "ونزوئلا",
+    "languages": [
+      "es"
+    ],
+    "nationality": "Venezuelan",
+    "region": "Americas",
+    "subregion": "South America"
+  },
+  {
+    "alpha2": "VG",
+    "alpha3": "VGB",
+    "continent": "North America",
+    "currency_code": "USD",
+    "long_name": "The Virgin Islands",
+    "short_name": "British Virgin Islands",
+    "per_name": "جزایر ویرجین بریتانیا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Virgin Islander",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "VI",
+    "alpha3": "VIR",
+    "continent": "North America",
+    "currency_code": "USD",
+    "long_name": "The Virgin Islands of the United States",
+    "short_name": "United States Virgin Islands",
+    "per_name": "جزایر ویرجین ایالات متحده آمریکا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Virgin Islander",
+    "region": "Americas",
+    "subregion": "Caribbean"
+  },
+  {
+    "alpha2": "VN",
+    "alpha3": "VNM",
+    "continent": "Asia",
+    "currency_code": "VND",
+    "long_name": "The Socialist Republic of Viet Nam",
+    "short_name": "Vietnam",
+    "per_name": "ویتنام",
+    "languages": [
+      "vi"
+    ],
+    "nationality": "Vietnamese",
+    "region": "Asia",
+    "subregion": "South-Eastern Asia"
+  },
+  {
+    "alpha2": "VU",
+    "alpha3": "VUT",
+    "continent": "Australia",
+    "currency_code": "VUV",
+    "long_name": "The Republic of Vanuatu",
+    "short_name": "Vanuatu",
+    "per_name": "وانواتو",
+    "languages": [
+      "bi",
+      "en",
+      "fr"
+    ],
+    "nationality": "Ni-Vanuatu",
+    "region": "Oceania",
+    "subregion": "Melanesia"
+  },
+  {
+    "alpha2": "WF",
+    "alpha3": "WLF",
+    "continent": "Australia",
+    "currency_code": "XPF",
+    "long_name": "The Territory of the Wallis and Futuna Islands",
+    "short_name": "Wallis and Futuna",
+    "per_name": "والیس و فوتونا",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "Wallis and Futuna Islander",
+    "region": "Oceania",
+    "subregion": "Polynesia",
+    "dep": "FR"
+  },
+  {
+    "alpha2": "WS",
+    "alpha3": "WSM",
+    "continent": "Australia",
+    "currency_code": "WST",
+    "long_name": "The Independent State of Samoa",
+    "short_name": "Samoa",
+    "per_name": "ساموا",
+    "languages": [
+      "sm",
+      "en"
+    ],
+    "nationality": "Samoan",
+    "region": "Oceania",
+    "subregion": "Polynesia"
+  },
+  {
+    "alpha2": "YE",
+    "alpha3": "YEM",
+    "continent": "Asia",
+    "currency_code": "YER",
+    "long_name": "The Republic of Yemen",
+    "short_name": "Yemen",
+    "per_name": "یمن",
+    "languages": [
+      "ar"
+    ],
+    "nationality": "Yemeni",
+    "region": "Asia",
+    "subregion": "Western Asia"
+  },
+  {
+    "alpha2": "YT",
+    "alpha3": "MYT",
+    "continent": "Africa",
+    "currency_code": "EUR",
+    "long_name": "The Department of Mayotte",
+    "short_name": "Mayotte",
+    "per_name": "مایوت",
+    "languages": [
+      "fr"
+    ],
+    "nationality": "French",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "ZA",
+    "alpha3": "ZAF",
+    "continent": "Africa",
+    "currency_code": "ZAR",
+    "long_name": "The Republic of South Africa",
+    "short_name": "South Africa",
+    "per_name": "آفریقای جنوبی",
+    "languages": [
+      "af",
+      "en",
+      "nr",
+      "st",
+      "ss",
+      "tn",
+      "ts",
+      "ve",
+      "xh",
+      "zu"
+    ],
+    "nationality": "South African",
+    "region": "Africa",
+    "subregion": "Southern Africa"
+  },
+  {
+    "alpha2": "ZM",
+    "alpha3": "ZMB",
+    "continent": "Africa",
+    "currency_code": "ZMW",
+    "long_name": "The Republic of Zambia",
+    "short_name": "Zambia",
+    "per_name": "زامبیا",
+    "languages": [
+      "en"
+    ],
+    "nationality": "Zambian",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  },
+  {
+    "alpha2": "ZW",
+    "alpha3": "ZWE",
+    "continent": "Africa",
+    "currency_code": "USD",
+    "long_name": "The Republic of Zimbabwe",
+    "short_name": "Zimbabwe",
+    "per_name": "زیمبابوه",
+    "languages": [
+      "en",
+      "sn",
+      "nd"
+    ],
+    "nationality": "Zimbabwean",
+    "region": "Africa",
+    "subregion": "Eastern Africa"
+  }
+]

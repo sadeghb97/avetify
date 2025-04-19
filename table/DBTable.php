@@ -1,6 +1,8 @@
 <?php
 
 class DBTable extends SBTable {
+    public bool $pkIsNumeric = true;
+
     public function __construct(public DBConnection $conn, public string $dbTableName, public string $primaryKey,
                                 array $fields, string $key){
 
@@ -33,7 +35,7 @@ class DBTable extends SBTable {
             }
 
             if($queryRequired) {
-                $sql = $queryBuilder->createUpdate(new QueryField($itemPk, true, "pk"));
+                $sql = $queryBuilder->createUpdate(new QueryField($itemPk, $this->pkIsNumeric, $this->primaryKey));
                 if($this->conn->query($sql)) {
                     $titlePrinter->print($this->getItemName($oldRecord));
                     $messagePrinter->print(": Updated" . br());
@@ -58,7 +60,7 @@ class DBTable extends SBTable {
 
             foreach ($deletingFields as $itemPk) {
                 $oldRecord = $this->currentRecords[$indexesMap[$itemPk]];
-                $sql = $queryBuilder->createDelete(new QueryField($itemPk, true, "pk"));
+                $sql = $queryBuilder->createDelete(new QueryField($itemPk, $this->pkIsNumeric, $this->primaryKey));
 
                 if($this->conn->query($sql)) {
                     $titlePrinter->print($this->getItemName($oldRecord));
