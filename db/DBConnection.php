@@ -48,7 +48,10 @@ abstract class DBConnection extends mysqli {
     }
 
     public function query($sql, $queryName = null) : mysqli_result | bool {
-        $result = parent::query($sql);
+        try { $result = parent::query($sql);}
+        catch (Exception $ex){
+            echo $sql . br();
+        }
         $this->lastQuery = $sql;
         return $result;
     }

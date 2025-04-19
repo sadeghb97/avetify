@@ -157,14 +157,10 @@ class SBTableField {
         return $this;
     }
 
-    public function autoEditableOnCreate(bool $required = false,
-                                        IDGetter | null $idGetter = null,
-                                        string | null $namespace = null) : SBTableField {
+    public function autoEditableOnCreate(bool $required = false) : SBTableField {
 
         if($this instanceof SBEditableField) $this->onCreateField = clone $this;
         else $this->onCreateField = new SBEditableField($this->title, $this->key);
-        $this->onCreateField->idGetter = $idGetter;
-        $this->onCreateField->namespace = $namespace;
         $this->onCreateField->rtl = $this->rtl;
 
         $this->onCreateField->requiredOnCreate = $required;
