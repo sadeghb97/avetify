@@ -16,4 +16,8 @@ class CountriesTable extends JSONTable {
             (new SBTableSimpleField("Region", "subregion"))
         ]);
     }
+    
+    public function getItemId($item): string {
+        return EntityUtils::getSimpleValue($item, "alpha2");
+    }
 }
