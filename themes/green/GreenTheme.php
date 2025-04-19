@@ -8,6 +8,7 @@ class GreenTheme extends ThemesManager {
         $this->importCropperCSS();
         $this->importCropperJS();
         $this->importMainJSInterface();
+        $this->importAvnJSFields();
         $this->importJoshButtons();
         $this->importGalleryGrids();
     }

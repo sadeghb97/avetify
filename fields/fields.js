@@ -11,6 +11,16 @@ function titleCase(str) {
     return splitStr.join(' ');
 }
 
+function acOnItemEntered(fieldKey, recordsList, recordTargetKey, callback){
+    const field = document.getElementById(fieldKey)
+    const fieldValue = field.value
+    const foundRecord = recordsList.find((record) => {
+        return record[recordTargetKey] === fieldValue
+    })
+
+    if(foundRecord != null) callback(field, foundRecord)
+}
+
 function apiMedalClickAction(fieldKey, recordId, medalKey, initValue, apiEndpoint){
     const newValue = prompt('Enter new ' + titleCase(medalKey) + ": ", initValue);
     if(isNaN(newValue)) return;
@@ -85,4 +95,8 @@ function addLongClickEvent(elementId, callback){
     element.addEventListener("touchend", () => {
         clearTimeout(pressTimer);
     });
+}
+
+function logRecord(record){
+    console.log("Entered Record", record)
 }
