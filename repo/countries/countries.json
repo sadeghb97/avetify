@@ -132,8 +132,8 @@
     "per_name": "جنوبگان",
     "languages": [],
     "nationality": "",
-    "region": "",
-    "subregion": "",
+    "region": "Antarctic",
+    "subregion": "Antarctica",
     "dep": true
   },
   {
@@ -520,8 +520,8 @@
     "per_name": "جزیره بووه",
     "languages": [],
     "nationality": "",
-    "region": "",
-    "subregion": "",
+    "region": "Antarctic",
+    "subregion": "Antarctica",
     "dep": "NO"
   },
   {
@@ -1486,8 +1486,8 @@
       "en"
     ],
     "nationality": "Heard and McDonald Islander",
-    "region": "",
-    "subregion": "",
+    "region": "Antarctic",
+    "subregion": "Antarctica",
     "dep": "AU"
   },
   {

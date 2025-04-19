@@ -11,7 +11,9 @@ class CountriesTable extends JSONTable {
             (new FlagField("Flag", "alpha2")),
             (new SBTableSimpleField("Code", "alpha2")),
             (new SBTableSimpleField("Name", "short_name")),
-            (new SBTableSimpleField("PerName", "per_name"))
+            (new SBTableSimpleField("PerName", "per_name")),
+            (new SBTableSimpleField("Continent", "continent")),
+            (new SBTableSimpleField("Region", "subregion"))
         ]);
     }
 }
