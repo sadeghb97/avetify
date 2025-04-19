@@ -17,7 +17,7 @@ class JSDatalist {
         return $this->listKey . "_" . "records";
     }
 
-    public function place(WebModifier $webModifier = null) {
+    public function place() {
         ?>
         <script>
             const <?php echo $this->getRecordsListJSVarName(); ?> = <?php echo json_encode($this->records) ?>;

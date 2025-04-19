@@ -8,7 +8,10 @@ class WorldCountries {
         $countries = json_decode($countriesRaw, true);
 
         foreach ($countries as $country){
-            $this->map[$country['alpha2']] = $country;
+            $countryCode = $country['alpha2'];
+            $this->map[$countryCode] = $country;
+            $flag = $this->extractCountryFlag($countryCode);
+            $this->map[$country['alpha2']]['flag'] = $flag;
         }
     }
 
@@ -18,21 +21,27 @@ class WorldCountries {
     }
 
     public function getCountryFlag($countryCode) : string | null {
-        $details = $this->getCountryDetails($countryCode);
-        if(!$details) return null;
-
-        if(!isset($details['dep']) || !$details['dep']) {
-            return Routing::browserPathFromAventador("assets/img/flags/cdc/") . $details['alpha2'] . ".png";
-        }
-
-        if($details['dep'] === True){
-            return Routing::browserPathFromAventador("assets/img/flags/more/") . $details['alpha2'] . ".png";
-        }
-
-        return $this->getCountryFlag($details['dep']);
+        $country = $this->getCountryDetails($countryCode);
+        if($country) return $country['flag'];
+        return null;
     }
 
-    public function countriesClone() : array {
+    public function extractCountryFlag($countryCode) : string | null {
+        $country = $this->getCountryDetails($countryCode);
+        if($country == null) return null;
+
+        if(!isset($country['dep']) || !$country['dep']) {
+            return Routing::browserPathFromAventador("assets/img/flags/cdc/") . $country['alpha2'] . ".png";
+        }
+
+        if($country['dep'] === True){
+            return Routing::browserPathFromAventador("assets/img/flags/more/") . $country['alpha2'] . ".png";
+        }
+
+        return $this->extractCountryFlag($country['dep']);
+    }
+
+    public function countriesMapClone() : array {
         return array_merge([], $this->map);
     }
 }

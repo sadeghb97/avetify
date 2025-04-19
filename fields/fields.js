@@ -11,14 +11,14 @@ function titleCase(str) {
     return splitStr.join(' ');
 }
 
-function acOnItemEntered(fieldKey, recordsList, recordTargetKey, callback){
+function acOnItemEntered(fieldKey, recordKey, recordsList, recordTargetKey, callback){
     const field = document.getElementById(fieldKey)
     const fieldValue = field.value
-    const foundRecord = recordsList.find((record) => {
+    const selectedItem = recordsList.find((record) => {
         return record[recordTargetKey] === fieldValue
     })
 
-    if(foundRecord != null) callback(field, foundRecord)
+    if(selectedItem != null) callback(field, recordKey, selectedItem)
 }
 
 function apiMedalClickAction(fieldKey, recordId, medalKey, initValue, apiEndpoint){
@@ -97,6 +97,15 @@ function addLongClickEvent(elementId, callback){
     });
 }
 
-function logRecord(record){
-    console.log("Entered Record", record)
+function logSelectedRecord(field, recordKey, selectedItem){
+    console.log("Entered Record", field, recordKey, selectedItem)
+}
+
+function onSelectCountry(field, recordKey, selectedCountry){
+    const dataElement = document.getElementById(recordKey)
+    const flagElement = document.getElementById(recordKey + "_flag")
+
+    dataElement.value = selectedCountry['alpha2']
+    flagElement.src = selectedCountry['flag']
+    field.value = ""
 }

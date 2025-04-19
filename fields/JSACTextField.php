@@ -1,35 +1,33 @@
 <?php
 
-abstract class JSACTextField extends JSTextField {
-    public function __construct(string $fieldKey, string $recordKey,
+class JSACTextField extends JSTextField {
+    public string $enterCallbackName = "logSelectedRecord";
+
+    public function __construct(string $fieldKey, string $childKey,
                                 string $initValue, public DatalistInfo $dlInfo){
-        parent::__construct($fieldKey, $recordKey, $initValue);
+        parent::__construct($fieldKey, $childKey, $initValue);
         $this->listIdentifier = $dlInfo->datalistId;
     }
 
     public function present(){
-        $this->presentList();
-    }
-
-    public function onEnterCallbackName() : string {
-        return "logRecord";
+        $this->presentListField();
     }
 
     public function applyText(): string {
-        return 'acOnItemEntered(' . '\'' . $this->fieldKey . '\''
+        return 'acOnItemEntered(' . '\'' . $this->getFieldIdentifier() . '\', \'' . $this->childKey . '\''
             . ', ' . $this->dlInfo->jsRecordsVarName . ', \'' . $this->dlInfo->recordLabelKey . '\', '
-            . $this->onEnterCallbackName() . ');';
+            . $this->enterCallbackName . ');';
     }
 }
 
 class APIACTextField extends APITextField {
-    public function __construct(string $fieldKey, string $recordKey,
+    public function __construct(string $fieldKey, string $childKey,
                                 string $initValue, string $endpoint, string $listId){
-        parent::__construct($fieldKey, $recordKey, $initValue, $endpoint);
+        parent::__construct($fieldKey, $childKey, $initValue, $endpoint);
         $this->listIdentifier = $listId;
     }
 
     public function present(){
-        $this->presentList();
+        $this->presentListField();
     }
 }

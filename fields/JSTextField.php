@@ -4,12 +4,12 @@ abstract class JSTextField extends JSInputField {
     public string $listIdentifier = "";
     public bool $disableSubmitOnEnter = true;
 
-    public function __construct(public string $fieldKey, public string $recordKey,
+    public function __construct(public string $fieldKey, public string $childKey,
                                 public string $initValue){
     }
 
     public function getFieldIdentifier() : string {
-        if($this->recordKey) return $this->fieldKey . "_" . $this->recordKey;
+        if($this->childKey) return $this->fieldKey . "_" . $this->childKey;
         return $this->fieldKey;
     }
 
@@ -36,7 +36,7 @@ abstract class JSTextField extends JSInputField {
             "}");
     }
 
-    public function presentList(){
+    public function presentListField(){
         echo '<input ';
         HTMLInterface::addAttribute("list", $this->listIdentifier);
         HTMLInterface::addAttribute("id", $this->getFieldIdentifier());
@@ -46,13 +46,13 @@ abstract class JSTextField extends JSInputField {
 }
 
 class APITextField extends JSTextField {
-    public function __construct(string $fieldKey, string $recordKey, string $initValue,
+    public function __construct(string $fieldKey, string $childKey, string $initValue,
                                 public string $apiEndpoint){
-        parent::__construct($fieldKey, $recordKey, $initValue);
+        parent::__construct($fieldKey, $childKey, $initValue);
     }
 
     public function applyText() : string {
-        return 'apiTextEnterAction(\'' . $this->getFieldIdentifier() . '\', \'' . $this->recordKey .
+        return 'apiTextEnterAction(\'' . $this->getFieldIdentifier() . '\', \'' . $this->childKey .
             '\', \'' . $this->fieldKey . '\', \'' .
             $this->apiEndpoint . '\', ' . $this->applyTextCallback() . ');';
     }
