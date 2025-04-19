@@ -124,6 +124,7 @@ require_once "calc/IRDateStatsCalculator.php";
 
 require_once "repo/countries/WorldCountries.php";
 require_once "repo/countries/World.php";
+require_once "repo/countries/CountriesTable.php";
 
 $AVENTADOR_ROOT_PATH = "";
 $AVENTADOR_PHYSICAL_ROOT_PATH = "";

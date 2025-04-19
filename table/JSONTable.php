@@ -5,13 +5,17 @@ class JSONTable extends SBTable {
                                 bool $isEditable = false,
                                 ?IDGetter $idGetter = null){
 
+        parent::__construct($fields, [], $key, $isEditable, $idGetter);
+        $this->loadRawRecords($this->fetchRecordsFromJsonFile());
+    }
+
+    public function fetchRecordsFromJsonFile() : array {
         $rawRecords = [];
         if(file_exists($this->filename)){
             $tempObject = json_decode(file_get_contents($this->filename), true);
             if(is_array($tempObject)) $rawRecords = $tempObject;
         }
-
-        parent::__construct($fields, $rawRecords, $key, $isEditable, $idGetter);
+        return $rawRecords;
     }
 
     public function handleCreatingFields($creatingFields) {
