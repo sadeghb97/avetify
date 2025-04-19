@@ -455,6 +455,7 @@ abstract class SBEntity extends SetModifier {
 
         $theme = $this->getTheme();
         $theme->placeHeader($title);
+        $theme->loadHeaderElements();
     }
 
     public function renderEntityPage(){

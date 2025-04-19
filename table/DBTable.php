@@ -1,6 +1,6 @@
 <?php
 
-abstract class DBTable extends SBTable {
+class DBTable extends SBTable {
     public function __construct(public DBConnection $conn, public string $dbTableName, public string $primaryKey,
                                 array $fields, string $key){
 
@@ -9,7 +9,7 @@ abstract class DBTable extends SBTable {
     }
 
     public function getItemId($item): string {
-        return EntityUtils::getSimpleValue($item, "pk");
+        return EntityUtils::getSimpleValue($item, $this->primaryKey);
     }
 
     public function handleSubmittedFields($itemsFields) {
@@ -109,5 +109,7 @@ abstract class DBTable extends SBTable {
         $this->loadRawRecords($this->fetchDBRecords());
     }
 
-    abstract public function fetchDBRecords() : array;
+    public function fetchDBRecords() : array {
+        return $this->conn->fetchSet("SELECT * FROM {$this->dbTableName}");
+    }
 }
