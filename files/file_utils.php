@@ -25,12 +25,30 @@ function getFileExtension($filename) : string {
     return "";
 }
 
-function getDirFiles(string $directory): array {
-    if (!is_dir($directory)) return [];
+function dirSubFiles(string $path, string $type = 'all'): array {
+    $path = rtrim($path, '/\\'); // remove trailing / or \ depending on OS
+    $items = glob($path . '/*');
+    $result = [];
 
-    $files = array_filter(scandir($directory), function ($file) use ($directory) {
-        return is_file($directory . DIRECTORY_SEPARATOR . $file);
-    });
+    foreach ($items as $item) {
+        switch ($type) {
+            case 'files':
+                if (is_file($item)) {
+                    $result[] = $item;
+                }
+                break;
+            case 'dirs':
+                if (is_dir($item) && !in_array(basename($item), ['.', '..'])) {
+                    $result[] = $item;
+                }
+                break;
+            case 'all':
+                $result[] = $item;
+                break;
+            default:
+                throw new InvalidArgumentException("Invalid type: $type. Allowed: files, dirs, all");
+        }
+    }
 
-    return array_values($files); // Re-index array
+    return $result;
 }

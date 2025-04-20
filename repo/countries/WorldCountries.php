@@ -8,15 +8,15 @@ class WorldCountries {
         $countries = json_decode($countriesRaw, true);
 
         foreach ($countries as $country){
-            $countryCode = $country['alpha2'];
+            $countryCode = strtolower($country['alpha2']);
             $this->map[$countryCode] = $country;
             $flag = $this->extractCountryFlag($countryCode);
-            $this->map[$country['alpha2']]['flag'] = $flag;
+            $this->map[$countryCode]['flag'] = $flag;
         }
     }
 
     public function getCountryDetails($countryCode) : array | null {
-        if(isset($this->map[$countryCode])) return $this->map[$countryCode];
+        if(isset($this->map[strtolower($countryCode)])) return $this->map[strtolower($countryCode)];
         return null;
     }
 
