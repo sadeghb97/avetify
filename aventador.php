@@ -42,6 +42,7 @@ require_once "entities/SortFactor.php";
 require_once "entities/FilterFactor.php";
 require_once "entities/ValueGetter.php";
 require_once "entities/fields/date_fields.php";
+require_once "entities/fields/EntityAvatarField.php";
 
 require_once "fields/JSDatalist.php";
 require_once "fields/JSInputField.php";

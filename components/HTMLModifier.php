@@ -1,5 +1,7 @@
 <?php
 
+use JetBrains\PhpStorm\Pure;
+
 class HTMLModifier {
     public array $modifiers = [];
 
@@ -17,6 +19,10 @@ class HTMLModifier {
 class WebModifier {
     public function __construct(public HTMLModifier | null $htmlModifier = null,
                                 public Styler | null $styler = null){
+    }
+
+    #[Pure] public static function createInstance() : WebModifier {
+        return new WebModifier(new HTMLModifier(), new Styler());
     }
 
     public function apply(){

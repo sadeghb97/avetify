@@ -5,7 +5,7 @@ class EntityField
     public ?string $title = null;
     public ?string $type = null;
     public ?string $path = null;
-    public ?string $extension = null;
+    public ?string $targetExt = null;
     public ?string $maxImageSize = null;
     public int $forcedWidthDimension = 0;
     public int $forcedHeightDimension = 0;
@@ -92,7 +92,7 @@ class EntityField
         $this->writable = true;
         $this->avatar = true;
         $this->path = $path;
-        $this->extension = $extension;
+        $this->targetExt = $extension;
         return $this;
     }
 

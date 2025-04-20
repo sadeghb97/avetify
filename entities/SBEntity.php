@@ -4,6 +4,7 @@ abstract class SBEntity extends SetModifier {
     public ?DBConnection $conn = null;
     public $latestFetchedRecord = null;
     public bool $redirectOnInsert = true;
+    public string $entityName = "Record";
 
     public function __construct($dbConnection, string $key = "sbn"){
         parent::__construct($key);
@@ -237,13 +238,14 @@ abstract class SBEntity extends SetModifier {
 
     public function printForm($options = null){
         $pk = $this->getCurrentRecordPk();
+        $record = $this->getCurrentRecord();
+        if($pk && !$record) return;
 
         echo '<div style="height: 12px;"></div>';
         echo '<div style="width: 80%; margin: auto;">
         <form method="post" name="mbform" enctype="multipart/form-data" onsubmit="' . $this->jsValidateForm() . '">
         <fieldset><legend>Insert & Update</legend>';
 
-        $record = $this->getCurrentRecord();
         if($pk) {
             echo '<input type="hidden" name="entity_pk" id="entity_pk" value="' . $pk . '" />';
         }
@@ -256,16 +258,51 @@ abstract class SBEntity extends SetModifier {
                 $value = isset($record[$key]) ? $record[$key] : null;
 
                 if($field->avatar){
+                    $div = new NiceDiv(12);
+                    $div->addStyle("margin-top", "8px");
+                    $div->addStyle("margin-bottom", "8px");
+                    $div->open();
+
+                    /** @var EntityAvatarField $avatarField */
+                    $avatarField = $field;
+
+                    $avExists = false;
+                    $avBrowserSrc = "";
+
                     if($record){
-                        $avatarSrc = $field->path . "/" . $pk . '.' . $field->extension;
-                        if(file_exists($avatarSrc)){
-                            echo '<img src="' . $avatarSrc . '?' . time() .
-                                '" style="height: 250px; width: auto;"<br><br>';
+                        $avServerSrc = $avatarField->getServerSrc($record);
+                        $avBrowserSrc = $avatarField->getBrowserSrc($record);
+                        if(file_exists($avServerSrc)){
+                            $avExists = true;
                         }
                     }
-                    echo 'Avatar: ';
-                    echo '<input type="file" name="' . $key . '" id="' . $key . '" class="empty"
-                       style="font-size: 13pt; margin-bottom: 15px;" ><br>';
+
+                    if(!$avExists) {
+                        HTMLInterface::placeText("Avatar: ");
+                        $div->separate();
+                    }
+
+                    echo '<input ';
+                    HTMLInterface::addAttribute("type", "file");
+                    HTMLInterface::addAttribute("name", $key);
+                    HTMLInterface::addAttribute("id", $key);
+                    HTMLInterface::addAttribute("class", "empty");
+                    Styler::startAttribute();
+                    Styler::addStyle("font-size", "13pt");
+                    Styler::addStyle("margin-bottom", "15px");
+                    Styler::closeAttribute();
+                    HTMLInterface::closeSingleTag();
+
+                    if($avExists){
+                        $avatarModifier = WebModifier::createInstance();
+                        $avatarModifier->styler->pushStyle("margin-bottom", "8px");
+                        HTMLInterface::placeImageWithHeight($avBrowserSrc . "?" . time(), 120,
+                            $avatarModifier);
+                        $div->separate();
+                        $avPrinted = true;
+                    }
+
+                    $div->close();
                 }
                 else if($fieldType == "boolean"){
                     echo $title . ' ';
@@ -368,6 +405,7 @@ abstract class SBEntity extends SetModifier {
         if(isset($_POST['entity_form'])){
             $data = $_POST;
             $entityPk = isset($data['entity_pk']) ? $data['entity_pk'] : null;
+            $currentRecord = $entityPk ? $this->getRecord($entityPk) : null;
 
             $avatarFields = [];
             foreach ($this->dataFields() as $field){
@@ -387,20 +425,17 @@ abstract class SBEntity extends SetModifier {
                 if($field->numeric && empty($data[$field->key])) $data[$field->key] = 0;
             }
 
-            if($entityPk){
-                $record = $this->getRecord($entityPk);
-                if($record) {
-                    $this->adjustUpdateData($data, $record, $options);
-                    $this->updateRecord($entityPk, $data);
-                }
+            if($currentRecord){
+                $this->adjustUpdateData($data, $currentRecord, $options);
+                $this->updateRecord($entityPk, $data);
             }
             else {
                 $this->adjustCreateData($data, $options);
-                $record = $this->insertRecord($data);
-                if ($record) {
-                    $entityPk = $record[$this->getSuperKey()];
+                $currentRecord = $this->insertRecord($data);
+                if ($currentRecord) {
+                    $entityPk = $currentRecord[$this->getSuperKey()];
                     echo "Registered Successfully (";
-                    $this->printEntityLinkedName($record);
+                    $this->printEntityLinkedName($currentRecord);
                     echo ')' . br();
 
                     if($this->redirectOnInsert) {
@@ -413,8 +448,11 @@ abstract class SBEntity extends SetModifier {
 
             if($entityPk && count($avatarFields) > 0){
                 foreach ($avatarFields as $af){
+                    /** @var EntityAvatarField $avatarField */
+                    $avatarField = $af;
+
                     $up = false;
-                    $targetFilename = $af->path . '/' . $entityPk;
+                    $targetFilename = $avatarField->noExtServerSrc($currentRecord);
                     if(!empty($_FILES[$af->key]['name'])){
                         $imageDetails = $_FILES[$af->key];
                         $tmpFilename = $imageDetails['tmp_name'];
@@ -433,14 +471,23 @@ abstract class SBEntity extends SetModifier {
                     }
 
                     if($up){
-                        $extensionRequired = ($orgExtension && $orgExtension != $af->extension);
-                        $convertRequired = $extensionRequired || $af->maxImageSize ||
-                            ($af->forcedWidthDimension > 0 && $af->forcedHeightDimension > 0);
+                        $extensionRequired = ($orgExtension && $orgExtension != $af->targetExt);
+                        $convertRequired = $extensionRequired;
+                        if(!$convertRequired && $af->maxImageSize){
+                            $curMaxSize = getImageMaxDimSize($targetFilename);
+                            if($curMaxSize > $af->maxImageSize) $convertRequired = true;
+                        }
+                        if(!$convertRequired && $af->forcedWidthDimension > 0 &&
+                            $af->forcedHeightDimension > 0){
+                            $curDiff = getRatioDiffWithDims($targetFilename,
+                                $af->forcedWidthDimension, $af->forcedHeightDimension);
+                            if($curDiff > 0.01) $convertRequired = true;
+                        }
 
 
                         if($convertRequired) {
                             convertImage($targetFilename,
-                                $extensionRequired ? $af->extension : null,
+                                $extensionRequired ? $af->targetExt : null,
                                 $af->maxImageSize, $af->forcedWidthDimension,
                                 $af->forcedHeightDimension);
                         }
@@ -490,7 +537,7 @@ abstract class SBEntity extends SetModifier {
 
     public function openEntityPage(){
         $record = $this->getCurrentRecord();
-        $title = $record ? $this->getPageTitle($record) : "Add Record";
+        $title = $record ? $this->getPageTitle($record) : ("Add " . $this->entityName);
 
         $theme = $this->getTheme();
         $theme->placeHeader($title);
