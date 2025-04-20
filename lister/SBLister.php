@@ -44,15 +44,16 @@ abstract class SBLister {
         return true;
     }
 
-    //in meghdar taghir nemikonad magar list az aval load shavad
+    //meghdari ke neshun dahande jaygahe record tuye list hast.
+    //vali deghat konid indexe list azash moshtagh mishe va be khodie khod dg karbord nadare
     abstract public function getItemCategoryOriginalPk($item);
 
-    //shomare indexe list pas az init. 0 shomare ba arzesh tarin list.
-    //in meghdar zaman init dar yek property zakhire mishavad.
-    //heine drag & drop in property beruz mishavad.
+    //shomare balatarin list 0 ast va be hamin tartib masalan shomare dovomin list az bala yek ast.
+    //in method shomare listi ke dar zamane load item dar an gharar migirad ra midahad.
     abstract public function catOrgPkToListIndex($item): int;
 
-    //ba tavajoh be shomare liste feli "list_index", pk categorie jadid ra midahad ke bayad zakhire shavad.
+    //mojadadan baraye makus sazie methode bala estefade mishavad.
+    //pas az submite list az an estefade mishavad ta db ra beruz konim.
     abstract public function listIndexToNewOrgPk($listIndex): int;
 
     /**
@@ -164,7 +165,7 @@ abstract class SBLister {
     }
 
     public function isPrintRankEnabled() : bool {
-        return false;
+        return true;
     }
 
     public function isRearrangeRanksEnabled() : bool {
@@ -177,8 +178,7 @@ abstract class SBLister {
         echo '</script>';
     }
 
-    function placeMenu()
-    {
+    function placeMenu() {
         $directCategories = $this->getDirectMenuCategories();
 
         $fullWidth = 230;
@@ -366,7 +366,7 @@ abstract class SBLister {
             $fieldId = $field['key'] . '_' . $itemId;
             heightMargin(4);
             echo '<div style="display: flex">';
-            echo '<span style="font-size: 12pt; margin-right: 6px;">' . $field['title'] . ': </span>';
+            echo '<span style="font-size: 10pt; margin-right: 6px;">' . $field['title'] . ': </span>';
             echo '<input type="text" id="' . $fieldId . '"'
                 . ' value="' . $field['value']($item)
                 . '" placeholder="' . $field['title']
@@ -398,19 +398,16 @@ abstract class SBLister {
         );
     }
 
-    function renderHead(){
-        echo '<!DOCTYPE html>
-        <html>
-            <head>';
+    public function openPage(){
+        $theme = $this->getTheme();
+        $theme->placeHeader($this->getPageTitle());
+        $theme->loadHeaderElements();
+    }
 
-            ThemesManager::setHeaderTitle($this->getPageTitle());
-            ClassicTheme::importMainStyles(Routing::getAventadorRoot());
-
-            ThemesManager::importStyle(Routing::getAventadorRoot() . "lister/lister.css");
-            ThemesManager::importStyle(Routing::getAventadorRoot() . "themes/assets/context_menu.css");
-            ThemesManager::importJS(Routing::getAventadorRoot() . "lister/sortable.js");
-
-            echo '</head>';
+    public function getTheme() : ThemesManager {
+        $theme = new GreenTheme();
+        $theme->includesListerTools = true;
+        return $theme;
     }
 
     function renderBody(){
@@ -420,7 +417,7 @@ abstract class SBLister {
         $this->initJsArgs();
         $this->placeMenu();
 
-        echo '<div class="container" style="width: 90%; max-width: 90%;">
+        echo '<div class="container" style="width: 90%; max-width: 90%; margin: auto;">
 		    <div id="grid" class="col">';
 
         echo '<form method="post" id="lister_form" name="lister_form">';
@@ -430,7 +427,6 @@ abstract class SBLister {
         $this->formMoreFields();
         echo '<input type="hidden" id="newlist" name="newlist">
               <input type="hidden" id="lister_params" name="lister_params">
-        <button type="submit" class="btn btn-primary" onclick="return listerSubmit(jsArgs)">Update</button>
         </form>';
 
         if($this->isPrintRankEnabled() && $this->isRearrangeRanksEnabled()){
@@ -442,6 +438,9 @@ abstract class SBLister {
                 ],
                 "rearrangeRanks()");
         }
+
+        $primaryButton = new PrimaryButton("listerSubmit(jsArgs); submitForm('lister_form');");
+        $primaryButton->place();
 
         ThemesManager::importJS(Routing::getAventadorRoot() . 'lister/lister.js');
         $this->initMenu();
@@ -484,7 +483,7 @@ abstract class SBLister {
     }
 
     function renderPage(){
-        $this->renderHead();
+        $this->openPage();
         $this->renderBody();
     }
 }

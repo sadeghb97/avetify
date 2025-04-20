@@ -24,7 +24,7 @@ function initMenu(){
 		}
 
 		fileTriggered = e.srcElement.parentElement.parentElement
-		if(fileTriggered.id.includes("msec")){
+		if(fileTriggered && fileTriggered.id.includes("msec")){
 			const contextShift = document.getElementById("context-shift");
 			showMenu(contextShift);
 

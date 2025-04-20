@@ -79,8 +79,22 @@ class ThemesManager {
         self::importStyle($this->ROOT_PATH . "themes/assets/gallery_grid.css");
     }
 
+    public function importListerTools(){
+        $this->importContextMenuStyles();
+        $this->importListerStyles();
+        $this->importSortableJS();
+    }
+
     public function importContextMenuStyles(){
         self::importStyle($this->ROOT_PATH . "themes/assets/context_menu.css");
+    }
+
+    public function importListerStyles(){
+        self::importStyle(Routing::getAventadorRoot() . "lister/lister.css");
+    }
+
+    public function importSortableJS(){
+        ThemesManager::importJS(Routing::getAventadorRoot() . "lister/sortable.js");
     }
 
     public function importGeneralFonts(){

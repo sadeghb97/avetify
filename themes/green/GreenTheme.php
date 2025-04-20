@@ -1,6 +1,8 @@
 <?php
 
 class GreenTheme extends ThemesManager {
+    public bool $includesListerTools = false;
+
     public function headerTags(){
         self::importStyle($this->ROOT_PATH . "themes/green/styles.css");
         self::importJS($this->ROOT_PATH . "themes/green/scripts.js");
@@ -12,6 +14,7 @@ class GreenTheme extends ThemesManager {
         $this->importJoshButtons();
         $this->importGeneralFonts();
         $this->importGalleryGrids();
+        if($this->includesListerTools) $this->importListerTools();
     }
 
     public function openNavbar(){

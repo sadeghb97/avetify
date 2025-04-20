@@ -22,3 +22,8 @@ function copyToClipboard(text){
 function openUrlOnNewTab(url){
     window.open(url, '_blank');
 }
+
+function submitForm(formId){
+    const form = document.getElementById(formId)
+    form.submit()
+}

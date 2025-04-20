@@ -69,10 +69,12 @@ require_once "components/images/IconButton.php";
 require_once "components/images/CroppableImage.php";
 require_once "components/images/CroppingImage.php";
 require_once "components/images/ImageCropper.php";
+require_once "components/buttons/AbsoluteButton.php";
 require_once "components/modifiers/ImageModifiers.php";
 
 require_once "lister/SBListCategory.php";
 require_once "lister/SBLister.php";
+require_once "lister/DBLister.php";
 require_once "lister/RankingList.php";
 
 require_once "table/SBTable.php";
