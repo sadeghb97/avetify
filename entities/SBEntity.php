@@ -3,6 +3,7 @@
 abstract class SBEntity extends SetModifier {
     public ?DBConnection $conn = null;
     public $latestFetchedRecord = null;
+    public bool $redirectOnInsert = true;
 
     public function __construct($dbConnection, string $key = "sbn"){
         parent::__construct($key);
@@ -400,7 +401,13 @@ abstract class SBEntity extends SetModifier {
                     $entityPk = $record[$this->getSuperKey()];
                     echo "Registered Successfully (";
                     $this->printEntityLinkedName($record);
-                    echo ')<br>';
+                    echo ')' . br();
+
+                    if($this->redirectOnInsert) {
+                        $entityUrl = Routing::addParamToCurrentLink("pk", $entityPk);
+                        JSInterface::redirect($entityUrl, 500);
+                        die;
+                    }
                 }
             }
 

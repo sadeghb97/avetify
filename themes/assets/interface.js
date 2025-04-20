@@ -1,6 +1,11 @@
 
-function redir(newUrl){
-    window.location.assign(newUrl);
+function redir(newUrl, delay){
+    if(delay){
+        setTimeout(() => {
+            window.location.assign(newUrl);
+        }, delay)
+    }
+    else window.location.assign(newUrl);
 }
 
 function loadFormData(){

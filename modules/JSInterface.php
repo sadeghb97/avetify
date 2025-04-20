@@ -17,4 +17,12 @@ class JSInterface {
         </script>
         <?php
     }
+
+    public static function redirect(string $url, $delay = 0){
+        ?>
+        <script>
+            redir("<?php echo $url; ?>", <?php echo $delay; ?>)
+        </script>
+        <?php
+    }
 }
