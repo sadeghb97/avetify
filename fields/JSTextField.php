@@ -31,8 +31,9 @@ abstract class JSTextField extends JSInputField {
     abstract public function applyText() : string;
 
     public function boundEnterEvent(){
-        HTMLInterface::addAttribute("onkeydown", "if (event.key === 'Enter') {" .
-            ($this->disableSubmitOnEnter ? "event.preventDefault();" : "") .
+        HTMLInterface::addAttribute("onkeydown",
+            "if (event.key === 'Enter') {" .
+            (!$this->disableSubmitOnEnter ? "if(event.target.value) " : "") . "event.preventDefault();" .
             $this->applyText() .
             "}");
     }
