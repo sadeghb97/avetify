@@ -278,7 +278,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .lister-item-img {
-	height: 230px; width: 180px; display: block; margin: auto; object-fit: cover;
+	height: 190px; width: auto; display: block; margin: auto; object-fit: cover;
 }
 
 .lister-item-name {

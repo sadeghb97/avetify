@@ -314,7 +314,7 @@ abstract class SBLister {
         }
         echo '/>';
 
-        heightMargin(4);
+        heightMargin(12);
         if($this->isPrintRankEnabled()){
             $rankStyler = new Styler();
             $rankStyler->pushStyle("font-size", "0.875rem");
