@@ -234,7 +234,7 @@ body{
 }
 
 .button {
-    font-family: IranSans;
+    font-family: 'IranSans', sans-serif;
     font-weight: bold;
     width: 160px;
     background-color: #4CAF50;

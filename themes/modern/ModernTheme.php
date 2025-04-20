@@ -8,6 +8,7 @@ class ModernTheme extends ThemesManager {
         self::importJS($this->ROOT_PATH . "themes/modern/oldselect.js");
         $this->importMainJSInterface();
         $this->importJoshButtons();
+        $this->importGeneralFonts();
         $this->importContextMenuStyles();
         $this->importGalleryGrids();
     }

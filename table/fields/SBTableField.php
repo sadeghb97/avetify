@@ -29,7 +29,7 @@ class SBTableField {
 
     public function headerCellStyles(){
         if($this->rtl) {
-            Styler::addStyle("font-family", "IranSans");
+            Styler::addFontFaceStyle("IranSans");
             Styler::addStyle("direction", "rtl");
         }
         if($this->isCentered) Styler::addStyle("text-align", "center");

@@ -83,6 +83,10 @@ class ThemesManager {
         self::importStyle($this->ROOT_PATH . "themes/assets/context_menu.css");
     }
 
+    public function importGeneralFonts(){
+        self::importStyle($this->ROOT_PATH . "assets/fonts/fonts.css");
+    }
+
     public static function openHead(){
         echo '<head>';
     }

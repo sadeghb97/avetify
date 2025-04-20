@@ -7,6 +7,18 @@ class Styler {
         $this->styles[$styleKey] = $styleValue;
     }
 
+    public function pushFontFaceStyle(string $fontFace){
+        $this->styles["font-family"] = "'$fontFace', sans-serif";
+    }
+
+    public static function addStyle(string $key, string $value){
+        echo ' ' . $key . ': ' . $value . '; ';
+    }
+
+    public static function addFontFaceStyle(string $fontFace){
+        self::addStyle("font-family", "'$fontFace', sans-serif");
+    }
+
     public function applyStyles(){
         self::startAttribute();
         $this->appendStyles();
@@ -25,10 +37,6 @@ class Styler {
 
     public static function closeAttribute(){
         echo '" ';
-    }
-
-    public static function addStyle(string $key, string $value){
-        echo ' ' . $key . ': ' . $value . '; ';
     }
 
     public static function imageWithHeight($height){

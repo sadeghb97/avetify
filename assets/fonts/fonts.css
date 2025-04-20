@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'QueenFont';
+    src: url('kiss.ttf') format('truetype');
+    font-weight: Bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'IranSans';
+    src: url('IRANSansWeb.woff') format('truetype');
+    font-style: normal;
+}

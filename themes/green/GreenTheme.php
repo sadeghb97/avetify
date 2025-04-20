@@ -10,6 +10,7 @@ class GreenTheme extends ThemesManager {
         $this->importMainJSInterface();
         $this->importAvnJSFields();
         $this->importJoshButtons();
+        $this->importGeneralFonts();
         $this->importGalleryGrids();
     }
 

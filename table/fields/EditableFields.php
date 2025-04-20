@@ -30,6 +30,14 @@ class SBEditableField extends SBTableField {
         }
     }
 
+    function appendMainAttributes($item){
+        $this->setFieldIdentifiers($item);
+    }
+
+    function appendMainStyles($item){
+        Styler::addStyle("font-family", "inherit");
+    }
+
     public function presentValue($item){
         echo '<input ';
         HTMLInterface::addAttribute("type", "text");
@@ -37,8 +45,9 @@ class SBEditableField extends SBTableField {
             HTMLInterface::addAttribute("value", $this->getValue($item));
         }
         HTMLInterface::addAttribute("placeholder", $this->title);
-        $this->setFieldIdentifiers($item);
+        $this->appendMainAttributes($item);
         Styler::startAttribute();
+        $this->appendMainStyles($item);
         Styler::addStyle("height", "35px");
         Styler::closeAttribute();
         HTMLInterface::closeSingleTag();
@@ -67,8 +76,9 @@ class TextAreaTableField extends SBEditableField {
         HTMLInterface::addAttribute("placeholder", $this->title);
         HTMLInterface::addAttribute("rows", "10");
         HTMLInterface::addAttribute("cols", "50");
-        $this->setFieldIdentifiers($item);
+        $this->appendMainAttributes($item);
         Styler::startAttribute();
+        $this->appendMainStyles($item);
         Styler::closeAttribute();
         HTMLInterface::closeTag();
 
@@ -89,8 +99,9 @@ class CheckboxField extends SBEditableField {
             $checked = !!$this->getValue($item);
             if($checked) HTMLInterface::addAttribute("checked");
         }
-        $this->setFieldIdentifiers($item);
+        $this->appendMainAttributes($item);
         Styler::startAttribute();
+        $this->appendMainStyles($item);
         Styler::closeAttribute();
         HTMLInterface::closeSingleTag();
     }

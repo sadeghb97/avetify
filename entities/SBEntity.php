@@ -324,7 +324,7 @@ abstract class SBEntity extends SetModifier {
                     Styler::addStyle("padding-top", "4px");
                     Styler::addStyle("padding-bottom", "4px");
                     if($field->rtl) {
-                        Styler::addStyle("font-family", "IranSans");
+                        Styler::addFontFaceStyle("IranSans");
                         Styler::addStyle("direction", "rtl");
                     }
                     Styler::closeAttribute();

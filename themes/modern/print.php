@@ -32,7 +32,10 @@ function printTable($keys, $array, $options=Array()){
 
     echo '<table class="table"';
     echo ' style="';
-    if(!empty($options['persian'])) echo 'font-family: IranSans; direction: rtl;';
+    if(!empty($options['persian'])){
+        Styler::addFontFaceStyle("IranSans");
+        Styler::addStyle("direction", "rtl");
+    }
     if(!empty($options['td_center'])) echo 'text-align: center;';
     echo '">';
 
