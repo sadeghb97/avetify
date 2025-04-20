@@ -97,8 +97,8 @@ function addLongClickEvent(elementId, callback){
     });
 }
 
-function logSelectedRecord(field, recordKey, selectedItem){
-    console.log("Entered Record", field, recordKey, selectedItem)
+function logSelectedRecord(field, childKey, selectedItem){
+    console.log("Entered Record", field, childKey, selectedItem)
 }
 
 function onSelectCountry(field, recordKey, selectedCountry){

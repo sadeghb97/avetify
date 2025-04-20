@@ -9,15 +9,17 @@ class EntityField
     public ?string $maxImageSize = null;
     public int $forcedWidthDimension = 0;
     public int $forcedHeightDimension = 0;
+    public bool $hidden = false;
     public bool $rtl = false;
     public bool $writable = false; // add field to edit and add forms
     public bool $printable = true; // print in forms
     public bool $required = false; // must have value in add and edit forms
     public bool $numeric = false;
-    public bool $special = false; //ignore in auto insert and update queries
+    public bool $special = false; //ignore it on auto insert and update queries
     public bool $avatar = false; //ham special ham writable
     public bool $autoTimeCreate = false; //na special na writable
     public bool $autoTimeUpdate = false; //na special na writable
+    //auto generated fields na special hastan na writable
 
     public function __construct($key, $title){
         $this->key = $key;
@@ -38,6 +40,12 @@ class EntityField
         $this->rtl = true;
         return $this;
     }
+
+    public function setHidden() : EntityField {
+        $this->hidden = true;
+        return $this;
+    }
+
 
     public function setWritable() : EntityField {
         $this->writable = true;

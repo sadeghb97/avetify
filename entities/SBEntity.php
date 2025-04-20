@@ -243,9 +243,10 @@ abstract class SBEntity extends SetModifier {
         <fieldset><legend>Insert & Update</legend>';
 
         $record = $this->getCurrentRecord();
-        if(!$record) return;
+        if($pk) {
+            echo '<input type="hidden" name="entity_pk" id="entity_pk" value="' . $pk . '" />';
+        }
 
-        echo '<input type="hidden" name="entity_pk" id="entity_pk" value="' . $pk . '" />';
         foreach ($this->dataFields() as $field){
             if($field->writable === True || ($field->writable && !$pk) ){
                 $fieldType = $field->type;
@@ -267,8 +268,16 @@ abstract class SBEntity extends SetModifier {
                 }
                 else if($fieldType == "boolean"){
                     echo $title . ' ';
-                    echo '<input type="checkbox" value="1" name="' . $key . '"'
-                        . ($value ? ' checked ' : '') . '/><br><br>';
+                    echo '<input ';
+                    HTMLInterface::addAttribute("type", "checkbox");
+                    HTMLInterface::addAttribute("value", "1");
+                    HTMLInterface::addAttribute("name", $key);
+                    HTMLInterface::addAttribute("id", $key);
+                    if($value) HTMLInterface::addAttribute("checked", "true");
+                    Styler::startAttribute();
+                    Styler::addStyle("margin-bottom", "8px");
+                    Styler::closeAttribute();
+                    HTMLInterface::closeSingleTag();
                 }
                 else if($fieldType == "text" || $fieldType == "set_text"){
                     if($fieldType == "set_text"){
@@ -280,12 +289,27 @@ abstract class SBEntity extends SetModifier {
                     Styler::startAttribute();
                     Styler::addStyle("margin-bottom", "8px");
                     Styler::closeAttribute();
-                    echo ' name="' . $key . '" rows="8" cols="150">' . $value . '</textarea><br>';
+                    HTMLInterface::addAttribute("name", $key);
+                    HTMLInterface::addAttribute("id", $key);
+                    HTMLInterface::addAttribute("rows", "8");
+                    HTMLInterface::addAttribute("cols", "150");
+                    HTMLInterface::closeTag();
+                    echo $value;
+                    echo '</textarea>';
+                }
+                else if($field->hidden){
+                    echo '<input ';
+                    HTMLInterface::addAttribute("type","hidden");
+                    HTMLInterface::addAttribute("name", $key);
+                    HTMLInterface::addAttribute("id", $key);
+                    HTMLInterface::addAttribute("value", $value ? $value : "");
+                    HTMLInterface::closeSingleTag();
                 }
                 else {
                     echo '<input ';
-                    HTMLInterface::addAttribute("type", "text");
+                    HTMLInterface::addAttribute("type","text");
                     HTMLInterface::addAttribute("name", $key);
+                    HTMLInterface::addAttribute("id", $key);
                     HTMLInterface::addAttribute("value", $value ? $value : "");
                     HTMLInterface::addAttribute("placeholder", $title);
                     HTMLInterface::addAttribute("class", "empty");
@@ -309,7 +333,15 @@ abstract class SBEntity extends SetModifier {
             else if($pk && $field->printable) {
                 $key = $field->key;
                 $value = isset($record[$key]) ? $record[$key] : null;
-                echo $field->title . ': ' . $value . '<br><br>';
+
+                echo '<div ';
+                Styler::startAttribute();
+                Styler::addStyle("margin-top", "6px");
+                Styler::addStyle("margin-bottom", "6px");
+                Styler::closeAttribute();
+                HTMLInterface::closeTag();
+                echo $field->title . ': ' . $value;
+                HTMLInterface::closeDiv();
             }
         }
 
@@ -334,7 +366,7 @@ abstract class SBEntity extends SetModifier {
     public function handleForm($options = null){
         if(isset($_POST['entity_form'])){
             $data = $_POST;
-            $entityPk = isset($_POST['entity_pk']) ? $data['entity_pk'] : null;
+            $entityPk = isset($data['entity_pk']) ? $data['entity_pk'] : null;
 
             $avatarFields = [];
             foreach ($this->dataFields() as $field){

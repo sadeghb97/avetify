@@ -21,6 +21,7 @@ abstract class JSTextField extends JSInputField {
         echo '<input ';
         HTMLInterface::addAttribute("id", $this->getFieldIdentifier());
         HTMLInterface::addAttribute("type", "text");
+        if($this->label) HTMLInterface::addAttribute("placeholder", $this->label);
         $this->boundEnterEvent();
         HTMLInterface::closeSingleTag();
 
@@ -40,6 +41,7 @@ abstract class JSTextField extends JSInputField {
         echo '<input ';
         HTMLInterface::addAttribute("list", $this->listIdentifier);
         HTMLInterface::addAttribute("id", $this->getFieldIdentifier());
+        if($this->label) HTMLInterface::addAttribute("placeholder", $this->label);
         $this->boundEnterEvent();
         HTMLInterface::closeSingleTag();
     }

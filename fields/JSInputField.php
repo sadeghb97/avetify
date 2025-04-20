@@ -1,3 +1,5 @@
 <?php
 
-class JSInputField {}
+class JSInputField {
+    public string $label = "";
+}

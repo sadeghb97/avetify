@@ -13,27 +13,30 @@ class VisualSelectCountryField extends SBEditableField {
         $this->setFieldIdentifiers($item);
         HTMLInterface::closeSingleTag();
 
-        $acTextField = new CountriesACTextField("actext",
+        $acTextField = new CountriesACTextField("countries-actext",
             $this->getEditableFieldIdentifier($item), "");
         $acTextField->presentListField();
 
-        if($item != null && $this->getValue($item)) {
-            $div->separate();
-            $flag = World::getCountryFlag($this->getValue($item));
-            $flagModifier = new WebModifier(new HTMLModifier(), null);
-            $flagModifier->htmlModifier->pushModifier("id",
-                $this->getEditableFieldIdentifier($item) . "_flag");
-            if($flag) HTMLInterface::placeImageWithHeight($flag, 50, $flagModifier);
-        }
+        $div->separate();
+        $flag = World::getCountryFlag($this->getValue($item));
+        $flagModifier = new WebModifier(new HTMLModifier(), null);
+        $flagModifier->htmlModifier->pushModifier("id",
+            $this->getEditableFieldIdentifier($item) . "_flag");
+        HTMLInterface::placeImageWithHeight($flag ? $flag : "", 50, $flagModifier);
 
         $div->close();
     }
 }
 
 class CountriesACTextField extends JSACTextField {
-    public function __construct(string $fieldKey, string $childKey, string $initValue){
+    /**
+     * @param string $childKey id elemente asli ke dar bargirande country code hast va mamulan hidden ast.
+     * yadavari: az tarkibe fieldKey va childKey id elemente inpute ac text sakhte mishavad.
+     */
+    public function __construct(string $fieldKey, string $childKey, string $initValue,
+                                string $enterCallbackName = "onSelectCountry"){
         parent::__construct($fieldKey, $childKey, $initValue, World::getCountriesDatalistInfo());
-        $this->enterCallbackName = "onSelectCountry";
+        $this->enterCallbackName = $enterCallbackName;
     }
 }
 
