@@ -54,9 +54,9 @@ abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLin
     //pas az submite list az an estefade mishavad ta db ra beruz konim.
     abstract public function listIndexToNewOrgPk($listIndex): int;
 
-    public function getRecordListTitle($record) : string | null {
+    public function getRecordListTitle($orgCatPk) : string | null {
         $listTitles = $this->getListTitles();
-        $listIndex = $this->catOrgPkToListIndex($this->getItemCategoryOriginalPk($record));
+        $listIndex = $this->catOrgPkToListIndex($orgCatPk);
         if($listIndex >= 0 && $listIndex < count($listTitles)) return $listTitles[$listIndex];
         return null;
     }
