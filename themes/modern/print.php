@@ -110,7 +110,7 @@ function printTable($keys, $array, $options=Array()){
                         echo '>';
 
                         if($record[$item['key']]) {
-                            $recentTime = getRecentTime($record[$item['key']]);
+                            $recentTime = getRecentTime($currentTime, $record[$item['key']]);
                             echo getRecentTimeString($recentTime, $summaryTime);
                         }
                         else echo 'Unknown';
@@ -126,7 +126,7 @@ function printTable($keys, $array, $options=Array()){
 
                         if(!$record[$item['key']]) echo "Nope";
                         else {
-                            $recentTime = getRecentTime($record[$item['key']]);
+                            $recentTime = getRecentTime($currentTime, $record[$item['key']]);
                             echo getRecentTimeString($recentTime, $summaryTime);
                             echo '</td>';
                         }
@@ -136,7 +136,7 @@ function printTable($keys, $array, $options=Array()){
 
                         echo $openTd;
                         if($record[$item['key']]) {
-                            $recentTime = getRecentTime($record[$item['key']]);
+                            $recentTime = getRecentTime($currentTime, $record[$item['key']]);
                             $recentTimeStr = getRecentTimeString($recentTime, $summaryTime);
                             echo ' title="' . $recentTimeStr . '"';
                         }
@@ -153,7 +153,7 @@ function printTable($keys, $array, $options=Array()){
                     }
                     else if(!empty($item['finish_normal_time'])){
                         $summaryTime = !empty($item['summary_time']);
-                        $recentTime = getRecentTime($record[$item['key']]);
+                        $recentTime = getRecentTime($currentTime, $record[$item['key']]);
                         $recentTimeStr = getRecentTimeString($recentTime, $summaryTime);
                         echo $openTd;
                         if(!$record[$item['key']]) echo ' style="background-color: Tomato;"';

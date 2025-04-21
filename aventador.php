@@ -135,6 +135,8 @@ require_once "repo/countries/CountriesTable.php";
 $AVENTADOR_ROOT_PATH = "";
 $AVENTADOR_PHYSICAL_ROOT_PATH = "";
 
+define("AVENTADOR_VERSION", 1);
+
 function initAventador($rootPath, $physicalRoot = ""){
     global $AVENTADOR_ROOT_PATH;
     global $AVENTADOR_PHYSICAL_ROOT_PATH;
