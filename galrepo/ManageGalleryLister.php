@@ -8,12 +8,12 @@ class ManageGalleryLister extends SBLister {
         return $record->path;
     }
 
-    public function getItemId($item): string {
-        return $item->path;
+    public function getItemId($record): string {
+        return $record->path;
     }
 
-    public function getItemTitle($item): string {
-        $p = $item->path;
+    public function getItemTitle($record): string {
+        $p = $record->path;
         if(!str_contains($p, "/")) return $p;
         $pos = strrpos($p, "/");
         return substr($p, $pos + 1);

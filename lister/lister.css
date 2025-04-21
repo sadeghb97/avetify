@@ -285,6 +285,11 @@ input[type=range]:focus::-ms-fill-upper {
 	font-size: 1rem;
 }
 
+.lister-item-link {
+	color: black;
+	text-decoration: none;
+}
+
 .lister-item-rate {
 	font-size: 10pt;
 }

@@ -1,5 +1,5 @@
 <?php
-abstract class SBLister {
+abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLink {
     public array $allItems = [];
     public array $initItemsMap = [];
     private int | null $cardImageWidth = null;
@@ -13,11 +13,9 @@ abstract class SBLister {
         $this->allItems = $items;
     }
 
-    abstract public function getItemId($item) : string;
-
-    abstract public function getItemImage($item) : string;
-
-    abstract public function getItemTitle($item) : string;
+    public function getItemLink($record): string {
+        return "";
+    }
 
     public function setCardImageDimension($cw, $hmp = 1.3){
         $this->cardImageWidth = $cw;
@@ -60,6 +58,10 @@ abstract class SBLister {
      * @return SBListCategory[] An array of MyClass instances
      */
     abstract public function getCategories() : array;
+
+    public function getListsCount() : int {
+        return count($this->getCategories());
+    }
 
     abstract public function handleSubmittedList(array $lists, array $itemsParams, $allFields);
 
@@ -315,6 +317,8 @@ abstract class SBLister {
         echo '/>';
 
         heightMargin(12);
+
+        echo '<div>';
         if($this->isPrintRankEnabled()){
             $rankStyler = new Styler();
             $rankStyler->pushStyle("font-size", "0.875rem");
@@ -330,10 +334,21 @@ abstract class SBLister {
             $rankStyler->applyStyles();
             echo '>: </span>';
         }
+
+        $link = $this->getItemLink($item);
+        if($link){
+            echo '<a ';
+            HTMLInterface::addAttribute("href", $link);
+            HTMLInterface::addAttribute("target", "_blank");
+            HTMLInterface::addAttribute("class", "lister-item-link");
+            HTMLInterface::closeTag();
+        }
         echo '<span class="lister-item-name">' . $this->getItemTitle($item) . '</span>';
+        if($link) HTMLInterface::closeLink();
 
         $alt = $this->getItemAlt($item);
-        if($alt) echo '<span class="lister-item-rate"> (' . $item['kingrate'] . ')</span>';
+        if($alt) echo '<span class="lister-item-rate"> (' . $alt . ')</span>';
+        echo '</div>';
 
         $plainFields = [];
         $dialogFields = [];
