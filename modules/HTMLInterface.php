@@ -22,13 +22,15 @@
          echo '</a>';
      }
 
-     public static function openContainer($width = "90%", $maxWidth = "90%", WebModifier | null $modifier = null){
+     public static function openContainer($width = "90%", $maxWidth = "90%", bool $centered = true,
+                                          WebModifier | null $modifier = null){
          echo '<div ';
          HTMLInterface::addAttribute("class", "container");
          self::applyModifiers($modifier);
          Styler::startAttribute();
          Styler::addStyle("width", $width);
          Styler::addStyle("max-width", $maxWidth);
+         if($centered) Styler::addStyle("margin", "auto");
          self::appendStyles($modifier);
          Styler::closeAttribute();
          self::closeTag();

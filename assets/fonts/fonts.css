@@ -1,7 +1,13 @@
 @font-face {
-    font-family: 'QueenFont';
+    font-family: 'Queen';
     src: url('kiss.ttf') format('truetype');
     font-weight: Bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Varsity';
+    src: url('varsity.ttf') format('truetype');
     font-style: normal;
 }
 
