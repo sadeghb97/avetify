@@ -1,0 +1,74 @@
+#!/bin/bash
+set -e
+
+REPO_URL="https://gitlab.com/sadeghb97/aventador"
+
+CURRENT_DIR="$(pwd)"
+
+if [[ "$CURRENT_DIR" =~ htdocs/(.*) ]]; then
+    PROJECT_NAME="${BASH_REMATCH[1]}"
+else
+    echo "❌ This script must be run inside a directory under 'htdocs'."
+    exit 1
+fi
+
+echo "📁 Detected project name: $PROJECT_NAME"
+
+echo "🔄 Cloning the repository..."
+if git clone "$REPO_URL" ./aventador; then
+    echo "✅ Repository cloned successfully."
+
+    echo "📁 Creating lib directory and lib.php..."
+    mkdir -p lib
+    cat > lib/lib.php <<EOF
+<?php
+
+define("AVENTADOR_ROOT", "/$PROJECT_NAME/aventador/");
+define("MAIN_PROXY", "127.0.0.1:2081");
+
+require_once __DIR__ . "/../aventador/aventador.php";
+initAventador(AVENTADOR_ROOT);
+EOF
+
+    echo "📄 Creating aventador.php..."
+    cat > aventador.php <<'EOF'
+<?php
+require_once "lib/lib.php";
+
+$avnRenderer = new AventadorRenderer();
+$avnRenderer->renderPage();
+EOF
+
+    echo "📄 Creating index.php..."
+    cat > index.php <<'EOF'
+<?php
+header("Location: aventador.php");
+EOF
+
+    echo "📝 Creating .gitignore..."
+    cat > .gitignore <<'EOF'
+aventador
+.avnfiles
+.idea
+.tmp
+test.php
+EOF
+
+    echo "🎉 All files and folders have been set up successfully."
+
+else
+    echo "❌ Failed to clone the repository. Aborting."
+    exit 1
+fi
+
+# Installation instructions:
+# 1. Save this script as ~/avncreate and make it executable:
+#    chmod +x ~/avncreate
+# 2. (Optional) Move it to ~/bin for global use:
+#    mkdir -p ~/bin
+#    mv ~/avncreate ~/bin/
+# 3. Add ~/bin to your PATH if it's not already:
+#    echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
+#    source ~/.bashrc
+# 4. Now you can run it from anywhere with:
+#    avncreate
