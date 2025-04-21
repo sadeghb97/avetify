@@ -1,5 +1,6 @@
 body{
     text-align: center;
+    background: linear-gradient(to bottom, rgb(244,215,201) 0%,rgb(244,226,201) 100%);
 }
 
 .forms{

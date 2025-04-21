@@ -59,6 +59,10 @@ class ManageGalleryLister extends SBLister {
         return 1 + count($this->galleryRepo->virtualFolders);
     }
 
+    public function getListTitles(): array {
+        return [];
+    }
+
     public function getCategories(): array {
         $categories = [new SBListCategory(0, "Uncategorized")];
         foreach ($this->galleryRepo->virtualFolders as $vf){
