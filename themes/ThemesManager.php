@@ -101,6 +101,20 @@ class ThemesManager {
         self::importStyle($this->ROOT_PATH . "assets/fonts/fonts.css");
     }
 
+    public function appendBodyStyles(){}
+
+    public function openBody(){
+        echo '<body ';
+        Styler::startAttribute();
+        $this->appendBodyStyles();
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
+    }
+
+    public function closeBody(){
+        echo '</body>';
+    }
+
     public static function openHead(){
         echo '<head>';
     }

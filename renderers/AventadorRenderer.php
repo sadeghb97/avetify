@@ -2,10 +2,11 @@
 
 class AventadorRenderer implements PageRenderer {
     public function renderPage($title = "Aventador") {
-        $theme = new GreenTheme();
+        $theme = new AventadorTheme();
         $theme->placeHeader($title);
         $avnImage = Routing::browserPathFromAventador("assets/img/aventador.webp");
 
+        $theme->openBody();
         HTMLInterface::openContainer();
         $div = new VertDiv(8);
         $div->open();
@@ -35,5 +36,15 @@ class AventadorRenderer implements PageRenderer {
 
         $div->close();
         HTMLInterface::closeDiv();
+        $theme->closeBody();
+    }
+}
+
+class AventadorTheme extends GreenTheme {
+    public function appendBodyStyles() {
+        Styler::addStyle("display", "flex");
+        Styler::addStyle("justify-content", "center");
+        Styler::addStyle("align-items", "center");
+        Styler::addStyle("height", "100%");
     }
 }
