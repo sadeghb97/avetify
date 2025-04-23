@@ -6,7 +6,7 @@ class ProxyHeadersFetcher extends ProxyFetcher {
     }
 
     function fetch($url) : string {
-        return self::fetchUrlWithHeaders($url, self::parseRawHeaders($this->headers), $this->proxy);
+        return $this->fetchUrlWithHeaders($url, self::parseRawHeaders($this->headers), $this->proxy);
     }
 
 }

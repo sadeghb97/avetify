@@ -3,7 +3,7 @@ class NetworkFetcher {
     public int $lastStatusCode = 0;
 
     public function fetch($url) : string {
-        return self::curlGetContents($url);
+        return $this->curlGetContents($url);
     }
 
     function curlGetContents($url, $proxy = null) {
@@ -21,7 +21,7 @@ class NetworkFetcher {
         $this->lastStatusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        if ($this->lastStatusCode == 200 && $fileContent !== false) {
+        if ($this->lastStatusCode >= 200 && $this->lastStatusCode < 300 && $fileContent !== false) {
             return $fileContent;
         }
 
@@ -33,7 +33,7 @@ class NetworkFetcher {
     }
 
     protected function _downloadFile($fileUrl, $targetFile, $proxy = null) : bool {
-        $fileContent = self::curlGetContents($fileUrl, $proxy);
+        $fileContent = $this->curlGetContents($fileUrl, $proxy);
         if ($fileContent) {
             file_put_contents($targetFile, $fileContent);
             return true;
