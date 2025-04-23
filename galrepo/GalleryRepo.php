@@ -1,43 +1,56 @@
 <?php
 
 class GalleryRepo {
-    private static array $extensions = ["jpg", "jpeg", "png"];
+    private static array $extensions = ["jpg", "jpeg", "png", "webp"];
 
     public array $virtualFolders = [];
+    public string $path;
+    public string $relativePath = "";
+    public string $parentRelativePath = "";
 
-    /**
-     * @var GalleryRecord[] $allRecords
-     * An associative array
-     */
+    /** @var GalleryRepo[] $subRepos */
+    public array $subRepos = [];
+
+    /** @var GalleryRecord[] $allRecords */
     public array $allRecords = [];
 
-    public function __construct(public string $path){
+    public null | GalleryRecord $cover = null;
+
+    public function __construct(string $relativePath, public bool $recursive = true,
+                                public bool $readOnly = false){
+        if(!str_ends_with($relativePath, "/")) $relativePath = $relativePath . "/";
+        $this->relativePath = $relativePath;
+        $this->parentRelativePath = Filer::getParentFilename($relativePath);
+        $this->path = Routing::serverRootPath($relativePath);
         $this->loadRecords();
     }
 
     public function loadRecords(){
-        $conFilename = self::getGalleryConfigFilename($this->path);
         if(!file_exists($this->path)){
-            mkdir($this->path);
+            if(!$this->readOnly) mkdir($this->path);
+            else return;
         }
 
-        if(!file_exists($conFilename)){
+        $configs = self::createConfigsData([], []);
+        $conFilename = self::getGalleryConfigFilename($this->path);
+        if (!$this->readOnly && !file_exists($conFilename)) {
             $def = self::createConfigsData([], []);
             file_put_contents($conFilename, json_encode($def));
         }
 
-        $rawConfs = file_get_contents($conFilename);
-        $configs = json_decode($rawConfs, true);
+        if(file_exists($conFilename)) {
+            $rawConfs = file_get_contents($conFilename);
+            $configs = json_decode($rawConfs, true);
+        }
 
         $this->virtualFolders = [];
         $this->allRecords = [];
-
 
         $allVirtualGalNames = [];
         foreach ($configs['virtual_gals'] as $vgKey => $vg){
             $allVirtualGalNames[] = $vgKey;
         }
-        sort($allVirtualGalNames);
+        natcasesort($allVirtualGalNames);
 
         $index = 1;
         foreach ($allVirtualGalNames as $vgKey){
@@ -50,6 +63,15 @@ class GalleryRepo {
         $files = [];
         foreach (self::$extensions as $ext) {
             $files = array_merge($files, glob($this->path . "*.$ext"));
+        }
+
+        if($this->recursive) {
+            $dirs = Filer::subDirs($this->path);
+            natcasesort($dirs);
+            foreach ($dirs as $dir) {
+                $pureDir = Filer::getPureFilename($dir);
+                $this->subRepos[] = new GalleryRepo($this->relativePath . $pureDir, false);
+            }
         }
 
         $confRecords = $configs['items'];
@@ -67,17 +89,17 @@ class GalleryRepo {
                 $this->allRecords[] = new GalleryRecord(0, $adjustedFilename, 0);
             }
         }
+
+        if(count($this->allRecords) > 0){
+            $this->cover = $this->allRecords[0];
+        }
     }
 
     public function arrangeRepo(){
-        //printPreArray($this->virtualFolders);
-        //printPreArray($this->allRecords);
-
         $virtualGalsIdMap = [];
         foreach ($this->virtualFolders as $vf){
             $virtualGalsIdMap[$vf['index']] = $vf['id'];
         }
-        //printPreArray($virtualGalsIdMap);
 
         foreach ($this->allRecords as $imageIndex => $record){
             if($record->galleryIndex > 0) {

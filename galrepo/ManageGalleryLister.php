@@ -2,6 +2,7 @@
 class ManageGalleryLister extends SBLister {
     public function __construct(public GalleryRepo $galleryRepo){
         parent::__construct($this->galleryRepo->allRecords);
+        $this->placeDefaultTriggers = false;
     }
 
     private function getCandidateMainValue(GalleryRecord $record): string{
@@ -14,12 +15,19 @@ class ManageGalleryLister extends SBLister {
 
     public function getItemTitle($record): string {
         $p = $record->path;
+
+        if(str_ends_with($p, "/")){
+            $p = substr($p, 0, strlen($p) - 1);
+        }
+
         if(!str_contains($p, "/")) return $p;
+
         $pos = strrpos($p, "/");
         return substr($p, $pos + 1);
     }
 
     public function getItemImage($item): string {
+        if(!$item) return "";
         return Routing::serverPathToBrowserPath($this->galleryRepo->path . $item->path);
     }
 
@@ -36,7 +44,8 @@ class ManageGalleryLister extends SBLister {
     }
 
     public function getSecondarySortFactor($item){
-        return $item->imageIndex;
+        if($item->galleryIndex > 0) return $item->imageIndex;
+        return $item->path;
     }
 
     public function isOpenImageEnabled(): bool{
@@ -108,25 +117,34 @@ class ManageGalleryLister extends SBLister {
     }
 
     public function moreBodyContents(){
-        $iconImage = "img/kiss.png";
-        echo '<div style="position: fixed; bottom: 20px; left: 20px;" onclick="addVirtualGallery()">
-            <img src="' . $iconImage . '" alt="Icon" style="width: 50px; height: 50px; border-radius: 50%;">
-        </div>';
+        $this->placeSubRepos();
 
-        $iconImage = "img/update.png";
-        echo '<div style="position: fixed; bottom: 20px; left: 90px;" onclick="updateGalleryConfigs(jsArgs)">
-            <img src="' . $iconImage . '" alt="Icon" style="width: 50px; height: 50px; border-radius: 50%;">
-        </div>';
+        if($this->galleryRepo->parentRelativePath){
+            $prevRepo = $this->galleryRepo->parentRelativePath;
+            $prevLink = Routing::addParamToCurrentLink("gp", $prevRepo);
+            $prevButton = new AbsoluteButton(Routing::getAvnImage("arrow_left.svg"),
+                ["top" => "20px", "left" => "20px"],
+                "redir('" . $prevLink . "');");
+            $prevButton->place();
+        }
 
-        $iconImage = "img/submit.png";
-        echo '<div style="position: fixed; bottom: 20px; right: 20px;" onclick="submitGalleries(jsArgs)">
-            <img src="' . $iconImage . '" alt="Icon" style="width: 50px; height: 50px; border-radius: 50%;">
-        </div>';
+        if(!$this->galleryRepo->readOnly) {
+            $addButton = new AbsoluteButton(Routing::getAvnImage("add_box.svg"),
+                ["bottom" => "20px", "left" => "20px"], "addVirtualGallery()");
+            $addButton->place();
 
-        $iconImage = "img/reset.png";
-        echo '<div style="position: fixed; bottom: 20px; right: 90px;" onclick="resetGalleryConfigs()">
-            <img src="' . $iconImage . '" alt="Icon" style="width: 50px; height: 50px; border-radius: 50%;">
-        </div>';
+            $updateButton = new AbsoluteButton(Routing::getAvnImage("commit.svg"),
+                ["bottom" => "20px", "left" => "90px"], "updateGalleryConfigs(jsArgs)");
+            $updateButton->place();
+
+            $submitButton = new AbsoluteButton(Routing::getAvnImage("send.svg"),
+                ["bottom" => "20px", "right" => "20px"], "submitGalleries(jsArgs)");
+            $submitButton->place();
+
+            $resetButton = new AbsoluteButton(Routing::getAvnImage("layers_clear.svg"),
+                ["bottom" => "20px", "right" => "90px"], "resetGalleryConfigs()");
+            $resetButton->place();
+        }
     }
 
     public function catchNewList(){
@@ -180,5 +198,72 @@ class ManageGalleryLister extends SBLister {
         }
 
         $this->setItems($this->galleryRepo->allRecords);
+    }
+
+    public function placeSubRepos(){
+        echo '<div class="magham-box">';
+        echo '<span class="magham-degree">' . "Sub Repos" . '</span>';
+        echo '</div>';
+
+        echo '<div class="row" ';
+        Styler::startAttribute();
+        Styler::addStyle("overflow", "auto");
+        Styler::addStyle("position", "relative");
+        Styler::addStyle("justify-content", "center");
+        Styler::closeAttribute();
+        echo ' >';
+
+        foreach ($this->galleryRepo->subRepos as $srIndex => $subRepo){
+            $this->printSubRepo($subRepo, $srIndex + 1);
+        }
+
+        echo '</div>';
+        echo '<hr />';
+        echo '</div>';
+    }
+
+    public function printSubRepo(GalleryRepo $subRepo, $itemRank){
+        echo '<div class="grid-square" ';
+        echo '>';
+
+        $avatar = $subRepo->cover ?
+            Routing::serverPathToBrowserPath($subRepo->path . $subRepo->cover->path) : "";
+        echo '<img src="' . $avatar . '" class="lister-item-img" ';
+        echo '/>';
+
+        heightMargin(12);
+
+        echo '<div>';
+        if($this->isPrintRankEnabled()){
+            $rankStyler = new Styler();
+            $rankStyler->pushStyle("font-size", "0.875rem");
+            $rankStyler->pushStyle("font-weight", "bold");
+            echo '<span ';
+            $rankStyler->applyStyles();
+            echo ' >';
+            echo $itemRank;
+            echo '</span>';
+            echo '<span ';
+            $rankStyler->applyStyles();
+            echo '>: </span>';
+        }
+
+        $title = $this->getItemTitle($subRepo);
+        $newPath = str_replace("/", "~", $subRepo->relativePath);
+        $link = Routing::addParamToCurrentLink("gp", $newPath);
+
+        if($link) {
+            echo '<a ';
+            HTMLInterface::addAttribute("href", $link);
+            HTMLInterface::addAttribute("class", "lister-item-link");
+            HTMLInterface::closeTag();
+        }
+
+        echo '<span class="lister-item-name">' . $title . '</span>';
+
+        if($link) HTMLInterface::closeLink();
+
+        echo '</div>';
+        echo '</div>';
     }
 }

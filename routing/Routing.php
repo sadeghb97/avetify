@@ -27,6 +27,10 @@ class Routing {
         return self::getAventadorRoot() . $path;
     }
 
+    public static function getAvnImage($path) : string {
+        return self::browserPathFromAventador("assets/img/" . $path);
+    }
+
     public static function browserRootPath($path) : string {
         return self::removeRedundantPath(self::getAventadorRoot() . '../') . $path;
     }

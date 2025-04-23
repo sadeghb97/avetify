@@ -2,6 +2,7 @@
 abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLink {
     public array $allItems = [];
     public array $initItemsMap = [];
+    public bool $placeDefaultTriggers = true;
     private int | null $cardImageWidth = null;
     private float | null $cardImageHeightMultiplier = null;
 
@@ -465,18 +466,20 @@ abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLin
               <input type="hidden" id="lister_params" name="lister_params">
         </form>';
 
-        if($this->isPrintRankEnabled() && $this->isRearrangeRanksEnabled()){
-            HTMLInterface::addAbsoluteIconButton(Routing::getAventadorRoot()
-                . 'assets/img/arrange.png',
-                [
-                    "right" => "20px",
-                    "bottom" => "20px"
-                ],
-                "rearrangeRanks()");
-        }
+        if($this->placeDefaultTriggers) {
+            if ($this->isPrintRankEnabled() && $this->isRearrangeRanksEnabled()) {
+                HTMLInterface::addAbsoluteIconButton(Routing::getAventadorRoot()
+                    . 'assets/img/arrange.png',
+                    [
+                        "right" => "20px",
+                        "bottom" => "20px"
+                    ],
+                    "rearrangeRanks()");
+            }
 
-        $primaryButton = new PrimaryButton("listerSubmit(jsArgs); submitForm('lister_form');");
-        $primaryButton->place();
+            $primaryButton = new PrimaryButton("listerSubmit(jsArgs); submitForm('lister_form');");
+            $primaryButton->place();
+        }
 
         ThemesManager::importJS(Routing::getAventadorRoot() . 'lister/lister.js');
         $this->initMenu();

@@ -10,6 +10,8 @@ function str_rot13(str) {
 function initMenu(){
 	window.oncontextmenu = function (e) {
 		let fileTriggered = e.srcElement
+		if(!fileTriggered) return false
+
 		for(let i=0; 2>i; i++) {
 			if (!fileTriggered.id.includes("lister-item"))
 				fileTriggered = fileTriggered.parentElement
