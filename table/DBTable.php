@@ -37,7 +37,7 @@ class DBTable extends SBTable {
             if($queryRequired) {
                 $sql = $queryBuilder->createUpdate(new QueryField($itemPk, $this->pkIsNumeric, $this->primaryKey));
                 if($this->conn->query($sql)) {
-                    $titlePrinter->print($this->getItemName($oldRecord));
+                    $titlePrinter->print($this->getItemTitle($oldRecord));
                     $messagePrinter->print(": Updated" . br());
                     $queryDone = true;
                 }
@@ -46,7 +46,6 @@ class DBTable extends SBTable {
 
         if($queryDone){
             $this->updateRecords();
-            endline();
         }
     }
 
@@ -63,7 +62,7 @@ class DBTable extends SBTable {
                 $sql = $queryBuilder->createDelete(new QueryField($itemPk, $this->pkIsNumeric, $this->primaryKey));
 
                 if($this->conn->query($sql)) {
-                    $titlePrinter->print($this->getItemName($oldRecord));
+                    $titlePrinter->print($this->getItemTitle($oldRecord));
                     $messagePrinter->print(": Deleted" . br());
                 }
             }
@@ -98,7 +97,7 @@ class DBTable extends SBTable {
 
             $sql = $queryBuilder->createInsert(true);
             if($this->conn->query($sql)) {
-                $titlePrinter->print($this->getItemName($creatingFields));
+                $titlePrinter->print($this->getItemTitle($creatingFields));
                 $messagePrinter->print(": Inserted" . br());
 
                 $this->updateRecords();

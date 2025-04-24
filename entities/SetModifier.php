@@ -1,18 +1,31 @@
 <?php
 
-abstract class SetModifier {
+abstract class SetModifier implements EntityID, EntityTitle, EntityLink, EntityImage, EntityAltLink {
     public array $currentRecords = [];
+    public bool $isSortable = true;
 
     public function __construct(public string $setKey){}
 
     public abstract function getEntityRecords() : array;
 
-    public function getItemId($item) : string {
-        return EntityUtils::getSimpleValue($item, "id");
+    public function getItemId($record) : string {
+        return EntityUtils::getMultiChoiceValue($record, ["id", "pk"]);
     }
 
-    public function getItemName($item) : string {
-        return EntityUtils::getSimpleValue($item, "name");
+    public function getItemTitle($record) : string {
+        return EntityUtils::getMultiChoiceValue($record, ["name", "title"]);
+    }
+
+    public function getItemLink($record) : string {
+        return "";
+    }
+
+    public function getItemImage($record) : string {
+        return "";
+    }
+
+    public function getItemAltLink($record): string {
+        return "";
     }
 
     /** @return SortFactor[] An array of MyClass instances */

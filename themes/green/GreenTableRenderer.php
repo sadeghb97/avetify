@@ -1,7 +1,14 @@
 <?php
 
-class GreenSBTRenderer extends SBTRenderer {
+class GreenTableRenderer extends SetRenderer {
+    public function __construct(SetModifier $setModifier, GreenTheme $theme,
+                                string $title = "Set", bool|int $limit = 5000){
+        parent::__construct($setModifier, $theme, $title, $limit);
+    }
+
     public function renderCreatingElements() {
+        if(!($this->setModifier instanceof SBTable)) return;
+
         /** @var SBTable $sbTable */
         $sbTable = $this->setModifier;
 
@@ -79,6 +86,10 @@ class GreenSBTRenderer extends SBTRenderer {
         }
         if($sbTable->enableSelectRecord) $this->selectorField->renderRecord($item);
         $this->closeRecord($item);
+    }
+
+    public function getTheme() : ThemesManager {
+        return new GreenTheme();
     }
 
     protected function placeEmptyTD(){

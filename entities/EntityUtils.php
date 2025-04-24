@@ -71,6 +71,14 @@ class EntityUtils {
         return $ar;
     }
 
+    public static function getMultiChoiceValue($item, array $keysList) : float | string | null {
+        foreach ($keysList as $key){
+            $res = self::getSimpleValue($item, $key);
+            if($res !== "" && $res !== null) return $res;
+        }
+        return "";
+    }
+
     public static function simpleSort(array &$records, string $key, bool $isAsc){
         self::multiSort($records, [new SortDetails($key, $isAsc)]);
     }

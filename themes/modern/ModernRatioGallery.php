@@ -1,6 +1,6 @@
 <?php
 
-abstract class ModernRatioGallery extends SetRenderer implements EntityImage, EntityImageRatio, EntityLink {
+abstract class ModernRatioGallery extends SetRenderer implements EntityImageRatio {
     public RecordContextMenu | null $contextMenu = null;
     private float $curRowOffset = 0;
 
@@ -22,7 +22,7 @@ abstract class ModernRatioGallery extends SetRenderer implements EntityImage, En
         if(count($this->setModifier->currentRecords) > 0){
             $this->openRowDiv();
         }
-        parent::renderRecords();
+        parent::renderSet();
         if(count($this->setModifier->currentRecords) > 0){
             HTMLInterface::closeDiv();
         }
@@ -43,7 +43,7 @@ abstract class ModernRatioGallery extends SetRenderer implements EntityImage, En
         }
 
         echo '<img ';
-        HTMLInterface::addAttribute("src", $this->getItemImage($item));
+        HTMLInterface::addAttribute("src", $this->setModifier->getItemImage($item));
         Styler::startAttribute();
         Styler::addStyle("height", $this->unitSize . "px");
         Styler::addStyle("width", "auto");

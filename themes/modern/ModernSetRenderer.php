@@ -1,8 +1,9 @@
 <?php
 
 abstract class ModernSetRenderer extends SetRenderer {
-    public function __construct(SetModifier $setModifier, bool | int $limit = false){
-        parent::__construct($setModifier, new ModernTheme(), $limit);
+    public function __construct(SetModifier $setModifier, ModernTheme $theme,
+                                string $title = "Set", bool | int $limit = 5000){
+        parent::__construct($setModifier, $theme, $limit);
     }
 
     public function openContainer() {

@@ -555,7 +555,7 @@ abstract class SBEntity extends SetModifier {
     }
 
     public function getPageTitle($item) : string {
-        return $this->getItemName($item);
+        return $this->getItemTitle($item);
     }
 
     abstract public function getSuperKey();

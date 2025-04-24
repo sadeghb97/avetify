@@ -1,6 +1,6 @@
 <?php
 
-class SBTable extends SetModifier implements EntityLink {
+class SBTable extends SetModifier {
     public array $records;
 
     /** @var SBTableField[] $fields */
@@ -9,8 +9,7 @@ class SBTable extends SetModifier implements EntityLink {
     public bool $enableSelectRecord = false;
     public bool $enableCreatingRow = false;
     public bool $forcePatchRecords = false;
-    public bool $isSortable = true;
-    public SBTRenderer | null $tableRenderer = null;
+    public SetRenderer | null $tableRenderer = null;
 
     public function __construct(array $fields, array $rawRecords, string $key,
                                 public bool $isEditable = false, public IDGetter | null $idGetter = null){
@@ -80,8 +79,8 @@ class SBTable extends SetModifier implements EntityLink {
         $this->tableRenderer->renderPage();
     }
 
-    protected function getTableRenderer() : SBTRenderer {
-        return new GreenSBTRenderer($this);
+    protected function getTableRenderer() : SetRenderer {
+        return new GreenTableRenderer($this, new GreenTheme());
     }
 
     public function catchSubmittedFields(){
@@ -156,9 +155,5 @@ class SBTable extends SetModifier implements EntityLink {
 
     public function getEntityRecords(): array {
         return $this->records;
-    }
-
-    public function getItemLink($record): string {
-        return "";
     }
 }

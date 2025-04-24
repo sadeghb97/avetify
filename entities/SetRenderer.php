@@ -1,71 +1,141 @@
 <?php
 
-abstract class SetRenderer {
-    public function __construct(public SetModifier $setModifier,
-                                public ThemesManager | null $theme,
-                                public bool | int $limit = false){}
+abstract class SetRenderer extends BaseSetRenderer {
+    public SBForm | null $form = null;
+    public RecordSelectorField | null $selectorField = null;
+    public bool $printRowIndex = true;
+    public bool $useClassicButtons = false;
 
-    public function moreRecordFields($record, int $itemIndex){}
 
-    public function renderSet(){
-        $this->openCollection();
-        foreach ($this->setModifier->currentRecords as $itemIndex => $record){
-            if(!$this->isQualified($record)) continue;
+    public function __construct(SetModifier $setModifier, null | ThemesManager $theme,
+                                public string $title = "Set", bool|int $limit = 5000){
+        if($theme == null) $theme = new GreenTheme();
+        parent::__construct($setModifier, $theme, $limit);
+    }
 
-            $this->openRecord($record);
-            $this->renderRecordMain($record, $itemIndex);
-            $this->moreRecordFields($record, $itemIndex);
-            $this->closeRecord($record);
+    public function getTitle(): string {
+        return $this->title;
+    }
 
-            if($this->limit && ($itemIndex + 1) >= $this->limit) break;
+    public function initForm(){
+        $this->form = new SBForm($this->getFormName());
+        $this->form->addHiddenElement(new FormHiddenProperty($this->getFormFieldsName(), ""));
+        $this->form->addHiddenElement(new FormHiddenProperty($this->getFormSelectorName(), ""));
+
+        $deleteConfirmMessage = "Are you sure?";
+        if($this->useClassicButtons) {
+            $this->form->addTrigger(new FormButton($this->getFormName(), $this->getUpdateButtonID(),
+                "Update"));
+
+            $deleteTrigger = new FormButton($this->getFormName(), $this->getDeleteButtonID(),
+                "Delete", "warning");
+            $deleteTrigger->enableConfirmMessage($deleteConfirmMessage);
+            $this->form->addTrigger($deleteTrigger);
         }
-        $this->closeCollection();
+        else {
+            $this->form->addTrigger(new PrimaryFormButton($this->getFormName(), $this->getUpdateButtonID()));
+
+            $deleteTrigger = new DeleteFormButton($this->getFormName(), $this->getDeleteButtonID());
+            $deleteTrigger->enableConfirmMessage($deleteConfirmMessage);
+            $this->form->addTrigger($deleteTrigger);
+        }
     }
 
-    public function isQualified($item) : bool {
-        return true;
+    public function placeFormJSUtils(){
+        if(!($this->setModifier instanceof SBTable)) return;
+
+        /** @var SBTable $sbTable */
+        $sbTable = $this->setModifier;
+
+        if(!$sbTable->isEditable) return;
+
+        $allJSEditableFields = [];
+        foreach ($sbTable->fields as $field) {
+            foreach ($sbTable->currentRecords as $record) {
+                if ($field instanceof SBEditableField) {
+                    $allJSEditableFields[] = $field->getEditableFieldIdentifier($record);
+                }
+                else if($sbTable->forcePatchRecords && $field->onCreateField != null){
+                    $feField = $field->getForcedEditableClone();
+                    $allJSEditableFields[] = $feField->getEditableFieldIdentifier($record);
+                }
+            }
+
+        }
+
+        $allSelectFields = null;
+        if($this->selectorField != null){
+            $allSelectFields = [];
+            foreach ($sbTable->currentRecords as $record) {
+                $allSelectFields[] = $this->selectorField->getEditableFieldIdentifier($record);
+            }
+        }
+
+        JSInterface::declareGlobalJSArgs($this->getJSArgsName());
+        FormUtils::readyFormToCatchNoNamedFields(
+            $this->getJSArgsName(),
+            $this->getFormName(),
+            $this->getFormFieldsName(),
+            json_encode($allJSEditableFields),
+            $sbTable->isEditable,
+            $sbTable->enableSelectRecord ? $this->getFormSelectorName() : null,
+            $allSelectFields
+        );
     }
 
-    public function renderLeadingItems(){}
+    public function openContainer() {
+        echo '<div style="height: ' . 8 . 'px;"></div>';
 
-    public function renderFooter(){}
+        if($this->setModifier instanceof SBTable) {
+            /** @var SBTable $sbTable */
+            $sbTable = $this->setModifier;
 
-    public function openCollection(WebModifier $webModifier = null){}
-    public function closeCollection(WebModifier $webModifier = null){}
-    public function openRecord($record){}
-    public function closeRecord($record){}
+            $this->initForm();
 
-    public function openPage(){
-        $theme = $this->getTheme();
-        $theme->placeHeader($this->getTitle());
-        $theme->loadHeaderElements();
+            if ($sbTable->isEditable) $sbTable->catchSubmittedFields();
+
+            if ($sbTable->isEditable) {
+                $this->form->openForm();
+            }
+        }
     }
 
-    public function renderPage(){
-        $this->openPage();
-        $this->setModifier->adjustRecords();
-        $this->onRecordsAdjusted();
+    public function closeContainer() {
+        if($this->setModifier instanceof SBTable) {
+            /** @var SBTable $sbTable */
+            $sbTable = $this->setModifier;
 
-        $allSortFactors = $this->setModifier->finalSortFactors();
-        if(count($allSortFactors) > 0) $this->renderSortLabels();
-
-        $this->openContainer();
-        $this->renderLeadingItems();
-        $this->renderSet();
-        $this->closeContainer();
-        $this->renderFooter();
+            if ($sbTable->isEditable) {
+                $this->form->placeTriggers();
+                $this->form->closeForm();
+                $this->placeFormJSUtils();
+            }
+        }
     }
 
-    public function onRecordsAdjusted() : void {}
+    public function renderCreatingElements(){}
 
-    public abstract function getTitle() : string;
-    public abstract function openContainer();
-    public abstract function closeContainer();
-    public abstract function renderRecordMain($item, int $index);
+    public function getFormName() : string {
+        return $this->setModifier->setKey . "_" . "table_form";
+    }
 
-    public function renderSortLabels(){}
+    public function getFormFieldsName() : string {
+        return $this->setModifier->setKey . "_" . "table_fields";
+    }
 
-    public function getItemBoxIdentifier($record) : string {
-        return $this->setModifier->setKey . "__box__" . $this->setModifier->getItemId($record);
+    public function getFormSelectorName() : string {
+        return $this->setModifier->setKey . "_" . "selector_field";
+    }
+
+    public function getJSArgsName() : string {
+        return $this->setModifier->setKey . "_" . "args";
+    }
+
+    public function getUpdateButtonID() : string {
+        return $this->setModifier->setKey . '_update';
+    }
+
+    public function getDeleteButtonID() : string {
+        return $this->setModifier->setKey . '_delete';
     }
 }
