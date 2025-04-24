@@ -81,21 +81,21 @@ class GreenSBTRenderer extends SBTRenderer {
         $this->closeRecord($item);
     }
 
-    private function placeEmptyTD(){
+    protected function placeEmptyTD(){
         echo '<td></td>';
     }
 
-    public function openHeaderTR(){
+    protected function openHeaderTR(){
         echo '<tr style="';
         $this->headerTRStyles();
         echo '">';
     }
 
-    public function headerTRStyles(){}
+    protected function headerTRStyles(){}
 
-    public function normalTRStyles($record){
+    protected function normalTRStyles($record){
         $this->headerTRStyles();
     }
 
-    public function tableStyles(){}
+    protected function tableStyles(){}
 }
