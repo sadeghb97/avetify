@@ -457,14 +457,14 @@ abstract class SBEntity extends SetModifier {
                         $imageDetails = $_FILES[$af->key];
                         $tmpFilename = $imageDetails['tmp_name'];
                         $orgName = $imageDetails['name'];
-                        $orgExtension = getFileExtension($orgName);
+                        $orgExtension = Filer::getFileExtension($orgName);
                         $targetFilename .= ('.' . $orgExtension);
                         move_uploaded_file($tmpFilename, $targetFilename);
                         $up = true;
                     }
                     else if(isset($data[$af->key])){
                         $avatarSrc = $data[$af->key];
-                        $orgExtension = getFileExtension($avatarSrc);
+                        $orgExtension = Filer::getFileExtension($avatarSrc);
                         $targetFilename .= ('.' . $orgExtension);
                         $this->getNetworkFetcher()->downloadFile($avatarSrc, $targetFilename);
                         $up = true;
