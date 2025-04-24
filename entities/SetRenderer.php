@@ -5,17 +5,21 @@ abstract class SetRenderer {
                                 public ThemesManager | null $theme,
                                 public bool | int $limit = false){}
 
-    public function placeHeader(){
-        $this->theme->placeHeader($this->getTitle());
-    }
+    public function moreRecordFields($record, int $itemIndex){}
 
-    public function renderRecords(){
-        $itemIndex = 0;
-        foreach ($this->setModifier->currentRecords as $index => $record){
+    public function renderSet(){
+        $this->openCollection();
+        foreach ($this->setModifier->currentRecords as $itemIndex => $record){
             if(!$this->isQualified($record)) continue;
-            $this->renderRecord($record, $itemIndex++);
-            if($this->limit && ($index + 1) >= $this->limit) break;
+
+            $this->openRecord($record);
+            $this->renderRecordMain($record, $itemIndex);
+            $this->moreRecordFields($record, $itemIndex);
+            $this->closeRecord($record);
+
+            if($this->limit && ($itemIndex + 1) >= $this->limit) break;
         }
+        $this->closeCollection();
     }
 
     public function isQualified($item) : bool {
@@ -26,17 +30,28 @@ abstract class SetRenderer {
 
     public function renderFooter(){}
 
+    public function openCollection(WebModifier $webModifier = null){}
+    public function closeCollection(WebModifier $webModifier = null){}
+    public function openRecord($record){}
+    public function closeRecord($record){}
+
+    public function openPage(){
+        $theme = $this->getTheme();
+        $theme->placeHeader($this->getTitle());
+        $theme->loadHeaderElements();
+    }
+
     public function renderPage(){
-        $this->placeHeader();
+        $this->openPage();
         $this->setModifier->adjustRecords();
         $this->onRecordsAdjusted();
 
         $allSortFactors = $this->setModifier->finalSortFactors();
-        if(count($allSortFactors) > 0) $this->setModifier->renderSortLabels();
+        if(count($allSortFactors) > 0) $this->renderSortLabels();
 
         $this->openContainer();
         $this->renderLeadingItems();
-        $this->renderRecords();
+        $this->renderSet();
         $this->closeContainer();
         $this->renderFooter();
     }
@@ -46,7 +61,9 @@ abstract class SetRenderer {
     public abstract function getTitle() : string;
     public abstract function openContainer();
     public abstract function closeContainer();
-    public abstract function renderRecord($item, $index);
+    public abstract function renderRecordMain($item, int $index);
+
+    public function renderSortLabels(){}
 
     public function getItemBoxIdentifier($record) : string {
         return $this->setModifier->setKey . "__box__" . $this->setModifier->getItemId($record);

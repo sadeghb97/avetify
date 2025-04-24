@@ -87,42 +87,6 @@ abstract class SetModifier {
         $this->sortRecords();
     }
 
-    public function renderSortLabels(){
-        $allSortFactors = $this->finalSortFactors();
-        echo '<div style="text-align: center; margin-top: 2px;">';
-        $defaultBg = 'Black';
-        $defaultColor = 'Cyan';
-        $alterBg = 'Black';
-        $alterColor = 'GoldenRod';
-        printLabel("Clear", Routing::removeParamFromCurrentLink($this->getSortKey()), $defaultBg, $defaultColor);
-
-        $currentSort = isset($_GET[$this->getSortKey()]) ? $_GET[$this->getSortKey()] : null;
-        $startWithMinus = $currentSort ? str_starts_with($currentSort, "-") : false;
-        $pureSort = null;
-        if($currentSort != null){
-            $pureSort = $startWithMinus ? substr($currentSort, 1) : $currentSort;
-        }
-
-        foreach ($allSortFactors as $sortFactor){
-            $finalBg = $defaultBg;
-            $finalColor = $defaultColor;
-            $finalTitle = $sortFactor->title;
-            $nextDescending = $sortFactor->descIsDefault;
-            if($currentSort && $pureSort == $sortFactor->factorKey){
-                $nextDescending = !$startWithMinus;
-                $finalBg = $alterBg;
-                $finalColor = $alterColor;
-                $finalTitle .= ($startWithMinus ? " ↓" : " ↑");
-            }
-            $finalSortFactor = ($nextDescending ? "-" : "") . $sortFactor->factorKey;
-
-            printLabel($finalTitle, Routing::addParamToCurrentLink($this->getSortKey(),
-                $finalSortFactor), $finalBg, $finalColor);
-        }
-
-        echo '</div>';
-    }
-
     public function getCurrentRecordsIndexes() : array {
         $map = [];
         foreach ($this->currentRecords as $index => $record){

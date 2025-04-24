@@ -7,7 +7,7 @@ abstract class ModernGallery extends ModernSetRenderer implements EntityImage, E
         parent::__construct($setModifier, $limit);
     }
 
-    public function renderRecord($item, $index) {
+    public function renderRecordMain($item, $index) {
         $name = ($index + 1) . ": " . $this->getItemTitle($item);
         printCard($this->getItemImage($item), $name, "",
             $this->getItemLink($item),

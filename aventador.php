@@ -80,6 +80,8 @@ require_once "lister/RankingList.php";
 require_once "table/SBTable.php";
 require_once "table/DBTable.php";
 require_once "table/JSONTable.php";
+require_once "table/renderers/SBTRenderer.php";
+require_once "table/renderers/GreenSBTRenderer.php";
 require_once "table/fields/SBTableField.php";
 require_once "table/fields/SBTableSortField.php";
 require_once "table/fields/LinkFields.php";
@@ -135,7 +137,8 @@ require_once "repo/countries/CountriesTable.php";
 $AVENTADOR_ROOT_PATH = "";
 $AVENTADOR_PHYSICAL_ROOT_PATH = "";
 
-define("AVENTADOR_VERSION", 1);
+define("AVENTADOR_VERSION", "0.11");
+define("AVENTADOR_BUILD", 2);
 
 function initAventador($rootPath, $physicalRoot = ""){
     global $AVENTADOR_ROOT_PATH;

@@ -5,14 +5,12 @@ class SBTable extends SetModifier implements EntityLink {
 
     /** @var SBTableField[] $fields */
     public array $fields;
-    public RecordSelectorField | null $selectorField = null;
-    public SBForm | null $form = null;
-    public bool $printRowIndex = true;
+
     public bool $enableSelectRecord = false;
     public bool $enableCreatingRow = false;
     public bool $forcePatchRecords = false;
-    public bool $useClassicButtons = false;
     public bool $isSortable = true;
+    public SBTRenderer | null $tableRenderer = null;
 
     public function __construct(array $fields, array $rawRecords, string $key,
                                 public bool $isEditable = false, public IDGetter | null $idGetter = null){
@@ -22,6 +20,8 @@ class SBTable extends SetModifier implements EntityLink {
         }
         $this->setFields($fields);
         $this->loadRawRecords($rawRecords);
+        $this->tableRenderer = $this->getTableRenderer();
+        $this->tableRenderer->limit = $this->recordsLimit();
     }
 
     public function setFields(array $fields){
@@ -37,30 +37,6 @@ class SBTable extends SetModifier implements EntityLink {
                     $field->onCreateField->onlyNameIdentifier();
                 }
             }
-        }
-    }
-
-    public function initForm(){
-        $this->form = new SBForm($this->getTableFormName());
-        $this->form->addHiddenElement(new FormHiddenProperty($this->getRawTableFieldsName(), ""));
-        $this->form->addHiddenElement(new FormHiddenProperty($this->getTableSelectorName(), ""));
-
-        $deleteConfirmMessage = "Are you sure?";
-        if($this->useClassicButtons) {
-            $this->form->addTrigger(new FormButton($this->getTableFormName(), $this->getUpdateButtonID(),
-                "Update"));
-
-            $deleteTrigger = new FormButton($this->getTableFormName(), $this->getDeleteButtonID(),
-                "Delete", "warning");
-            $deleteTrigger->enableConfirmMessage($deleteConfirmMessage);
-            $this->form->addTrigger($deleteTrigger);
-        }
-        else {
-            $this->form->addTrigger(new PrimaryFormButton($this->getTableFormName(), $this->getUpdateButtonID()));
-
-            $deleteTrigger = new DeleteFormButton($this->getTableFormName(), $this->getDeleteButtonID());
-            $deleteTrigger->enableConfirmMessage($deleteConfirmMessage);
-            $this->form->addTrigger($deleteTrigger);
         }
     }
 
@@ -90,142 +66,31 @@ class SBTable extends SetModifier implements EntityLink {
         return array_merge($this->getDefaultSortFactors(), $this->moreSortFactors());
     }
 
-    public function placeJSUtils(){
-        if($this->isEditable) {
-            $allJSEditableFields = [];
-            foreach ($this->fields as $field) {
-                foreach ($this->currentRecords as $record) {
-                    if ($field instanceof SBEditableField) {
-                        $allJSEditableFields[] = $field->getEditableFieldIdentifier($record);
-                    }
-                    else if($this->forcePatchRecords && $field->onCreateField != null){
-                        $feField = $field->getForcedEditableClone();
-                        $allJSEditableFields[] = $feField->getEditableFieldIdentifier($record);
-                    }
-                }
-
-            }
-
-            $allSelectFields = null;
-            if($this->selectorField != null){
-                $allSelectFields = [];
-                foreach ($this->currentRecords as $record) {
-                    $allSelectFields[] = $this->selectorField->getEditableFieldIdentifier($record);
-                }
-            }
-
-            JSInterface::declareGlobalJSArgs($this->getJSArgsName());
-            FormUtils::readyFormToCatchNoNamedFields(
-                $this->getJSArgsName(),
-                $this->getTableFormName(),
-                $this->getRawTableFieldsName(),
-                json_encode($allJSEditableFields),
-                $this->isEditable,
-                $this->enableSelectRecord ? $this->getTableSelectorName() : null,
-                $allSelectFields
-            );
-        }
-    }
-
-    private function placeEmptyTD(){
-        echo '<td></td>';
-    }
-
-    public function renderCreatingTr(){
-        $this->openNormalTR(null);
-        if($this->printRowIndex) $this->placeEmptyTD();
-        foreach ($this->fields as $field){
-            if($field->onCreateField != null){
-                $field->onCreateField->renderRecord(null);
-            }
-            else $this->placeEmptyTD();
-        }
-        if($this->enableSelectRecord) $this->placeEmptyTD();
-        self::closeTR();
-    }
-
-    public function renderTable(WebModifier $webModifier = null, int $marginTop = 0){
-        $this->initForm();
-        if($marginTop > 0){
-            echo '<div style="height: ' . $marginTop . 'px;"></div>';
-        }
-
-        if($this->isEditable) $this->catchSubmittedFields();
-        if($this->isSortable) $this->renderSortLabels();
-
-        if($this->isEditable){
-            $this->form->openForm();
-        }
-        echo '<div class="tables_panel" ';
-        if($webModifier != null) $webModifier->apply();
-        HTMLInterface::closeTag();
-        echo '<table class="table" style="';
-        $this->tableStyles();
-        echo '"';
-        echo ' >';
-
-        $this->openHeaderTR();
-        if($this->printRowIndex) SBTableField::renderIndexTH("Row");
-        foreach ($this->fields as $field){
-            $field->renderHeaderTH();
-        }
-        if($this->enableSelectRecord) SBTableField::renderIndexTH("Action");
-        self::closeTR();
-
-        $recIndex = 1;
-        if($this->enableSelectRecord) {
-            $this->selectorField = new RecordSelectorField("Action", $this->idGetter);
-            $this->selectorField->namespace = $this->setKey;
-            $this->selectorField->onlyIDIdentifier();
-        }
-        foreach ($this->currentRecords as $record){
-            $this->openNormalTR($record);
-            if($this->printRowIndex) SBTableField::renderIndexTD($recIndex, $this->getItemLink($record));
-            $recIndex++;
-            foreach ($this->fields as $field){
-                if($this->forcePatchRecords && !$field->isEditable() && $field->onCreateField != null){
-                    $feField = $field->getForcedEditableClone();
-                    $feField->renderRecord($record);
-                }
-                else $field->renderRecord($record);
-            }
-            if($this->enableSelectRecord) $this->selectorField->renderRecord($record);
-            self::closeTR();
-
-            if($recIndex > $this->recordsLimit()) break;
-        }
-        if($this->enableCreatingRow) $this->renderCreatingTr();
-
-        echo '</table>';
-        echo '</div>';
-        if($this->isEditable) {
-            $this->form->placeTriggers();
-            $this->form->closeForm();
-        }
-        $this->placeJSUtils();
+    public function recordsLimit() : int {
+        return 5000;
     }
 
     public function openPage(string $title){
-        $theme = $this->getTheme();
-        $theme->placeHeader($title);
-        $theme->loadHeaderElements();
+        $this->tableRenderer->title = $title;
+        $this->tableRenderer->openPage();
     }
 
     public function renderPage(string $title){
-        $this->openPage($title);
-        $this->renderTable();
+        $this->tableRenderer->title = $title;
+        $this->tableRenderer->renderPage();
     }
 
-    public function getTheme() : ThemesManager {
-        return new GreenTheme();
+    protected function getTableRenderer() : SBTRenderer {
+        return new GreenSBTRenderer($this);
     }
 
-    private function catchSubmittedFields(){
-        $currentTrigger = $this->form->getCurrentTrigger();
+    public function catchSubmittedFields(){
+        $tableRenderer = $this->tableRenderer;
+        $currentTrigger = $tableRenderer->form->getCurrentTrigger();
 
         $selectedRecords = [];
-        if(!empty($_POST[$this->getTableSelectorName()])){
-            $activeSelectElements = json_decode($_POST[$this->getTableSelectorName()], true);
+        if(!empty($_POST[$tableRenderer->getFormSelectorName()])){
+            $activeSelectElements = json_decode($_POST[$tableRenderer->getFormSelectorName()], true);
             foreach ($activeSelectElements as $selectElementID){
                 $lastPos = strrpos($selectElementID, "_");
                 $itemId = substr($selectElementID, $lastPos + 1);
@@ -233,10 +98,10 @@ class SBTable extends SetModifier implements EntityLink {
             }
         }
 
-        if($currentTrigger == $this->getDeleteButtonID()) {
+        if($currentTrigger == $tableRenderer->getDeleteButtonID()) {
             $this->handleDeletingFields($selectedRecords);
         }
-        else if (isset($_POST[$this->getRawTableFieldsName()])) {
+        else if (isset($_POST[$tableRenderer->getFormFieldsName()])) {
             if($this->enableCreatingRow) {
                 $creatingFields = [];
                 foreach ($this->fields as $field) {
@@ -254,7 +119,7 @@ class SBTable extends SetModifier implements EntityLink {
             }
 
             $itemsFields = [];
-            $tableFieldsRaw = $_POST[$this->getRawTableFieldsName()];
+            $tableFieldsRaw = $_POST[$tableRenderer->getFormFieldsName()];
             $tableFieldsList = json_decode($tableFieldsRaw, true);
 
             foreach ($tableFieldsList as $tableFieldRawKey => $tableFieldValue) {
@@ -289,60 +154,8 @@ class SBTable extends SetModifier implements EntityLink {
 
     public function handleDeletingFields($deletingFields){}
 
-    public function tableStyles(){}
-
-    public function openHeaderTR(){
-        echo '<tr style="';
-        $this->headerTRStyles();
-        echo '">';
-    }
-
-    public function openNormalTR($record){
-        echo '<tr style="';
-        $this->normalTRStyles($record);
-        echo '">';
-    }
-
-    public function headerTRStyles(){}
-
-    public function normalTRStyles($record){
-        $this->headerTRStyles();
-    }
-
-    public function getTableFormName() : string {
-        return $this->setKey . "_" . "table_form";
-    }
-
-    public function getRawTableFieldsName() : string {
-        return $this->setKey . "_" . "table_fields";
-    }
-
-    public function getTableSelectorName() : string {
-        return $this->setKey . "_" . "selector_field";
-    }
-
-    public function getJSArgsName() : string {
-        return $this->setKey . "_" . "args";
-    }
-
-    public function getUpdateButtonID() : string {
-        return $this->setKey . '_update';
-    }
-
-    public function getDeleteButtonID() : string {
-        return $this->setKey . '_delete';
-    }
-
-    private static function closeTR(){
-        echo '</td>';
-    }
-
     public function getEntityRecords(): array {
         return $this->records;
-    }
-
-    public function recordsLimit() : int {
-        return 5000;
     }
 
     public function getItemLink($record): string {
