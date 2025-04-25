@@ -22,22 +22,29 @@ abstract class SetRenderer extends BaseSetRenderer {
         $this->form->addHiddenElement(new FormHiddenProperty($this->getFormFieldsName(), ""));
         $this->form->addHiddenElement(new FormHiddenProperty($this->getFormSelectorName(), ""));
 
-        $deleteConfirmMessage = "Are you sure?";
-        if($this->useClassicButtons) {
-            $this->form->addTrigger(new FormButton($this->getFormName(), $this->getUpdateButtonID(),
-                "Update"));
+        if($this->setModifier instanceof SBTable && $this->setModifier->isEditable) {
+            $deleteConfirmMessage = "Are you sure?";
+            $deleteButtonRequired = $this->setModifier->enableSelectRecord;
+            if ($this->useClassicButtons) {
+                $this->form->addTrigger(new FormButton($this->getFormName(), $this->getUpdateButtonID(),
+                    "Update"));
 
-            $deleteTrigger = new FormButton($this->getFormName(), $this->getDeleteButtonID(),
-                "Delete", "warning");
-            $deleteTrigger->enableConfirmMessage($deleteConfirmMessage);
-            $this->form->addTrigger($deleteTrigger);
-        }
-        else {
-            $this->form->addTrigger(new PrimaryFormButton($this->getFormName(), $this->getUpdateButtonID()));
+                if ($deleteButtonRequired) {
+                    $deleteTrigger = new FormButton($this->getFormName(), $this->getDeleteButtonID(),
+                        "Delete", "warning");
+                    $deleteTrigger->enableConfirmMessage($deleteConfirmMessage);
+                    $this->form->addTrigger($deleteTrigger);
+                }
+            }
+            else {
+                $this->form->addTrigger(new PrimaryFormButton($this->getFormName(), $this->getUpdateButtonID()));
 
-            $deleteTrigger = new DeleteFormButton($this->getFormName(), $this->getDeleteButtonID());
-            $deleteTrigger->enableConfirmMessage($deleteConfirmMessage);
-            $this->form->addTrigger($deleteTrigger);
+                if ($deleteButtonRequired) {
+                    $deleteTrigger = new DeleteFormButton($this->getFormName(), $this->getDeleteButtonID());
+                    $deleteTrigger->enableConfirmMessage($deleteConfirmMessage);
+                    $this->form->addTrigger($deleteTrigger);
+                }
+            }
         }
     }
 

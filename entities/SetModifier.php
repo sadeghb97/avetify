@@ -3,6 +3,7 @@
 abstract class SetModifier implements EntityID, EntityTitle, EntityLink, EntityImage, EntityAltLink {
     public array $currentRecords = [];
     public bool $isSortable = true;
+    public bool $isEditable = true;
 
     public function __construct(public string $setKey){}
 

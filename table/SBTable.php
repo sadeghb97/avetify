@@ -12,11 +12,14 @@ class SBTable extends SetModifier {
     public SetRenderer | null $tableRenderer = null;
 
     public function __construct(array $fields, array $rawRecords, string $key,
-                                public bool $isEditable = false, public IDGetter | null $idGetter = null){
+                                bool $isEditable = false, public IDGetter | null $idGetter = null){
         parent::__construct($key);
+
+        $this->isEditable = $isEditable;
         if($this->isEditable && $this->idGetter == null){
             $this->idGetter = new SimpleIDGetter("id");
         }
+
         $this->setFields($fields);
         $this->loadRawRecords($rawRecords);
         $this->tableRenderer = $this->getTableRenderer();
@@ -72,6 +75,10 @@ class SBTable extends SetModifier {
     public function openPage(string $title){
         $this->tableRenderer->title = $title;
         $this->tableRenderer->openPage();
+    }
+
+    public function renderBody(){
+        $this->tableRenderer->renderBody();
     }
 
     public function renderPage(string $title){
