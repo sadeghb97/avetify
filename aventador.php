@@ -31,6 +31,7 @@ require_once "network/HeadersFetcher.php";
 require_once "network/ProxyHeadersFetcher.php";
 
 require_once "entities/BasicEntityProperties.php";
+require_once "entities/SBEntityItem.php";
 require_once "entities/SetModifier.php";
 require_once "entities/BaseSetRenderer.php";
 require_once "entities/SetRenderer.php";

@@ -6,6 +6,8 @@ class JoshButton {
                                 public string $buttonType = "button"){
     }
 
+    public const WARNING_STYLE = "warning";
+
     public function renderButton(WebModifier $webModifier = null){
         $buttonStyle = "pushable";
         if($this->buttonStyle == "warning") $buttonStyle .= (' ' . $this->buttonStyle);
@@ -14,12 +16,10 @@ class JoshButton {
         HTMLInterface::addAttribute("type", $this->buttonType);
         if($this->buttonId) HTMLInterface::addAttribute("id", $this->buttonId);
         HTMLInterface::addAttribute("class", $buttonStyle);
-        if($webModifier != null && $webModifier->htmlModifier != null){
-            $webModifier->htmlModifier->applyModifiers();
-        }
-        if($webModifier != null && $webModifier->styler != null){
-            $webModifier->styler->applyStyles();
-        }
+        HTMLInterface::applyModifiers($webModifier);
+        Styler::startAttribute();
+        HTMLInterface::appendStyles($webModifier);
+        Styler::closeAttribute();
         HTMLInterface::closeTag();
 
         echo '<span ';

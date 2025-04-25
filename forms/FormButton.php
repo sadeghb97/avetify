@@ -65,7 +65,7 @@ class FormButton implements Placeable {
     }
 }
 
-class AbsoluteFormButtons extends FormButton {
+class AbsoluteFormButton extends FormButton {
     public function __construct(string $formIdentifier,
                                 string $triggerIdentifier,
                                 public array $position,
@@ -98,7 +98,7 @@ class AbsoluteFormButtons extends FormButton {
     }
 }
 
-class PrimaryFormButton extends AbsoluteFormButtons {
+class PrimaryFormButton extends AbsoluteFormButton {
     public function __construct(string $formIdentifier,
                                 string $triggerIdentifier,
                                 string $formTriggerElementId = "") {
@@ -108,7 +108,7 @@ class PrimaryFormButton extends AbsoluteFormButtons {
     }
 }
 
-class DeleteFormButton extends AbsoluteFormButtons {
+class DeleteFormButton extends AbsoluteFormButton {
     public function __construct(string $formIdentifier,
                                 string $triggerIdentifier,
                                 string $formTriggerElementId = "") {

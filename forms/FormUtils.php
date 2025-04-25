@@ -49,11 +49,14 @@ class FormUtils {
         <?php
     }
 
-    public static function openPostForm(string $id){
+    public static function openPostForm(string $id, WebModifier|null $webModifier = null){
         echo '<form ';
         HTMLInterface::addAttribute("method", "post");
         HTMLInterface::addAttribute("id", $id);
-        HTMLInterface::addAttribute("name", $id);
+        HTMLInterface::applyModifiers($webModifier);
+        Styler::startAttribute();
+        HTMLInterface::appendStyles($webModifier);
+        Styler::closeAttribute();
         echo ' >';
     }
 
@@ -61,8 +64,8 @@ class FormUtils {
         echo '</form>';
     }
 
-    public static function placeSubmitButton(string $title, int $marginTop = 12,
-                                             string $buttonStyle = "", WebModifier $webModifier = null){
+    public static function placeSubmitButton(string $title, string $buttonStyle = "",
+                                             int $marginTop = 12, WebModifier $webModifier = null){
         $joshButton = new JoshButton($title, "", $buttonStyle, "submit");
         heightMargin($marginTop);
         $joshButton->renderButton($webModifier);
@@ -71,7 +74,7 @@ class FormUtils {
     public static function placeAbsSubmitButton(string $icon, string $formId, string $triggerName,
                                                 int $iconSize = 60,
                                                 array $position = ["right" => "20px", "bottom" => "20px"]){
-        $button = new AbsoluteFormButtons($formId, $triggerName, $position, $icon);
+        $button = new AbsoluteFormButton($formId, $triggerName, $position, $icon);
         $button->iconSize = $iconSize;
         $button->place();
     }
@@ -81,7 +84,7 @@ class FormUtils {
         self::openPostForm($mainFormId);
         $position = ["right" => "20px", "bottom" => "20px"];
 
-        $button = new AbsoluteFormButtons($mainFormId, "default", $position, $icon);
+        $button = new AbsoluteFormButton($mainFormId, "default", $position, $icon);
         $button->iconSize = 60;
         $button->place();
 

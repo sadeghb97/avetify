@@ -4,6 +4,7 @@ abstract class SBEntity extends SetModifier {
     public ?DBConnection $conn = null;
     public $latestFetchedRecord = null;
     public bool $redirectOnInsert = true;
+    public bool $deletable = true;
     public string $entityName = "Record";
 
     public function __construct($dbConnection, string $key = "sbn"){
@@ -214,10 +215,12 @@ abstract class SBEntity extends SetModifier {
         $isOk = $this->checkData($data, false);
         if(!$isOk) return null;
 
-        //echo $this->updateRecordQuery($pk, $data) . '<br>';
-
         $this->conn->query($this->updateRecordQuery($pk, $data));
         return $this->getRecord($pk);
+    }
+
+    public function deleteRecord($pk) : bool {
+        return $this->conn->query($this->deleteRecordQuery($pk));
     }
 
     public function printRecords(){
@@ -241,14 +244,23 @@ abstract class SBEntity extends SetModifier {
         $record = $this->getCurrentRecord();
         if($pk && !$record) return;
 
-        echo '<div style="height: 12px;"></div>';
-        echo '<div style="width: 80%; margin: auto;">
-        <form method="post" name="mbform" enctype="multipart/form-data" onsubmit="' . $this->jsValidateForm() . '">
-        <fieldset><legend>Insert & Update</legend>';
+        HTMLInterface::placeVerticalDivider(12);
+        echo '<div style="width: 80%; margin: auto;">';
+
+        echo '<form ';
+        HTMLInterface::addAttribute("method", "post");
+        HTMLInterface::addAttribute("name", $this->getFormId());
+        HTMLInterface::addAttribute("id", $this->getFormId());
+        HTMLInterface::addAttribute("enctype", "multipart/form-data");
+        HTMLInterface::addAttribute("onsubmit", $this->jsValidateForm());
+        HTMLInterface::closeTag();
+
+        echo '<fieldset><legend>Insert & Update</legend>';
 
         if($pk) {
             echo '<input type="hidden" name="entity_pk" id="entity_pk" value="' . $pk . '" />';
         }
+        HTMLInterface::placeHiddenField($this->getFormTriggerElementId(), "");
 
         foreach ($this->dataFields() as $field){
             if($field->writable === True || ($field->writable && !$pk) ){
@@ -388,20 +400,35 @@ abstract class SBEntity extends SetModifier {
 
         $this->formMoreExtension($options);
 
-        echo '<div style="text-align: center; margin-top: 24px;">' .
-            '<button type="submit" name="entity_form" value="submit" 
-                style="width: 110px; height: 30px;" >Submit</button>';
+        echo '<div ';
+        Styler::startAttribute();
+        Styler::addStyle("text-align", "center");
+        Styler::addStyle("margin-top", "24px");
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
 
-        foreach ($this->altTriggers() as $triggerKey => $triggerValue){
-            echo '<button type="submit" name="entity_form" value="' . $triggerKey .
-                '" style="width: 110px; height: 30px; margin-left: 8px;" />' . $triggerValue . '</button>';
+        $submitModifier = WebModifier::createInstance();
+        $submitModifier->htmlModifier->pushModifier("name", "entity_form");
+        FormUtils::placeSubmitButton("Submit", "", 8, $submitModifier);
+
+        if($record && $this->deletable){
+            $deleteButton = new AbsoluteFormButton($this->getFormId(),
+                $this->getDeleteTriggerKey(), ["right" => "20px", "bottom" => "20px"],
+                Routing::getAvnImage("remove.svg"),
+                $this->getFormTriggerElementId());
+            $deleteButton->confirmMessage = "Are you sure to delete this "
+                . strtolower($this->entityName) . "?";
+            $deleteButton->place();
         }
-        echo '</div>';
 
+        HTMLInterface::closeDiv();
         echo '</form>';
     }
 
     public function handleForm($options = null){
+        $justNewRecordInserted = false;
+        $newRecordUrl = "";
+
         if(isset($_POST['entity_form'])){
             $data = $_POST;
             $entityPk = isset($data['entity_pk']) ? $data['entity_pk'] : null;
@@ -439,9 +466,8 @@ abstract class SBEntity extends SetModifier {
                     echo ')' . br();
 
                     if($this->redirectOnInsert) {
-                        $entityUrl = Routing::addParamToCurrentLink("pk", $entityPk);
-                        JSInterface::redirect($entityUrl, 500);
-                        die;
+                        $newRecordUrl = Routing::addParamToCurrentLink("pk", $entityPk);
+                        $justNewRecordInserted = true;
                     }
                 }
             }
@@ -497,6 +523,47 @@ abstract class SBEntity extends SetModifier {
 
             $this->manualHandleForm();
         }
+
+        if($justNewRecordInserted){
+            JSInterface::redirect($newRecordUrl, 500);
+            die;
+        }
+
+        if(!empty($_POST[$this->getFormTriggerElementId()])){
+            $trigger = $_POST[$this->getFormTriggerElementId()];
+            if($trigger == $this->getDeleteTriggerKey() && $this->deletable){
+                $currentRecord = $this->fastCurrentRecord();
+
+                if($currentRecord){
+                    $entityPk = $this->getItemId($currentRecord);
+                    if($this->deleteRecord($entityPk)){
+                        HTMLInterface::placeVerticalDivider(8);
+                        $this->deleteRecordResources($currentRecord);
+                        $recordName = $this->getItemTitle($currentRecord);
+                        Printer::warningPrint($recordName . ": Deleted");
+                        endline();
+                        JSInterface::redirect(Routing::currentPureLink(), 1000);
+                        die;
+                    }
+                }
+            }
+        }
+    }
+
+    protected function deleteRecordResources($record){
+        $entityItem = $this->getRecordObject($record);
+        if($entityItem){
+            $entityItem->deleteAllResources();
+        }
+    }
+
+    private function getRecordObject($record) : SBEntityItem | null {
+        if($record instanceof SBEntityItem) return $record;
+        return $this->createEntityItem($record);
+    }
+
+    public function createEntityItem($record) : SBEntityItem | null {
+        return null;
     }
 
     //extension inside main legend
@@ -518,10 +585,6 @@ abstract class SBEntity extends SetModifier {
     public function adjustCreateData(&$data, $options = null){}
 
     public function adjustUpdateData(&$data, $record, $options = null){}
-
-    public function altTriggers() : array {
-        return [];
-    }
 
     public function getTitleKey() : string {
         return "name";
@@ -558,13 +621,25 @@ abstract class SBEntity extends SetModifier {
         return $this->getItemTitle($item);
     }
 
+    public function getFormId() : string {
+        return "entity_patch_form";
+    }
+
+    public function getFormTriggerElementId() : string {
+        return "form_trigger_data";
+    }
+
+    public function getDeleteTriggerKey() : string {
+        return "delete_entity";
+    }
+
     abstract public function getSuperKey();
     abstract public function getTableName();
 
-    /**
-     * @return EntityField[] An array of MyClass instances
-     */
-    abstract public function dataFields() : array;
+    public function entityWhereFields() : array {
+        return [];
+    }
 
-    abstract public function entityWhereFields() : array;
+    /** @return EntityField[] */
+    abstract public function dataFields() : array;
 }

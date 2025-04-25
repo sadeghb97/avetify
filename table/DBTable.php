@@ -62,6 +62,9 @@ class DBTable extends SBTable {
                 $sql = $queryBuilder->createDelete(new QueryField($itemPk, $this->pkIsNumeric, $this->primaryKey));
 
                 if($this->conn->query($sql)) {
+                    if($oldRecord instanceof SBEntityItem){
+                        $oldRecord->deleteAllResources();
+                    }
                     $titlePrinter->print($this->getItemTitle($oldRecord));
                     $messagePrinter->print(": Deleted" . br());
                 }
