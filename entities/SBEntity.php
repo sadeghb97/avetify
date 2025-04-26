@@ -223,11 +223,6 @@ abstract class SBEntity extends SetModifier {
         return $this->conn->query($this->deleteRecordQuery($pk));
     }
 
-    public function printRecords(){
-        $records = $this->getRecords();
-        printTable($this->dataFields(), $records, ['have_row_number' => true]);
-    }
-
     public function printEntityLinkedName($entity){
         echo '<a href="' . $this->entityPage() . '?pk=' . $entity[$this->getSuperKey()] . '" target="_blank"';
         echo ' style="text-decoration: none; font-weight: bold;" >';
