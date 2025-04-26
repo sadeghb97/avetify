@@ -79,9 +79,10 @@ document.addEventListener('keydown', function (e) {
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-    let warmedUp = false;
     const input = document.querySelector('input:not([type="hidden"])');
+    if(!input) return;
 
+    let warmedUp = false;
     const warmUp = () => {
         if (warmedUp) return;
         warmedUp = true;
