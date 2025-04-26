@@ -3,14 +3,14 @@
 class CroppingImage extends CroppableImage {
     public function handleSubmit($x, $y, $w, $h) : bool {
         try {
-            $gumletImage = new \Gumlet\ImageResize($this->src);
-            $orgFilename = new Filename($this->src);
+            $gumletImage = new \Gumlet\ImageResize($this->serverSrc);
+            $orgFilename = new Filename($this->serverSrc);
             $copyFn = Routing::serverRootPath('.avnfiles/')
                 . $orgFilename->pureName . '_' . time() . '.' . $orgFilename->extension;
             $gumletImage->freecrop($w, $h, $x, $y);
 
-            copy($this->src, $copyFn);
-            $gumletImage->save($this->src, $this->imageType);
+            copy($this->serverSrc, $copyFn);
+            $gumletImage->save($this->serverSrc, $this->imageType);
             $this->onCropSuccess();
             return true;
         } catch (\Gumlet\ImageResizeException $e) {

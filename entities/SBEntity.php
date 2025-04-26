@@ -306,7 +306,6 @@ abstract class SBEntity extends SetModifier {
                         HTMLInterface::placeImageWithHeight($avBrowserSrc . "?" . time(), 120,
                             $avatarModifier);
                         $div->separate();
-                        $avPrinted = true;
                     }
 
                     $div->close();
@@ -495,19 +494,19 @@ abstract class SBEntity extends SetModifier {
                         $extensionRequired = ($orgExtension && $orgExtension != $af->targetExt);
                         $convertRequired = $extensionRequired;
                         if(!$convertRequired && $af->maxImageSize){
-                            $curMaxSize = getImageMaxDimSize($targetFilename);
+                            $curMaxSize = ImageUtils::getMaxDimSize($targetFilename);
                             if($curMaxSize > $af->maxImageSize) $convertRequired = true;
                         }
                         if(!$convertRequired && $af->forcedWidthDimension > 0 &&
                             $af->forcedHeightDimension > 0){
-                            $curDiff = getRatioDiffWithDims($targetFilename,
+                            $curDiff = ImageUtils::getRatioDiffWithDims($targetFilename,
                                 $af->forcedWidthDimension, $af->forcedHeightDimension);
                             if($curDiff > 0.01) $convertRequired = true;
                         }
 
 
                         if($convertRequired) {
-                            convertImage($targetFilename,
+                            ImageUtils::convert($targetFilename,
                                 $extensionRequired ? $af->targetExt : null,
                                 $af->maxImageSize, $af->forcedWidthDimension,
                                 $af->forcedHeightDimension);

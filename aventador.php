@@ -15,7 +15,7 @@ require_once "models/DataModel.php";
 require_once "models/IDGetter.php";
 
 require_once "files/Filer.php";
-require_once "files/image_utlis.php";
+require_once "files/ImageUtils.php";
 
 require_once "utils/cli_utils.php";
 require_once "utils/echo_utils.php";

@@ -2,6 +2,7 @@
 
 class ThemesManager {
     public bool $includesListerTools = false;
+    public bool $includesCropperTools = false;
     public string $ROOT_PATH = "";
 
     public function __construct(){
@@ -28,15 +29,14 @@ class ThemesManager {
     public function generalHeaderTags(){
         $this->loadFavicon();
         self::importMainStyles();
-        $this->importCropperCSS();
-        $this->importCropperJS();
         $this->importMainJSInterface();
         $this->importAvnJSFields();
         $this->importJoshButtons();
         $this->importGeneralFonts();
         $this->importContextMenuStyles();
         $this->importGalleryGrids();
-        if($this->includesListerTools) $this->importListerTools();
+        if($this->includesListerTools) self::importListerTools();
+        if($this->includesCropperTools) self::importCropperTools();
     }
 
     public function loadFavicon(){}
@@ -71,12 +71,10 @@ class ThemesManager {
         echo '></script>';
     }
 
-    public function importCropperCSS(){
-        self::importStyle($this->ROOT_PATH . "externals/cropper/cropper.min.css");
-    }
-
-    public function importCropperJS(){
-        self::importJS($this->ROOT_PATH . "externals/cropper/cropper.min.js");
+    public static function importCropperTools(){
+        self::importStyle(Routing::browserPathFromAventador("externals/cropper/cropper.min.css"));
+        self::importJS(Routing::browserPathFromAventador("externals/cropper/cropper.min.js"));
+        self::importJS(Routing::browserPathFromAventador("themes/assets/avn_cropper.js"));
     }
 
     public function importAvnJSFields(){
@@ -103,22 +101,22 @@ class ThemesManager {
         self::importStyle($this->ROOT_PATH . "themes/assets/gallery_grid.css");
     }
 
-    public function importListerTools(){
-        $this->importContextMenuStyles();
-        $this->importListerStyles();
-        $this->importSortableJS();
+    public static function importListerTools(){
+        self::importContextMenuStyles();
+        self::importListerStyles();
+        self::importSortableJS();
     }
 
-    public function importContextMenuStyles(){
-        self::importStyle($this->ROOT_PATH . "themes/assets/context_menu.css");
+    public static function importContextMenuStyles(){
+        self::importStyle(Routing::browserPathFromAventador("themes/assets/context_menu.css"));
     }
 
-    public function importListerStyles(){
-        self::importStyle(Routing::getAventadorRoot() . "lister/lister.css");
+    public static function importListerStyles(){
+        self::importStyle(Routing::browserPathFromAventador("lister/lister.css"));
     }
 
-    public function importSortableJS(){
-        ThemesManager::importJS(Routing::getAventadorRoot() . "lister/sortable.js");
+    public static function importSortableJS(){
+        ThemesManager::importJS(Routing::browserPathFromAventador("lister/sortable.js"));
     }
 
     public function importGeneralFonts(){
