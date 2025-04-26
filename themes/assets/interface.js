@@ -1,35 +1,3 @@
-document.addEventListener('keydown', function (e) {
-    const target = e.target;
-    if (target.classList.contains('numeric-text')) {
-        const allowedKeys = [
-            'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'
-        ];
-
-        const isOk = (e.key >= '0' && e.key <= '9') ||
-            allowedKeys.includes(e.key) ||
-            (e.key === '.' && !target.value.includes('.'))
-
-        if(!isOk) e.preventDefault()
-    }
-});
-
-document.addEventListener('keydown', function (e) {
-    const target = e.target;
-    if (target.classList.contains('submitter')) {
-        if (e.key === 'Enter') {
-            let parent = target;
-            while (parent) {
-                if (parent.tagName === 'FORM') {
-                    const formId = parent.id;
-                    triggerForm(formId);
-                    return;
-                }
-                parent = parent.parentElement;
-            }
-        }
-    }
-});
-
 function triggerForm(formId, confirmMessage, formTriggerElementId, triggerId) {
     loadFormData();
     let isOk = true;
@@ -77,3 +45,59 @@ function submitForm(formId){
     const form = document.getElementById(formId)
     form.submit()
 }
+
+document.addEventListener('keydown', function (e) {
+    const target = e.target;
+    if (target.classList.contains('numeric-text')) {
+        const allowedKeys = [
+            'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'
+        ];
+
+        const isOk = (e.key >= '0' && e.key <= '9') ||
+            allowedKeys.includes(e.key) ||
+            (e.key === '.' && !target.value.includes('.'))
+
+        if(!isOk) e.preventDefault()
+    }
+});
+
+document.addEventListener('keydown', function (e) {
+    const target = e.target;
+    if (target.classList.contains('submitter')) {
+        if (e.key === 'Enter') {
+            let parent = target;
+            while (parent) {
+                if (parent.tagName === 'FORM') {
+                    const formId = parent.id;
+                    triggerForm(formId);
+                    return;
+                }
+                parent = parent.parentElement;
+            }
+        }
+    }
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+    let warmedUp = false;
+    const input = document.querySelector('input:not([type="hidden"])');
+
+    const warmUp = () => {
+        if (warmedUp) return;
+        warmedUp = true;
+
+        input.focus();
+        input.select();
+        input.blur();
+
+        window.removeEventListener('click', warmUp);
+        window.removeEventListener('keydown', warmUp);
+        window.removeEventListener('touchstart', warmUp);
+        window.removeEventListener('mousemove', warmUp);
+    };
+
+    window.addEventListener('click', warmUp, { once: true });
+    window.addEventListener('keydown', warmUp, { once: true });
+    window.addEventListener('touchstart', warmUp, { once: true });
+    window.addEventListener('mousemove', warmUp, { once: true });
+});
