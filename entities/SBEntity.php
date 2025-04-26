@@ -350,13 +350,21 @@ abstract class SBEntity extends SetModifier {
                     HTMLInterface::closeSingleTag();
                 }
                 else {
+                    $classApplier = new Styler();
+                    $classApplier->pushClass("empty");
+                    if($field->numeric) $classApplier->pushClass("numeric-text");
+
                     echo '<input ';
                     HTMLInterface::addAttribute("type","text");
                     HTMLInterface::addAttribute("name", $key);
                     HTMLInterface::addAttribute("id", $key);
                     HTMLInterface::addAttribute("value", $value ? $value : "");
                     HTMLInterface::addAttribute("placeholder", $title);
-                    HTMLInterface::addAttribute("class", "empty");
+
+                    Styler::classStartAttribute();
+                    $classApplier->appendClasses();
+                    Styler::closeAttribute();
+
                     Styler::startAttribute();
                     Styler::addStyle("width", "80%");
                     Styler::addStyle("font-size", "14pt");

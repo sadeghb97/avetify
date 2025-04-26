@@ -50,7 +50,7 @@ document.addEventListener('keydown', function (e) {
     const target = e.target;
     if (target.classList.contains('numeric-text')) {
         const allowedKeys = [
-            'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'
+            'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End', 'Enter'
         ];
 
         const isOk = (e.key >= '0' && e.key <= '9') ||
@@ -79,17 +79,31 @@ document.addEventListener('keydown', function (e) {
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-    const input = document.querySelector('input:not([type="hidden"])');
+    const input = document.querySelector('input:not([type="hidden"]):not([type="checkbox"])');
     if(!input) return;
 
     let warmedUp = false;
-    const warmUp = () => {
+    const warmUp = (e) => {
         if (warmedUp) return;
         warmedUp = true;
 
-        input.focus();
-        input.select();
-        input.blur();
+        let skipFocusing = false;
+        if (e.type === 'click') {
+            const target = e.target;
+            if (
+                target.tagName === 'INPUT' &&
+                target.type !== 'hidden' &&
+                target.type !== 'checkbox'
+            ) {
+                skipFocusing = true;
+            }
+        }
+
+        if(!skipFocusing) {
+            input.focus();
+            input.select();
+            input.blur();
+        }
 
         window.removeEventListener('click', warmUp);
         window.removeEventListener('keydown', warmUp);
