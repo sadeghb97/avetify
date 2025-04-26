@@ -40,13 +40,10 @@ class SBEditableField extends SBTableField {
 
     public function presentValue($item){
         $value = $this->getValue($item);
+        $classApplier = $this->getItemClassApplier($item);
+
         echo '<input ';
-
         HTMLInterface::addAttribute("type", "text");
-        if($this->isNumeric){
-            HTMLInterface::addAttribute("class", "numeric-text");
-        }
-
         if($item != null) {
             HTMLInterface::addAttribute("value", $value);
         }
@@ -57,7 +54,19 @@ class SBEditableField extends SBTableField {
         $this->appendMainStyles($item);
         Styler::addStyle("height", "35px");
         Styler::closeAttribute();
+
+        if(count($classApplier->classes) > 0){
+            $classApplier->applyClasses();
+        }
+
         HTMLInterface::closeSingleTag();
+    }
+
+    public function getItemClassApplier($item) : Styler {
+        $classApplier = new Styler();
+        if($this->isNumeric) $classApplier->pushClass("numeric-text");
+        if($this->submitter) $classApplier->pushClass("submitter");
+        return $classApplier;
     }
 
     public function onlyNameIdentifier(){

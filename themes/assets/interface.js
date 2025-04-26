@@ -13,6 +13,42 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
+document.addEventListener('keydown', function (e) {
+    const target = e.target;
+    if (target.classList.contains('submitter')) {
+        if (e.key === 'Enter') {
+            let parent = target;
+            while (parent) {
+                if (parent.tagName === 'FORM') {
+                    const formId = parent.id;
+                    triggerForm(formId);
+                    return;
+                }
+                parent = parent.parentElement;
+            }
+        }
+    }
+});
+
+function triggerForm(formId, confirmMessage, formTriggerElementId, triggerId) {
+    loadFormData();
+    let isOk = true;
+    if (confirmMessage) {
+        isOk = confirm(confirmMessage);
+    }
+
+    if (isOk) {
+        if (formTriggerElementId) {
+            const formTriggerElement = document.getElementById(formTriggerElementId);
+            formTriggerElement.value = triggerId;
+        }
+
+        const event = new Event("submit", { cancelable: true });
+        document.getElementById(formId).dispatchEvent(event);
+    }
+}
+
+
 function redir(newUrl, delay){
     if(delay){
         setTimeout(() => {

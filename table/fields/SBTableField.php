@@ -9,6 +9,7 @@ class SBTableField {
     public bool $isAscending = false;
     protected bool $editable = false;
     public bool $skipEmpties = false;
+    public bool $submitter = false;
     public SBEditableField | null $onCreateField = null;
     public bool $requiredOnCreate = false;
     public string | null $backgroundColor = null;
@@ -132,6 +133,11 @@ class SBTableField {
 
     public function setSkipEmpties() : SBTableField {
         $this->skipEmpties = true;
+        return $this;
+    }
+
+    public function setSubmitter() : SBTableField {
+        $this->submitter = true;
         return $this;
     }
 

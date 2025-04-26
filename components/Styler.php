@@ -2,9 +2,14 @@
 
 class Styler {
     public array $styles = [];
+    public array $classes = [];
 
     public function pushStyle($styleKey, $styleValue){
         $this->styles[$styleKey] = $styleValue;
+    }
+
+    public function pushClass($className){
+        $this->classes[] = $className;
     }
 
     public function pushFontFaceStyle(string $fontFace){
@@ -17,6 +22,10 @@ class Styler {
 
     public static function addFontFaceStyle(string $fontFace){
         self::addStyle("font-family", "'$fontFace', sans-serif");
+    }
+
+    public static function addClass(string $className){
+        echo ' ' . $className;
     }
 
     public function applyStyles(){
@@ -37,6 +46,22 @@ class Styler {
 
     public static function closeAttribute(){
         echo '" ';
+    }
+
+    public function applyClasses(){
+        self::classStartAttribute();
+        $this->appendClasses();
+        self::closeAttribute();
+    }
+
+    public function appendClasses(){
+        foreach ($this->classes as $className){
+            self::addClass($className);
+        }
+    }
+
+    public static function classStartAttribute(){
+        echo ' class="';
     }
 
     public static function imageWithHeight($height){

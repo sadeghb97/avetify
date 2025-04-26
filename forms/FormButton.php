@@ -20,21 +20,12 @@ class FormButton implements Placeable {
         ?>
         <script>
             document.getElementById("<?php echo $this->triggerIdentifier; ?>").onclick = function() {
-                loadFormData();
-                let isOk = true;
-                <?php if($this->confirmMessage != null) { ?>
-                isOk = confirm('<?php echo $this->confirmMessage; ?>');
-                <?php } ?>
-
-                if (isOk) {
-                    <?php if($this->formTriggerElementId) { ?>
-                    const formTriggerElement = document.getElementById('<?php echo $this->formTriggerElementId; ?>');
-                    formTriggerElement.value = '<?php echo $this->triggerIdentifier ?>';
-                    <?php } ?>
-
-                    const event = new Event("submit", { cancelable: true });
-                    document.getElementById("<?php echo $this->formIdentifier; ?>").dispatchEvent(event);
-                }
+                triggerForm(
+                    '<?php echo $this->formIdentifier ? $this->formIdentifier : ''; ?>',
+                    '<?php echo $this->confirmMessage ? $this->confirmMessage : ''; ?>',
+                    '<?php echo $this->formTriggerElementId ? $this->formTriggerElementId : ''; ?>',
+                    '<?php echo $this->triggerIdentifier ? $this->triggerIdentifier : ''; ?>'
+                )
             };
         </script>
         <?php
