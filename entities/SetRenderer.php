@@ -23,29 +23,50 @@ abstract class SetRenderer extends BaseSetRenderer {
         $this->form->addHiddenElement(new FormHiddenProperty($this->getFormSelectorName(), ""));
 
         if($this->setModifier instanceof SBTable && $this->setModifier->isEditable) {
-            $deleteConfirmMessage = "Are you sure?";
             $deleteButtonRequired = $this->setModifier->enableSelectRecord;
             if ($this->useClassicButtons) {
-                $this->form->addTrigger(new FormButton($this->getFormName(), $this->getUpdateButtonID(),
-                    "Update"));
+                $this->placeClassicUpdateTrigger($this->getFormName(), $this->getUpdateButtonID());
 
                 if ($deleteButtonRequired) {
-                    $deleteTrigger = new FormButton($this->getFormName(), $this->getDeleteButtonID(),
-                        "Delete", "warning");
-                    $deleteTrigger->enableConfirmMessage($deleteConfirmMessage);
-                    $this->form->addTrigger($deleteTrigger);
+                    $this->placeClassicDeleteTrigger($this->getFormName(), $this->getDeleteButtonID());
                 }
             }
             else {
-                $this->form->addTrigger(new PrimaryFormButton($this->getFormName(), $this->getUpdateButtonID()));
+                $this->placeUpdateTrigger($this->getFormName(), $this->getUpdateButtonID());
 
                 if ($deleteButtonRequired) {
-                    $deleteTrigger = new DeleteFormButton($this->getFormName(), $this->getDeleteButtonID());
-                    $deleteTrigger->enableConfirmMessage($deleteConfirmMessage);
-                    $this->form->addTrigger($deleteTrigger);
+                    $this->placeDeleteTrigger($this->getFormName(), $this->getDeleteButtonID());
                 }
             }
         }
+    }
+
+    function placeUpdateTrigger($formId, $buttonId){
+        $this->form->addTrigger(new PrimaryFormButton($formId, $buttonId));
+    }
+
+    function placeDeleteTrigger($formId, $buttonId){
+        $deleteConfirmMessage = $this->getConfirmMessage();
+        $deleteTrigger = new DeleteFormButton($formId, $buttonId);
+        if($deleteConfirmMessage) $deleteTrigger->enableConfirmMessage($deleteConfirmMessage);
+        $this->form->addTrigger($deleteTrigger);
+    }
+
+    function placeClassicUpdateTrigger($formId, $buttonId){
+        $this->form->addTrigger(new FormButton($formId, $buttonId,
+            "Update"));
+    }
+
+    function placeClassicDeleteTrigger($formId, $buttonId){
+        $deleteConfirmMessage = $this->getConfirmMessage();
+        $deleteTrigger = new FormButton($formId, $buttonId,
+            "Delete", "warning");
+        if($deleteConfirmMessage) $deleteTrigger->enableConfirmMessage($deleteConfirmMessage);
+        $this->form->addTrigger($deleteTrigger);
+    }
+
+    function getConfirmMessage() : string {
+        return "Are you sure?";
     }
 
     public function placeFormJSUtils(){
