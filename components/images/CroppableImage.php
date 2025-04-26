@@ -6,12 +6,6 @@ class CroppableImage {
                                 public float $ratio = 0
     ){}
 
-    public function defaultTheme($title){
-        $theme = new ExternalCropperClassicTheme();
-        $theme->placeHeader($title);
-        $this->initJS();
-    }
-
     public static function initJS(){
         ?>
 

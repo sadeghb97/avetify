@@ -1,6 +1,7 @@
 <?php
 
 class ThemesManager {
+    public bool $includesListerTools = false;
     public string $ROOT_PATH = "";
 
     public function __construct(){
@@ -16,7 +17,26 @@ class ThemesManager {
     }
 
     public function headerTags(){
-        $this->importBootstrap();
+        $this->generalHeaderTags();
+        $this->moreHeaderTags();
+    }
+
+    public function moreHeaderTags(){
+
+    }
+
+    public function generalHeaderTags(){
+        $this->loadFavicon();
+        self::importMainStyles();
+        $this->importCropperCSS();
+        $this->importCropperJS();
+        $this->importMainJSInterface();
+        $this->importAvnJSFields();
+        $this->importJoshButtons();
+        $this->importGeneralFonts();
+        $this->importContextMenuStyles();
+        $this->importGalleryGrids();
+        if($this->includesListerTools) $this->importListerTools();
     }
 
     public function loadFavicon(){}
@@ -65,6 +85,10 @@ class ThemesManager {
 
     public function importMainJSInterface(){
         self::importJS($this->ROOT_PATH . "themes/assets/interface.js");
+    }
+
+    public static function importMainStyles(){
+        self::importStyle(Routing::browserPathFromAventador("themes/assets/main.css"));
     }
 
     public function importBootstrap(){

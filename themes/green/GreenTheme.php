@@ -1,20 +1,9 @@
 <?php
 
 class GreenTheme extends ThemesManager {
-    public bool $includesListerTools = false;
-
-    public function headerTags(){
-        self::importStyle($this->ROOT_PATH . "themes/green/styles.css");
-        self::importJS($this->ROOT_PATH . "themes/green/scripts.js");
-        $this->loadFavicon();
-        $this->importCropperCSS();
-        $this->importCropperJS();
-        $this->importMainJSInterface();
-        $this->importAvnJSFields();
-        $this->importJoshButtons();
-        $this->importGeneralFonts();
-        $this->importGalleryGrids();
-        if($this->includesListerTools) $this->importListerTools();
+    public function moreHeaderTags(){
+        self::importStyle(Routing::browserPathFromAventador("themes/green/styles.css"));
+        self::importJS(Routing::browserPathFromAventador("themes/green/scripts.js"));
     }
 
     public function openNavbar(){

@@ -2,7 +2,9 @@
  class HTMLInterface {
      public static function addAttribute($attr, $value = null){
          echo ' ' . $attr;
-         if($value) echo '="' . $value . '"';
+         if($value !== null && $value !== false){
+             echo '="' . $value . '"';
+         }
          echo ' ';
      }
 

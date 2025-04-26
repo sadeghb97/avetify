@@ -28,10 +28,23 @@ class DBTable extends SBTable {
             $oldRecord = $this->currentRecords[$indexesMap[$itemPk]];
 
             foreach ($itemFields as $fk => $fv){
+                $qr = false;
                 $fieldDetails = $fieldsMap[$fk];
                 $isNumericField = $fieldDetails && $fieldDetails->isNumeric;
+
+                $oldValue = EntityUtils::getSimpleValue($oldRecord, $fk);
+                if(!$isNumericField){
+                    $qr = $oldValue !== $fv;
+                }
+                else {
+                    if(!$fv) $fv = 0;
+                    if(!$oldValue) $oldValue = 0;
+                    if(!$fv) $qr = $fv !== $oldValue;
+                    else $qr = $fv != $oldValue;
+                    if(!$fv) $fv = "0";
+                }
                 $queryBuilder->addField($fv, $isNumericField, $fk);
-                if(EntityUtils::getSimpleValue($oldRecord, $fk) != $fv) $queryRequired = true;
+                if($qr) $queryRequired = true;
             }
 
             if($queryRequired) {

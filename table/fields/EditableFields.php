@@ -39,11 +39,18 @@ class SBEditableField extends SBTableField {
     }
 
     public function presentValue($item){
+        $value = $this->getValue($item);
         echo '<input ';
+
         HTMLInterface::addAttribute("type", "text");
-        if($item != null) {
-            HTMLInterface::addAttribute("value", $this->getValue($item));
+        if($this->isNumeric){
+            HTMLInterface::addAttribute("class", "numeric-text");
         }
+
+        if($item != null) {
+            HTMLInterface::addAttribute("value", $value);
+        }
+
         HTMLInterface::addAttribute("placeholder", $this->title);
         $this->appendMainAttributes($item);
         Styler::startAttribute();

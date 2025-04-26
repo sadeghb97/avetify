@@ -1,3 +1,17 @@
+document.addEventListener('keydown', function (e) {
+    const target = e.target;
+    if (target.classList.contains('numeric-text')) {
+        const allowedKeys = [
+            'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End'
+        ];
+
+        const isOk = (e.key >= '0' && e.key <= '9') ||
+            allowedKeys.includes(e.key) ||
+            (e.key === '.' && !target.value.includes('.'))
+
+        if(!isOk) e.preventDefault()
+    }
+});
 
 function redir(newUrl, delay){
     if(delay){
