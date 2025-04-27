@@ -349,6 +349,20 @@ abstract class SBEntity extends SetModifier {
                     HTMLInterface::addAttribute("value", $value ? $value : "");
                     HTMLInterface::closeSingleTag();
                 }
+                else if($field instanceof EntityFlagField && $fieldType == "country"){
+                    $catFactory = $field->countriesACFactory;
+                    $catFactory->fieldKey = "countries-actext";
+                    $catFactory->childKey = $key ? $key : "";
+
+                    $countrySelector = new CountrySelector(
+                        $key,
+                        $catFactory,
+                        "Select Nation",
+                        true,
+                        $value
+                    );
+                    $countrySelector->place();
+                }
                 else {
                     $classApplier = new Styler();
                     $classApplier->pushClass("empty");

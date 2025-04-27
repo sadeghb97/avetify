@@ -44,6 +44,7 @@ require_once "entities/SortFactor.php";
 require_once "entities/FilterFactor.php";
 require_once "entities/ValueGetter.php";
 require_once "entities/fields/date_fields.php";
+require_once "entities/fields/flag_fields.php";
 require_once "entities/fields/EntityAvatarField.php";
 
 require_once "fields/JSDatalist.php";
@@ -66,6 +67,7 @@ require_once "components/JSField.php";
 require_once "components/SpecialField.php";
 require_once "components/SpecialTags.php";
 require_once "components/WinRateBar.php";
+require_once "components/CountrySelector.php";
 require_once "components/images/PlaceableImage.php";
 require_once "components/images/IconButton.php";
 require_once "components/images/CroppableImage.php";
