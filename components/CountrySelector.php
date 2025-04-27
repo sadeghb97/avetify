@@ -71,7 +71,8 @@ class CountriesACTextField extends JSACTextField {
     public function callbackMoreData(): array {
         return [
             "pre_link" => $this->getPreCountryLink(),
-            "post_link" => $this->getPostCountryLink()
+            "post_link" => $this->getPostCountryLink(),
+            "disable_auto_submit" => $this->disableSubmitOnEnter,
         ];
     }
 

@@ -106,6 +106,7 @@ function onSelectCountry(field, recordKey, cData, selectedCountry){
     const flagElement = document.getElementById(recordKey + "_flag")
     const linkElement = document.getElementById(recordKey + "_link")
     const countryCode = selectedCountry['alpha2']
+    const disableAutoSubmit = 'disable_auto_submit' in cData && cData['disable_auto_submit']
 
     let countryLink = ""
     if('pre_link' in cData || 'post_link' in cData){
@@ -116,11 +117,10 @@ function onSelectCountry(field, recordKey, cData, selectedCountry){
         }
     }
 
-    console.log("CL", countryLink)
     dataElement.value = countryCode
     flagElement.src = selectedCountry['flag']
     flagElement.title = selectedCountry['short_name']
     if(linkElement) linkElement.href = countryLink
     field.value = ""
-    field.blur()
+    if(disableAutoSubmit) field.blur()
 }
