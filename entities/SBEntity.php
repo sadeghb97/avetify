@@ -359,7 +359,7 @@ abstract class SBEntity extends SetModifier {
                         $catFactory,
                         "Select Nation",
                         true,
-                        $value
+                        $value ? $value : ""
                     );
                     $countrySelector->place();
                 }
