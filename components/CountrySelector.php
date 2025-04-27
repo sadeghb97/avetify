@@ -62,7 +62,7 @@ class CountriesACTextField extends JSACTextField {
      * @param string $childKey id elemente asli ke dar bargirande country code hast va mamulan hidden ast.
      * yadavari: az tarkibe fieldKey va childKey id elemente inpute ac text sakhte mishavad.
      */
-    public function __construct(string $fieldKey, string $childKey, string $initValue,
+    public function __construct(string $fieldKey = "", string $childKey = "", string $initValue = "",
                                 string $enterCallbackName = "onSelectCountry"){
         parent::__construct($fieldKey, $childKey, $initValue, World::getCountriesDatalistInfo());
         $this->enterCallbackName = $enterCallbackName;
@@ -92,11 +92,31 @@ class CountriesDatalist extends JSDatalist {
 }
 
 class CountriesACTextFactory {
-    public function __construct(public string $fieldKey = "", public string $childKey = "",
-                                public string $initValue = "", public string $callbackName = "onSelectCountry"){
+    public bool $disableAutoSubmit = true;
+
+    public function __construct(
+        public string $fieldKey = "",
+        public string $childKey = "",
+        public string $initValue = "",
+        public string $callbackName = "onSelectCountry"
+    ){
+    }
+
+    public function modifyField(CountriesACTextField $baseField) : CountriesACTextField {
+        $baseField->fieldKey = $this->fieldKey;
+        $baseField->childKey = $this->childKey;
+        $baseField->initValue = $this->initValue;
+        $baseField->enterCallbackName = $this->callbackName;
+        $baseField->disableSubmitOnEnter = $this->disableAutoSubmit;
+        return $baseField;
+    }
+
+    public function createBase() : CountriesACTextField {
+        return new CountriesACTextField();
     }
 
     public function create() : CountriesACTextField {
-        return new CountriesACTextField($this->fieldKey, $this->childKey, $this->initValue, $this->callbackName);
+        $baseField = $this->createBase();
+        return $this->modifyField($baseField);
     }
 }

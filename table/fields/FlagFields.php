@@ -41,8 +41,11 @@ class VisualSelectCountryField extends SBEditableField {
         $countrySelector->place();
     }
 
-    public function getCountriesACFactory(string $fieldKey, string $childKey,
-                                            string $initValue = "", string $callbackName = "onSelectCountry"
+    public function getCountriesACFactory(
+        string $fieldKey,
+        string $childKey,
+        string $initValue = "",
+        string $callbackName = "onSelectCountry"
     ) : CountriesACTextFactory {
         return new CountriesACTextFactory($fieldKey, $childKey, $initValue, $callbackName);
     }
