@@ -1,6 +1,8 @@
 <?php
 
 class CountrySelector implements Placeable {
+    public bool $setNameIdentifier = false;
+
     public function __construct(public string $mainElementId,
                                 public CountriesACTextFactory $countriesACFactory,
                                 public string $label,
@@ -23,7 +25,7 @@ class CountrySelector implements Placeable {
             HTMLInterface::addAttribute("value", $this->initCountryCode);
         }
         HTMLInterface::addAttribute("id", $this->mainElementId);
-        HTMLInterface::addAttribute("name", $this->mainElementId);
+        if($this->setNameIdentifier) HTMLInterface::addAttribute("name", $this->mainElementId);
         HTMLInterface::closeSingleTag();
 
         $acTextField = $this->countriesACFactory->create();

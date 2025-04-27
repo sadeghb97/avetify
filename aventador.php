@@ -47,14 +47,16 @@ require_once "entities/fields/date_fields.php";
 require_once "entities/fields/flag_fields.php";
 require_once "entities/fields/EntityAvatarField.php";
 
+require_once "components/Placeable.php";
 require_once "fields/JSDatalist.php";
+require_once "fields/JSDataSet.php";
 require_once "fields/JSInputField.php";
 require_once "fields/APIMedalField.php";
 require_once "fields/JSTextField.php";
 require_once "fields/JSACTextField.php";
+require_once "fields/JSDynamicSelect.php";
 require_once "fields/APISpanField.php";
 
-require_once "components/Placeable.php";
 require_once "components/Submittable.php";
 require_once "components/DialogField.php";
 require_once "components/JoshButton.php";
@@ -93,6 +95,7 @@ require_once "table/fields/NumberFields.php";
 require_once "table/fields/DateFields.php";
 require_once "table/fields/TextFields.php";
 require_once "table/fields/FlagFields.php";
+require_once "table/fields/SelectField.php";
 
 require_once "crawling/Scrapper.php";
 require_once "crawling/RawDocumentLoader.php";

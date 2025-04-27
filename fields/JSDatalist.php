@@ -1,6 +1,6 @@
 <?php
 
-class JSDatalist {
+class JSDatalist implements Placeable {
     public array $flatRecords = [];
     public function __construct(public string $listKey, public array $records,
                                 public string $primaryKey, public string $labelKey){
@@ -17,7 +17,7 @@ class JSDatalist {
         return $this->listKey . "_" . "records";
     }
 
-    public function place() {
+    public function place(WebModifier $webModifier = null) {
         ?>
         <script>
             const <?php echo $this->getRecordsListJSVarName(); ?> = <?php echo json_encode($this->records) ?>;

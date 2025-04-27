@@ -361,6 +361,7 @@ abstract class SBEntity extends SetModifier {
                         true,
                         $value ? $value : ""
                     );
+                    $countrySelector->setNameIdentifier = true;
                     $countrySelector->place();
                 }
                 else {

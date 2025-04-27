@@ -84,6 +84,8 @@ class SBEditableField extends SBTableField {
         $this->useIDIdentifier = true;
         $this->useIDIdentifier = true;
     }
+
+    public function preLoad(){}
 }
 
 class TextAreaTableField extends SBEditableField {
