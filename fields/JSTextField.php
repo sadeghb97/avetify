@@ -42,6 +42,7 @@ abstract class JSTextField extends JSInputField {
         echo '<input ';
         HTMLInterface::addAttribute("list", $this->listIdentifier);
         HTMLInterface::addAttribute("id", $this->getFieldIdentifier());
+        HTMLInterface::addAttribute("autocomplete", "off");
         if($this->label) HTMLInterface::addAttribute("placeholder", $this->label);
         $this->boundEnterEvent();
         HTMLInterface::closeSingleTag();
