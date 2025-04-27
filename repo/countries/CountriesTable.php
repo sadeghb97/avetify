@@ -8,7 +8,7 @@ class CountriesTable extends JSONTable {
         $this->isSortable = false;
 
         $this->setFields([
-            (new FlagField("Flag", "alpha2")),
+            ($this->getFlagField("alpha2")),
             (new SBTableSimpleField("Code", "alpha2")),
             (new SBTableSimpleField("Name", "short_name")),
             (new SBTableSimpleField("PerName", "per_name")),
@@ -17,7 +17,11 @@ class CountriesTable extends JSONTable {
         ]);
     }
 
-    public function getItemId($item): string {
-        return EntityUtils::getSimpleValue($item, "alpha2");
+    public function getFlagField($countryCodeKey) : FlagField {
+        return new FlagField("Flag", $countryCodeKey);
+    }
+
+    public function getItemId($record): string {
+        return EntityUtils::getSimpleValue($record, "alpha2");
     }
 }

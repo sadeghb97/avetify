@@ -21,10 +21,19 @@ class JSACTextField extends JSTextField {
         $this->presentListField();
     }
 
+    public function callbackMoreData() : array {
+        return [];
+    }
+
     #[Pure]
     public function applyText(): string {
+        $cmdJson = json_encode($this->callbackMoreData());
+        $cmdSafe = htmlspecialchars($cmdJson, ENT_QUOTES, 'UTF-8');
+
         return 'acOnItemEntered(' . '\'' . $this->getFieldIdentifier() . '\', \'' . $this->childKey . '\''
-            . ', ' . $this->dlInfo->jsRecordsVarName . ', \'' . $this->dlInfo->recordLabelKey . '\', '
+            . ', ' . $this->dlInfo->jsRecordsVarName . ', \''
+            . $this->dlInfo->recordLabelKey . '\', '
+            . $cmdSafe . ', '
             . $this->enterCallbackName . ');';
     }
 }

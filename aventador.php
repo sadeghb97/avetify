@@ -91,7 +91,6 @@ require_once "table/fields/NumberFields.php";
 require_once "table/fields/DateFields.php";
 require_once "table/fields/TextFields.php";
 require_once "table/fields/FlagFields.php";
-require_once "table/fields/VisualSelectCountryField.php";
 
 require_once "crawling/Scrapper.php";
 require_once "crawling/RawDocumentLoader.php";

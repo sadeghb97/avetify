@@ -11,14 +11,14 @@ function titleCase(str) {
     return splitStr.join(' ');
 }
 
-function acOnItemEntered(fieldKey, recordKey, recordsList, recordTargetKey, callback){
+function acOnItemEntered(fieldKey, recordKey, recordsList, recordTargetKey, cData, callback){
     const field = document.getElementById(fieldKey)
     const fieldValue = field.value
     const selectedItem = recordsList.find((record) => {
         return record[recordTargetKey] === fieldValue
     })
 
-    if(selectedItem != null) callback(field, recordKey, selectedItem)
+    if(selectedItem != null) callback(field, recordKey, cData, selectedItem)
 }
 
 function apiMedalClickAction(fieldKey, recordId, medalKey, initValue, apiEndpoint){
@@ -101,11 +101,26 @@ function logSelectedRecord(field, childKey, selectedItem){
     console.log("Entered Record", field, childKey, selectedItem)
 }
 
-function onSelectCountry(field, recordKey, selectedCountry){
+function onSelectCountry(field, recordKey, cData, selectedCountry){
     const dataElement = document.getElementById(recordKey)
     const flagElement = document.getElementById(recordKey + "_flag")
+    const linkElement = document.getElementById(recordKey + "_link")
+    const countryCode = selectedCountry['alpha2']
 
-    dataElement.value = selectedCountry['alpha2']
+    let countryLink = ""
+    if('pre_link' in cData || 'post_link' in cData){
+        const preLink = 'pre_link' in cData ? cData['pre_link'] : ""
+        const postLink = 'post_link' in cData ? cData['post_link'] : ""
+        if(preLink || postLink) {
+            countryLink = preLink + countryCode + postLink
+        }
+    }
+
+    console.log("CL", countryLink)
+    dataElement.value = countryCode
     flagElement.src = selectedCountry['flag']
+    flagElement.title = selectedCountry['short_name']
+    if(linkElement) linkElement.href = countryLink
     field.value = ""
+    field.blur()
 }
