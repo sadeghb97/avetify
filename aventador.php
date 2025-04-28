@@ -1,6 +1,13 @@
 <?php
 require_once "routing/Routing.php";
 
+require_once "interface/Interface.php";
+require_once "interface/Placeable.php";
+require_once "interface/Styler.php";
+require_once "interface/HTMLModifier.php";
+require_once "interface/HTMLInterface.php";
+require_once "interface/JSInterface.php";
+
 require_once "db/DBConnection.php";
 require_once "db/DBFilter.php";
 require_once "db/QueryBuilder.php";
@@ -48,7 +55,6 @@ require_once "entities/fields/flag_fields.php";
 require_once "entities/fields/EntityAvatarField.php";
 require_once "entities/fields/EntitySelectField.php";
 
-require_once "components/Placeable.php";
 require_once "fields/JSDataElement.php";
 require_once "fields/JSDatalist.php";
 require_once "fields/JSDataSet.php";
@@ -62,8 +68,6 @@ require_once "fields/APISpanField.php";
 require_once "components/Submittable.php";
 require_once "components/DialogField.php";
 require_once "components/JoshButton.php";
-require_once "components/Styler.php";
-require_once "components/HTMLModifier.php";
 require_once "components/NiceDiv.php";
 require_once "components/VertDiv.php";
 require_once "components/PlaceableTextField.php";
@@ -108,8 +112,6 @@ require_once "galrepo/ManageGalleryLister.php";
 require_once "standings/LeagueStandings.php";
 require_once "standings/Competitor.php";
 
-require_once "modules/HTMLInterface.php";
-require_once "modules/JSInterface.php";
 require_once "modules/Flusher.php";
 require_once "modules/SecureNetwork.php";
 require_once "modules/Printer.php";

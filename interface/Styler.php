@@ -4,6 +4,9 @@ class Styler {
     public array $styles = [];
     public array $classes = [];
 
+    /**
+     * @param ('color'|'background-color'|string) $styleKey
+     */
     public function pushStyle($styleKey, $styleValue){
         $this->styles[$styleKey] = $styleValue;
     }
