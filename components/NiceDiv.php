@@ -22,19 +22,20 @@ class NiceDiv {
         $this->htmlModifiers[$key] = $value;
     }
 
-    public function baseOpen(){
+    public function baseOpen(WebModifier $webModifier = null){
         echo '<div ';
         Styler::startAttribute();
-        foreach ($this->styles as $key => $value)
-            Styler::addStyle($key, $value);
+        foreach ($this->styles as $key => $value) Styler::addStyle($key, $value);
+        HTMLInterface::appendStyles($webModifier);
         Styler::closeAttribute();
         foreach ($this->htmlModifiers as $modifierKey => $modifierValue){
             HTMLInterface::addAttribute($modifierKey, $modifierValue);
         }
+        HTMLInterface::applyModifiers($webModifier);
     }
 
-    public function open(){
-        $this->baseOpen();
+    public function open(WebModifier $webModifier = null){
+        $this->baseOpen($webModifier);
         echo ' >';
     }
 

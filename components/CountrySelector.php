@@ -17,7 +17,7 @@ class CountrySelector implements Placeable {
         $countryName = $countryDetails ? $countryDetails['short_name'] : "";
 
         $div = new NiceDiv(6);
-        $div->open();
+        $div->open($webModifier);
 
         echo '<input ';
         HTMLInterface::addAttribute("type", "hidden");

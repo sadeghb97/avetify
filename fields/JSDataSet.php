@@ -1,10 +1,6 @@
 <?php
 
-class JSDataSet implements Placeable {
-    public function __construct(public string $dataSetKey, public array $records,
-                                public string $primaryKey, public string $labelKey){
-    }
-
+class JSDataSet extends JSDataElement {
     public function place(WebModifier $webModifier = null){
         echo '<template ';
         HTMLInterface::addAttribute("id", $this->dataSetKey);

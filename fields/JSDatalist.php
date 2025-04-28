@@ -1,20 +1,21 @@
 <?php
 
-class JSDatalist implements Placeable {
+class JSDatalist extends JSDataElement {
     public array $flatRecords = [];
-    public function __construct(public string $listKey, public array $records,
-                                public string $primaryKey, public string $labelKey){
+    public function __construct(string $dataSetKey, array $records, string $primaryKey, string $labelKey){
+        parent::__construct($dataSetKey, $records, $primaryKey, $labelKey);
+
         foreach ($this->records as $record){
             $this->flatRecords[] = EntityUtils::getSimpleValue($record, $this->labelKey);
         }
     }
 
     public function getDatalistElementId() : string {
-        return $this->listKey;
+        return $this->dataSetKey;
     }
 
     public function getRecordsListJSVarName() : string {
-        return $this->listKey . "_" . "records";
+        return $this->dataSetKey . "_" . "records";
     }
 
     public function place(WebModifier $webModifier = null) {

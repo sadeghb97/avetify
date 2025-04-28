@@ -46,8 +46,10 @@ require_once "entities/ValueGetter.php";
 require_once "entities/fields/date_fields.php";
 require_once "entities/fields/flag_fields.php";
 require_once "entities/fields/EntityAvatarField.php";
+require_once "entities/fields/EntitySelectField.php";
 
 require_once "components/Placeable.php";
+require_once "fields/JSDataElement.php";
 require_once "fields/JSDatalist.php";
 require_once "fields/JSDataSet.php";
 require_once "fields/JSInputField.php";

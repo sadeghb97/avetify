@@ -242,6 +242,11 @@ abstract class SBEntity extends SetModifier {
         HTMLInterface::placeVerticalDivider(12);
         echo '<div style="width: 80%; margin: auto;">';
 
+        $dataSets = $this->getDataSets();
+        foreach ($dataSets as $dataSet){
+            $dataSet->place();
+        }
+
         echo '<form ';
         HTMLInterface::addAttribute("method", "post");
         HTMLInterface::addAttribute("name", $this->getFormId());
@@ -354,6 +359,10 @@ abstract class SBEntity extends SetModifier {
                     $catFactory->fieldKey = "countries-actext";
                     $catFactory->childKey = $key ? $key : "";
 
+                    $csModifier = WebModifier::createInstance();
+                    $csModifier->styler->pushStyle("margin-top", "12px");
+                    $csModifier->styler->pushStyle("margin-bottom", "12px");
+
                     $countrySelector = new CountrySelector(
                         $key,
                         $catFactory,
@@ -362,7 +371,15 @@ abstract class SBEntity extends SetModifier {
                         $value ? $value : ""
                     );
                     $countrySelector->setNameIdentifier = true;
-                    $countrySelector->place();
+                    $countrySelector->place($csModifier);
+                }
+                else if($field instanceof EntitySelectField && $fieldType == "select"){
+                    $sModifier = WebModifier::createInstance();
+                    $sModifier->styler->pushStyle("margin-top", "8px");
+                    $sModifier->styler->pushStyle("margin-bottom", "8px");
+                    $selectField = new JSDynamicSelect($field->title, $key, $value, $field->dataSetKey);
+                    $selectField->setNameIdentifier = true;
+                    $selectField->place($sModifier);
                 }
                 else {
                     $classApplier = new Styler();
@@ -590,6 +607,11 @@ abstract class SBEntity extends SetModifier {
     public function formMoreExtension($options){}
 
     public function manualHandleForm(){}
+
+    /** @return JSDataElement[] */
+    public function getDataSets() : array {
+        return [];
+    }
 
     public function entityPage() : string {
         return "";

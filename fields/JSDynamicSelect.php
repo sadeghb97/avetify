@@ -4,13 +4,14 @@ class JSDynamicSelect implements Placeable {
     public bool $setNameIdentifier = false;
 
     public function __construct(public string $title, public string $elementId,
-                                public string $value, public string $dataSetId){
+                                public string|null $value, public string $dataSetId){
+        if(!$this->value) $this->value = "";
     }
 
 
     public function place(WebModifier $webModifier = null) {
         $div = new NiceDiv(8);
-        $div->open();
+        $div->open($webModifier);
 
         if($this->title) {
             HTMLInterface::placeText($this->title . ': ');
@@ -32,7 +33,6 @@ class JSDynamicSelect implements Placeable {
                     const fieldChildCount = fieldElement.children.length
 
                     if(fieldChildCount <= 0){
-                        console.log("LOoOoOoding ...")
                         const template = document.getElementById('<?php echo $this->dataSetId; ?>').content;
                         fieldElement.appendChild(template.cloneNode(true));
                         fieldElement.value = '<?php echo $this->value; ?>';
