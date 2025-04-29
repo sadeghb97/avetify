@@ -471,7 +471,7 @@ abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLin
                 HTMLInterface::addAbsoluteIconButton(Routing::getAventadorRoot()
                     . 'assets/img/arrange.png',
                     [
-                        "right" => "20px",
+                        "inset-inline-start" => "20px",
                         "bottom" => "20px"
                     ],
                     "rearrangeRanks()");

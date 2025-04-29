@@ -73,7 +73,7 @@ class FormUtils {
 
     public static function placeAbsSubmitButton(string $icon, string $formId, string $triggerName,
                                                 int $iconSize = 60,
-                                                array $position = ["right" => "20px", "bottom" => "20px"]){
+                                                array $position = ["inset-inline-end" => "20px", "bottom" => "20px"]){
         $button = new AbsoluteFormButton($formId, $triggerName, $position, $icon);
         $button->iconSize = $iconSize;
         $button->place();
@@ -82,7 +82,7 @@ class FormUtils {
     public static function fastSubmitButton(string $icon){
         $mainFormId = "main_form";
         self::openPostForm($mainFormId);
-        $position = ["right" => "20px", "bottom" => "20px"];
+        $position = ["inset-inline-end" => "20px", "bottom" => "20px"];
 
         $button = new AbsoluteFormButton($mainFormId, "default", $position, $icon);
         $button->iconSize = 60;

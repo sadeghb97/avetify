@@ -10,8 +10,13 @@ class WorldCountries {
         foreach ($countries as $country){
             $countryCode = strtolower($country['alpha2']);
             $this->map[$countryCode] = $country;
-            $flag = $this->extractCountryFlag($countryCode);
-            $this->map[$countryCode]['flag'] = $flag;
+        }
+
+        foreach ($countries as $country){
+            $countryCode = strtolower($country['alpha2']);
+            $flags = $this->extractCountryFlag($countryCode);
+            $this->map[$countryCode]['flag'] = $flags[0];
+            $this->map[$countryCode]['flag_file'] = $flags[1];
         }
     }
 
@@ -26,16 +31,33 @@ class WorldCountries {
         return null;
     }
 
-    public function extractCountryFlag($countryCode) : string | null {
+    public function getCountryFlagFile($countryCode) : string | null {
         $country = $this->getCountryDetails($countryCode);
-        if($country == null) return null;
+        if($country) return $country['flag_file'];
+        return null;
+    }
+
+    public function extractCountryFlag($countryCode) : array | null {
+        $country = $this->getCountryDetails($countryCode);
+        if($country == null){
+            echo "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDD: " . $countryCode . br();
+            return null;
+        }
 
         if(!isset($country['dep']) || !$country['dep']) {
-            return Routing::browserPathFromAventador("assets/img/flags/cdc/") . $country['alpha2'] . ".png";
+            $browserFlag =
+                Routing::browserPathFromAventador("assets/img/flags/cdc/") . $country['alpha2'] . ".png";
+            $physicalFlag =
+                Routing::serverPathFromAventador("assets/img/flags/cdc/") . $country['alpha2'] . ".png";
+            return [$browserFlag, $physicalFlag];
         }
 
         if($country['dep'] === True){
-            return Routing::browserPathFromAventador("assets/img/flags/more/") . $country['alpha2'] . ".png";
+            $browserFlag =
+                Routing::browserPathFromAventador("assets/img/flags/more/") . $country['alpha2'] . ".png";
+            $physicalFlag =
+                Routing::serverPathFromAventador("assets/img/flags/more/") . $country['alpha2'] . ".png";
+            return [$browserFlag, $physicalFlag];
         }
 
         return $this->extractCountryFlag($country['dep']);

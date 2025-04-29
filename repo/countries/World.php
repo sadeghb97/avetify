@@ -2,6 +2,7 @@
 
 class World {
     private static array | null $flagsMap = null;
+    private static array | null $flagFilesMap = null;
     private static array | null $detailsMap = null;
     private static CountriesDatalist | null $countriesDatalist = null;
     private static DatalistInfo | null $countriesDatalistInfo = null;
@@ -20,12 +21,21 @@ class World {
         foreach (self::$detailsMap as $countryCode => $country){
             $flag = $worldCountries->getCountryFlag($countryCode);
             if($flag) self::$flagsMap[strtolower($countryCode)] = $flag;
+
+            $flagFile = $worldCountries->getCountryFlagFile($countryCode);
+            if($flagFile) self::$flagFilesMap[strtolower($countryCode)] = $flagFile;
         }
     }
 
     public static function getCountryFlag($countryCode) : string | null {
         if(self::$flagsMap == null) self::init();
         if(isset(self::$flagsMap[strtolower($countryCode)])) return self::$flagsMap[strtolower($countryCode)];
+        return null;
+    }
+
+    public static function getCountryFlagFile($countryCode) : string | null {
+        if(self::$flagFilesMap == null) self::init();
+        if(isset(self::$flagFilesMap[strtolower($countryCode)])) return self::$flagFilesMap[strtolower($countryCode)];
         return null;
     }
 
