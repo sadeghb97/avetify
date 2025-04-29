@@ -90,7 +90,24 @@ abstract class DBConnection extends mysqli {
         return $row[$property];
     }
 
-    public function fetchTable($tableName){
-        return $this->fetchSet("SELECT * FROM $tableName");
+    /** @param DBFilter[] $filters
+     * @return array
+     */
+    public function fetchTableSet(string $tableName, array $filters = [], string $orderBy = "") : array {
+        $sql = "SELECT * FROM $tableName " . $this->getFilteringQuery($filters);
+        if($orderBy) $sql .= (" ORDER BY " . $orderBy);
+        return $this->fetchSet($sql);
+    }
+
+    /** @param DBFilter[] $filters
+     * @return SBEntityItem[]
+     */
+    public function fetchTable(string $className, string $tableName, array $filters = [], string $orderBy = "") : array {
+        $set = $this->fetchTableSet($tableName, $filters, $orderBy);
+        $out = [];
+        foreach ($set as $result){
+            $out[] = SBEntityItem::createInstance($className, $result);
+        }
+        return $out;
     }
 }
