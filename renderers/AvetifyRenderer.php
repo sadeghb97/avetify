@@ -22,7 +22,7 @@ class AvetifyRenderer implements PageRenderer {
         $titleModifier = WebModifier::createInstance();
         $titleModifier->styler->pushFontFaceStyle("Queen");
         $titleModifier->styler->pushStyle("font-size", "2rem");
-        HTMLInterface::placeText("Lamborghini Avetify", $titleModifier);
+        HTMLInterface::placeText("Avetify", $titleModifier);
         $titleDiv->close();
         $div->separate();
 
