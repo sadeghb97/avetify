@@ -2,10 +2,12 @@
 
 class SBSet extends SetModifier {
     private array $map = [];
+    public SetRenderer|null $renderer = null;
 
     public function __construct(public array $set, public string $key = "set"){
         parent::__construct($this->key);
         $this->refreshMap();
+        $this->renderer = $this->getRenderer();
     }
 
     public function loadFromFile($filename){
@@ -104,7 +106,7 @@ class SBSet extends SetModifier {
         return [];
     }
 
-    public function getRenderer() : SetRenderer | null {
+    protected function getRenderer() : SetRenderer | null {
         return null;
     }
 
