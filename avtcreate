@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-REPO_URL="https://gitlab.com/sadeghb97/avetify"
+REPO_URL="https://github.com/sadeghb97/avetify"
 
 CURRENT_DIR="$(pwd)"
 
