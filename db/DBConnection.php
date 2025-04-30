@@ -110,4 +110,21 @@ abstract class DBConnection extends mysqli {
         }
         return $out;
     }
+
+    /** @return array */
+    public function fetchRecordItem(string $tableName, string $pKey, string $pValue, bool $pIsNumeric) : array | null {
+        $sql = "SELECT * FROM $tableName WHERE $pKey=";
+        if(!$pIsNumeric) $sql .= "'";
+        $sql .= $pValue;
+        if(!$pIsNumeric) $sql .= "'";
+        return $this->fetchRow($sql);
+    }
+
+    /** @return SBEntityItem | null */
+    public function fetchRecord(string $tableName, string $className,
+                                string $pKey, string $pValue, bool $pIsNumeric) : SBEntityItem | null {
+        $recordAr = $this->fetchRecordItem($tableName, $pKey, $pValue, $pIsNumeric);
+        if($recordAr == null) return null;
+        return SBEntityItem::createInstance($className, $recordAr);
+    }
 }

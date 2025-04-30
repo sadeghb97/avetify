@@ -45,7 +45,7 @@ class GreenTableRenderer extends SetRenderer {
         $this->closeRecord(null);
 
         if($sbTable->enableSelectRecord) {
-            $this->selectorField = new RecordSelectorField("Action", $sbTable->idGetter);
+            $this->selectorField = new RecordSelectorField("Action", $sbTable);
             $this->selectorField->namespace = $sbTable->setKey;
             $this->selectorField->onlyIDIdentifier();
         }

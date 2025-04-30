@@ -6,8 +6,7 @@ class DBTable extends SBTable {
     public function __construct(public DBConnection $conn, public string $dbTableName, public string $primaryKey,
                                 array $fields, string $key){
 
-        $idGetter = new SimpleIDGetter($this->primaryKey);
-        parent::__construct($fields, $this->fetchDBRecords(), $key, true, $idGetter);
+        parent::__construct($fields, $this->fetchDBRecords(), $key, true);
     }
 
     public function getItemId($item): string {

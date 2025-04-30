@@ -11,18 +11,14 @@ class SBTable extends SetModifier {
     public bool $forcePatchRecords = false;
     public SetRenderer | null $tableRenderer = null;
 
-    public function __construct(array $fields, array $rawRecords, string $key,
-                                bool $isEditable = false, public IDGetter | null $idGetter = null){
+    public function __construct(array $fields, array $rawRecords, string $key, bool $isEditable = false){
         parent::__construct($key);
 
         $this->isEditable = $isEditable;
-        if($this->isEditable && $this->idGetter == null){
-            $this->idGetter = new SimpleIDGetter("id");
-        }
+        $this->tableRenderer = $this->getTableRenderer();
 
         $this->setFields($fields);
         $this->loadRawRecords($rawRecords);
-        $this->tableRenderer = $this->getTableRenderer();
         $this->tableRenderer->limit = $this->recordsLimit();
     }
 
@@ -32,10 +28,10 @@ class SBTable extends SetModifier {
         foreach ($this->fields as $field){
             if($field->isEditable()){
                 if($field instanceof SBEditableField) $field->namespace = $this->setKey;
-                $field->idGetter = $this->idGetter;
+                $field->idGetter = $this;
                 if($field->onCreateField != null){
                     $field->onCreateField->namespace = $this->setKey;
-                    $field->onCreateField->idGetter = $this->idGetter;
+                    $field->onCreateField->idGetter = $this;
                     $field->onCreateField->onlyNameIdentifier();
                 }
             }

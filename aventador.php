@@ -19,7 +19,6 @@ require_once "externals/gumlet-image/ImageResizeException.php";
 
 require_once "models/Filename.php";
 require_once "models/DataModel.php";
-require_once "models/IDGetter.php";
 
 require_once "files/Filer.php";
 require_once "files/ImageUtils.php";

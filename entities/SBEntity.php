@@ -591,13 +591,19 @@ abstract class SBEntity extends SetModifier {
         }
     }
 
-    private function getRecordObject($record) : SBEntityItem | null {
+    public function getRecordObject($record) : SBEntityItem | null {
         if($record instanceof SBEntityItem) return $record;
         return $this->createEntityItem($record);
     }
 
     public function createEntityItem($record) : SBEntityItem | null {
         return null;
+    }
+
+    public function getCurrentRecordObject() : SBEntityItem | null {
+        $record = $this->getCurrentRecord();
+        if(!$record) return null;
+        return $this->getRecordObject($record);
     }
 
     //extension inside main legend

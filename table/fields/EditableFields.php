@@ -5,7 +5,7 @@ class SBEditableField extends SBTableField {
     public bool $useNameIdentifier = false;
 
     public function __construct(string $title, string $key,
-                                public IDGetter | null $idGetter = null,
+                                public EntityID | null $idGetter = null,
                                 public string | null $namespace = null){
         parent::__construct($title, $key);
         $this->editable = true;
@@ -17,7 +17,7 @@ class SBEditableField extends SBTableField {
         $id .= $this->key;
         if($item != null) {
             $id .= "_";
-            $id .= $this->idGetter->getID($item);
+            $id .= $this->idGetter->getItemId($item);
         }
         return $id;
     }
@@ -126,7 +126,7 @@ class CheckboxField extends SBEditableField {
 }
 
 class RecordSelectorField extends CheckboxField {
-    public function __construct(string $title, IDGetter $idGetter){
+    public function __construct(string $title, EntityID $idGetter){
         parent::__construct($title, "select_Record", $idGetter);
     }
 

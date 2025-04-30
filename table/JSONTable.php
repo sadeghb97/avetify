@@ -2,10 +2,9 @@
 
 class JSONTable extends SBTable {
     public function __construct(array $fields, public string $filename, string $key,
-                                bool $isEditable = false,
-                                ?IDGetter $idGetter = null){
+                                bool $isEditable = false){
 
-        parent::__construct($fields, [], $key, $isEditable, $idGetter);
+        parent::__construct($fields, [], $key, $isEditable);
         $this->loadRawRecords($this->fetchRecordsFromJsonFile());
     }
 
