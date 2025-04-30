@@ -1,6 +1,7 @@
 <?php
 
-class CountriesTable extends JSONTable {
+class CountriesTable extends SBTable {
+    public bool $isEditable = false;
     public bool $includesCode = true;
     public bool $includesName = true;
     public bool $includesPerName = true;
@@ -8,19 +9,21 @@ class CountriesTable extends JSONTable {
     public bool $includesSubRegion = true;
 
     public function __construct(){
-        parent::__construct([],
-            Routing::serverPathFromAvetify("repo/countries/countries.json"), "countries");
-
-        $this->isSortable = false;
+        parent::__construct([], $this->fetchCountries(), "countries");
 
         $fieldsList = [];
         $fieldsList[] = ($this->getFlagField("alpha2"));
         if($this->includesCode) $fieldsList[] = (new SBTableSimpleField("Code", "alpha2"));
-        if($this->includesName) $fieldsList[] = (new SBTableSimpleField("Name", "short_name"));
-        if($this->includesPerName) $fieldsList[] = (new SBTableSimpleField("PerName", "per_name"));
+        if($this->includesName) $fieldsList[] = (new SBTableSimpleField("Name", "short_name"))->setMaxWidth("200px");
+        if($this->includesPerName) $fieldsList[] = (new SBTableSimpleField("PerName", "per_name"))->setMaxWidth("200px");
         if($this->includesContinent) $fieldsList[] = (new SBTableSimpleField("Continent", "continent"));
-        if($this->includesSubRegion) $fieldsList[] = (new SBTableSimpleField("Region", "subregion"));
+        if($this->includesSubRegion) $fieldsList[] = (new SBTableSimpleField("Region", "subregion"))->setMaxWidth("200px");
         $this->setFields($fieldsList);
+    }
+
+    public function fetchCountries(){
+        $jsFilename = Routing::serverPathFromAvetify("repo/countries/countries.json");
+        return json_decode(file_get_contents($jsFilename), true);
     }
 
     public function getFlagField($countryCodeKey) : FlagField {

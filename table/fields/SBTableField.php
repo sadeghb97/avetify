@@ -16,6 +16,7 @@ class SBTableField {
     public string | null $color = null;
     public string | null $width = null;
     public string | null $maxWidth = null;
+    public string | null $minWidth = null;
     public string | null $fontSize = null;
     public string | null $fontWeight = null;
 
@@ -36,6 +37,7 @@ class SBTableField {
         if($this->isCentered) Styler::addStyle("text-align", "center");
         if($this->width != null) Styler::addStyle("width", $this->width);
         if($this->maxWidth != null) Styler::addStyle("max-width", $this->maxWidth);
+        if($this->minWidth != null) Styler::addStyle("min-width", $this->minWidth);
         if(!$this->isUnbreakable) Styler::addStyle("word-wrap", "break-word");
     }
 
@@ -118,6 +120,11 @@ class SBTableField {
 
     public function setMaxWidth(string $w) : SBTableField {
         $this->maxWidth = $w;
+        return $this;
+    }
+
+    public function setMinWidth(string $w) : SBTableField {
+        $this->minWidth = $w;
         return $this;
     }
 

@@ -41,7 +41,6 @@ abstract class BaseSetRenderer {
     }
 
     public function renderBody(){
-        $this->setModifier->adjustRecords();
         $this->onRecordsAdjusted();
 
         $allSortFactors = $this->setModifier->finalSortFactors();

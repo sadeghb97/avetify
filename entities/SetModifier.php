@@ -1,13 +1,12 @@
 <?php
 
 abstract class SetModifier implements EntityID, EntityTitle, EntityLink, EntityImage, EntityAltLink {
+    public array $records = [];
     public array $currentRecords = [];
     public bool $isSortable = true;
     public bool $isEditable = true;
 
     public function __construct(public string $setKey){}
-
-    public abstract function getEntityRecords() : array;
 
     public function getItemId($record) : string {
         return EntityUtils::getMultiChoiceValue($record, ["id", "pk"]);
@@ -29,7 +28,7 @@ abstract class SetModifier implements EntityID, EntityTitle, EntityLink, EntityI
         return "";
     }
 
-    /** @return SortFactor[] An array of MyClass instances */
+    /** @return Sorter[] An array of MyClass instances */
     public function finalSortFactors() : array {
         return [];
     }
@@ -47,11 +46,11 @@ abstract class SetModifier implements EntityID, EntityTitle, EntityLink, EntityI
         return $this->setKey . "_" . $factorKey;
     }
 
-    public function getDefaultFactor() : SortFactor | null {
+    public function getDefaultFactor() : Sorter | null {
         return null;
     }
 
-    public function getSortFactor() : SortFactor | null {
+    public function getSortFactor() : Sorter | null {
         if(!isset($_GET[$this->getSortKey()])) return $this->getDefaultFactor();
         $sortFactorKey = $_GET[$this->getSortKey()];
         $startWithMinus = str_starts_with($sortFactorKey, "-");
@@ -59,7 +58,7 @@ abstract class SetModifier implements EntityID, EntityTitle, EntityLink, EntityI
         $allSortFactors = $this->finalSortFactors();
 
         foreach ($allSortFactors as $sf){
-            if($sf->factorKey == $pureSortFactorKey){
+            if($sf instanceof SortFactor && $sf->factorKey == $pureSortFactorKey){
                 $nextIsDescending = $startWithMinus;
                 if($sf->isDescending() != $nextIsDescending) $sf->toggleDirection();
                 return $sf;
@@ -81,7 +80,7 @@ abstract class SetModifier implements EntityID, EntityTitle, EntityLink, EntityI
 
     private function filterRecords(){
         $this->currentRecords = [];
-        foreach ($this->getEntityRecords() as $record){
+        foreach ($this->records as $record){
             $isQualified = true;
 
             foreach ($this->finalFilterFactors() as $filterFactor){
@@ -94,6 +93,11 @@ abstract class SetModifier implements EntityID, EntityTitle, EntityLink, EntityI
 
             if($isQualified) $this->currentRecords[] = $record;
         }
+    }
+
+    public function loadRawRecords($rawRecords){
+        $this->records = $rawRecords;
+        $this->adjustRecords();
     }
 
     public function adjustRecords(){

@@ -1,6 +1,10 @@
 <?php
 
-abstract class SortFactor {
+interface Sorter {
+    public function compare($itemA, $itemB) : int;
+}
+
+abstract class SortFactor implements Sorter {
     public bool $alterDirection = false;
 
     public function __construct(public string $title, public string $factorKey,

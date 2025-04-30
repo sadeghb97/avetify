@@ -1,8 +1,6 @@
 <?php
 
 class SBTable extends SetModifier {
-    public array $records;
-
     /** @var SBTableField[] $fields */
     public array $fields;
 
@@ -36,11 +34,6 @@ class SBTable extends SetModifier {
                 }
             }
         }
-    }
-
-    public function loadRawRecords($rawRecords){
-        $this->records = $rawRecords;
-        $this->adjustRecords();
     }
 
     /** @return SortFactor[] An array of MyClass instances */
