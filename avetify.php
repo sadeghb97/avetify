@@ -86,7 +86,6 @@ require_once "components/modifiers/ImageModifiers.php";
 require_once "lister/SBListCategory.php";
 require_once "lister/SBLister.php";
 require_once "lister/DBLister.php";
-require_once "lister/RankingList.php";
 
 require_once "table/SBTable.php";
 require_once "table/DBTable.php";
@@ -127,9 +126,7 @@ require_once "themes/modern/ModernTheme.php";
 require_once "themes/modern/ModernSetRenderer.php";
 require_once "themes/modern/ModernGallery.php";
 require_once "themes/modern/ModernRatioGallery.php";
-require_once "themes/modern/print.php";
 require_once "themes/modern/cards.php";
-require_once "themes/modern/components.php";
 
 require_once "renderers/PageRenderer.php";
 require_once "renderers/AvetifyRenderer.php";
