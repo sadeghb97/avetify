@@ -105,7 +105,7 @@ function printCard($img, $name, $description, $link, $options){
         echo '<span style="' . $valueStyle . ' color: gray;">' . $loses . '</span>';
 
         echo '</div>';
-        heightMargin(12);
+        HTMLInterface::placeVerticalDivider(12);
     }
 
     if(isset($options['score'])){
@@ -124,7 +124,7 @@ function printCard($img, $name, $description, $link, $options){
     if(isset($options['rate'])){
         echo '<div style="margin: auto; font-size: 48px; font-weight: bold; color: #674188;">'
             . $options['rate'] . '</div>';
-        heightMargin(12);
+        HTMLInterface::placeVerticalDivider(12);
     }
 
     if(isset($options['related']) && $options['related'] && count($options['related']) > 0){
@@ -195,7 +195,7 @@ function printCard($img, $name, $description, $link, $options){
         }
 
         echo '</div>';
-        heightMargin(12);
+        HTMLInterface::placeVerticalDivider(12);
     }
 
     if(isset($options['api_medals'])){
@@ -208,7 +208,7 @@ function printCard($img, $name, $description, $link, $options){
         }
 
         $apiMedalsDiv->close();
-        heightMargin(12);
+        HTMLInterface::placeVerticalDivider(12);
     }
 
     if(isset($options['span_texts'])){
@@ -223,7 +223,7 @@ function printCard($img, $name, $description, $link, $options){
         }
 
         $tagsDiv->close();
-        heightMargin(12);
+        HTMLInterface::placeVerticalDivider(12);
     }
 
     if(isset($options['api_texts'])){
@@ -236,7 +236,7 @@ function printCard($img, $name, $description, $link, $options){
         }
 
         $apiTextsDiv->close();
-        heightMargin(12);
+        HTMLInterface::placeVerticalDivider(12);
     }
 
     if(!empty($options['details'])){

@@ -120,6 +120,7 @@ require_once "forms/FormButton.php";
 require_once "forms/SBForm.php";
 
 require_once "themes/ThemesManager.php";
+require_once "themes/classic/ClassicMenu.php";
 require_once "themes/green/GreenTheme.php";
 require_once "themes/green/GreenTableRenderer.php";
 require_once "themes/modern/ModernTheme.php";

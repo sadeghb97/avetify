@@ -74,8 +74,12 @@ abstract class BaseSetRenderer {
         $defaultColor = 'Cyan';
         $alterBg = 'Black';
         $alterColor = 'GoldenRod';
-        printLabel("Clear", Routing::removeParamFromCurrentLink($this->setModifier->getSortKey()),
-            $defaultBg, $defaultColor);
+
+        $clearLabel = new ClassicLabel(
+            "Clear",
+            Routing::removeParamFromCurrentLink($this->setModifier->getSortKey())
+        );
+        $clearLabel->place();
 
         $currentSort = isset($_GET[$this->setModifier->getSortKey()]) ?
             $_GET[$this->setModifier->getSortKey()] : null;
@@ -98,8 +102,13 @@ abstract class BaseSetRenderer {
             }
             $finalSortFactor = ($nextDescending ? "-" : "") . $sortFactor->factorKey;
 
-            printLabel($finalTitle, Routing::addParamToCurrentLink($this->setModifier->getSortKey(),
-                $finalSortFactor), $finalBg, $finalColor);
+            $label = new ClassicLabel(
+                $finalTitle,
+                Routing::addParamToCurrentLink($this->setModifier->getSortKey(), $finalSortFactor),
+                $finalBg,
+                $finalColor
+            );
+            $label->place();
         }
 
         echo '</div>';

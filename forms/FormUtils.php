@@ -67,7 +67,7 @@ class FormUtils {
     public static function placeSubmitButton(string $title, string $buttonStyle = "",
                                              int $marginTop = 12, WebModifier $webModifier = null){
         $joshButton = new JoshButton($title, "", $buttonStyle, "submit");
-        heightMargin($marginTop);
+        HTMLInterface::placeVerticalDivider($marginTop);
         $joshButton->renderButton($webModifier);
     }
 

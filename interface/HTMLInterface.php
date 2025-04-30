@@ -120,6 +120,7 @@
          echo $element . ' ';
          self::applyModifiers($modifier);
          self::applyStyles($modifier);
+         self::applyClasses($modifier);
          self::closeTag();
          echo $text;
          echo '</';
@@ -250,6 +251,14 @@
 
      public static function applyStyles(WebModifier | null $modifier = null){
          if($modifier && $modifier->styler != null) $modifier->styler->applyStyles();
+     }
+
+     public static function appendClasses(WebModifier | null $modifier = null){
+         if($modifier && $modifier->styler != null) $modifier->styler->appendClasses();
+     }
+
+     public static function applyClasses(WebModifier | null $modifier = null){
+         if($modifier && $modifier->styler != null) $modifier->styler->applyClasses();
      }
 
      public static function applyModifiers(WebModifier | null $modifier = null){

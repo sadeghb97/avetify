@@ -57,8 +57,8 @@ class SpecialTags extends JSField {
         foreach ($this->tags as $index => $tag){
             if($index != 0 && ($index % $this->lineItemsLimit) == 0){
                 $tagsDiv->close();
-                if($this->horizTags) heightMargin(6);
-                else widthMargin(6);
+                if($this->horizTags) HTMLInterface::placeVerticalDivider(6);
+                else HTMLInterface::placeHorizontalDivider(6);
                 $tagsDiv->open();
             }
             $specialTag = $this->createChildTag($tag);

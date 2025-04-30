@@ -10,6 +10,16 @@ class SBSet extends SetModifier {
         $this->renderer = $this->getRenderer();
     }
 
+    public function loadFromFile($filename){
+        if(file_exists($filename)){
+            $tmpObject = json_decode(file_get_contents($filename), true);
+            if(is_array($tmpObject)){
+                $this->records = $tmpObject;
+                $this->refreshMap();
+            }
+        }
+    }
+
     public function loadRawRecords($rawRecords) {
         parent::loadRawRecords($rawRecords);
         $this->refreshMap();

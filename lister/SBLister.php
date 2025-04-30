@@ -338,7 +338,7 @@ abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLin
         }
         echo '/>';
 
-        heightMargin(12);
+        HTMLInterface::placeVerticalDivider(12);
 
         echo '<div>';
         if($this->isPrintRankEnabled()){
@@ -395,13 +395,13 @@ abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLin
             $niceDiv->close();
 
             if(count($plainFields) > 0){
-                heightMargin(6);
+                HTMLInterface::placeVerticalDivider(6);
             }
         }
 
         foreach ($plainFields as $field){
             $fieldId = $field['key'] . '_' . $itemId;
-            heightMargin(4);
+            HTMLInterface::placeVerticalDivider(4);
             echo '<div style="display: flex">';
             echo '<span style="font-size: 10pt; margin-right: 6px;">' . $field['title'] . ': </span>';
             echo '<input type="text" id="' . $fieldId . '"'

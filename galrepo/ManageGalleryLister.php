@@ -231,7 +231,7 @@ class ManageGalleryLister extends SBLister {
         echo '<img src="' . $avatar . '" class="lister-item-img" ';
         echo '/>';
 
-        heightMargin(12);
+        HTMLInterface::placeVerticalDivider(12);
 
         echo '<div>';
         if($this->isPrintRankEnabled()){
