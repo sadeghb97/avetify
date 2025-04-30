@@ -1,4 +1,4 @@
-# aventador
+# avetify
 
 
 
@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.com/sadeghb97/aventador.git
+git remote add origin https://gitlab.com/sadeghb97/avetify.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlab.com/sadeghb97/aventador/-/settings/integrations)
+- [ ] [Set up project integrations](https://gitlab.com/sadeghb97/avetify/-/settings/integrations)
 
 ## Collaborate with your team
 

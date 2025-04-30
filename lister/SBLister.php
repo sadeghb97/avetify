@@ -468,7 +468,7 @@ abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLin
 
         if($this->placeDefaultTriggers) {
             if ($this->isPrintRankEnabled() && $this->isRearrangeRanksEnabled()) {
-                HTMLInterface::addAbsoluteIconButton(Routing::getAventadorRoot()
+                HTMLInterface::addAbsoluteIconButton(Routing::getAvetifyRoot()
                     . 'assets/img/arrange.png',
                     [
                         "inset-inline-start" => "20px",
@@ -481,7 +481,7 @@ abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLin
             $primaryButton->place();
         }
 
-        ThemesManager::importJS(Routing::getAventadorRoot() . 'lister/lister.js');
+        ThemesManager::importJS(Routing::getAvetifyRoot() . 'lister/lister.js');
         $this->initMenu();
         $this->readyForm();
         $this->moreBodyContents();

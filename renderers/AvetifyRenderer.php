@@ -1,10 +1,10 @@
 <?php
 
-class AventadorRenderer implements PageRenderer {
-    public function renderPage($title = "Aventador") {
-        $theme = new AventadorTheme();
+class AvetifyRenderer implements PageRenderer {
+    public function renderPage($title = "Avetify") {
+        $theme = new AvetifyTheme();
         $theme->placeHeader($title);
-        $avnImage = Routing::browserPathFromAventador("assets/img/aventador.webp");
+        $avtImage = Routing::browserPathFromAvetify("assets/img/avetify.webp");
 
         $theme->openBody();
         HTMLInterface::openContainer();
@@ -13,7 +13,7 @@ class AventadorRenderer implements PageRenderer {
 
         $imgDiv = new NiceDiv(8);
         $imgDiv->open();
-        HTMLInterface::placeImageWithWidth($avnImage, 750);
+        HTMLInterface::placeImageWithWidth($avtImage, 750);
         $imgDiv->close();
         $div->separate();
 
@@ -22,7 +22,7 @@ class AventadorRenderer implements PageRenderer {
         $titleModifier = WebModifier::createInstance();
         $titleModifier->styler->pushFontFaceStyle("Queen");
         $titleModifier->styler->pushStyle("font-size", "2rem");
-        HTMLInterface::placeText("Lamborghini Aventador", $titleModifier);
+        HTMLInterface::placeText("Lamborghini Avetify", $titleModifier);
         $titleDiv->close();
         $div->separate();
 
@@ -31,7 +31,7 @@ class AventadorRenderer implements PageRenderer {
         $versionModifier = WebModifier::createInstance();
         $versionModifier->styler->pushFontFaceStyle("Varsity");
         $versionModifier->styler->pushStyle("font-size", "1.25rem");
-        HTMLInterface::placeText("Version: " . AVENTADOR_VERSION, $versionModifier);
+        HTMLInterface::placeText("Version: " . AVETIFY_VERSION, $versionModifier);
         $versionDiv->close();
 
         $div->close();
@@ -40,7 +40,7 @@ class AventadorRenderer implements PageRenderer {
     }
 }
 
-class AventadorTheme extends GreenTheme {
+class AvetifyTheme extends GreenTheme {
     public function appendBodyStyles() {
         Styler::addStyle("display", "flex");
         Styler::addStyle("justify-content", "center");

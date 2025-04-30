@@ -2,8 +2,8 @@
 
 class GreenTheme extends ThemesManager {
     public function moreHeaderTags(){
-        self::importStyle(Routing::browserPathFromAventador("themes/green/styles.css"));
-        self::importJS(Routing::browserPathFromAventador("themes/green/scripts.js"));
+        self::importStyle(Routing::browserPathFromAvetify("themes/green/styles.css"));
+        self::importJS(Routing::browserPathFromAvetify("themes/green/scripts.js"));
     }
 
     public function openNavbar(){

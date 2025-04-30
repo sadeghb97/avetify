@@ -122,26 +122,26 @@ class ManageGalleryLister extends SBLister {
         if($this->galleryRepo->parentRelativePath){
             $prevRepo = $this->galleryRepo->parentRelativePath;
             $prevLink = Routing::addParamToCurrentLink("gp", $prevRepo);
-            $prevButton = new AbsoluteButton(Routing::getAvnImage("arrow_left.svg"),
+            $prevButton = new AbsoluteButton(Routing::getAvtImage("arrow_left.svg"),
                 ["top" => "20px", "left" => "20px"],
                 "redir('" . $prevLink . "');");
             $prevButton->place();
         }
 
         if(!$this->galleryRepo->readOnly) {
-            $addButton = new AbsoluteButton(Routing::getAvnImage("add_box.svg"),
+            $addButton = new AbsoluteButton(Routing::getAvtImage("add_box.svg"),
                 ["bottom" => "20px", "left" => "20px"], "addVirtualGallery()");
             $addButton->place();
 
-            $updateButton = new AbsoluteButton(Routing::getAvnImage("commit.svg"),
+            $updateButton = new AbsoluteButton(Routing::getAvtImage("commit.svg"),
                 ["bottom" => "20px", "left" => "90px"], "updateGalleryConfigs(jsArgs)");
             $updateButton->place();
 
-            $submitButton = new AbsoluteButton(Routing::getAvnImage("send.svg"),
+            $submitButton = new AbsoluteButton(Routing::getAvtImage("send.svg"),
                 ["bottom" => "20px", "right" => "20px"], "submitGalleries(jsArgs)");
             $submitButton->place();
 
-            $resetButton = new AbsoluteButton(Routing::getAvnImage("layers_clear.svg"),
+            $resetButton = new AbsoluteButton(Routing::getAvtImage("layers_clear.svg"),
                 ["bottom" => "20px", "right" => "90px"], "resetGalleryConfigs()");
             $resetButton->place();
         }

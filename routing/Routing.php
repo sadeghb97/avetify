@@ -1,38 +1,38 @@
 <?php
 
 class Routing {
-    public static function getAventadorRoot() : string {
-        global $AVENTADOR_ROOT_PATH;
-        return $AVENTADOR_ROOT_PATH;
+    public static function getAvetifyRoot() : string {
+        global $AVETIFY_ROOT_PATH;
+        return $AVETIFY_ROOT_PATH;
     }
 
-    public static function getAventadorPhysicalRoot() : string {
-        global $AVENTADOR_PHYSICAL_ROOT_PATH;
-        if(isCli()) return $AVENTADOR_PHYSICAL_ROOT_PATH;
+    public static function getAvetifyPhysicalRoot() : string {
+        global $AVETIFY_PHYSICAL_ROOT_PATH;
+        if(isCli()) return $AVETIFY_PHYSICAL_ROOT_PATH;
         return "";
     }
 
-    public static function serverPathFromAventador($path) : string {
-        return self::getAventadorPhysicalRoot() .
-            $_SERVER['DOCUMENT_ROOT'] . self::getAventadorRoot() . $path;
+    public static function serverPathFromAvetify($path) : string {
+        return self::getAvetifyPhysicalRoot() .
+            $_SERVER['DOCUMENT_ROOT'] . self::getAvetifyRoot() . $path;
     }
 
     public static function serverRootPath($path) : string {
-        return self::getAventadorPhysicalRoot() .
-            self::removeRedundantPath($_SERVER['DOCUMENT_ROOT'] . self::getAventadorRoot() . '../') .
+        return self::getAvetifyPhysicalRoot() .
+            self::removeRedundantPath($_SERVER['DOCUMENT_ROOT'] . self::getAvetifyRoot() . '../') .
             $path;
     }
 
-    public static function browserPathFromAventador($path) : string {
-        return self::getAventadorRoot() . $path;
+    public static function browserPathFromAvetify($path) : string {
+        return self::getAvetifyRoot() . $path;
     }
 
-    public static function getAvnImage($path) : string {
-        return self::browserPathFromAventador("assets/img/" . $path);
+    public static function getAvtImage($path) : string {
+        return self::browserPathFromAvetify("assets/img/" . $path);
     }
 
     public static function browserRootPath($path) : string {
-        return self::removeRedundantPath(self::getAventadorRoot() . '../') . $path;
+        return self::removeRedundantPath(self::getAvetifyRoot() . '../') . $path;
     }
 
     public static function serverPathToBrowserPath($serverPath) : string {

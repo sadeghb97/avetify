@@ -9,7 +9,7 @@ class CountriesTable extends JSONTable {
 
     public function __construct(){
         parent::__construct([],
-            Routing::serverPathFromAventador("repo/countries/countries.json"), "countries");
+            Routing::serverPathFromAvetify("repo/countries/countries.json"), "countries");
 
         $this->isSortable = false;
 

@@ -6,8 +6,8 @@ class ThemesManager {
     public string $ROOT_PATH = "";
 
     public function __construct(){
-        global $AVENTADOR_ROOT_PATH;
-        $this->ROOT_PATH = $AVENTADOR_ROOT_PATH;
+        global $AVETIFY_ROOT_PATH;
+        $this->ROOT_PATH = $AVETIFY_ROOT_PATH;
     }
 
     public function placeHeader($title){
@@ -30,7 +30,7 @@ class ThemesManager {
         $this->loadFavicon();
         self::importMainStyles();
         $this->importMainJSInterface();
-        $this->importAvnJSFields();
+        $this->importAvtJSFields();
         $this->importJoshButtons();
         $this->importGeneralFonts();
         $this->importContextMenuStyles();
@@ -72,12 +72,12 @@ class ThemesManager {
     }
 
     public static function importCropperTools(){
-        self::importStyle(Routing::browserPathFromAventador("externals/cropper/cropper.min.css"));
-        self::importJS(Routing::browserPathFromAventador("externals/cropper/cropper.min.js"));
-        self::importJS(Routing::browserPathFromAventador("themes/assets/avn_cropper.js"));
+        self::importStyle(Routing::browserPathFromAvetify("externals/cropper/cropper.min.css"));
+        self::importJS(Routing::browserPathFromAvetify("externals/cropper/cropper.min.js"));
+        self::importJS(Routing::browserPathFromAvetify("themes/assets/avt_cropper.js"));
     }
 
-    public function importAvnJSFields(){
+    public function importAvtJSFields(){
         self::importJS($this->ROOT_PATH . "fields/fields.js");
     }
 
@@ -86,7 +86,7 @@ class ThemesManager {
     }
 
     public static function importMainStyles(){
-        self::importStyle(Routing::browserPathFromAventador("themes/assets/main.css"));
+        self::importStyle(Routing::browserPathFromAvetify("themes/assets/main.css"));
     }
 
     public function importBootstrap(){
@@ -108,15 +108,15 @@ class ThemesManager {
     }
 
     public static function importContextMenuStyles(){
-        self::importStyle(Routing::browserPathFromAventador("themes/assets/context_menu.css"));
+        self::importStyle(Routing::browserPathFromAvetify("themes/assets/context_menu.css"));
     }
 
     public static function importListerStyles(){
-        self::importStyle(Routing::browserPathFromAventador("lister/lister.css"));
+        self::importStyle(Routing::browserPathFromAvetify("lister/lister.css"));
     }
 
     public static function importSortableJS(){
-        ThemesManager::importJS(Routing::browserPathFromAventador("lister/sortable.js"));
+        ThemesManager::importJS(Routing::browserPathFromAvetify("lister/sortable.js"));
     }
 
     public function importGeneralFonts(){

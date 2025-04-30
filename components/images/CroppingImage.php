@@ -5,7 +5,7 @@ class CroppingImage extends CroppableImage {
         try {
             $gumletImage = new \Gumlet\ImageResize($this->serverSrc);
             $orgFilename = new Filename($this->serverSrc);
-            $copyFn = Routing::serverRootPath('.avnfiles/')
+            $copyFn = Routing::serverRootPath('.avtfiles/')
                 . $orgFilename->pureName . '_' . time() . '.' . $orgFilename->extension;
             $gumletImage->freecrop($w, $h, $x, $y);
 

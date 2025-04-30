@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-REPO_URL="https://gitlab.com/sadeghb97/aventador"
+REPO_URL="https://gitlab.com/sadeghb97/avetify"
 
 CURRENT_DIR="$(pwd)"
 
@@ -15,7 +15,7 @@ fi
 echo "📁 Detected project name: $PROJECT_NAME"
 
 echo "🔄 Cloning the repository..."
-if git clone "$REPO_URL" ./aventador; then
+if git clone "$REPO_URL" ./avetify; then
     echo "✅ Repository cloned successfully."
 
     echo "📁 Creating lib directory and lib.php..."
@@ -23,32 +23,32 @@ if git clone "$REPO_URL" ./aventador; then
     cat > lib/lib.php <<EOF
 <?php
 
-define("AVENTADOR_ROOT", "/$PROJECT_NAME/aventador/");
+define("AVETIFY_ROOT", "/$PROJECT_NAME/avetify/");
 define("MAIN_PROXY", "127.0.0.1:2081");
 
-require_once __DIR__ . "/../aventador/aventador.php";
-initAventador(AVENTADOR_ROOT);
+require_once __DIR__ . "/../avetify/avetify.php";
+initAvetify(AVETIFY_ROOT);
 EOF
 
-    echo "📄 Creating aventador.php..."
-    cat > aventador.php <<'EOF'
+    echo "📄 Creating avetify.php..."
+    cat > avetify.php <<'EOF'
 <?php
 require_once "lib/lib.php";
 
-$avnRenderer = new AventadorRenderer();
-$avnRenderer->renderPage();
+$avtRenderer = new AvetifyRenderer();
+$avtRenderer->renderPage();
 EOF
 
     echo "📄 Creating index.php..."
     cat > index.php <<'EOF'
 <?php
-header("Location: aventador.php");
+header("Location: avetify.php");
 EOF
 
     echo "📝 Creating .gitignore..."
     cat > .gitignore <<'EOF'
-aventador
-.avnfiles
+avetify
+.avtfiles
 .idea
 .tmp
 test.php
@@ -62,13 +62,13 @@ else
 fi
 
 # Installation instructions:
-# 1. Save this script as ~/avncreate and make it executable:
-#    chmod +x ~/avncreate
+# 1. Save this script as ~/avtcreate and make it executable:
+#    chmod +x ~/avtcreate
 # 2. (Optional) Move it to ~/bin for global use:
 #    mkdir -p ~/bin
-#    mv ~/avncreate ~/bin/
+#    mv ~/avtcreate ~/bin/
 # 3. Add ~/bin to your PATH if it's not already:
 #    echo 'export PATH="$HOME/bin:$PATH"' >> ~/.bashrc
 #    source ~/.bashrc
 # 4. Now you can run it from anywhere with:
-#    avncreate
+#    avtcreate

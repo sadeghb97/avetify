@@ -132,7 +132,7 @@ require_once "themes/modern/cards.php";
 require_once "themes/modern/components.php";
 
 require_once "renderers/PageRenderer.php";
-require_once "renderers/AventadorRenderer.php";
+require_once "renderers/AvetifyRenderer.php";
 
 require_once "calc/DateStatsCalculator.php";
 require_once "calc/IRDateStatsCalculator.php";
@@ -141,15 +141,15 @@ require_once "repo/countries/WorldCountries.php";
 require_once "repo/countries/World.php";
 require_once "repo/countries/CountriesTable.php";
 
-$AVENTADOR_ROOT_PATH = "";
-$AVENTADOR_PHYSICAL_ROOT_PATH = "";
+$AVETIFY_ROOT_PATH = "";
+$AVETIFY_PHYSICAL_ROOT_PATH = "";
 
-define("AVENTADOR_VERSION", "0.11");
-define("AVENTADOR_BUILD", 2);
+define("AVETIFY_VERSION", "0.11");
+define("AVETIFY_BUILD", 2);
 
-function initAventador($rootPath, $physicalRoot = ""){
-    global $AVENTADOR_ROOT_PATH;
-    global $AVENTADOR_PHYSICAL_ROOT_PATH;
-    $AVENTADOR_ROOT_PATH = $rootPath;
-    $AVENTADOR_PHYSICAL_ROOT_PATH = $physicalRoot;
+function initAvetify($rootPath, $physicalRoot = ""){
+    global $AVETIFY_ROOT_PATH;
+    global $AVETIFY_PHYSICAL_ROOT_PATH;
+    $AVETIFY_ROOT_PATH = $rootPath;
+    $AVETIFY_PHYSICAL_ROOT_PATH = $physicalRoot;
 }
