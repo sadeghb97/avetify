@@ -26,6 +26,10 @@ function redir(newUrl, delay){
     else window.location.assign(newUrl);
 }
 
+function openTab(url){
+    window.open(url, '_blank');
+}
+
 function loadFormData(){
     const dataElement = document.getElementById("main_form_data");
     if(dataElement && formData) {

@@ -2,7 +2,7 @@
 class ManageGalleryLister extends SBLister {
     public int $maxTitleLength = 20;
     public bool $focusMode = true;
-    public bool $galleryMode = false;
+    public bool $galleryMode = true;
     protected int | null $cardImageWidth = 300;
 
     public function __construct(public GalleryRepo $galleryRepo){
@@ -127,11 +127,21 @@ class ManageGalleryLister extends SBLister {
         if($this->galleryRepo->parentRelativePath){
             $prevRepo = $this->galleryRepo->parentRelativePath;
             $prevLink = Routing::addParamToCurrentLink("gp", $prevRepo);
+
             $prevButton = new AbsoluteButton(Routing::getAvtImage("arrow_left.svg"),
                 ["top" => "20px", "left" => "20px"],
                 "redir('" . $prevLink . "');");
             $prevButton->place();
+
+            $prevCloneButton = new AbsoluteButton(Routing::getAvtImage("tab_duplicate.svg"),
+                ["top" => "70px", "left" => "20px"],
+                "openTab('" . $prevLink . "');");
+            $prevCloneButton->place();
         }
+
+        $toggleButton = new AbsoluteButton(Routing::getAvtImage("view_alt.svg"),
+            ["top" => "20px", "right" => "20px"], $this->jsToggleGalleryMode());
+        $toggleButton->place();
 
         if(!$this->galleryRepo->readOnly) {
             $addButton = new AbsoluteButton(Routing::getAvtImage("add_box.svg"),
@@ -210,7 +220,7 @@ class ManageGalleryLister extends SBLister {
         echo '<span class="magham-degree">' . "Sub Repos" . '</span>';
         echo '</div>';
 
-        echo '<div class="row" ';
+        echo '<div class="row focus-force" ';
         Styler::startAttribute();
         Styler::addStyle("overflow", "auto");
         Styler::addStyle("position", "relative");
@@ -229,11 +239,17 @@ class ManageGalleryLister extends SBLister {
 
     public function printSubRepo(GalleryRepo $subRepo, $itemRank){
         echo '<div class="grid-square" ';
+        Styler::startAttribute();
+        $this->appendCardWidthStyles();
+        Styler::closeAttribute();
         echo '>';
 
         $avatar = $subRepo->cover ?
             Routing::serverPathToBrowserPath($subRepo->path . $subRepo->cover->path) : "";
         echo '<img src="' . $avatar . '" class="lister-item-img" ';
+        Styler::startAttribute();
+        $this->appendImageWidthStyles();
+        Styler::closeAttribute();
         echo '/>';
 
         HTMLInterface::placeVerticalDivider(12);
@@ -270,5 +286,17 @@ class ManageGalleryLister extends SBLister {
 
         echo '</div>';
         echo '</div>';
+    }
+
+    function jsToggleGalleryMode(){
+        $out = "const container = document.getElementById('" . $this->containerId . "');";
+        $out .= ("if (container.classList.contains('focus')) {");
+        $out .= ("container.classList.remove('focus');");
+        $out .= ("container.classList.add('gallery');");
+        $out .= ("} else {");
+        $out .= ("container.classList.remove('gallery');");
+        $out .= ("container.classList.add('focus');");
+        $out .= ("}");
+        return $out;
     }
 }

@@ -138,6 +138,19 @@ code {
 	padding: 0 0 8px;
 }
 
+.focus-force .grid-square {
+	border-radius: 8px !important;
+	padding: 0 0 8px !important;
+}
+
+.grid-square-footer {}
+
+.gallery .grid-square-footer {
+	display: none;
+}
+
+.focus .grid-square-footer {}
+
 .lister-item-img {
 	height: 190px;
 	width: auto;
@@ -153,6 +166,10 @@ code {
 .focus .lister-item-img {
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
+}
+
+.focus-force .lister-item-img {
+	border-radius: 8px 8px 0 0 !important;
 }
 
 .lister-item-name {
