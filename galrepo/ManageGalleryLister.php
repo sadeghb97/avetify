@@ -263,22 +263,6 @@ class ManageGalleryLister extends SBLister {
 
         HTMLInterface::placeVerticalDivider(12);
 
-        echo '<div>';
-        if($this->isPrintRankEnabled()){
-            $rankStyler = new Styler();
-            $rankStyler->pushStyle("font-size", "0.875rem");
-            $rankStyler->pushStyle("font-weight", "bold");
-            echo '<span ';
-            $rankStyler->applyStyles();
-            echo ' >';
-            echo $itemRank;
-            echo '</span>';
-            echo '<span ';
-            $rankStyler->applyStyles();
-            echo '>: </span>';
-        }
-
-        $title = $this->getItemTitle($subRepo);
         $newPath = str_replace("/", "~", $subRepo->relativePath);
         $link = Routing::addParamToCurrentLink("gp", $newPath);
 
@@ -289,11 +273,27 @@ class ManageGalleryLister extends SBLister {
             HTMLInterface::closeTag();
         }
 
+        echo '<div>';
+        $rankModifier = WebModifier::createInstance();
+        $rankModifier->styler->pushStyle("font-size", "0.8rem");
+        $rankModifier->styler->pushStyle("font-weight", "bold");
+
+        if($this->isPrintRankEnabled()){
+            HTMLInterface::placeSpan($itemRank, $rankModifier);
+            HTMLInterface::placeSpan(": ", $rankModifier);
+        }
+
+        $title = $this->getItemTitle($subRepo);
         echo '<span class="lister-item-name">' . $title . '</span>';
 
-        if($link) HTMLInterface::closeLink();
+        if(count($subRepo->allRecords) > 0){
+            $subRepoImagesCount = count($subRepo->allRecords);
+            HTMLInterface::placeSpan(" (" . $subRepoImagesCount . ")", $rankModifier);
+        }
 
         echo '</div>';
+        if($link) HTMLInterface::closeLink();
+
         echo '</div>';
     }
 
