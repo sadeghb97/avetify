@@ -2,7 +2,7 @@
 class ManageGalleryLister extends SBLister {
     public int $maxTitleLength = 20;
     public bool $focusMode = true;
-    public bool $galleryMode = true;
+    public bool $galleryMode = false;
     protected int | null $cardImageWidth = 300;
 
     public function __construct(public GalleryRepo $galleryRepo){
