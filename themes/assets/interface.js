@@ -33,8 +33,14 @@ function loadFormData(){
     }
 }
 
-function copyToClipboard(text){
+function copyToClipboard(text, silent = false){
     navigator.clipboard.writeText(text)
+        .then(() => {
+            //alert("copied!");
+        })
+        .catch(err => {
+            console.error("Failed to copy: ", err);
+        });
 }
 
 function openUrlOnNewTab(url){

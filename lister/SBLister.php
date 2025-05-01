@@ -150,6 +150,10 @@ abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLin
         return "Show Image";
     }
 
+    public function getCopyImageWord() : string {
+        return "Copy Link";
+    }
+
     public function getRelegateWord() : string {
         return "Relegate";
     }
@@ -219,8 +223,12 @@ abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLin
 
         echo '<div class="context-menu-row">';
         if ($this->isOpenImageEnabled()) {
-            echo '<div class="item" style="width:' . $fullWidth . 'px" onclick="action(5, jsArgs)">';
+            echo '<div class="item" style="width:' . $halfWidth . 'px" onclick="action(5, jsArgs)">';
             echo $this->getOpenImageWord();
+            echo '</div>';
+
+            echo '<div class="item" style="width:' . $halfWidth . 'px" onclick="action(6, jsArgs)">';
+            echo $this->getCopyImageWord();
             echo '</div>';
         }
 

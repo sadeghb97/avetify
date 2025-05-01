@@ -140,6 +140,10 @@ function action(arg, menuArgs){
 		const triggeredImage = triggeredFile.firstElementChild.src
 		window.open(triggeredImage, '_blank');
 	}
+	else if(arg === 6){
+		const triggeredImage = triggeredFile.firstElementChild.src
+		copyToClipboard(triggeredImage)
+	}
 	hideContextMenu()
 }
 
