@@ -42,14 +42,15 @@ class EntityAvatarField extends EntityField {
         return $this;
     }
 
-    public function getCroppingImage(SBEntity $entity, $record) : CroppingImage {
+    public function getCroppingImage(SBEntity $entity, $record) : ?CroppingImage {
         $cid = $entity->setKey . "_" . $this->key;
         if($record instanceof SBEntityItem){
             $cid .= ("_" . $record->getItemId());
         }
+        $serverSrc = $this->getServerSrc($record);
 
-        if($this->croppingImage == null){
-            $this->croppingImage = new CroppingImage($this->getServerSrc($record),
+        if($this->croppingImage == null && file_exists($serverSrc)){
+            $this->croppingImage = new CroppingImage($serverSrc,
                 $cid, $this->targetImageType,
                 $this->getImageForcedRatio());
         }

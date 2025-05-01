@@ -296,7 +296,7 @@ abstract class SBEntity extends SetModifier {
                     $div->open();
 
                     if(!$avExists) {
-                        HTMLInterface::placeText("Avatar: ");
+                        HTMLInterface::placeText("$title: ");
                         $div->separate();
                     }
 
@@ -307,9 +307,10 @@ abstract class SBEntity extends SetModifier {
                     HTMLInterface::addAttribute("class", "empty");
                     Styler::startAttribute();
                     Styler::addStyle("font-size", "13pt");
-                    Styler::addStyle("margin-bottom", "15px");
                     Styler::closeAttribute();
                     HTMLInterface::closeSingleTag();
+
+                    HTMLInterface::placePostInput($key, "", $title . " Url");
 
                     if($avExists && !$avatarField->manualCrop){
                         $avatarModifier = WebModifier::createInstance();
@@ -529,10 +530,10 @@ abstract class SBEntity extends SetModifier {
                         move_uploaded_file($tmpFilename, $targetFilename);
                         $up = true;
                     }
-                    else if(isset($data[$af->key])){
+                    else if(!empty($data[$af->key])){
                         $avatarSrc = $data[$af->key];
                         $orgExtension = Filer::getFileExtension($avatarSrc);
-                        $targetFilename .= ('.' . $orgExtension);
+                        if($orgExtension) $targetFilename .= ('.' . $orgExtension);
                         $this->getNetworkFetcher()->downloadFile($avatarSrc, $targetFilename);
                         $up = true;
                     }
@@ -562,7 +563,8 @@ abstract class SBEntity extends SetModifier {
                         }
                     }
                     else if($curRecordObject) {
-                        $avatarField->getCroppingImage($this, $curRecordObject)->checkSubmit();
+                        $crImage = $avatarField->getCroppingImage($this, $curRecordObject);
+                        if($crImage) $crImage->checkSubmit();
                     }
                 }
             }

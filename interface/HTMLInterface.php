@@ -233,8 +233,8 @@
      }
 
      public static function applyInputIdentifiers($idSet, $nameSet, $identifier){
-         if($idSet) HTMLInterface::addAttribute("name", $identifier);
-         if($nameSet) HTMLInterface::addAttribute("id", $identifier);
+         if($idSet) HTMLInterface::addAttribute("id", $identifier);
+         if($nameSet) HTMLInterface::addAttribute("name", $identifier);
      }
 
      public static function placeSpan(string $text, WebModifier | null $modifier = null){
