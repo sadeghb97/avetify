@@ -250,6 +250,15 @@ function submitGalleries(moreArgs){
 	}
 }
 
+function renameGalleries(moreArgs){
+	if(confirm("Images permanently will rename.\nare you sure?")){
+		const form = document.getElementById("lister_form");
+		const submitTypeElement = document.getElementById("submit_type");
+		submitTypeElement.value = "rename"
+		if(listerSubmit(moreArgs)) form.submit()
+	}
+}
+
 for(let i=0; maxGrids>i; i++) {
 	grids[i] = document.getElementById('gridDemo' + i)
 	if(grids[i]) {

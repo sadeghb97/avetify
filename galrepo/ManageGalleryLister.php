@@ -3,6 +3,7 @@ class ManageGalleryLister extends SBLister {
     public int $maxTitleLength = 20;
     public bool $focusMode = true;
     public bool $galleryMode = false;
+    public bool $noCacheMode = true;
     protected int | null $cardImageWidth = 300;
 
     public function __construct(public GalleryRepo $galleryRepo){
@@ -50,7 +51,8 @@ class ManageGalleryLister extends SBLister {
 
     public function getSecondarySortFactor($item){
         if($item->galleryIndex > 0) return $item->imageIndex;
-        return $item->path;
+        if($item->imageIndex < $this->galleryRepo->bigIndex) return $item->imageIndex;
+        return "zZ" . "_" . $item->path;
     }
 
     public function isOpenImageEnabled(): bool{
@@ -156,8 +158,12 @@ class ManageGalleryLister extends SBLister {
                 ["bottom" => "20px", "right" => "20px"], "submitGalleries(jsArgs)");
             $submitButton->place();
 
+            $submitButton = new AbsoluteButton(Routing::getAvtImage("pen.svg"),
+                ["bottom" => "20px", "right" => "90px"], "renameGalleries(jsArgs)");
+            $submitButton->place();
+
             $resetButton = new AbsoluteButton(Routing::getAvtImage("layers_clear.svg"),
-                ["bottom" => "20px", "right" => "90px"], "resetGalleryConfigs()");
+                ["bottom" => "20px", "right" => "160px"], "resetGalleryConfigs()");
             $resetButton->place();
         }
     }
@@ -194,8 +200,8 @@ class ManageGalleryLister extends SBLister {
                 }
             }
 
-            for ($i = 1; $galleriesCount > $i; $i++) {
-                $galId = $virtualFoldersMap[$i];
+            for ($i = 0; $galleriesCount > $i; $i++) {
+                $galId = $i > 0 ? $virtualFoldersMap[$i] : "";
                 foreach ($lists[$i] as $imageIndex => $image) {
                     $galleriesItems[$image] = [
                         "gid" => $galId,
@@ -207,7 +213,10 @@ class ManageGalleryLister extends SBLister {
             $this->galleryRepo->storeConfigs($virtualGalleries, $galleriesItems);
             $this->galleryRepo->loadRecords();
 
-            if($submitType == "finish"){
+            if($submitType == "rename"){
+                $this->galleryRepo->renameRepo();
+            }
+            else if($submitType == "finish"){
                 $this->galleryRepo->arrangeRepo();
             }
         }

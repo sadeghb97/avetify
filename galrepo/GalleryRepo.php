@@ -1,7 +1,10 @@
 <?php
 
 class GalleryRepo {
-    private static array $extensions = ["jpg", "jpeg", "png", "webp"];
+    private static array $extensions = ["jpg", "jpeg", "png", "webp", "gif"];
+
+    public array $originalVirtualGalsMap = [];
+    public array $originalRecordsConfMap = [];
 
     public array $virtualFolders = [];
     public string $path;
@@ -15,6 +18,7 @@ class GalleryRepo {
     public array $allRecords = [];
 
     public null | GalleryRecord $cover = null;
+    public int $bigIndex = 0;
 
     public function __construct(string $relativePath, public bool $recursive = true,
                                 public bool $readOnly = false){
@@ -41,13 +45,15 @@ class GalleryRepo {
         if(file_exists($conFilename)) {
             $rawConfs = file_get_contents($conFilename);
             $configs = json_decode($rawConfs, true);
+            $this->originalVirtualGalsMap = $configs['virtual_gals'];
+            $this->originalRecordsConfMap = $configs['items'];
         }
 
         $this->virtualFolders = [];
         $this->allRecords = [];
 
         $allVirtualGalNames = [];
-        foreach ($configs['virtual_gals'] as $vgKey => $vg){
+        foreach ($this->originalVirtualGalsMap as $vgKey => $vg){
             $allVirtualGalNames[] = $vgKey;
         }
         natcasesort($allVirtualGalNames);
@@ -74,20 +80,22 @@ class GalleryRepo {
             }
         }
 
-        $confRecords = $configs['items'];
+        $confRecords = $this->originalRecordsConfMap;
 
+        $this->bigIndex = count($files) + 1000;
         foreach ($files as $file){
             $adjustedFilename = Routing::prunePath($file, $this->path);
 
+            $fileGalId = "";
+            $imageIndex = $this->bigIndex;
             if(isset($confRecords[$adjustedFilename])){
                 $fileGalId = $confRecords[$adjustedFilename]['gid'];
                 $imageIndex = $confRecords[$adjustedFilename]['ind'];
-                $this->allRecords[] = new GalleryRecord($this->virtualFolders[$fileGalId]['index'],
-                    $adjustedFilename, $imageIndex);
             }
-            else {
-                $this->allRecords[] = new GalleryRecord(0, $adjustedFilename, 0);
-            }
+
+            $this->allRecords[] = new GalleryRecord(
+                $fileGalId ? $this->virtualFolders[$fileGalId]['index'] : 0,
+                $adjustedFilename, $imageIndex);
         }
 
         if(count($this->allRecords) > 0){
@@ -101,7 +109,7 @@ class GalleryRepo {
             $virtualGalsIdMap[$vf['index']] = $vf['id'];
         }
 
-        foreach ($this->allRecords as $imageIndex => $record){
+        foreach ($this->allRecords as $recordIndex => $record){
             if($record->galleryIndex > 0) {
                 $currentServerFilename = $this->path . $record->path;
                 $targetDir = $this->path . $virtualGalsIdMap[$record->galleryIndex] . '/';
@@ -114,6 +122,79 @@ class GalleryRepo {
             }
         }
         $this->resetConfigs();
+    }
+
+    public function renameRepo(){
+        $virtualGalsIdMap = [];
+        foreach ($this->virtualFolders as $vf){
+            $virtualGalsIdMap[$vf['index']] = $vf['id'];
+        }
+
+        $recordsIndexMap = [];
+        foreach ($this->allRecords as $recordIndex => $record){
+            $recordsIndexMap[$record->path] = $recordIndex;
+        }
+
+        foreach ($this->allRecords as $recordIndex => $record){
+            $currentServerFilename = $this->path . $record->path;
+            $pureFilename = Filer::getPureFilename($currentServerFilename);
+            $orgExtension = Filer::getFileExtension($currentServerFilename);
+            if($orgExtension) $orgExtension = "." . $orgExtension;
+            $vgPreName = $record->galleryIndex > 0 ?
+                $virtualGalsIdMap[$record->galleryIndex] . "_" : "";
+            $targetIndex = $record->imageIndex + 1;
+            $targetPureStarterName = $vgPreName . $targetIndex;
+            $targetPureFilename = $targetPureStarterName . $orgExtension;
+            $targetFilename = $this->path . $targetPureFilename;
+
+            if($currentServerFilename != $targetFilename) {
+                if(file_exists($targetFilename)){
+                    $tRes = $this->temporaryRename($targetFilename, $targetPureFilename,
+                        $targetPureStarterName, $orgExtension,
+                        $this->allRecords, $recordsIndexMap);
+
+                    if(!$tRes){
+                        Printer::warningPrint("Something went wrong!");
+                        return;
+                    }
+                }
+
+                if (rename($currentServerFilename, $targetFilename)) {
+                    echo $currentServerFilename . ' -> ' . $targetFilename . '<br>';
+                    if (isset($this->originalRecordsConfMap[$pureFilename])) {
+                        $imageDetails = $this->originalRecordsConfMap[$pureFilename];
+                        unset($this->originalRecordsConfMap[$pureFilename]);
+                        $this->originalRecordsConfMap[$targetPureFilename] = $imageDetails;
+                    }
+                }
+            }
+
+            $this->storeConfigs($this->originalVirtualGalsMap, $this->originalRecordsConfMap);
+            $this->loadRecords();
+        }
+    }
+
+    public function temporaryRename($fullFn, $pureFn, $starter, $extension, &$recs, &$indexMap) : bool {
+        $newStarter = $starter . "_" . time();
+        $newPureFn = $newStarter . $extension;
+        $newFullFn = $this->path . $newPureFn;
+
+        echo "Temp Renaming $fullFn ---> $newFullFn" . br();
+
+        if(rename($fullFn, $newFullFn)){
+            $recIndex = $indexMap[$pureFn];
+            $recs[$recIndex]->path = $newPureFn;
+            unset($indexMap[$pureFn]);
+            $indexMap[$newPureFn] = $recIndex;
+
+            if(!empty($this->originalRecordsConfMap[$pureFn])){
+                $details = $this->originalRecordsConfMap[$pureFn];
+                unset($this->originalRecordsConfMap[$pureFn]);
+                $this->originalRecordsConfMap[$newPureFn] = $details;
+                return true;
+            }
+        }
+        return false;
     }
 
     public static function getSimplifiedFilename($filename) : string {

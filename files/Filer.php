@@ -26,12 +26,16 @@ class Filer {
         return "";
     }
 
-    public static function getPureFilename($filename) : string {
+    public static function pruneLastSlash(string $filename) : string {
         $cloneFilename = $filename;
         if(str_ends_with($cloneFilename, "/")){
-            $cloneFilename = substr($cloneFilename, 0, strlen($cloneFilename) - 1);
+            return substr($cloneFilename, 0, strlen($cloneFilename) - 1);
         }
+        return $filename;
+    }
 
+    public static function getPureFilename($filename) : string {
+        $cloneFilename = self::pruneLastSlash($filename);
         $pos = strrpos($cloneFilename, "/");
         if($pos === false) return $cloneFilename;
         if($pos == (strlen($cloneFilename) - 1)) return "";
@@ -39,11 +43,7 @@ class Filer {
     }
 
     public static function getParentFilename($filename) : string {
-        $cloneFilename = $filename;
-        if(str_ends_with($cloneFilename, "/")){
-            $cloneFilename = substr($cloneFilename, 0, strlen($cloneFilename) - 1);
-        }
-
+        $cloneFilename = self::pruneLastSlash($filename);
         $pos = strrpos($cloneFilename, "/");
         if($pos == false) return "";
         return substr($cloneFilename, 0, $pos);

@@ -6,6 +6,7 @@ abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLin
     public int $maxTitleLength = 0;
     public bool $focusMode = false;
     public bool $galleryMode = false;
+    public bool $noCacheMode = false;
     protected int | null $cardImageWidth = null;
     protected float | null $cardImageHeightMultiplier = null;
     public WebModifier $containerModifier;
@@ -376,6 +377,8 @@ abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLin
         HTMLInterface::closeTag();
 
         $avatar = $this->getItemImage($item);
+        if($this->noCacheMode) $avatar .= ("?" . time());
+
         echo '<img ';
         HTMLInterface::addAttribute(Attrs::src, $avatar);
         Styler::classStartAttribute();
