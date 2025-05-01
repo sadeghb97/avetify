@@ -1,5 +1,29 @@
 <?php
 
+interface HaveTitle {
+    public function getItemTitle() : string;
+}
+
+interface HaveID {
+    public function getItemId() : string;
+}
+
+interface HaveImage {
+    public function getItemImage() : string;
+}
+
+interface HaveLink {
+    public function getItemLink() : string;
+}
+
+interface HaveAltLink {
+    public function getItemAltLink() : string;
+}
+
+interface HaveImageRatio {
+    public function getItemRatio() : float;
+}
+
 interface EntityTitle {
     public function getItemTitle($record) : string;
 }

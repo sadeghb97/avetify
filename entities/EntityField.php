@@ -5,6 +5,7 @@ class EntityField
     public ?string $title = null;
     public ?string $type = null;
     public ?string $path = null;
+    public ?int $targetImageType = null;
     public ?string $targetExt = null;
     public ?string $maxImageSize = null;
     public int $forcedWidthDimension = 0;
@@ -81,18 +82,26 @@ class EntityField
         $this->maxImageSize = $imageSize;
         return $this;
     }
+
     public function setImageForcedRatio(int $widthDim, int $heightDim) : EntityField {
         $this->forcedWidthDimension = $widthDim;
         $this->forcedHeightDimension = $heightDim;
         return $this;
     }
 
-    public function setAvatar(string $path, string $extension = "jpg") : EntityField {
+    public function getImageForcedRatio() : float {
+        if($this->forcedWidthDimension > 0 && $this->forcedHeightDimension > 0)
+            return $this->forcedWidthDimension / $this->forcedHeightDimension;
+        return 0;
+    }
+
+    public function setAvatar(string $path, string $imageType = IMAGETYPE_JPEG) : EntityField {
         $this->special = true;
         $this->writable = true;
         $this->avatar = true;
         $this->path = $path;
-        $this->targetExt = $extension;
+        $this->targetImageType = $imageType;
+        $this->targetExt = ImageUtils::getImageExtension($imageType);
         return $this;
     }
 

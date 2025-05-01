@@ -1,6 +1,7 @@
 let lastCropper = null;
 let increasingMode = true;
 function setCropConfigs(event, imageId, ratio){
+    console.log("R", ratio)
     const clickRelativeX = event.offsetX;
     const clickRelativeY = event.offsetY;
 
@@ -41,7 +42,7 @@ function setCropConfigs(event, imageId, ratio){
 
     setTimeout(() => {
         const newWidth = 200;
-        const newHeight = 200 / ratio
+        const newHeight = (ratio > 0) ? 200 / ratio : 200
         lastCropper.setCropBoxData({
             left: clickRelativeX - (newWidth / 2),
             top: clickRelativeY - (newHeight / 2),

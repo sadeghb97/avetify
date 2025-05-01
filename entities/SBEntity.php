@@ -238,6 +238,7 @@ abstract class SBEntity extends SetModifier {
         $pk = $this->getCurrentRecordPk();
         $record = $this->getCurrentRecord();
         if($pk && !$record) return;
+        $curRecordObject = $this->getRecordObject($record);
 
         HTMLInterface::placeVerticalDivider(12);
         echo '<div style="width: 80%; margin: auto;">';
@@ -270,16 +271,12 @@ abstract class SBEntity extends SetModifier {
                 $value = isset($record[$key]) ? $record[$key] : null;
 
                 if($field->avatar){
-                    $div = new NiceDiv(12);
-                    $div->addStyle("margin-top", "8px");
-                    $div->addStyle("margin-bottom", "8px");
-                    $div->open();
-
                     /** @var EntityAvatarField $avatarField */
                     $avatarField = $field;
 
                     $avExists = false;
                     $avBrowserSrc = "";
+                    $avServerSrc = "";
 
                     if($record){
                         $avServerSrc = $avatarField->getServerSrc($record);
@@ -288,6 +285,15 @@ abstract class SBEntity extends SetModifier {
                             $avExists = true;
                         }
                     }
+
+                    if($avExists && $avatarField->manualCrop){
+                        $avatarField->presentCroppingImage($this, $curRecordObject);
+                    }
+
+                    $div = new NiceDiv(12);
+                    $div->addStyle("margin-top", "8px");
+                    $div->addStyle("margin-bottom", "8px");
+                    $div->open();
 
                     if(!$avExists) {
                         HTMLInterface::placeText("Avatar: ");
@@ -305,7 +311,7 @@ abstract class SBEntity extends SetModifier {
                     Styler::closeAttribute();
                     HTMLInterface::closeSingleTag();
 
-                    if($avExists){
+                    if($avExists && !$avatarField->manualCrop){
                         $avatarModifier = WebModifier::createInstance();
                         $avatarModifier->styler->pushStyle("margin-bottom", "8px");
                         HTMLInterface::placeImageWithHeight($avBrowserSrc . "?" . time(), 120,
@@ -467,6 +473,7 @@ abstract class SBEntity extends SetModifier {
             $data = $_POST;
             $entityPk = isset($data['entity_pk']) ? $data['entity_pk'] : null;
             $currentRecord = $entityPk ? $this->getRecord($entityPk) : null;
+            $curRecordObject = $this->getRecordObject($currentRecord);
 
             $avatarFields = [];
             foreach ($this->dataFields() as $field){
@@ -537,8 +544,11 @@ abstract class SBEntity extends SetModifier {
                             $curMaxSize = ImageUtils::getMaxDimSize($targetFilename);
                             if($curMaxSize > $af->maxImageSize) $convertRequired = true;
                         }
-                        if(!$convertRequired && $af->forcedWidthDimension > 0 &&
-                            $af->forcedHeightDimension > 0){
+
+                        $finalWD = $avatarField->manualCrop ? 0 : $af->forcedWidthDimension;
+                        $finalHD = $avatarField->manualCrop ? 0 : $af->forcedHeightDimension;
+
+                        if(!$convertRequired && $finalWD > 0 && $finalHD > 0){
                             $curDiff = ImageUtils::getRatioDiffWithDims($targetFilename,
                                 $af->forcedWidthDimension, $af->forcedHeightDimension);
                             if($curDiff > 0.01) $convertRequired = true;
@@ -548,9 +558,11 @@ abstract class SBEntity extends SetModifier {
                         if($convertRequired) {
                             ImageUtils::convert($targetFilename,
                                 $extensionRequired ? $af->targetExt : null,
-                                $af->maxImageSize, $af->forcedWidthDimension,
-                                $af->forcedHeightDimension);
+                                $af->maxImageSize, $finalWD, $finalHD);
                         }
+                    }
+                    else if($curRecordObject) {
+                        $avatarField->getCroppingImage($this, $curRecordObject)->checkSubmit();
                     }
                 }
             }
@@ -591,16 +603,17 @@ abstract class SBEntity extends SetModifier {
         }
     }
 
-    public function getRecordObject($record) : SBEntityItem | null {
-        if($record instanceof SBEntityItem) return $record;
-        return $this->createEntityItem($record);
+    public function createEntityItem(array $record) : SBEntityItem | array {
+        return $record;
     }
 
-    public function createEntityItem($record) : SBEntityItem | null {
+    public function getRecordObject(SBEntityItem|array|null $record) : SBEntityItem | array | null {
+        if($record instanceof SBEntityItem) return $record;
+        if(is_array($record)) return $this->createEntityItem($record);
         return null;
     }
 
-    public function getCurrentRecordObject() : SBEntityItem | null {
+    public function getCurrentRecordObject() : SBEntityItem | array | null {
         $record = $this->getCurrentRecord();
         if(!$record) return null;
         return $this->getRecordObject($record);

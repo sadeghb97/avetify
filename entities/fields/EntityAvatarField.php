@@ -1,9 +1,15 @@
 <?php
 
 class EntityAvatarField extends EntityField {
-    public function __construct(string $path, public string $uniqueKey, string $targetExt = "jpg"){
+    protected CroppingImage | null $croppingImage = null;
+    public bool $manualCrop = false;
+    public int $width = 0;
+    public int $height = 0;
+
+    public function __construct(string $path, public string $uniqueKey,
+                                int $imageType = IMAGETYPE_JPEG){
         parent::__construct("avatar", "Avatar");
-        $this->setAvatar($path, $targetExt);
+        $this->setAvatar($path, $imageType);
     }
 
     private function noExtRelativeSrc($record) : string {
@@ -29,5 +35,37 @@ class EntityAvatarField extends EntityField {
 
     public function getServerSrc($record) : string {
         return Routing::serverRootPath($this->getRelativeSrc($record));
+    }
+
+    public function setManualCrop() : EntityAvatarField {
+        $this->manualCrop = true;
+        return $this;
+    }
+
+    public function getCroppingImage(SBEntity $entity, $record) : CroppingImage {
+        $cid = $entity->setKey . "_" . $this->key;
+        if($record instanceof SBEntityItem){
+            $cid .= ("_" . $record->getItemId());
+        }
+
+        if($this->croppingImage == null){
+            $this->croppingImage = new CroppingImage($this->getServerSrc($record),
+                $cid, $this->targetImageType,
+                $this->getImageForcedRatio());
+        }
+        return $this->croppingImage;
+    }
+
+    public function presentCroppingImage(SBEntity $entity, $record){
+        $niceDiv = new NiceDiv(8);
+        $niceDiv->open();
+
+        $croppingImage = $this->getCroppingImage($entity, $record);
+
+        if($this->width > 0) $croppingImage->presentFromWidth($this->width);
+        else if($this->height > 0) $croppingImage->presentFromHeight($this->height);
+        else $croppingImage->presentFromWidth(350);
+
+        $niceDiv->close();
     }
 }

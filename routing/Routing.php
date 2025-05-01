@@ -31,6 +31,12 @@ class Routing {
         return self::browserPathFromAvetify("assets/img/" . $path);
     }
 
+    public static function getBackupFilesDir() : string {
+        $dir = Routing::serverRootPath('.avtfiles/');
+        if(!file_exists($dir)) mkdir($dir);
+        return $dir;
+    }
+
     public static function browserRootPath($path) : string {
         return self::removeRedundantPath(self::getAvetifyRoot() . '../') . $path;
     }

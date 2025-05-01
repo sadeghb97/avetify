@@ -26,6 +26,20 @@ function safeLog($l){
         padding-bottom: 20px;">' . $l . '</textarea>' . br();
 }
 
+function printPreArray($array, $name = "Array") {
+    echo '<div ';
+    Styler::startAttribute();
+    Styler::addStyle(CSS::marginTop, "20px");
+    Styler::addStyle(CSS::marginBottom, "20px");
+    Styler::addStyle(CSS::textAlign, "left");
+    Styler::addStyle(CSS::backgroundColor, "#dee9e7");
+    Styler::closeAttribute();
+    HTMLInterface::closeTag();
+    echo '##' . $name . '<br><pre>';
+    print_r($array);
+    HTMLInterface::closeDiv();
+}
+
 function classicMenu(array $rows, $margin = 16){
     $fontSize = "14pt";
     $splitterContents = "&nbsp;&nbsp;|&nbsp;&nbsp;";

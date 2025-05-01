@@ -22,6 +22,7 @@ require_once "models/DataModel.php";
 
 require_once "files/Filer.php";
 require_once "files/ImageUtils.php";
+require_once "files/RecycleCan.php";
 
 require_once "utils/cli_utils.php";
 require_once "utils/echo_utils.php";

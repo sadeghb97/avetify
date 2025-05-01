@@ -1,9 +1,9 @@
 <?php
 
 class ImageCropper extends CroppableImage {
-    public function __construct(string $serverSrc, string $id, float $ratio = 0, int $imageType = IMAGETYPE_JPEG,
+    public function __construct(string $serverSrc, string $id, float $targetRatio = 0, int $imageType = IMAGETYPE_JPEG,
                                 public string $targetSrc = ""){
-        parent::__construct($serverSrc, $id, $imageType, $ratio);
+        parent::__construct($serverSrc, $id, $imageType, $targetRatio);
     }
 
     public function handleSubmit($x, $y, $w, $h) : bool {

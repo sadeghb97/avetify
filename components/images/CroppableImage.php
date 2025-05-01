@@ -3,17 +3,18 @@
 class CroppableImage {
     public function __construct(public string $serverSrc, public string $id,
                                 public int $imageType = IMAGETYPE_JPEG,
-                                public float $ratio = 0
+                                public float $targetRatio = 0,
+                                public float $originalRatio = 0
     ){
-        if(!$this->ratio){
-            $this->ratio = ImageUtils::getRatio($this->serverSrc);
+        if(!$this->originalRatio){
+            $this->originalRatio = ImageUtils::getRatio($this->serverSrc);
         }
     }
 
-    private function present(int $size, bool $withWidth = true){
+    private function _present(int $size, bool $withWidth = true){
         ?>
         <script>
-            <?php echo $this->getJSRatioVarName(); ?> = <?php echo $this->ratio; ?>;
+            <?php echo $this->getJSRatioVarName(); ?> = <?php echo $this->targetRatio; ?>;
         </script>
         <?php
 
@@ -53,18 +54,18 @@ class CroppableImage {
         Styler::addStyle("width", $size . "px");
         Styler::closeAttribute();
         HTMLInterface::closeTag();
-        $this->present($size, true);
+        $this->_present($size, true);
         HTMLInterface::closeDiv();
     }
 
     public function presentFromHeight(int $size){
-        $widthSize = $size * $this->ratio;
+        $widthSize = $size * $this->originalRatio;
         echo '<div ';
         Styler::startAttribute();
         Styler::addStyle("width", $widthSize . "px");
         Styler::closeAttribute();
         HTMLInterface::closeTag();
-        $this->present($size, false);
+        $this->_present($size, false);
         HTMLInterface::closeDiv();
     }
 

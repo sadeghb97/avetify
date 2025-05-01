@@ -9,8 +9,11 @@ class DBTable extends SBTable {
         parent::__construct($fields, $this->fetchDBRecords(), $key, true);
     }
 
-    public function getItemId($item): string {
-        return EntityUtils::getSimpleValue($item, $this->primaryKey);
+    public function getItemId($record): string {
+        $id = parent::getItemId($record);
+        if($id) return $id;
+
+        return EntityUtils::getSimpleValue($record, $this->primaryKey);
     }
 
     public function handleSubmittedFields($itemsFields) {

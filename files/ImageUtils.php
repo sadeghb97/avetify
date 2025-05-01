@@ -58,4 +58,10 @@ class ImageUtils {
     public static function getRatioDiffWithDims(string $imageFilename, float $widthDim, float $heightDim) : float {
         return self::getRatioDiff($imageFilename, $widthDim / $heightDim);
     }
+
+    public static function getImageExtension(int $imageType, bool $includeDot = false) : string {
+        $ext = image_type_to_extension($imageType, $includeDot);
+        if($ext == "jpeg") return "jpg";
+        return $ext;
+    }
 }

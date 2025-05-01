@@ -9,22 +9,27 @@ abstract class SetModifier implements EntityID, EntityTitle, EntityLink, EntityI
     public function __construct(public string $setKey){}
 
     public function getItemId($record) : string {
+        if($record instanceof SBEntityItem) return $record->getItemId();
         return EntityUtils::getMultiChoiceValue($record, ["id", "pk"]);
     }
 
     public function getItemTitle($record) : string {
+        if($record instanceof SBEntityItem) return $record->getItemTitle();
         return EntityUtils::getMultiChoiceValue($record, ["name", "title"]);
     }
 
     public function getItemLink($record) : string {
+        if($record instanceof SBEntityItem) return $record->getItemLink();
         return "";
     }
 
     public function getItemImage($record) : string {
+        if($record instanceof SBEntityItem) return $record->getItemImage();
         return "";
     }
 
     public function getItemAltLink($record): string {
+        if($record instanceof SBEntityItem) return $record->getItemAltLink();
         return "";
     }
 

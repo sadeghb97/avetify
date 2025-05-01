@@ -5,11 +5,9 @@ class CroppingImage extends CroppableImage {
         try {
             $gumletImage = new \Gumlet\ImageResize($this->serverSrc);
             $orgFilename = new Filename($this->serverSrc);
-            $copyFn = Routing::serverRootPath('.avtfiles/')
-                . $orgFilename->pureName . '_' . time() . '.' . $orgFilename->extension;
             $gumletImage->freecrop($w, $h, $x, $y);
 
-            copy($this->serverSrc, $copyFn);
+            RecycleCan::saveBackupFile($this->id, $this->serverSrc);
             $gumletImage->save($this->serverSrc, $this->imageType);
             $this->onCropSuccess();
             return true;
