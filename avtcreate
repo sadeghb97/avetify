@@ -22,12 +22,9 @@ if git clone "$REPO_URL" ./avetify; then
     mkdir -p lib
     cat > lib/lib.php <<EOF
 <?php
-
-define("AVETIFY_ROOT", "/$PROJECT_NAME/avetify/");
 define("MAIN_PROXY", "127.0.0.1:2081");
-
 require_once __DIR__ . "/../avetify/avetify.php";
-initAvetify(AVETIFY_ROOT);
+initAvetify("/$PROJECT_NAME/avetify/");
 EOF
 
     echo "📄 Creating avetify.php..."
