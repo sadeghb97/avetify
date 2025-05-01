@@ -1,5 +1,10 @@
 <?php
 class ManageGalleryLister extends SBLister {
+    public int $maxTitleLength = 20;
+    public bool $focusMode = true;
+    public bool $galleryMode = false;
+    protected int | null $cardImageWidth = 300;
+
     public function __construct(public GalleryRepo $galleryRepo){
         parent::__construct($this->galleryRepo->allRecords);
         $this->placeDefaultTriggers = false;
@@ -73,7 +78,7 @@ class ManageGalleryLister extends SBLister {
     }
 
     public function getCategories(): array {
-        $categories = [new SBListCategory(0, "Uncategorized")];
+        $categories = [new SBListCategory(0, "Main")];
         foreach ($this->galleryRepo->virtualFolders as $vf){
             $categories[] = new SBListCategory($vf['index'], $vf['id']);
         }

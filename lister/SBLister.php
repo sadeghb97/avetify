@@ -3,11 +3,22 @@ abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLin
     public array $allItems = [];
     public array $initItemsMap = [];
     public bool $placeDefaultTriggers = true;
-    private int | null $cardImageWidth = null;
-    private float | null $cardImageHeightMultiplier = null;
+    public int $maxTitleLength = 0;
+    public bool $focusMode = false;
+    public bool $galleryMode = false;
+    protected int | null $cardImageWidth = null;
+    protected float | null $cardImageHeightMultiplier = null;
+    public WebModifier $containerModifier;
+    public string $containerId;
 
     public function __construct($items){
         $this->setItems($items);
+        $this->containerId = "lister_" . time();
+        $this->containerModifier = WebModifier::createInstance();
+        $this->containerModifier->htmlModifier->pushModifier(Attrs::id, $this->containerId);
+        $this->containerModifier->styler->pushClass("container");
+        $this->containerModifier->styler->pushStyle(CSS::width, "90%");
+        $this->containerModifier->styler->pushStyle(CSS::margin, "auto");
     }
 
     public function setItems($items){
@@ -331,93 +342,132 @@ abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLin
 
     public function printItemCard($item, SBListCategory | null $category, $itemRank){
         $itemId = $this->getItemId($item);
-        echo '<div class="grid-square" id="lister-item_' . $itemId . '"';
-        if($this->cardImageWidth != null){
-            $boxWidth = $this->cardImageWidth + 25;
-            echo ' style="width: ' . $boxWidth . 'px;"';
+        echo '<div ';
+        HTMLInterface::addAttribute(Attrs::id,'lister-item_' . $itemId);
+        Styler::classStartAttribute();
+        Styler::addClass("grid-square");
+        Styler::closeAttribute();
+        Styler::startAttribute();
+        if($this->cardImageWidth) {
+            Styler::addStyle(CSS::width, ($this->cardImageWidth + 25) . "px");
         }
-        echo '>';
+        if($this->focusMode || $this->galleryMode){
+            Styler::addStyle(CSS::borderRadius, "8px");
+            if($this->galleryMode) Styler::addStyle(CSS::padding, "0px");
+            else if($this->focusMode){
+                Styler::addStyle(CSS::paddingTop, "0px");
+                Styler::addStyle(CSS::paddingLeft, "0px");
+                Styler::addStyle(CSS::paddingRight, "0px");
+                Styler::addStyle(CSS::paddingBottom, "8px");
+            }
+        }
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
 
         $avatar = $this->getItemImage($item);
-        echo '<img src="' . $avatar . '" class="lister-item-img" ';
+        echo '<img ';
+        HTMLInterface::addAttribute(Attrs::src, $avatar);
+        Styler::classStartAttribute();
+        Styler::addClass("lister-item-img");
+        Styler::closeAttribute();
+        Styler::startAttribute();
         if($this->cardImageWidth != null){
-            $imageHeight = (int)($this->cardImageHeightMultiplier * $this->cardImageWidth);
-            echo ' style="width: ' . $this->cardImageWidth . 'px; height: ' . $imageHeight . 'px; "';
-        }
-        echo '/>';
+            $finalImageWidth = ($this->focusMode || $this->galleryMode) ? $this->cardImageWidth + 25 :
+                $this->cardImageWidth;
 
-        HTMLInterface::placeVerticalDivider(12);
-
-        echo '<div>';
-        if($this->isPrintRankEnabled()){
-            $rankStyler = new Styler();
-            $rankStyler->pushStyle("font-size", "0.875rem");
-            $rankStyler->pushStyle("font-weight", "bold");
-            echo '<span ';
-            $rankStyler->applyStyles();
-            $rankId = "lister-rank_" . $itemId;
-            HTMLInterface::addAttribute("id", $rankId);
-            echo ' >';
-            echo $itemRank;
-            echo '</span>';
-            echo '<span ';
-            $rankStyler->applyStyles();
-            echo '>: </span>';
-        }
-
-        $link = $this->getItemLink($item);
-        if($link){
-            echo '<a ';
-            HTMLInterface::addAttribute("href", $link);
-            HTMLInterface::addAttribute("target", "_blank");
-            HTMLInterface::addAttribute("class", "lister-item-link");
-            HTMLInterface::closeTag();
-        }
-        echo '<span class="lister-item-name">' . $this->getItemTitle($item) . '</span>';
-        if($link) HTMLInterface::closeLink();
-
-        $alt = $this->getItemAlt($item);
-        if($alt) echo '<span class="lister-item-rate"> (' . $alt . ')</span>';
-        echo '</div>';
-
-        $plainFields = [];
-        $dialogFields = [];
-
-        foreach ($this->getItemFields() as $field){
-            if(isset($field['factory'])) $dialogFields[] = $field;
-            else $plainFields[] = $field;
-        }
-
-        if(count($dialogFields) > 0){
-            $niceDiv = new NiceDiv("10px");
-            $niceDiv->addStyle("width", "95%");
-            $niceDiv->open();
-
-            foreach ($dialogFields as $field){
-                $fieldId = $field['key'] . '_' . $itemId;
-                $dialogField = $field['factory']->makeDialogField($fieldId, $field['value']($item));
-                $niceDiv->placeItem($dialogField);
-                if($dialogField instanceof MaghamField) $niceDiv->resetItemsCount();
+            Styler::addStyle(CSS::width, $finalImageWidth . "px");
+            if($this->cardImageHeightMultiplier > 0){
+                $imageHeight = (int)($this->cardImageHeightMultiplier * $finalImageWidth);
+                Styler::addStyle(CSS::height, $imageHeight . "px");
             }
-
-            $niceDiv->close();
-
-            if(count($plainFields) > 0){
-                HTMLInterface::placeVerticalDivider(6);
+            else Styler::addStyle(CSS::height, $this->cardImageWidth . "px");
+        }
+        if($this->focusMode || $this->galleryMode){
+            if($this->galleryMode) Styler::addStyle(CSS::borderRadius, "8px");
+            else if($this->focusMode){
+                Styler::addStyle("border-top-left-radius", "8px");
+                Styler::addStyle("border-top-right-radius", "8px");
             }
         }
+        Styler::closeAttribute();
+        HTMLInterface::closeSingleTag();
 
-        foreach ($plainFields as $field){
-            $fieldId = $field['key'] . '_' . $itemId;
-            HTMLInterface::placeVerticalDivider(4);
-            echo '<div style="display: flex">';
-            echo '<span style="font-size: 10pt; margin-right: 6px;">' . $field['title'] . ': </span>';
-            echo '<input type="text" id="' . $fieldId . '"'
-                . ' value="' . $field['value']($item)
-                . '" placeholder="' . $field['title']
-                . '" class="empty" style="width: 80%; height: 30px; font-size: 11pt; margin-top: -4px;"'
-                . ' onfocus="this.select();" />';
+        if(!$this->galleryMode) {
+            HTMLInterface::placeVerticalDivider(12);
+
+            echo '<div>';
+            if ($this->isPrintRankEnabled()) {
+                $rankStyler = new Styler();
+                $rankStyler->pushStyle("font-size", "0.875rem");
+                $rankStyler->pushStyle("font-weight", "bold");
+                echo '<span ';
+                $rankStyler->applyStyles();
+                $rankId = "lister-rank_" . $itemId;
+                HTMLInterface::addAttribute("id", $rankId);
+                echo ' >';
+                echo $itemRank;
+                echo '</span>';
+                echo '<span ';
+                $rankStyler->applyStyles();
+                echo '>: </span>';
+            }
+
+            $link = $this->getItemLink($item);
+            if ($link) {
+                echo '<a ';
+                HTMLInterface::addAttribute("href", $link);
+                HTMLInterface::addAttribute("target", "_blank");
+                HTMLInterface::addAttribute("class", "lister-item-link");
+                HTMLInterface::closeTag();
+            }
+
+            $finalTitle = minimize($this->getItemTitle($item), $this->maxTitleLength);
+            echo '<span class="lister-item-name">' . $finalTitle . '</span>';
+            if ($link) HTMLInterface::closeLink();
+
+            $alt = $this->getItemAlt($item);
+            if ($alt) echo '<span class="lister-item-rate"> (' . $alt . ')</span>';
             echo '</div>';
+
+            $plainFields = [];
+            $dialogFields = [];
+
+            foreach ($this->getItemFields() as $field) {
+                if (isset($field['factory'])) $dialogFields[] = $field;
+                else $plainFields[] = $field;
+            }
+
+            if (count($dialogFields) > 0) {
+                $niceDiv = new NiceDiv("10px");
+                $niceDiv->addStyle("width", "95%");
+                $niceDiv->open();
+
+                foreach ($dialogFields as $field) {
+                    $fieldId = $field['key'] . '_' . $itemId;
+                    $dialogField = $field['factory']->makeDialogField($fieldId, $field['value']($item));
+                    $niceDiv->placeItem($dialogField);
+                    if ($dialogField instanceof MaghamField) $niceDiv->resetItemsCount();
+                }
+
+                $niceDiv->close();
+
+                if (count($plainFields) > 0) {
+                    HTMLInterface::placeVerticalDivider(6);
+                }
+            }
+
+            foreach ($plainFields as $field) {
+                $fieldId = $field['key'] . '_' . $itemId;
+                HTMLInterface::placeVerticalDivider(4);
+                echo '<div style="display: flex">';
+                echo '<span style="font-size: 10pt; margin-right: 6px;">' . $field['title'] . ': </span>';
+                echo '<input type="text" id="' . $fieldId . '"'
+                    . ' value="' . $field['value']($item)
+                    . '" placeholder="' . $field['title']
+                    . '" class="empty" style="width: 80%; height: 30px; font-size: 11pt; margin-top: -4px;"'
+                    . ' onfocus="this.select();" />';
+                echo '</div>';
+            }
         }
 
         echo '<div>';
@@ -462,8 +512,13 @@ abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLin
         $this->initJsArgs();
         $this->placeMenu();
 
-        echo '<div class="container" style="width: 90%; max-width: 90%; margin: auto;">
-		    <div id="grid" class="col">';
+        echo '<div ';
+        HTMLInterface::applyClasses($this->containerModifier);
+        HTMLInterface::applyStyles($this->containerModifier);
+        HTMLInterface::applyModifiers($this->containerModifier);
+        HTMLInterface::closeTag();
+
+        echo '<div id="grid" class="col">';
 
         echo '<form method="post" id="lister_form" name="lister_form">';
         $this->renderAllCategories();
