@@ -151,3 +151,7 @@ class ThemesManager {
         echo '</title>';
     }
 }
+
+class Navigation {
+    public function __construct(public string $title, public string $link, public bool $isActive = false) {}
+}

@@ -4,6 +4,8 @@ abstract class ModernRatioGallery extends SetRenderer implements EntityImageRati
     public RecordContextMenu | null $contextMenu = null;
     private float $curRowOffset = 0;
 
+    public ?WebModifier $linkModifier = null;
+
     public function __construct(SetModifier $setModifier, ModernTheme $theme, string $title,
                                 public int $unitSize, public int $maxRowUnits){
         parent::__construct($setModifier, $theme, $title);
@@ -39,6 +41,13 @@ abstract class ModernRatioGallery extends SetRenderer implements EntityImageRati
         if($link){
             echo '<a ';
             HTMLInterface::addAttribute("href", $link);
+            HTMLInterface::applyModifiers($this->linkModifier);
+            Styler::startAttribute();
+            HTMLInterface::appendStyles($this->linkModifier);
+            Styler::closeAttribute();
+            Styler::classStartAttribute();
+            HTMLInterface::appendClasses($this->linkModifier);
+            Styler::closeAttribute();
             HTMLInterface::closeTag();
         }
 

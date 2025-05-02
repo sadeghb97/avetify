@@ -28,10 +28,10 @@ class ClassicMenu implements Placeable {
 class ClassicMenuSection implements Placeable {
     public function __construct(public string $color = ""){}
 
-    /** @var ClassicMenuLink[] */
+    /** @var Navigation[] */
     public array $menuLinks = [];
 
-    public function pushLink(ClassicMenuLink $link){
+    public function pushLink(Navigation $link){
         $this->menuLinks[] = $link;
     }
 
@@ -58,10 +58,6 @@ class ClassicMenuSection implements Placeable {
         $splitterModifier->styler->pushStyle(CSS::color, $this->color);
         HTMLInterface::placeText($splitterContents);
     }
-}
-
-class ClassicMenuLink {
-    public function __construct(public string $title, public string $link){}
 }
 
 class ClassicLabel implements Placeable {

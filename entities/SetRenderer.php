@@ -128,7 +128,9 @@ abstract class SetRenderer extends BaseSetRenderer {
             }
 
             if ($sbTable->isEditable) {
-                $this->form->openForm();
+                $formModifier = WebModifier::createInstance();
+                $formModifier->styler->pushClass("tables_panel");
+                $this->form->openForm($formModifier);
             }
         }
     }

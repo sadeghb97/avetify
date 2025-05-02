@@ -18,12 +18,20 @@ class SBForm {
         $this->hiddenData[$hiddenProperty->hiddenPropertyId] = $hiddenProperty;
     }
 
-    public function openForm() {
+    public function openForm(?WebModifier $webModifier = null) {
         echo '<form ';
         HTMLInterface::addAttribute("id", $this->formIdentifier);
         HTMLInterface::addAttribute("name", $this->formIdentifier);
         HTMLInterface::addAttribute("method", $this->formMethod);
+        Styler::classStartAttribute();
+        HTMLInterface::appendClasses($webModifier);
+        Styler::closeAttribute();
+        Styler::startAttribute();
+        HTMLInterface::appendStyles($webModifier);
+        Styler::closeAttribute();
+        HTMLInterface::applyModifiers($webModifier);
         HTMLInterface::closeTag();
+
         $this->placeHiddenData();
     }
 

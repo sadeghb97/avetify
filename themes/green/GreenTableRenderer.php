@@ -1,7 +1,7 @@
 <?php
 
 class GreenTableRenderer extends SetRenderer {
-    public function __construct(SetModifier $setModifier, GreenTheme $theme,
+    public function __construct(SetModifier $setModifier, ThemesManager $theme,
                                 string $title = "Set", bool|int $limit = 5000){
         parent::__construct($setModifier, $theme, $title, $limit);
     }
@@ -28,9 +28,18 @@ class GreenTableRenderer extends SetRenderer {
         /** @var SBTable $sbTable */
         $sbTable = $this->setModifier;
 
-        echo '<div class="tables_panel" ';
-        if($webModifier != null) $webModifier->apply();
+        echo '<div ';
+        Styler::classStartAttribute();
+        //Styler::addClass("tables_panel");
+        HTMLInterface::appendClasses($webModifier);
+        Styler::closeAttribute();
+        Styler::startAttribute();
+        Styler::addStyle(CSS::width, "100%");
+        HTMLInterface::appendStyles($webModifier);
+        Styler::closeAttribute();
+        HTMLInterface::applyModifiers($webModifier);
         HTMLInterface::closeTag();
+
         echo '<table class="table" style="';
         $this->tableStyles();
         echo '"';

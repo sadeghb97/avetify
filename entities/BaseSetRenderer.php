@@ -3,7 +3,9 @@
 abstract class BaseSetRenderer {
     public function __construct(public SetModifier $setModifier,
                                 public ThemesManager | null $theme,
-                                public bool | int $limit = false){}
+                                public bool | int $limit = false){
+        $this->postConstruct();
+    }
 
     public function moreRecordFields($record, int $itemIndex){}
 
@@ -34,6 +36,7 @@ abstract class BaseSetRenderer {
     public function closeCollection(WebModifier $webModifier = null){}
     public function openRecord($record){}
     public function closeRecord($record){}
+    public function postConstruct(){}
 
     public function openPage(){
         $this->theme->placeHeader($this->getTitle());

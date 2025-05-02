@@ -7,3 +7,15 @@ input.numeric-text::-webkit-outer-spin-button {
 input.numeric-text {
     -moz-appearance: textfield;
 }
+
+.tables_panel{
+    border-style: solid;
+    border-width: 2px;
+    border-color: #269abc;
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #fbfbfb;
+}

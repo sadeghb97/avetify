@@ -245,23 +245,23 @@
          self::placeElement("div", $text, $modifier);
      }
 
-     public static function appendStyles(WebModifier | null $modifier = null){
+     public static function appendStyles(WebModifier | null $modifier){
          if($modifier && $modifier->styler != null) $modifier->styler->appendStyles();
      }
 
-     public static function applyStyles(WebModifier | null $modifier = null){
+     public static function applyStyles(WebModifier | null $modifier){
          if($modifier && $modifier->styler != null) $modifier->styler->applyStyles();
      }
 
-     public static function appendClasses(WebModifier | null $modifier = null){
+     public static function appendClasses(WebModifier | null $modifier){
          if($modifier && $modifier->styler != null) $modifier->styler->appendClasses();
      }
 
-     public static function applyClasses(WebModifier | null $modifier = null){
+     public static function applyClasses(WebModifier | null $modifier){
          if($modifier && $modifier->styler != null) $modifier->styler->applyClasses();
      }
 
-     public static function applyModifiers(WebModifier | null $modifier = null){
+     public static function applyModifiers(WebModifier | null $modifier){
          if($modifier && $modifier->htmlModifier != null) $modifier->htmlModifier->applyModifiers();
      }
 
