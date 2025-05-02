@@ -27,11 +27,11 @@ class SBTable extends SetModifier {
             if($field->isEditable()){
                 if($field instanceof SBEditableField) $field->namespace = $this->setKey;
                 $field->idGetter = $this;
-                if($field->onCreateField != null){
-                    $field->onCreateField->namespace = $this->setKey;
-                    $field->onCreateField->idGetter = $this;
-                    $field->onCreateField->onlyNameIdentifier();
-                }
+            }
+            if($field->onCreateField != null && $field->onCreateField->isEditable()){
+                $field->onCreateField->namespace = $this->setKey;
+                $field->onCreateField->idGetter = $this;
+                $field->onCreateField->onlyNameIdentifier();
             }
         }
     }

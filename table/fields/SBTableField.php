@@ -23,6 +23,7 @@ class SBTableField {
     public function __construct(public string $title, public string $key){}
 
     public function getValue($item) : string {
+        if(!$item) return "";
         if(!is_array($item) && !is_object($item)) return $item;
         if(str_contains($this->key, "~")) $finalKeys = explode("~", $this->key);
         else $finalKeys = $this->key;
