@@ -28,7 +28,7 @@ abstract class ModernRatioGallery extends SetRenderer implements EntityImageRati
         }
     }
 
-    public function renderRecord($item, $index) {
+    public function renderRecordMain($item, int $index) {
         $itemWidthUnits = $this->getItemRatio($item);
         if(($this->curRowOffset + $itemWidthUnits) > $this->maxRowUnits){
             HTMLInterface::closeDiv();

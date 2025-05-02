@@ -39,33 +39,3 @@ function printPreArray($array, $name = "Array") {
     print_r($array);
     HTMLInterface::closeDiv();
 }
-
-function classicMenu(array $rows, $margin = 16){
-    $fontSize = "14pt";
-    $splitterContents = "&nbsp;&nbsp;|&nbsp;&nbsp;";
-    $prBold=true;
-    $prNoDecor=true;
-    $prBlank=false;
-
-    $vertDiv = new VertDiv(4);
-    $vertDiv->addStyle("margin-top", $margin . "px");
-    $vertDiv->addStyle("margin-bottom", $margin . "px");
-    $vertDiv->addStyle("font-size", $fontSize);
-
-    $vertDiv->open();
-
-    foreach ($rows as $rowIndex => $row){
-        $niceDiv = new NiceDiv(0);
-        $niceDiv->open();
-        $color = $row['color'];
-        $splitter = '<span style="font-weight: bold; color: ' . $color . ';">' . $splitterContents . '</span>';
-
-        foreach ($row['links'] as $linkIndex => $link){
-            if($linkIndex > 0) echo $splitter;
-            prLink($link[1], $link[0], $color, $prBold, $prBlank, $prNoDecor);
-        }
-        $niceDiv->close();
-    }
-
-    $vertDiv->close();
-}
