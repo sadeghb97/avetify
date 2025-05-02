@@ -18,7 +18,7 @@ abstract class ModernRatioGallery extends SetRenderer implements EntityImageRati
         $this->curRowOffset = 0;
     }
 
-    public function renderRecords() {
+    public function renderSet() {
         if(count($this->setModifier->currentRecords) > 0){
             $this->openRowDiv();
         }

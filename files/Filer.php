@@ -42,6 +42,13 @@ class Filer {
         return substr($cloneFilename, $pos + 1);
     }
 
+    public static function getStarterFilename($filename) : string {
+        $cloneFilename = self::getPureFilename($filename);
+        $pos = strrpos($cloneFilename, ".");
+        if($pos === false) return $cloneFilename;
+        return substr($cloneFilename, 0, $pos);
+    }
+
     public static function getParentFilename($filename) : string {
         $cloneFilename = self::pruneLastSlash($filename);
         $pos = strrpos($cloneFilename, "/");
