@@ -4,9 +4,9 @@ abstract class ModernRatioGallery extends SetRenderer implements EntityImageRati
     public RecordContextMenu | null $contextMenu = null;
     private float $curRowOffset = 0;
 
-    public function __construct(SetModifier $setModifier, public int $unitSize, public int $maxRowUnits,
-                                public string $title){
-        parent::__construct($setModifier, new ModernTheme());
+    public function __construct(SetModifier $setModifier, ModernTheme $theme, string $title,
+                                public int $unitSize, public int $maxRowUnits){
+        parent::__construct($setModifier, $theme, $title);
     }
 
     public function openRowDiv(){
