@@ -86,6 +86,20 @@ class Routing {
         return $longPath;
     }
 
+    public static function getBaseUrlFilename(string $url) : string {
+        if(str_contains($url, "/")){
+            $pos = strrpos($url, "/");
+            $url = substr($url, $pos + 1);
+        }
+
+        if(str_contains($url, "?")){
+            $pos = strpos($url, "?");
+            $url = substr($url, 0, $pos);
+        }
+
+        return $url;
+    }
+
     public static function getServerProtocol() : string {
         return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443)
             ? "https://" : "http://";

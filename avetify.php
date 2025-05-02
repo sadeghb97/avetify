@@ -19,6 +19,7 @@ require_once "externals/gumlet-image/ImageResizeException.php";
 
 require_once "models/Filename.php";
 require_once "models/DataModel.php";
+require_once "models/Detailed.php";
 
 require_once "files/Filer.php";
 require_once "files/ImageUtils.php";
@@ -40,8 +41,6 @@ require_once "network/ProxyHeadersFetcher.php";
 require_once "entities/BasicEntityProperties.php";
 require_once "entities/SBEntityItem.php";
 require_once "entities/SetModifier.php";
-require_once "entities/BaseSetRenderer.php";
-require_once "entities/SetRenderer.php";
 require_once "entities/SBSet.php";
 require_once "entities/RecordContextMenu.php";
 require_once "entities/EntityField.php";
@@ -120,10 +119,16 @@ require_once "forms/FormUtils.php";
 require_once "forms/FormButton.php";
 require_once "forms/SBForm.php";
 
-require_once "themes/ThemesManager.php";
+require_once "themes/main/ThemesManager.php";
+require_once "themes/main/BaseSetRenderer.php";
+require_once "themes/main/SetRenderer.php";
+require_once "themes/main/navigations/NavigationBar.php";
+require_once "themes/main/navigations/SimpleNavigationBar.php";
+require_once "themes/main/navigations/NavigationRenderer.php";
 require_once "themes/classic/ClassicMenu.php";
 require_once "themes/green/GreenTheme.php";
 require_once "themes/green/GreenTableRenderer.php";
+require_once "themes/green/GreenNavigationRenderer.php";
 require_once "themes/modern/ModernTheme.php";
 require_once "themes/modern/ModernSetRenderer.php";
 require_once "themes/modern/ModernGallery.php";

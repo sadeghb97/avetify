@@ -4,11 +4,15 @@ class ThemesManager {
     public bool $includesListerTools = false;
     public bool $includesCropperTools = false;
     public string $ROOT_PATH = "";
+    public ?NavigationRenderer $navigationRenderer = null;
 
     public function __construct(){
         global $AVETIFY_ROOT_PATH;
         $this->ROOT_PATH = $AVETIFY_ROOT_PATH;
+        $this->postConstruct();
     }
+
+    public function postConstruct(){}
 
     public function placeHeader($title){
         self::openHead();
@@ -41,7 +45,15 @@ class ThemesManager {
 
     public function loadFavicon(){}
 
-    public function loadHeaderElements(){}
+    public function loadHeaderElements(){
+        if($this->navigationRenderer != null){
+            $this->navigationRenderer->place();
+        }
+    }
+
+    public function getNavigationBar() : ?NavigationBar {
+        return null;
+    }
 
     public static function importFavicon($path, $type = "image/png", $sizes = "32x32"){
         echo '<link rel="icon" href="' . $path . '" type="' . $type . '" sizes="' . $sizes . '">';
@@ -150,8 +162,4 @@ class ThemesManager {
         echo $title;
         echo '</title>';
     }
-}
-
-class Navigation {
-    public function __construct(public string $title, public string $link, public bool $isActive = false) {}
 }

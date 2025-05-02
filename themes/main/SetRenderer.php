@@ -132,6 +132,13 @@ abstract class SetRenderer extends BaseSetRenderer {
                 $formModifier->styler->pushClass("tables_panel");
                 $this->form->openForm($formModifier);
             }
+            else {
+                echo '<div ';
+                Styler::classStartAttribute();
+                Styler::addClass("tables_panel");
+                Styler::closeAttribute();
+                HTMLInterface::closeTag();
+            }
         }
     }
 
@@ -144,6 +151,9 @@ abstract class SetRenderer extends BaseSetRenderer {
                 $this->form->placeTriggers();
                 $this->form->closeForm();
                 $this->placeFormJSUtils();
+            }
+            else {
+                HTMLInterface::closeDiv();
             }
         }
     }

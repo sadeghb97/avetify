@@ -28,10 +28,10 @@ class ClassicMenu implements Placeable {
 class ClassicMenuSection implements Placeable {
     public function __construct(public string $color = ""){}
 
-    /** @var Navigation[] */
+    /** @var NavigationBar[] */
     public array $menuLinks = [];
 
-    public function pushLink(Navigation $link){
+    public function pushLink(NavigationBar $link){
         $this->menuLinks[] = $link;
     }
 
