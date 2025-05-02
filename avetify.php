@@ -125,7 +125,7 @@ require_once "themes/main/SetRenderer.php";
 require_once "themes/main/navigations/NavigationBar.php";
 require_once "themes/main/navigations/SimpleNavigationBar.php";
 require_once "themes/main/navigations/NavigationRenderer.php";
-require_once "themes/classic/ClassicMenu.php";
+require_once "themes/classic/ClassicNavigationRenderer.php";
 require_once "themes/green/GreenTheme.php";
 require_once "themes/green/GreenTableRenderer.php";
 require_once "themes/green/GreenNavigationRenderer.php";

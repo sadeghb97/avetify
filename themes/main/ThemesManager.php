@@ -9,6 +9,12 @@ class ThemesManager {
     public function __construct(){
         global $AVETIFY_ROOT_PATH;
         $this->ROOT_PATH = $AVETIFY_ROOT_PATH;
+
+        $navigationBar = $this->getNavigationBar();
+        if($navigationBar){
+            $this->navigationRenderer = $this->getNavigationRenderer($navigationBar);
+        }
+
         $this->postConstruct();
     }
 
@@ -52,6 +58,10 @@ class ThemesManager {
     }
 
     public function getNavigationBar() : ?NavigationBar {
+        return null;
+    }
+
+    public function getNavigationRenderer(NavigationBar $navigationBar) : ?NavigationRenderer {
         return null;
     }
 

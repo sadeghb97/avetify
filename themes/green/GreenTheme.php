@@ -1,11 +1,8 @@
 <?php
 
 class GreenTheme extends ThemesManager {
-    public function postConstruct() {
-        $navigationBar = $this->getNavigationBar();
-        if($navigationBar){
-            $this->navigationRenderer = new GreenNavigationRenderer($navigationBar);
-        }
+    public function getNavigationRenderer(NavigationBar $navigationBar): ?NavigationRenderer {
+        return new GreenNavigationRenderer($navigationBar);
     }
 
     public function moreHeaderTags(){
