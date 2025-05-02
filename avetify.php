@@ -138,6 +138,7 @@ require_once "themes/modern/cards.php";
 
 require_once "renderers/PageRenderer.php";
 require_once "renderers/AvetifyRenderer.php";
+require_once "renderers/TaskPageRenderer.php";
 
 require_once "calc/DateStatsCalculator.php";
 require_once "calc/IRDateStatsCalculator.php";
