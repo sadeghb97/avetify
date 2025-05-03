@@ -6,6 +6,7 @@ abstract class SBEntity extends SetModifier {
     public bool $redirectOnInsert = true;
     public bool $deletable = true;
     public string $entityName = "Record";
+    public string $entityModel = "";
 
     public function __construct($dbConnection, string $key = "sbn"){
         parent::__construct($key);
@@ -14,6 +15,26 @@ abstract class SBEntity extends SetModifier {
 
     public function getEntityRecords(): array {
         return $this->getRecords();
+    }
+
+    /** @return SBEntityItem[] */
+    public function getRecordObjects(int $offset, int $limit) : array {
+        $recs = $this->getRecords($offset, $limit);
+        $dsRecords = [];
+        foreach ($recs as $rec){
+            $dsRecords[] = $this->createEntityItem($rec);
+        }
+        return $dsRecords;
+    }
+
+    /** @return SBEntityItem[] */
+    public function getAllRecordObjects() : array {
+        return $this->getRecordObjects(0, 50000);
+    }
+
+    public function getJSDatalist() : JSDatalist {
+        return new JSDatalist($this->setKey . "_dataset",
+            $this->getAllRecordObjects());
     }
 
     public function insertDataExpression(array $data) : string {
@@ -606,6 +627,7 @@ abstract class SBEntity extends SetModifier {
     }
 
     public function createEntityItem(array $record) : SBEntityItem | array {
+        if($this->entityModel) return SBEntityItem::createInstance($this->entityModel, $record);
         return $record;
     }
 
