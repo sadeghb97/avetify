@@ -34,14 +34,9 @@ class JSDatalist extends JSDataElement {
 
         foreach ($this->records as $record){
             $plcRecord = (array)($record);
-            $plcRecord['main_jsdl_avatar'] = "";
-            $plcRecord['main_jsdl_name'] = "";
-            $plcRecord['main_jsdl_id'] = "";
-            if($record instanceof SBEntityItem){
-                $plcRecord['main_jsdl_avatar'] = $record->getItemImage();
-                $plcRecord['main_jsdl_name'] = $record->getItemTitle();
-                $plcRecord['main_jsdl_id'] = $record->getItemId();
-            }
+            $plcRecord['main_jsdl_avatar'] = $this->getItemImage($record);
+            $plcRecord['main_jsdl_name'] = $this->getItemTitle($record);
+            $plcRecord['main_jsdl_id'] = $this->getItemId($record);
 
             $plcNamesMap[strtolower($plcRecord['main_jsdl_name'])] = count($plcRecords);
             $plcIdsMap[strtolower($plcRecord['main_jsdl_id'])] = count($plcRecords);
