@@ -82,7 +82,7 @@
          self::closeTag();
      }
 
-     public static function placeImageWithWidth(string $src, int $width, WebModifier | null $modifier = null){
+     public static function placeImageWithWidth(string $src, int|string $width, ?WebModifier $modifier = null){
          echo '<img ';
          self::addAttribute("src", $src);
          self::applyModifiers($modifier);
@@ -93,7 +93,7 @@
          self::closeTag();
      }
 
-     public static function placeImageWithHeight(string $src, int $height, WebModifier | null $modifier = null){
+     public static function placeImageWithHeight(string $src, int|string $height, ?WebModifier $modifier = null){
          echo '<img ';
          self::addAttribute("src", $src);
          self::applyModifiers($modifier);
@@ -104,7 +104,7 @@
          self::closeTag();
      }
 
-     public static function placeSquareImage(string $src, int $size, WebModifier | null $modifier = null){
+     public static function placeSquareImage(string $src, int $size, ?WebModifier $modifier = null){
          echo '<img ';
          self::addAttribute("src", $src);
          self::applyModifiers($modifier);

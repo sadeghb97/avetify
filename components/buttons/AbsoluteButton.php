@@ -8,17 +8,20 @@ class AbsoluteButton implements Placeable {
 
     public function place(WebModifier $webModifier = null) {
         echo '<div ';
+        Styler::classStartAttribute();
+        HTMLInterface::appendClasses($webModifier);
+        Styler::closeAttribute();
         Styler::startAttribute();
         Styler::addStyle("position", "fixed");
         Styler::addStyle("cursor", "pointer");
         foreach ($this->positionStyles as $psKey => $psValue){
             Styler::addStyle($psKey, $psValue);
         }
-        if($webModifier && $webModifier->styler) $webModifier->styler->appendStyles();
+        HTMLInterface::appendStyles($webModifier);
         Styler::closeAttribute();
         HTMLInterface::addAttribute("class", "img-button");
         if($this->rawOnclick) HTMLInterface::addAttribute("onclick", $this->rawOnclick);
-        if($webModifier && $webModifier->htmlModifier) $webModifier->htmlModifier->applyModifiers();
+        HTMLInterface::applyModifiers($webModifier);
         HTMLInterface::closeTag();
         echo '<img src="' . $this->imageSrc . '" alt="Icon" style="width: 50px; height: 50px; border-radius: 50%;">';
         echo '</div>';
