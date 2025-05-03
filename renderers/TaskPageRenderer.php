@@ -22,7 +22,10 @@ abstract class TaskPageRenderer implements PageRenderer {
         FormUtils::closeForm();
     }
 
+    public function getTriggerImage(): string {
+        return Routing::getAvtImage("send.svg");
+    }
+
     abstract public function getTheme() : ThemesManager;
-    abstract public function getTriggerImage() : string;
     abstract public function doTask();
 }
