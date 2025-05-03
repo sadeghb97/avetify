@@ -20,7 +20,11 @@ class SBTableField {
     public string | null $fontSize = null;
     public string | null $fontWeight = null;
 
-    public function __construct(public string $title, public string $key){}
+    public function __construct(public string $title, public string $key){
+        $this->postConstruct();
+    }
+
+    public function postConstruct(){}
 
     public function getValue($item) : string {
         if(!$item) return "";

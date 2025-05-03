@@ -138,8 +138,9 @@ function addRecordToSelector(acField, selectorKey, cData, selectedRecord){
     const recordName = selectedRecord['main_jsdl_name']
     const recordImage = selectedRecord['main_jsdl_avatar']
     const imagesDiv = document.getElementById(selectorKey + "_images")
-    const valueElement = document.getElementById(selectorKey + "_main")
+    const valueElement = document.getElementById(selectorKey)
     const imageElementId = selectorKey + "_item_" + recordId
+    const disableAutoSubmit = cData && 'disable_auto_submit' in cData && cData['disable_auto_submit']
 
     const selectedSetVarName = selectorKey + "_selected"
     window[selectedSetVarName].add(recordId)
@@ -164,11 +165,19 @@ function addRecordToSelector(acField, selectorKey, cData, selectedRecord){
         imageElement.style.opacity = "1"
         imageElement.style.filter = "none"
     }
+
+    if(acField) {
+        acField.value = ""
+        if (disableAutoSubmit) acField.blur()
+    }
 }
 
 function removeSelectorItem(selectorKey, recordId){
+    const valueElement = document.getElementById(selectorKey)
     const selectedSetVarName = selectorKey + "_selected"
     window[selectedSetVarName].delete(recordId)
+    valueElement.value = [...window[selectedSetVarName]].join(',')
+
     const imageElementId = selectorKey + "_item_" + recordId
     const imageElement = document.getElementById(imageElementId)
     if(imageElement){

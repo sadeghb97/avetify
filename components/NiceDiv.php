@@ -11,6 +11,11 @@ class NiceDiv {
         "gap" => "4px"
     ];
 
+    public static function justOpen(){
+        $niceDiv = new NiceDiv(0);
+        $niceDiv->open();
+    }
+
     public array $htmlModifiers = [];
 
     public function __construct(public string $sepSize){}

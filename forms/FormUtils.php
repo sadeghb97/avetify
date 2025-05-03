@@ -19,10 +19,11 @@ class FormUtils {
                     const values = {}
                     <?php echo $jsArgsName ?>.fields.forEach((fieldElementId) => {
                         const fieldElement = document.getElementById(fieldElementId)
-                        if(fieldElement.type === "checkbox"){
-                            values[fieldElementId] = !!fieldElement.checked;
+                        if(fieldElement) {
+                            if (fieldElement.type === "checkbox") {
+                                values[fieldElementId] = !!fieldElement.checked;
+                            } else values[fieldElementId] = fieldElement.value
                         }
-                        else values[fieldElementId] = fieldElement.value
                     })
                     const valuesRaw = JSON.stringify(values);
                     const tableFieldsRawElement = document.getElementById("<?php echo $hiddenRawElementId ?>");

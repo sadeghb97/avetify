@@ -101,6 +101,7 @@ require_once "table/fields/DateFields.php";
 require_once "table/fields/TextFields.php";
 require_once "table/fields/FlagFields.php";
 require_once "table/fields/SelectField.php";
+require_once "table/fields/SetSelectField.php";
 
 require_once "crawling/Scrapper.php";
 require_once "crawling/RawDocumentLoader.php";

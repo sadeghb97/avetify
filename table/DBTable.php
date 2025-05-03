@@ -1,12 +1,12 @@
 <?php
 
-class DBTable extends SBTable {
+abstract class DBTable extends SBTable {
     public bool $pkIsNumeric = true;
 
-    public function __construct(public DBConnection $conn, public string $dbTableName, public string $primaryKey,
-                                array $fields, string $key){
+    public function __construct(public DBConnection $conn, public string $dbTableName,
+                                public string $primaryKey, string $key){
 
-        parent::__construct($fields, $this->fetchDBRecords(), $key, true);
+        parent::__construct($this->makeTableFields(), $this->fetchDBRecords(), $key, true);
     }
 
     public function getItemId($record): string {
@@ -52,9 +52,12 @@ class DBTable extends SBTable {
             if($queryRequired) {
                 $sql = $queryBuilder->createUpdate(new QueryField($itemPk, $this->pkIsNumeric, $this->primaryKey));
                 if($this->conn->query($sql)) {
+                    $niceDiv = new NiceDiv(0);
+                    $niceDiv->open();
                     $titlePrinter->print($this->getItemTitle($oldRecord));
                     $messagePrinter->print(": Updated" . br());
                     $queryDone = true;
+                    $niceDiv->close();
                 }
             }
         }
@@ -80,8 +83,11 @@ class DBTable extends SBTable {
                     if($oldRecord instanceof SBEntityItem){
                         $oldRecord->deleteAllResources();
                     }
+                    $niceDiv = new NiceDiv(0);
+                    $niceDiv->open();
                     $titlePrinter->print($this->getItemTitle($oldRecord));
                     $messagePrinter->print(": Deleted" . br());
+                    $niceDiv->close();
                 }
             }
 
@@ -131,4 +137,7 @@ class DBTable extends SBTable {
     public function fetchDBRecords() : array {
         return $this->conn->fetchSet("SELECT * FROM {$this->dbTableName}");
     }
+
+    /** @return SBTableField[] */
+    abstract public function makeTableFields() : array;
 }

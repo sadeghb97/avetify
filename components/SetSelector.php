@@ -2,12 +2,15 @@
 
 class SetSelector implements Placeable {
     public bool $useNameIdentifier = false;
+    public bool $disableAutoSubmit = false;
 
     public function __construct(public string $label,
                                 public string $key,
                                 public string $initValue,
                                 public JSDatalist $dlInfo
-    ){}
+    ){
+        $this->initValue = trim($this->initValue);
+    }
 
     public function place(WebModifier $webModifier = null) {
         echo '<div ';
@@ -23,6 +26,7 @@ class SetSelector implements Placeable {
 
         HTMLInterface::placeVerticalDivider(12);
         $acText = new SetSelectorAC($this->key, $this->key, $this->initValue, $this->dlInfo, $this);
+        $acText->disableSubmitOnEnter = $this->disableAutoSubmit;
         $acText->place();
 
         $titleModifier = WebModifier::createInstance();
@@ -31,7 +35,7 @@ class SetSelector implements Placeable {
         $titleModifier->styler->pushStyle(CSS::marginTop, "8px");
         $titleModifier->styler->pushStyle(CSS::marginBottom, "6px");
         HTMLInterface::placeDiv($this->label, $titleModifier);
-        FormUtils::placeHiddenField($this->getMainElementId(), $this->initValue, $this->useNameIdentifier);
+        FormUtils::placeHiddenField($this->getMainElementId(), $this->initValue, !$this->useNameIdentifier);
 
         $niceDiv = new NiceDiv(0);
         $niceDiv->addModifier(Attrs::id, $this->getImagesDivId());
@@ -40,10 +44,10 @@ class SetSelector implements Placeable {
 
         HTMLInterface::closeDiv();
 
-        $currentIds = explode(",", $this->initValue);
+        $currentIds = $this->initValue ? explode(",", $this->initValue) : [];
         ?>
         <script>
-            var <?php echo $this->getJSSelectedListVarName(); ?> = new Set(<?php echo json_encode($currentIds); ?>);
+            var <?php echo $this->getJSSelectedListVarName(); ?> = new Set(<?php if(count($currentIds) > 0) echo json_encode($currentIds); ?>);
             <?php echo $this->jsUpdateSelector(); ?>
         </script>
         <?php
@@ -56,7 +60,7 @@ class SetSelector implements Placeable {
     }
 
     public function getMainElementId() : string {
-        return $this->key . "_main";
+        return $this->key;
     }
 
     public function getImagesDivId() : string {
@@ -69,9 +73,17 @@ class SetSelector implements Placeable {
 }
 
 class SetSelectorAC extends JSACTextField {
+    public bool $disableSubmitOnEnter = true;
+
     public function __construct(string $fieldKey, string $childKey, string $initValue,
                                 JSDatalist $dlInfo, public SetSelector $selector) {
         parent::__construct($fieldKey, $childKey, $initValue, $dlInfo);
         $this->enterCallbackName = "addRecordToSelector";
+    }
+
+    public function callbackMoreData(): array {
+        return [
+            "disable_auto_submit" => $this->disableSubmitOnEnter,
+        ];
     }
 }
