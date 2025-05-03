@@ -33,6 +33,7 @@ abstract class SBEntityItem extends DataModel implements HaveID, HaveTitle, Have
     public function getItemId(): string {
         if(property_exists($this, "id")) return $this->id;
         if(property_exists($this, "pk")) return $this->pk;
+        if(property_exists($this, "slug")) return $this->slug;
         return "";
     }
 }

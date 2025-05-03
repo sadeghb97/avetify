@@ -16,7 +16,7 @@ class APIMedalField extends JSInputField {
             '\', \'' . $this->apiEndpoint . '\')';
     }
 
-    public function present(){
+    public function place(?WebModifier $webModifier = null){
         $div = new NiceDiv(0);
         $div->baseOpen();
         HTMLInterface::addAttribute("onclick", $this->clickAction());

@@ -12,12 +12,12 @@ class JSACTextField extends JSTextField {
      *          shome be an dastresi khahid dasht
      */
     public function __construct(string $fieldKey, string $childKey,
-                                string $initValue, public DatalistInfo $dlInfo){
+                                string $initValue, public JSDatalist $dlInfo){
         parent::__construct($fieldKey, $childKey, $initValue);
-        $this->listIdentifier = $dlInfo->datalistId;
+        $this->listIdentifier = $dlInfo->getDatalistElementId();
     }
 
-    public function present(){
+    public function place(?WebModifier $webModifier = null){
         $this->presentListField();
     }
 
@@ -31,8 +31,7 @@ class JSACTextField extends JSTextField {
         $cmdSafe = htmlspecialchars($cmdJson, ENT_QUOTES, 'UTF-8');
 
         return 'acOnItemEntered(' . '\'' . $this->getFieldIdentifier() . '\', \'' . $this->childKey . '\''
-            . ', ' . $this->dlInfo->jsRecordsVarName . ', \''
-            . $this->dlInfo->recordLabelKey . '\', '
+            . ', ' . $this->dlInfo->getRecordsListJSVarName() . ', '
             . $cmdSafe . ', '
             . $this->enterCallbackName . ');';
     }
@@ -45,7 +44,7 @@ class APIACTextField extends APITextField {
         $this->listIdentifier = $listId;
     }
 
-    public function present(){
+    public function place(?WebModifier $webModifier = null){
         $this->presentListField();
     }
 }

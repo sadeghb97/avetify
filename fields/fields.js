@@ -11,11 +11,11 @@ function titleCase(str) {
     return splitStr.join(' ');
 }
 
-function acOnItemEntered(fieldKey, recordKey, recordsList, recordTargetKey, cData, callback){
+function acOnItemEntered(fieldKey, recordKey, recordsList, cData, callback){
     const field = document.getElementById(fieldKey)
     const fieldValue = field.value
     const selectedItem = recordsList.find((record) => {
-        return record[recordTargetKey] === fieldValue
+        return record['main_jsdl_name'] === fieldValue
     })
 
     if(selectedItem != null) callback(field, recordKey, cData, selectedItem)
@@ -123,4 +123,56 @@ function onSelectCountry(field, recordKey, cData, selectedCountry){
     if(linkElement) linkElement.href = countryLink
     field.value = ""
     if(disableAutoSubmit) field.blur()
+}
+
+function updateSelectorSet(selectorKey, records, map){
+    const selectedSetVarName = selectorKey + "_selected"
+    window[selectedSetVarName].forEach((recordId) => {
+        const record = records[map[recordId]]
+        if(record) addRecordToSelector(null, selectorKey, null, record)
+    })
+}
+
+function addRecordToSelector(acField, selectorKey, cData, selectedRecord){
+    const recordId = selectedRecord['main_jsdl_id']
+    const recordName = selectedRecord['main_jsdl_name']
+    const recordImage = selectedRecord['main_jsdl_avatar']
+    const imagesDiv = document.getElementById(selectorKey + "_images")
+    const valueElement = document.getElementById(selectorKey + "_main")
+    const imageElementId = selectorKey + "_item_" + recordId
+
+    const selectedSetVarName = selectorKey + "_selected"
+    window[selectedSetVarName].add(recordId)
+    valueElement.value = [...window[selectedSetVarName]].join(',')
+
+    let imageElement = document.getElementById(imageElementId)
+    if(!imageElement){
+        imageElement = document.createElement("img")
+        imageElement.id = imageElementId
+        imageElement.src = recordImage
+        imageElement.title = recordName
+        imageElement.classList.add("selbox-img")
+        imageElement.onclick = function() {
+            if(window[selectedSetVarName].has(recordId)){
+                removeSelectorItem(selectorKey, recordId)
+            }
+            else addRecordToSelector(acField, selectorKey, cData, selectedRecord)
+        };
+        imagesDiv.appendChild(imageElement)
+    }
+    else {
+        imageElement.style.opacity = "1"
+        imageElement.style.filter = "none"
+    }
+}
+
+function removeSelectorItem(selectorKey, recordId){
+    const selectedSetVarName = selectorKey + "_selected"
+    window[selectedSetVarName].delete(recordId)
+    const imageElementId = selectorKey + "_item_" + recordId
+    const imageElement = document.getElementById(imageElementId)
+    if(imageElement){
+        imageElement.style.opacity = "0.35"
+        imageElement.style.filter = "grayscale(100%)"
+    }
 }

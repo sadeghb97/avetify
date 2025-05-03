@@ -7,8 +7,8 @@ class JSDataSet extends JSDataElement {
         HTMLInterface::closeTag();
 
         foreach ($this->records as $record){
-            $key = EntityUtils::getSimpleValue($record, $this->primaryKey);
-            $label = EntityUtils::getSimpleValue($record, $this->labelKey);
+            $key = $this->getItemId($record);
+            $label = $this->getItemTitle($record);
 
             echo '<option ';
             HTMLInterface::addAttribute("value", $key);

@@ -30,7 +30,7 @@ class CountrySelector implements Placeable {
 
         $acTextField = $this->countriesACFactory->create();
         $acTextField->label = $this->label;
-        $acTextField->presentListField();
+        $acTextField->place();
         $div->separate();
 
         $countryLink = "";
@@ -66,7 +66,7 @@ class CountriesACTextField extends JSACTextField {
      */
     public function __construct(string $fieldKey = "", string $childKey = "", string $initValue = "",
                                 string $enterCallbackName = "onSelectCountry"){
-        parent::__construct($fieldKey, $childKey, $initValue, World::getCountriesDatalistInfo());
+        parent::__construct($fieldKey, $childKey, $initValue, World::getCountriesDatalist());
         $this->enterCallbackName = $enterCallbackName;
     }
 

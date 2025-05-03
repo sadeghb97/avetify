@@ -19,3 +19,21 @@ input.numeric-text {
     padding: 10px;
     background-color: #fbfbfb;
 }
+
+.selbox{
+    background-color: aliceblue;
+    width: 320px;
+    border-style: dashed;
+    border-color: black;
+    border-width: 2px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-bottom: 12px;
+}
+
+.selbox-img{
+    height: 70px;
+    width: auto;
+    border-radius: 6px;
+    margin: 3px;
+}

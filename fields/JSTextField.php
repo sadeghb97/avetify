@@ -13,7 +13,7 @@ abstract class JSTextField extends JSInputField {
         return $this->fieldKey;
     }
 
-    public function present(){
+    public function place(?WebModifier $webModifier = null){
         $div = new NiceDiv(0);
         $div->baseOpen();
         HTMLInterface::closeTag();

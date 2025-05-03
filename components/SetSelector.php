@@ -1,0 +1,77 @@
+<?php
+
+class SetSelector implements Placeable {
+    public bool $useNameIdentifier = false;
+
+    public function __construct(public string $label,
+                                public string $key,
+                                public string $initValue,
+                                public JSDatalist $dlInfo
+    ){}
+
+    public function place(WebModifier $webModifier = null) {
+        echo '<div ';
+        Styler::classStartAttribute();
+        Styler::addClass("selbox");
+        HTMLInterface::appendClasses($webModifier);
+        Styler::closeAttribute();
+        Styler::startAttribute();
+        HTMLInterface::appendStyles($webModifier);
+        Styler::closeAttribute();
+        HTMLInterface::applyModifiers($webModifier);
+        HTMLInterface::closeTag();
+
+        HTMLInterface::placeVerticalDivider(12);
+        $acText = new SetSelectorAC($this->key, $this->key, $this->initValue, $this->dlInfo, $this);
+        $acText->place();
+
+        $titleModifier = WebModifier::createInstance();
+        $titleModifier->styler->pushStyle(CSS::fontSize, "11pt");
+        $titleModifier->styler->pushStyle(CSS::fontWeight, "bold");
+        $titleModifier->styler->pushStyle(CSS::marginTop, "8px");
+        $titleModifier->styler->pushStyle(CSS::marginBottom, "6px");
+        HTMLInterface::placeDiv($this->label, $titleModifier);
+        FormUtils::placeHiddenField($this->getMainElementId(), $this->initValue, $this->useNameIdentifier);
+
+        $niceDiv = new NiceDiv(0);
+        $niceDiv->addModifier(Attrs::id, $this->getImagesDivId());
+        $niceDiv->open();
+        $niceDiv->close();
+
+        HTMLInterface::closeDiv();
+
+        $currentIds = explode(",", $this->initValue);
+        ?>
+        <script>
+            var <?php echo $this->getJSSelectedListVarName(); ?> = new Set(<?php echo json_encode($currentIds); ?>);
+            <?php echo $this->jsUpdateSelector(); ?>
+        </script>
+        <?php
+    }
+
+    public function jsUpdateSelector() : string {
+        return "updateSelectorSet('" . $this->key . "', "
+            . $this->dlInfo->getRecordsListJSVarName() . ", "
+            . $this->dlInfo->getRecordsIdsMapJSVarName() . ");";
+    }
+
+    public function getMainElementId() : string {
+        return $this->key . "_main";
+    }
+
+    public function getImagesDivId() : string {
+        return $this->key . "_images";
+    }
+
+    public function getJSSelectedListVarName(){
+        return $this->key . "_selected";
+    }
+}
+
+class SetSelectorAC extends JSACTextField {
+    public function __construct(string $fieldKey, string $childKey, string $initValue,
+                                JSDatalist $dlInfo, public SetSelector $selector) {
+        parent::__construct($fieldKey, $childKey, $initValue, $dlInfo);
+        $this->enterCallbackName = "addRecordToSelector";
+    }
+}

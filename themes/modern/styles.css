@@ -502,15 +502,6 @@ input:checked + .slider:before {
     opacity: 1;
 }
 
-#selbox{
-    background-color: aliceblue;
-    max-width: 400px;
-    border-style: dashed;
-    border-color: black;
-    border-width: 2px;
-    padding-bottom: 12px;
-}
-
 .testbox{
     background-color: aliceblue;
     max-width: 1600px;

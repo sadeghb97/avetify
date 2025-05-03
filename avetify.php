@@ -75,6 +75,7 @@ require_once "components/SpecialField.php";
 require_once "components/SpecialTags.php";
 require_once "components/WinRateBar.php";
 require_once "components/CountrySelector.php";
+require_once "components/SetSelector.php";
 require_once "components/images/PlaceableImage.php";
 require_once "components/images/IconButton.php";
 require_once "components/images/CroppableImage.php";

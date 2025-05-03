@@ -9,7 +9,7 @@ class APISpanField extends JSInputField {
         return $this->fieldKey . "_" . $this->recordKey;
     }
 
-    public function present(){
+    public function place(?WebModifier $webModifier = null){
         echo '<div ';
         HTMLInterface::addAttribute("id", $this->getFieldIdentifier());
         HTMLInterface::addAttribute("onkeydown", "");

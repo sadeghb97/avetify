@@ -204,7 +204,7 @@ function printCard($img, $name, $description, $link, $options){
 
         foreach ($options['api_medals'] as $medalIndex => $apiMedal){
             if($medalIndex > 0) $apiMedalsDiv->separate();
-            $apiMedal->present();
+            $apiMedal->place();
         }
 
         $apiMedalsDiv->close();
@@ -219,7 +219,7 @@ function printCard($img, $name, $description, $link, $options){
 
         foreach ($options['span_texts'] as $sptIndex => $spanText){
             if($sptIndex > 0) $tagsDiv->separate();
-            $spanText->present();
+            $spanText->place();
         }
 
         $tagsDiv->close();
@@ -232,7 +232,7 @@ function printCard($img, $name, $description, $link, $options){
 
         foreach ($options['api_texts'] as $fieldIndex => $apiText){
             if($fieldIndex > 0) $apiTextsDiv->separate();
-            $apiText->present();
+            $apiText->place();
         }
 
         $apiTextsDiv->close();

@@ -5,7 +5,6 @@ class World {
     private static array | null $flagFilesMap = null;
     private static array | null $detailsMap = null;
     private static CountriesDatalist | null $countriesDatalist = null;
-    private static DatalistInfo | null $countriesDatalistInfo = null;
 
     private static function init(){
         $worldCountries = new WorldCountries();
@@ -16,7 +15,6 @@ class World {
         }
 
         self::$countriesDatalist = new CountriesDatalist($countriesArray);
-        self::$countriesDatalistInfo = self::$countriesDatalist->getDatalistInfo();
 
         foreach (self::$detailsMap as $countryCode => $country){
             $flag = $worldCountries->getCountryFlag($countryCode);
@@ -48,10 +46,5 @@ class World {
     public static function getCountriesDatalist() : CountriesDatalist {
         if(self::$countriesDatalist == null) self::init();
         return self::$countriesDatalist;
-    }
-
-    public static function getCountriesDatalistInfo() : DatalistInfo {
-        if(self::$countriesDatalist == null) self::init();
-        return self::$countriesDatalistInfo;
     }
 }
