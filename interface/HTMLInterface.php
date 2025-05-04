@@ -270,11 +270,12 @@
          $absButton->place();
      }
 
-     public static function absPlace(Placeable $placeable,
-                 string $right = "", string $left = "", string $top = "", string $bottom = ""){
+     private static function _absPlace(Placeable $placeable, string $positionStyle,
+                                     string $right = "", string $left = "",
+                                     string $top = "", string $bottom = ""){
 
          $styler = new Styler();
-         $styler->pushStyle("position", "fixed");
+         $styler->pushStyle("position", $positionStyle);
          if($left) $styler->pushStyle("left", $left);
          if($right) $styler->pushStyle("right", $right);
          if($top) $styler->pushStyle("top", $top);
@@ -282,5 +283,15 @@
 
          $webModifier = new WebModifier(null, $styler);
          $placeable->place($webModifier);
+     }
+
+     public static function absPlace(Placeable $placeable,
+                 string $right = "", string $left = "", string $top = "", string $bottom = ""){
+         self::_absPlace($placeable, "fixed", $right, $left, $top, $bottom);
+     }
+
+     public static function impPlace(Placeable $placeable,
+                                     string $right = "", string $left = "", string $top = "", string $bottom = ""){
+         self::_absPlace($placeable, "absolute", $right, $left, $top, $bottom);
      }
  }

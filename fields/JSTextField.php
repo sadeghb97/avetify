@@ -23,6 +23,13 @@ abstract class JSTextField extends JSInputField {
         HTMLInterface::addAttribute("type", "text");
         if($this->label) HTMLInterface::addAttribute("placeholder", $this->label);
         $this->boundEnterEvent();
+        HTMLInterface::applyModifiers($webModifier);
+        Styler::classStartAttribute();
+        HTMLInterface::appendClasses($webModifier);
+        Styler::closeAttribute();
+        Styler::startAttribute();
+        HTMLInterface::appendStyles($webModifier);
+        Styler::closeAttribute();
         HTMLInterface::closeSingleTag();
 
         $div->close();
@@ -38,13 +45,20 @@ abstract class JSTextField extends JSInputField {
             "}");
     }
 
-    public function presentListField(){
+    public function presentListField(?WebModifier $webModifier = null){
         echo '<input ';
         HTMLInterface::addAttribute("list", $this->listIdentifier);
         HTMLInterface::addAttribute("id", $this->getFieldIdentifier());
         HTMLInterface::addAttribute("autocomplete", "off");
         if($this->label) HTMLInterface::addAttribute("placeholder", $this->label);
         $this->boundEnterEvent();
+        HTMLInterface::applyModifiers($webModifier);
+        Styler::classStartAttribute();
+        HTMLInterface::appendClasses($webModifier);
+        Styler::closeAttribute();
+        Styler::startAttribute();
+        HTMLInterface::appendStyles($webModifier);
+        Styler::closeAttribute();
         HTMLInterface::closeSingleTag();
     }
 }

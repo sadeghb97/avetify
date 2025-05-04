@@ -3,8 +3,9 @@
 class JSDatalist extends JSDataElement {
     public array $flatRecords = [];
     public function __construct(string $dataSetKey, array $records,
-                                string $primaryKey = "", string $labelKey = ""){
-        parent::__construct($dataSetKey, $records, $primaryKey, $labelKey);
+                                string $primaryKey = "",
+                                string $labelKey = "", string $imageKey = ""){
+        parent::__construct($dataSetKey, $records, $primaryKey, $labelKey, $imageKey);
 
         foreach ($this->records as $record){
             $this->flatRecords[] = $this->getItemTitle($record);

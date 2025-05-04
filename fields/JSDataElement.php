@@ -5,7 +5,8 @@ abstract class JSDataElement implements Placeable, EntityID, EntityTitle, Entity
     public array $idsMap = [];
 
     public function __construct(public string $dataSetKey, public array $records,
-                                public string $primaryKey = "", public string $labelKey = ""){
+                                public string $primaryKey = "",
+                                public string $labelKey = "", public string $imageKey = ""){
         $this->namesMap = [];
         $this->idsMap = [];
         foreach ($this->records as $recordIndex => $record){
@@ -39,6 +40,6 @@ abstract class JSDataElement implements Placeable, EntityID, EntityTitle, Entity
 
     public function getItemImage($record) : string {
         if($record instanceof SBEntityItem) return $record->getItemImage();
-        return "";
+        return EntityUtils::getSimpleValue($record, $this->imageKey);
     }
 }

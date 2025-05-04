@@ -56,6 +56,16 @@ function submitForm(formId){
     form.submit()
 }
 
+function addParamToLink(url, paramKey, paramValue) {
+    const parsedUrl = new URL(url);
+    parsedUrl.searchParams.set(paramKey, paramValue);
+    return parsedUrl.toString();
+}
+
+function addParamToCurrentLink(paramKey, paramValue) {
+    addParamToLink(window.location.href, paramKey, paramValue)
+}
+
 document.addEventListener('keydown', function (e) {
     const target = e.target;
     if (target.classList.contains('numeric-text')) {
