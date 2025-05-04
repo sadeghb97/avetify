@@ -1,6 +1,8 @@
 <?php
 
 class CroppableImage {
+    public array $cropParams = [];
+
     public function __construct(public string $serverSrc, public string $id,
                                 public int $imageType = IMAGETYPE_JPEG,
                                 public float $targetRatio = 0,
@@ -24,8 +26,12 @@ class CroppableImage {
         $imageSrc = $this->serverSrc . '?' . time();
         HTMLInterface::addAttribute("src", Routing::serverPathToBrowserPath($imageSrc));
         HTMLInterface::addAttribute("id", $this->id);
+
+        $cmdJson = json_encode($this->cropParams);
+        $cmdSafe = htmlspecialchars($cmdJson, ENT_QUOTES, 'UTF-8');
         HTMLInterface::addAttribute("onclick", "setCropConfigs(event, '" . $this->id .
-            "', " . $this->getJSRatioVarName() . ")");
+            "', " . $this->getJSRatioVarName() . ", " . $cmdSafe . ")");
+
         Styler::startAttribute();
         if($withWidth) Styler::imageWithWidth($size);
         else Styler::imageWithHeight($size);

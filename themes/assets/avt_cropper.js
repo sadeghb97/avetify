@@ -1,7 +1,7 @@
 let lastCropper = null;
 let increasingMode = true;
-function setCropConfigs(event, imageId, ratio){
-    console.log("R", ratio)
+function setCropConfigs(event, imageId, ratio, cropParams){
+    console.log("R", cropParams)
     const clickRelativeX = event.offsetX;
     const clickRelativeY = event.offsetY;
 
@@ -60,6 +60,11 @@ function setCropConfigs(event, imageId, ratio){
             inpEnabled.value = 1
             cropStatus.innerText = status
             cropper.destroy()
+
+            if("auto_submit_form_id" in cropParams){
+                const form = document.getElementById(cropParams['auto_submit_form_id'])
+                if(form) form.submit()
+            }
         }
     };
 }

@@ -15,6 +15,7 @@ class JoshButton {
         echo '<button ';
         HTMLInterface::addAttribute("type", $this->buttonType);
         if($this->buttonId) HTMLInterface::addAttribute("id", $this->buttonId);
+        HTMLInterface::addAttribute("onkeydown", 'return false;');
         Styler::classStartAttribute();
         Styler::addClass($buttonStyle);
         HTMLInterface::appendClasses($webModifier);

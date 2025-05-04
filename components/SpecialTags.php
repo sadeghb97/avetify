@@ -124,6 +124,7 @@ class SpecialTag extends JSField {
         ?>
         <script>
             document.getElementById("<?php echo $this->fieldId ?>").addEventListener("click", function(event) {
+                console.log("ONCCCCCC", new Date());
                 <?php echo $this->parent->getJSObjectName(); ?>['<?php echo $this->fieldId ?>'] =
                     !<?php echo $this->parent->getJSObjectName(); ?>['<?php echo $this->fieldId ?>'];
                 const newValue = <?php echo $this->parent->getJSObjectName(); ?>['<?php echo $this->fieldId ?>'];
