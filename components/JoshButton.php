@@ -15,7 +15,10 @@ class JoshButton {
         echo '<button ';
         HTMLInterface::addAttribute("type", $this->buttonType);
         if($this->buttonId) HTMLInterface::addAttribute("id", $this->buttonId);
-        HTMLInterface::addAttribute("class", $buttonStyle);
+        Styler::classStartAttribute();
+        Styler::addClass($buttonStyle);
+        HTMLInterface::appendClasses($webModifier);
+        Styler::closeAttribute();
         HTMLInterface::applyModifiers($webModifier);
         Styler::startAttribute();
         HTMLInterface::appendStyles($webModifier);

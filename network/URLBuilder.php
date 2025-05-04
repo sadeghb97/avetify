@@ -3,6 +3,12 @@
 class URLBuilder {
     public array $params = [];
 
+    public static function fromCurrent() : URLBuilder {
+        $urlBuilder = new URLBuilder();
+        $urlBuilder->params = array_merge([], $_GET);
+        return $urlBuilder;
+    }
+
     public function __construct(public null | string $baseUrl = null){
     }
 

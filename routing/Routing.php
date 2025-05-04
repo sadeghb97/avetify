@@ -113,6 +113,15 @@ class Routing {
         return $protocol . $host . $uriWithoutParams;
     }
 
+    public static function currentScriptName() : string {
+        $curLink = self::currentPureLink();
+        $curLink = Filer::pruneLastSlash($curLink);
+        if(!str_contains($curLink, "/")) return $curLink;
+        $pos = strrpos($curLink, "/");
+        if(strlen($curLink) <= ($pos + 1)) return "";
+        return substr($curLink, $pos + 1);
+    }
+
     public static function removeParamFromCurrentLink($paramKey) : string {
         $protocol = self::getServerProtocol();
         $host = $_SERVER['HTTP_HOST'];

@@ -5,8 +5,6 @@ abstract class JSField implements Placeable
     public function __construct(public string $fieldId){
     }
 
-    abstract function present();
-
     function basicJSRules(){}
     function moreJSRules(){}
 
@@ -14,7 +12,7 @@ abstract class JSField implements Placeable
 
     function place(WebModifier $webModifier = null){
         $this->basicJSRules();
-        $this->present();
+        $this->place();
         $this->moreJSRules();
         $this->onClickRule();
     }

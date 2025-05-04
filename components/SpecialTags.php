@@ -9,7 +9,7 @@ class SpecialTags extends JSField {
                                 public bool $singleMode = false,
                                 public bool $displayTags = false){
         parent::__construct($fieldId);
-        $this->lineItemsLimit = $this->horizTags ? 10 : 16;
+        $this->lineItemsLimit = $this->horizTags ? 15 : 22;
     }
 
     public function basicJSRules(){
@@ -51,7 +51,7 @@ class SpecialTags extends JSField {
         <?php
     }
 
-    public function present(){
+    public function place(?WebModifier $webModifier = null){
         $tagsDiv = $this->horizTags ? new NiceDiv(4) : new VertDiv(4);
         $tagsDiv->open();
         foreach ($this->tags as $index => $tag){
@@ -144,11 +144,11 @@ class SpecialTag extends JSField {
         <?php
     }
 
-    function present(){
-        $htmlModifier = new HTMLModifier();
-        $styler = new Styler();
-        if(!$this->parent->horizTags) $styler->pushStyle("display", "block");
-        $webModifier = new WebModifier($htmlModifier, $styler);
+    function place(?WebModifier $webModifier = null){
+        if($webModifier == null) $webModifier = WebModifier::createInstance();
+        if(!$this->parent->horizTags){
+            $webModifier->styler->pushStyle("display", "block");
+        }
 
         $joshButton = new JoshButton($this->title, $this->fieldId, "warning");
         $joshButton->renderButton($webModifier);

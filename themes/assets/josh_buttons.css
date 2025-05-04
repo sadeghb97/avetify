@@ -7,9 +7,10 @@
 }
 .front {
     display: block;
-    padding: 10px 35px;
+    padding: 6px 8px;
+    min-width: 75px;
     border-radius: 12px;
-    font-size: 1rem;
+    font-size: 0.875rem;
     background: hsl(215deg 100% 47%);
     color: white;
     will-change: transform;

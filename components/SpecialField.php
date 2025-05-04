@@ -1,7 +1,3 @@
 <?php
 
-class SpecialField extends JSField {
-    public function present(){
-
-    }
-}
+class SpecialField extends JSField {}
