@@ -59,6 +59,7 @@ require_once "fields/JSDatalist.php";
 require_once "fields/JSDataSet.php";
 require_once "fields/JSInputField.php";
 require_once "fields/APIMedalField.php";
+require_once "fields/APIScoreField.php";
 require_once "fields/JSTextField.php";
 require_once "fields/JSACTextField.php";
 require_once "fields/JSDynamicSelect.php";
