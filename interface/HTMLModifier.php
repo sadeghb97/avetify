@@ -25,6 +25,11 @@ class WebModifier {
         return new WebModifier(new HTMLModifier(), new Styler());
     }
 
+    public function __clone() {
+        $this->htmlModifier = clone $this->htmlModifier;
+        $this->styler = clone $this->styler;
+    }
+
     public function apply(){
         if($this->htmlModifier != null) $this->htmlModifier->applyModifiers();
         if($this->styler != null) $this->styler->applyStyles();
