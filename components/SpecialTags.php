@@ -52,6 +52,7 @@ class SpecialTags extends JSField {
     }
 
     public function place(?WebModifier $webModifier = null){
+        $this->basicJSRules();
         $tagsDiv = $this->horizTags ? new NiceDiv(4) : new VertDiv(4);
         $tagsDiv->open();
         foreach ($this->tags as $index => $tag){
@@ -78,6 +79,8 @@ class SpecialTags extends JSField {
 
         FormUtils::placeHiddenField($this->fieldId, "", false);
         echo '<script>' . $this->getJSRefreshName() . "();" . '</script>';
+        $this->moreJSRules();
+        $this->onClickRule();
     }
 
     public function createChildTag($tag) : SpecialTag {
@@ -145,6 +148,7 @@ class SpecialTag extends JSField {
     }
 
     function place(?WebModifier $webModifier = null){
+        $this->basicJSRules();
         if($webModifier == null) $webModifier = WebModifier::createInstance();
         if(!$this->parent->horizTags){
             $webModifier->styler->pushStyle("display", "block");
@@ -152,5 +156,7 @@ class SpecialTag extends JSField {
 
         $joshButton = new JoshButton($this->title, $this->fieldId, "warning");
         $joshButton->renderButton($webModifier);
+        $this->moreJSRules();
+        $this->onClickRule();
     }
 }
