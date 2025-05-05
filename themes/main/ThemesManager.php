@@ -52,6 +52,7 @@ class ThemesManager {
         if($this->navigationRenderer != null){
             $this->navigationRenderer->place();
         }
+        AvtDialog::place();
     }
 
     public function getNavigationBar() : ?NavigationBar {
