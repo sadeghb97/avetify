@@ -80,6 +80,7 @@ require_once "components/SpecialTags.php";
 require_once "components/WinRateBar.php";
 require_once "components/CountrySelector.php";
 require_once "components/SetSelector.php";
+require_once "components/SingleSelector.php";
 require_once "components/AvtDialog.php";
 require_once "components/images/PlaceableImage.php";
 require_once "components/images/IconButton.php";
@@ -107,6 +108,7 @@ require_once "table/fields/TextFields.php";
 require_once "table/fields/FlagFields.php";
 require_once "table/fields/SelectField.php";
 require_once "table/fields/SetSelectField.php";
+require_once "table/fields/VisualSelectField.php";
 
 require_once "crawling/Scrapper.php";
 require_once "crawling/RawDocumentLoader.php";

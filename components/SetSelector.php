@@ -93,9 +93,6 @@ class SetSelectorAC extends JSACTextField {
     }
 
     public function callbackMoreData(): array {
-        return [
-            "disable_auto_submit" => $this->disableSubmitOnEnter,
-            "tiny_avatars" => $this->disableSubmitOnEnter,
-        ];
+        return $this->selector->selectorMoreData();
     }
 }

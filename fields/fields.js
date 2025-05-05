@@ -192,3 +192,24 @@ function removeSelectorItem(selectorKey, recordId){
         imageElement.style.filter = "grayscale(100%)"
     }
 }
+
+function updateSingleSelector(acField, selectorKey, cData, selectedRecord){
+    const valueElement = document.getElementById(selectorKey)
+    const imageBox = document.getElementById(selectorKey + "_avatar_box")
+    const imageElement = document.getElementById(selectorKey + "_avatar")
+
+    const selectedImageSrc = selectedRecord ? selectedRecord['main_jsdl_avatar'] : ""
+    const selectedId = selectedRecord ? selectedRecord['main_jsdl_id'] : ""
+    const disableAutoSubmit = cData && 'disable_auto_submit' in cData && cData['disable_auto_submit']
+
+    if(selectedId) {
+        imageBox.style.display = "block"
+        imageElement.src = selectedImageSrc
+        valueElement.value = selectedId
+    }
+
+    if(acField) {
+        acField.value = ""
+        if (disableAutoSubmit) acField.blur()
+    }
+}
