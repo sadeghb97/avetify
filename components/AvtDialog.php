@@ -3,10 +3,9 @@
 abstract class AvtDialog {
     public function __construct(public string $key,
                                 public string $title,
-                                public string $jsInflatorName,
                                 public string $jsSubmitName){}
 
-    public function jsInit(){
+    protected function jsInit(){
         ?>
         <script>
             var <?php echo $this->jsParamsVarName(); ?> = {};
@@ -14,7 +13,6 @@ abstract class AvtDialog {
                 <?php echo $this->jsParamsVarName(); ?> = constParams
                 const viewport = document.getElementById('avtDialogViewport');
                 const template = document.getElementById('<?php echo $this->getTemplateId(); ?>');
-                <?php echo $this->jsInflatorName .'(' . $this->jsParamsVarName() . ')';?>;
 
                 viewport.innerHTML = '';
                 const clone = document.importNode(template.content, true);
@@ -22,16 +20,16 @@ abstract class AvtDialog {
                 document.getElementById('avtDialogOverlay').style.display = 'flex';
             }
 
-            function <?php echo $this->_baseSubmitName(); ?>(constParams){
+            function <?php echo $this->mainSubmitFunctionName(); ?>(constParams){
                 const viewport = document.getElementById('avtDialogViewport');
                 const dataElements = viewport.querySelectorAll('.dialog-data');
-                const formData = [];
+                const formData = {};
 
                 dataElements.forEach(el => {
-                    formData.push({id: el.id, value: el.value});
+                    formData[el.id] = el.value
                 });
 
-                <?php echo $this->jsSubmitName ?>(constParams, formData);
+                <?php echo $this->jsSubmitName ?>('<?php echo $this->key ?>', constParams, formData);
             }
         </script>
         <?php
@@ -40,19 +38,27 @@ abstract class AvtDialog {
     public function jsInflateDialog($params) : string {
         $cmdJson = json_encode($params);
         $cmdSafe = htmlspecialchars($cmdJson, ENT_QUOTES, 'UTF-8');
-        return $this->_inflateDialogName() . '(' . $cmdSafe . ');';
+        return $this->_inflateDialogName() . '(' . $cmdSafe . ')';
     }
 
     private function _inflateDialogName() : string {
         return "inflate_dialog_" . $this->key;
     }
 
-    private function _baseSubmitName() : string {
+    public function mainSubmitFunctionName() : string {
         return "submit_dialog_" . $this->key;
     }
 
     private function jsParamsVarName() : string {
         return "params_" . $this->key;
+    }
+
+    private function jsSuccessMessageId() : string {
+        return "success_message_" . $this->key;
+    }
+
+    private function jsErrorMessageId() : string {
+        return "error_message_" . $this->key;
     }
 
     private function getTemplateId() : string {
@@ -97,12 +103,38 @@ abstract class AvtDialog {
 
     public function addPrimarySubmit(){
         echo '<button class="primary-button" '
-            . 'onclick="' . $this->_baseSubmitName()
+            . 'onclick="' . $this->mainSubmitFunctionName()
             . '(' . $this->jsParamsVarName() . ');">Submit</button>';
     }
 
     public function addPrimaryTitle(){
         echo '<div class="avt-dialog-title">' . $this->title . '</div>';
+    }
+
+    public function addPrimarySuccessMessage(){
+        echo '<div ';
+        Styler::classStartAttribute();
+        Styler::addClass("avt-dialog-success-message");
+        Styler::closeAttribute();
+        Styler::startAttribute();
+        Styler::addStyle("display", "none");
+        Styler::closeAttribute();
+        HTMLInterface::addAttribute("id", $this->jsSuccessMessageId());
+        HTMLInterface::closeTag();
+        HTMLInterface::closeDiv();
+    }
+
+    public function addPrimaryErrorMessage(){
+        echo '<div ';
+        Styler::classStartAttribute();
+        Styler::addClass("avt-dialog-error-message");
+        Styler::closeAttribute();
+        Styler::startAttribute();
+        Styler::addStyle("display", "none");
+        Styler::closeAttribute();
+        HTMLInterface::addAttribute("id", $this->jsErrorMessageId());
+        HTMLInterface::closeTag();
+        HTMLInterface::closeDiv();
     }
 
     protected static function placeDialogHeader(){
@@ -122,11 +154,16 @@ abstract class AvtDialog {
         self::placeDialogFooter();
     }
 
-    public function placeTemplate(){
+    protected function placeTemplate(){
         echo '<template id="' . $this->getTemplateId() . '">';
         $this->placeTemplateContents();
         echo '</template>';
     }
 
     abstract protected function placeTemplateContents();
+
+    public function prepare(){
+        $this->jsInit();
+        $this->placeTemplate();
+    }
 }

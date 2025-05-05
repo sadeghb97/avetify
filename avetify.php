@@ -12,6 +12,9 @@ require_once "db/DBConnection.php";
 require_once "db/DBFilter.php";
 require_once "db/QueryBuilder.php";
 
+require_once "api/APIHelper.php";
+require_once "api/JSONApiResponder.php";
+
 require_once"externals/ImageManipulator.php";
 require_once"externals/jdf.php";
 require_once "externals/gumlet-image/ImageResize.php";

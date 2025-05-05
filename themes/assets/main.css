@@ -96,3 +96,23 @@ input.numeric-text {
     padding: 10px;
     width: 100%;
 }
+
+.avt-dialog-error-message {
+    color: #c0392b;
+    background-color: #fceaea;
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    display: none; /* یا block بسته به شرایط */
+}
+
+.avt-dialog-success-message {
+    color: #27ae60;
+    background-color: #eafaf1;
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    display: none; /* یا block بسته به شرایط */
+}

@@ -16,8 +16,8 @@ function triggerForm(formId, confirmMessage, formTriggerElementId, triggerId) {
     }
 }
 
-function helloAvt(first, second){
-    console.log("Hello AVT!", first, second)
+function helloAvt(first, second, third){
+    console.log("Hello AVT!", first, second, third)
 }
 
 function openAvtDialog() {

@@ -1,46 +1,21 @@
 <?php
 
+use JetBrains\PhpStorm\Pure;
+
 class APIHelper {
-    public static function initJsonApi(){
-        header('Content-Type: application/json');
-        $GLOBALS['__json_api_errors'] = [];
-
-        ini_set('display_errors', 0);
-        error_reporting(E_ALL);
-
-        set_error_handler(function ($errno, $errstr, $errfile, $errline) {
-            $GLOBALS['__json_api_errors'][] = [
-                'type' => 'error',
-                'message' => $errstr,
-                'file' => $errfile,
-                'line' => $errline
-            ];
-            return true;
-        });
-
-        register_shutdown_function(function () {
-            $last_error = error_get_last();
-            if ($last_error && in_array($last_error['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
-                $GLOBALS['__json_api_errors'][] = [
-                    'type' => 'fatal',
-                    'message' => $last_error['message'],
-                    'file' => $last_error['file'],
-                    'line' => $last_error['line']
-                ];
-            }
-
-            $response = [
-                'success' => empty($GLOBALS['__json_api_errors']),
-                'data' => $GLOBALS['responseData'] ?? null,
-                'errors' => $GLOBALS['__json_api_errors']
-            ];
-
-            echo json_encode($response);
-        });
-    }
-
-    public static function requestJSONParams(){
+    public static function getRequestJSONParams(){
         $paramsRaw = file_get_contents("php://input");
         return json_decode($paramsRaw, true);
+    }
+
+    public static function getPostParam(array $jsonParams, string $paramKey) : ?string {
+        if(isset($_POST[$paramKey])) return $_POST[$paramKey];
+        if(isset($jsonParams[$paramKey])) return $jsonParams[$paramKey];
+        return null;
+    }
+
+    #[Pure] public static function reqTypeMatch(string $targetType, array $jsonParams) : bool {
+        $type = self::getPostParam($jsonParams, "request_type");
+        return $targetType == $type;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 class ThemesManager {
+    public bool $noNavigationMenu = false;
     public bool $includesListerTools = false;
     public bool $includesCropperTools = false;
     public ?NavigationRenderer $navigationRenderer = null;
@@ -49,7 +50,7 @@ class ThemesManager {
     public function loadFavicon(){}
 
     public function loadHeaderElements(){
-        if($this->navigationRenderer != null){
+        if(!$this->noNavigationMenu && $this->navigationRenderer != null){
             $this->navigationRenderer->place();
         }
         AvtDialog::place();
