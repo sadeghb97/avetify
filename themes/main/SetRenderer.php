@@ -121,6 +121,10 @@ abstract class SetRenderer extends BaseSetRenderer {
             $this->initForm();
             if ($sbTable->isEditable) $sbTable->catchSubmittedFields();
 
+            foreach ($this->setModifier->requiredDatalists as $dl){
+                $dl->place();
+            }
+
             foreach ($this->setModifier->fields as $field){
                 if($field instanceof SBEditableField){
                     $field->preLoad();

@@ -125,11 +125,11 @@ function onSelectCountry(field, recordKey, cData, selectedCountry){
     if(disableAutoSubmit) field.blur()
 }
 
-function updateSelectorSet(selectorKey, records, map){
+function updateSelectorSet(selectorKey, records, map, sData){
     const selectedSetVarName = selectorKey + "_selected"
     window[selectedSetVarName].forEach((recordId) => {
         const record = records[map[recordId]]
-        if(record) addRecordToSelector(null, selectorKey, null, record)
+        if(record) addRecordToSelector(null, selectorKey, sData, record)
     })
 }
 
@@ -141,6 +141,7 @@ function addRecordToSelector(acField, selectorKey, cData, selectedRecord){
     const valueElement = document.getElementById(selectorKey)
     const imageElementId = selectorKey + "_item_" + recordId
     const disableAutoSubmit = cData && 'disable_auto_submit' in cData && cData['disable_auto_submit']
+    const tinyAvatars = cData && 'tiny_avatars' in cData && cData['tiny_avatars']
 
     const selectedSetVarName = selectorKey + "_selected"
     window[selectedSetVarName].add(recordId)
@@ -153,6 +154,12 @@ function addRecordToSelector(acField, selectorKey, cData, selectedRecord){
         imageElement.src = recordImage
         imageElement.title = recordName
         imageElement.classList.add("selbox-img")
+
+        if(tinyAvatars){
+            imageElement.style.height = "50px";
+            imageElement.style.width = "auto";
+        }
+
         imageElement.onclick = function() {
             if(window[selectedSetVarName].has(recordId)){
                 removeSelectorItem(selectorKey, recordId)

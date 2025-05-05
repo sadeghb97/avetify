@@ -3,6 +3,7 @@
 class SetSelector implements Placeable {
     public bool $useNameIdentifier = false;
     public bool $disableAutoSubmit = false;
+    public bool $tinyAvatars = false;
 
     public function __construct(public string $label,
                                 public string $key,
@@ -27,6 +28,7 @@ class SetSelector implements Placeable {
         HTMLInterface::placeVerticalDivider(12);
         $acText = new SetSelectorAC($this->key, $this->key, $this->initValue, $this->dlInfo, $this);
         $acText->disableSubmitOnEnter = $this->disableAutoSubmit;
+        $acText->tinyAvatars = $this->tinyAvatars;
         $acText->place();
 
         $titleModifier = WebModifier::createInstance();
@@ -53,10 +55,18 @@ class SetSelector implements Placeable {
         <?php
     }
 
+    public function selectorMoreData() : array {
+        return [
+            "disable_auto_submit" => $this->disableAutoSubmit,
+            "tiny_avatars" => $this->tinyAvatars,
+        ];
+    }
+
     public function jsUpdateSelector() : string {
+        $cmdJson = json_encode($this->selectorMoreData());
         return "updateSelectorSet('" . $this->key . "', "
             . $this->dlInfo->getRecordsListJSVarName() . ", "
-            . $this->dlInfo->getRecordsIdsMapJSVarName() . ");";
+            . $this->dlInfo->getRecordsIdsMapJSVarName() . ', ' . $cmdJson . ');';
     }
 
     public function getMainElementId() : string {
@@ -74,6 +84,7 @@ class SetSelector implements Placeable {
 
 class SetSelectorAC extends JSACTextField {
     public bool $disableSubmitOnEnter = true;
+    public bool $tinyAvatars = false;
 
     public function __construct(string $fieldKey, string $childKey, string $initValue,
                                 JSDatalist $dlInfo, public SetSelector $selector) {
@@ -84,6 +95,7 @@ class SetSelectorAC extends JSACTextField {
     public function callbackMoreData(): array {
         return [
             "disable_auto_submit" => $this->disableSubmitOnEnter,
+            "tiny_avatars" => $this->disableSubmitOnEnter,
         ];
     }
 }

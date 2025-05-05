@@ -20,14 +20,6 @@ function helloAvt(first, second, third){
     console.log("Hello AVT!", first, second, third)
 }
 
-function openAvtDialog() {
-    document.getElementById('avtDialogOverlay').style.display = 'flex';
-}
-
-function closeAvtDialog() {
-    document.getElementById('avtDialogOverlay').style.display = 'none';
-}
-
 function redir(newUrl, delay){
     if(delay){
         setTimeout(() => {

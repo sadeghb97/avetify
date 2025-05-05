@@ -4,6 +4,9 @@ class SBTable extends SetModifier {
     /** @var SBTableField[] $fields */
     public array $fields;
 
+    /** @var JSDataElement[] */
+    public array $requiredDatalists = [];
+
     public bool $enableSelectRecord = false;
     public bool $enableCreatingRow = false;
     public bool $forcePatchRecords = false;
