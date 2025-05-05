@@ -41,7 +41,7 @@ class Routing {
         return self::removeRedundantPath(self::getAvetifyRoot() . '../') . $path;
     }
 
-    public static function serverPathToBrowserPath($serverPath) : string {
+    public static function srpToBrp($serverPath) : string {
         $adjustedPath = self::removeRedundantPath($serverPath);
 
         $documentRoot = $_SERVER['DOCUMENT_ROOT'];
@@ -51,6 +51,10 @@ class Routing {
         }
 
         return $adjustedPath;
+    }
+
+    public static function brpToSrp($browserRootPath){
+        return $_SERVER['DOCUMENT_ROOT'] . $browserRootPath;
     }
 
     public static function removeRedundantPath($path) : string {

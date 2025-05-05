@@ -24,7 +24,7 @@ class CroppableImage {
         echo '<img ';
 
         $imageSrc = $this->serverSrc . '?' . time();
-        HTMLInterface::addAttribute("src", Routing::serverPathToBrowserPath($imageSrc));
+        HTMLInterface::addAttribute("src", Routing::srpToBrp($imageSrc));
         HTMLInterface::addAttribute("id", $this->id);
 
         $cmdJson = json_encode($this->cropParams);

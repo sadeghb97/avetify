@@ -34,7 +34,7 @@ class ManageGalleryLister extends SBLister {
 
     public function getItemImage($item): string {
         if(!$item) return "";
-        return Routing::serverPathToBrowserPath($this->galleryRepo->path . $item->path);
+        return Routing::srpToBrp($this->galleryRepo->path . $item->path);
     }
 
     public function getItemCategoryOriginalPk($item){
@@ -254,7 +254,7 @@ class ManageGalleryLister extends SBLister {
         echo '>';
 
         $avatar = $subRepo->cover ?
-            Routing::serverPathToBrowserPath($subRepo->path . $subRepo->cover->path) : "";
+            Routing::srpToBrp($subRepo->path . $subRepo->cover->path) : "";
         echo '<img src="' . $avatar . '" class="lister-item-img" ';
         Styler::startAttribute();
         $this->appendImageWidthStyles();
