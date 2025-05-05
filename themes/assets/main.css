@@ -37,3 +37,62 @@ input.numeric-text {
     border-radius: 6px;
     margin: 3px;
 }
+
+.avt-dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.avt-dialog-box {
+    position: relative;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    font-family: sans-serif;
+}
+
+.avt-dialog-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.avt-dialog-box label {
+    display: block;
+    margin-top: 10px;
+}
+
+.avt-dialog-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-right: 25px;
+}
+
+.avt-dialog-box input,
+.avt-dialog-box textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+.avt-dialog-box .primary-button {
+    margin-top: 15px;
+    padding: 10px;
+    width: 100%;
+}

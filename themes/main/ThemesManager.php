@@ -3,13 +3,9 @@
 class ThemesManager {
     public bool $includesListerTools = false;
     public bool $includesCropperTools = false;
-    public string $ROOT_PATH = "";
     public ?NavigationRenderer $navigationRenderer = null;
 
     public function __construct(){
-        global $AVETIFY_ROOT_PATH;
-        $this->ROOT_PATH = $AVETIFY_ROOT_PATH;
-
         $navigationBar = $this->getNavigationBar();
         if($navigationBar){
             $this->navigationRenderer = $this->getNavigationRenderer($navigationBar);
@@ -41,6 +37,7 @@ class ThemesManager {
         self::importMainStyles();
         $this->importMainJSInterface();
         $this->importAvtJSFields();
+        self::importAvtJSDialogs();
         $this->importJoshButtons();
         $this->importGeneralFonts();
         $this->importContextMenuStyles();
@@ -99,28 +96,32 @@ class ThemesManager {
         self::importJS(Routing::browserPathFromAvetify("themes/assets/avt_cropper.js"));
     }
 
-    public function importAvtJSFields(){
-        self::importJS($this->ROOT_PATH . "fields/fields.js");
-    }
-
-    public function importMainJSInterface(){
-        self::importJS($this->ROOT_PATH . "themes/assets/interface.js");
+    public static function importMainJSInterface(){
+        self::importJS(Routing::browserPathFromAvetify("themes/assets/interface.js"));
     }
 
     public static function importMainStyles(){
         self::importStyle(Routing::browserPathFromAvetify("themes/assets/main.css"));
     }
 
-    public function importBootstrap(){
-        self::importStyle($this->ROOT_PATH . "externals/bootstrap.min.css");
+    public static function importAvtJSFields(){
+        self::importJS(Routing::browserPathFromAvetify("fields/fields.js"));
     }
 
-    public function importJoshButtons(){
-        self::importStyle($this->ROOT_PATH . "themes/assets/josh_buttons.css");
+    public static function importAvtJSDialogs(){
+        self::importJS(Routing::browserPathFromAvetify("themes/assets/dialogs.js"));
     }
 
-    public function importGalleryGrids(){
-        self::importStyle($this->ROOT_PATH . "themes/assets/gallery_grid.css");
+    public static function importBootstrap(){
+        self::importStyle(Routing::browserPathFromAvetify("externals/bootstrap.min.css"));
+    }
+
+    public static function importJoshButtons(){
+        self::importStyle(Routing::browserPathFromAvetify("themes/assets/josh_buttons.css"));
+    }
+
+    public static function importGalleryGrids(){
+        self::importStyle(Routing::browserPathFromAvetify("themes/assets/gallery_grid.css"));
     }
 
     public static function importListerTools(){
@@ -141,8 +142,8 @@ class ThemesManager {
         ThemesManager::importJS(Routing::browserPathFromAvetify("lister/sortable.js"));
     }
 
-    public function importGeneralFonts(){
-        self::importStyle($this->ROOT_PATH . "assets/fonts/fonts.css");
+    public static function importGeneralFonts(){
+        self::importStyle(Routing::browserPathFromAvetify("assets/fonts/fonts.css"));
     }
 
     public function appendBodyStyles(){}
@@ -155,7 +156,7 @@ class ThemesManager {
         HTMLInterface::closeTag();
     }
 
-    public function closeBody(){
+    public static function closeBody(){
         echo '</body>';
     }
 

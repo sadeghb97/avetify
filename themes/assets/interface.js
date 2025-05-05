@@ -16,6 +16,17 @@ function triggerForm(formId, confirmMessage, formTriggerElementId, triggerId) {
     }
 }
 
+function helloAvt(first, second){
+    console.log("Hello AVT!", first, second)
+}
+
+function openAvtDialog() {
+    document.getElementById('avtDialogOverlay').style.display = 'flex';
+}
+
+function closeAvtDialog() {
+    document.getElementById('avtDialogOverlay').style.display = 'none';
+}
 
 function redir(newUrl, delay){
     if(delay){
