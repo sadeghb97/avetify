@@ -6,13 +6,14 @@ REPO_URL="https://github.com/sadeghb97/avetify"
 CURRENT_DIR="$(pwd)"
 
 if [[ "$CURRENT_DIR" =~ htdocs/(.*) ]]; then
-    PROJECT_NAME="${BASH_REMATCH[1]}"
+    PROJECT_DIR="${BASH_REMATCH[1]}"
 else
     echo "❌ This script must be run inside a directory under 'htdocs'."
     exit 1
 fi
+PROJECT_NAME=$(echo "$PROJECT_DIR" | awk -F_ '{for (i=1; i<=NF; i++) $i=toupper(substr($i,1,1)) substr($i,2)} 1' OFS="")
 
-echo "📁 Detected project name: $PROJECT_NAME"
+echo "📁 Detected project dir: $PROJECT_DIR"
 
 echo "🔄 Cloning the repository..."
 if git clone "$REPO_URL" ./avetify; then
@@ -24,7 +25,29 @@ if git clone "$REPO_URL" ./avetify; then
 <?php
 define("MAIN_PROXY", "127.0.0.1:2081");
 require_once __DIR__ . "/../avetify/avetify.php";
-initAvetify("/$PROJECT_NAME/avetify/");
+initAvetify("/$PROJECT_DIR/avetify/");
+require_once __DIR__ . "/${PROJECT_NAME}Connection.php";
+EOF
+
+    cat > lib/${PROJECT_NAME}Connection.php <<EOF
+<?php
+class ${PROJECT_NAME}Connection extends DBConnection {
+    public function getHost(): string {
+        return "localhost";
+    }
+
+    public function getUser(): string {
+        return "root";
+    }
+
+    public function getPassword(): string {
+        return "";
+    }
+
+    public function getDBName(): string {
+        return "$PROJECT_DIR";
+    }
+}
 EOF
 
     echo "📄 Creating avetify.php..."
