@@ -52,12 +52,8 @@ abstract class DBTable extends SBTable {
             if($queryRequired) {
                 $sql = $queryBuilder->createUpdate(new QueryField($itemPk, $this->pkIsNumeric, $this->primaryKey));
                 if($this->conn->query($sql)) {
-                    $niceDiv = new NiceDiv(0);
-                    $niceDiv->open();
-                    $titlePrinter->print($this->getItemTitle($oldRecord));
-                    $messagePrinter->print(": Updated" . br());
+                    $this->printDBUpdateStatus($titlePrinter, $oldRecord, $messagePrinter, "Updated");
                     $queryDone = true;
-                    $niceDiv->close();
                 }
             }
         }
@@ -83,11 +79,7 @@ abstract class DBTable extends SBTable {
                     if($oldRecord instanceof SBEntityItem){
                         $oldRecord->deleteAllResources();
                     }
-                    $niceDiv = new NiceDiv(0);
-                    $niceDiv->open();
-                    $titlePrinter->print($this->getItemTitle($oldRecord));
-                    $messagePrinter->print(": Deleted" . br());
-                    $niceDiv->close();
+                    $this->printDBUpdateStatus($titlePrinter, $oldRecord, $messagePrinter, "Deleted");
                 }
             }
 
@@ -121,13 +113,19 @@ abstract class DBTable extends SBTable {
 
             $sql = $queryBuilder->createInsert(true);
             if($this->conn->query($sql)) {
-                $titlePrinter->print($this->getItemTitle($creatingFields));
-                $messagePrinter->print(": Inserted" . br());
-
+                $this->printDBUpdateStatus($titlePrinter, $creatingFields, $messagePrinter, "Inserted");
                 $this->updateRecords();
                 endline();
             }
         }
+    }
+
+    protected function printDBUpdateStatus($recordPrinter, $record, $statusPrinter, $status){
+        $niceDiv = new NiceDiv(0);
+        $niceDiv->open();
+        $recordPrinter->print($this->getItemTitle($record));
+        $statusPrinter->print(": " . $status);
+        $niceDiv->close();
     }
 
     public function updateRecords (){

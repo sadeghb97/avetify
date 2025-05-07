@@ -19,8 +19,8 @@ abstract class RecordContextMenu {
         echo '<div class="context-menu-row">';
 
         foreach ($this->options as $rowOptions){
-            if(!empty($rowOptions['key'])) {
-                $this->addMenuItem($rowOptions['key'], $rowOptions['title'], $this->singleWidth * $this->rowLength);
+            if($rowOptions instanceof ContextMenuItem) {
+                $this->addMenuItem($rowOptions, $this->singleWidth * $this->rowLength);
             }
             else {
                 foreach ($rowOptions as $index => $option) {
@@ -28,7 +28,7 @@ abstract class RecordContextMenu {
                     if((($index + 1) >= count($rowOptions)) && (count($rowOptions) < $this->rowLength)){
                         $width = ($this->rowLength - $index) * $this->singleWidth;
                     }
-                    $this->addMenuItem($option['key'], $option['title'], $width);
+                    $this->addMenuItem($option, $width);
                 }
             }
         }
@@ -102,17 +102,22 @@ abstract class RecordContextMenu {
         return $options;
     }
 
-    protected function addMenuItem(string $key, string $title, int $width){
+    protected function addMenuItem(ContextMenuItem $menuItem, int $width){
         echo '<div ';
         HTMLInterface::addAttribute("class", "item");
         Styler::startAttribute();
         Styler::addStyle("width", $width . "px");
         Styler::addStyle("height", $this->singleHeight . "px");
+        HTMLInterface::appendStyles($menuItem->modifier);
+        Styler::closeAttribute();
+        Styler::classStartAttribute();
+        HTMLInterface::appendClasses($menuItem->modifier);
         Styler::closeAttribute();
         HTMLInterface::addAttribute("onclick",
-            $this->provokerActionName() . "('" . $key . "')");
+            $this->provokerActionName() . "('" . $menuItem->key . "')");
+        HTMLInterface::applyModifiers($menuItem->modifier);
         HTMLInterface::closeTag();
-        echo $title;
+        echo $menuItem->title;
         HTMLInterface::closeDiv();
     }
 
@@ -145,4 +150,9 @@ abstract class RecordContextMenu {
     public function openMenuJSCall(string $recordId) : string {
         return $this->openMenuName() . "('" . $recordId . "', event)";
     }
+}
+
+class ContextMenuItem {
+    public function __construct(public string $key, public string $title){}
+    public ?WebModifier $modifier;
 }

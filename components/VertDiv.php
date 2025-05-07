@@ -6,7 +6,7 @@ class VertDiv extends NiceDiv {
         $this->styles = [];
     }
 
-    public function separate(){
+    public function separate(WebModifier $webModifier = null){
         $this->separateWith("height");
     }
 }

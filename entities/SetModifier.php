@@ -5,6 +5,7 @@ abstract class SetModifier implements EntityID, EntityTitle, EntityLink, EntityI
     public array $currentRecords = [];
     public bool $isSortable = true;
     public bool $isEditable = true;
+    public SetRenderer | null $renderer = null;
 
     public function __construct(public string $setKey){}
 
@@ -117,5 +118,27 @@ abstract class SetModifier implements EntityID, EntityTitle, EntityLink, EntityI
             $map[$id] = $index;
         }
         return $map;
+    }
+
+    public function getAllAvailableItemsCount() : int {
+        return count($this->records);
+    }
+
+    public function getCurrentRecordCount() : int {
+        return count($this->currentRecords);
+    }
+
+    public function openPage(string $title = ""){
+        if($title) $this->renderer->title = $title;
+        $this->renderer->openPage();
+    }
+
+    public function renderBody(){
+        $this->renderer->renderBody();
+    }
+
+    public function renderPage(string $title = ""){
+        if($title) $this->renderer->title = $title;
+        $this->renderer->renderPage();
     }
 }

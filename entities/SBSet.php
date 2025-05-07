@@ -2,12 +2,10 @@
 
 class SBSet extends SetModifier {
     private array $map = [];
-    public SetRenderer|null $renderer = null;
 
     public function __construct(array $set, public string $key = "set"){
         parent::__construct($this->key);
         $this->loadRawRecords($set);
-        $this->renderer = $this->getRenderer();
     }
 
     public function loadFromFile($filename){
@@ -41,14 +39,5 @@ class SBSet extends SetModifier {
 
     public function finalSortFactors(): array {
         return [];
-    }
-
-    protected function getRenderer() : SetRenderer | null {
-        return null;
-    }
-
-    public function renderPage(){
-        $renderer = $this->getRenderer();
-        if($renderer != null) $renderer->renderPage();
     }
 }

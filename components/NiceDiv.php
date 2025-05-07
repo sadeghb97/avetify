@@ -1,6 +1,6 @@
 <?php
 
-class NiceDiv {
+class NiceDiv implements AVTContainer {
     private int $itemsCount = 0;
 
     public array $styles = [
@@ -48,7 +48,7 @@ class NiceDiv {
         echo '</div>';
     }
 
-    public function separate(){
+    public function separate(WebModifier $webModifier = null){
         if($this->sepSize > 0) $this->separateWith("width");
     }
 

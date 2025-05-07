@@ -1,6 +1,7 @@
 <?php
 
 abstract class SBEntityItem extends DataModel implements HaveID, HaveTitle, HaveImage, HaveLink, HaveAltLink {
+    use Tagged;
     public static function createInstance(string $className, array $data): SBEntityItem {
         if (!is_subclass_of($className, SBEntityItem::class)) {
             throw new InvalidArgumentException("$className must extend SBEntityItem");

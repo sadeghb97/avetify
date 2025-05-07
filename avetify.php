@@ -3,6 +3,7 @@ require_once "routing/Routing.php";
 
 require_once "interface/Interface.php";
 require_once "interface/Placeable.php";
+require_once "interface/AVTContainer.php";
 require_once "interface/Styler.php";
 require_once "interface/HTMLModifier.php";
 require_once "interface/HTMLInterface.php";
@@ -23,6 +24,7 @@ require_once "externals/gumlet-image/ImageResizeException.php";
 require_once "models/Filename.php";
 require_once "models/DataModel.php";
 require_once "models/Detailed.php";
+require_once "models/traits/Tagged.php";
 
 require_once "files/Filer.php";
 require_once "files/ImageUtils.php";
@@ -73,6 +75,7 @@ require_once "components/DialogField.php";
 require_once "components/JoshButton.php";
 require_once "components/NiceDiv.php";
 require_once "components/VertDiv.php";
+require_once "components/GridDiv.php";
 require_once "components/PlaceableTextField.php";
 require_once "components/JSField.php";
 require_once "components/SpecialField.php";

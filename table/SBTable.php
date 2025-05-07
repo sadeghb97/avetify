@@ -10,17 +10,16 @@ class SBTable extends SetModifier {
     public bool $enableSelectRecord = false;
     public bool $enableCreatingRow = false;
     public bool $forcePatchRecords = false;
-    public SetRenderer | null $tableRenderer = null;
 
     public function __construct(array $fields, array $rawRecords, string $key, bool $isEditable = false){
         parent::__construct($key);
 
         $this->isEditable = $isEditable;
-        $this->tableRenderer = $this->getTableRenderer();
+        $this->renderer = $this->getTableRenderer();
 
         $this->setFields($fields);
         $this->loadRawRecords($rawRecords);
-        $this->tableRenderer->limit = $this->recordsLimit();
+        $this->renderer->limit = $this->recordsLimit();
     }
 
     public function setFields(array $fields){
@@ -64,26 +63,12 @@ class SBTable extends SetModifier {
         return 5000;
     }
 
-    public function openPage(string $title){
-        $this->tableRenderer->title = $title;
-        $this->tableRenderer->openPage();
-    }
-
-    public function renderBody(){
-        $this->tableRenderer->renderBody();
-    }
-
-    public function renderPage(string $title){
-        $this->tableRenderer->title = $title;
-        $this->tableRenderer->renderPage();
-    }
-
     protected function getTableRenderer() : SetRenderer {
         return new GreenTableRenderer($this, new GreenTheme());
     }
 
     public function catchSubmittedFields(){
-        $tableRenderer = $this->tableRenderer;
+        $tableRenderer = $this->renderer;
         $currentTrigger = $tableRenderer->form->getCurrentTrigger();
 
         $selectedRecords = [];
