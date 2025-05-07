@@ -21,6 +21,10 @@ class ModernGallery extends ModernSetRenderer {
         if($altLink && $altLinkIcon){
             $options['icon_link'] = ["link" => $altLink, "icon" => $altLinkIcon];
         }
+
+        $moreItemLinks = $this->getMoreItemIconLinks($item);
+        $options['more_icon_links'] = $moreItemLinks;
+
         if($this->smallerTitle()){
             $options['smaller_title'] = true;
         }
@@ -83,6 +87,10 @@ class ModernGallery extends ModernSetRenderer {
 
     public function getAltLinkIcon(): string {
         return "";
+    }
+
+    public function getMoreItemIconLinks($record) : array {
+        return [];
     }
 
     public function smallerTitle() : bool {

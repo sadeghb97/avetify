@@ -39,6 +39,14 @@ function printCard($img, $name, $description, $link, $options){
         $descPrinted = false;
         $iconLinkExists = isset($options['icon_link']) || isset($options['more_icon_links']);
         if($link || $iconLinkExists) {
+            $allIconLinks = [];
+            if($iconLinkExists) {
+                $allIconLinks = [$options['icon_link']];
+                if (isset($options['more_icon_links']) && is_array($options['more_icon_links'])) {
+                    $allIconLinks = array_merge($allIconLinks, $options['more_icon_links']);
+                }
+            }
+
             $niceDiv = new NiceDiv(4);
             $niceDiv->addStyle("background-color", "#269abc");
             $niceDiv->addModifier("class", "contextmenu-exception");
@@ -49,7 +57,7 @@ function printCard($img, $name, $description, $link, $options){
                 HTMLInterface::addAttribute("href", $link);
                 Styler::startAttribute();
                 Styler::addStyle("color", "Black");
-                Styler::addStyle("width", "82%");
+                if(count($allIconLinks) == 1) Styler::addStyle("width", "82%");
                 Styler::closeAttribute();
                 HTMLInterface::closeTag();
             }
@@ -62,12 +70,7 @@ function printCard($img, $name, $description, $link, $options){
             }
             if ($link) echo '</a>';
 
-            if($iconLinkExists) {
-                $allIconLinks = [$options['icon_link']];
-                if (isset($options['more_icon_links']) && is_array($options['more_icon_links'])) {
-                    $allIconLinks = array_merge($allIconLinks, $options['more_icon_links']);
-                }
-
+            if(count($allIconLinks) > 0) {
                 foreach ($allIconLinks as $iconLink) {
                     echo '<a href="' . $iconLink['link'] . '" target="_blank" style="margin-left: 8px;">';
                     echo '<img src="' . $iconLink['icon'] . '" style="height: 21px; width: auto;" />';

@@ -38,11 +38,11 @@ class GridDiv implements AVTContainer {
             if($this->itemDiv) $this->itemDiv->open();
         }
         else {
+            $this->innerDiv->separate();
             if($this->itemDiv){
                 $this->itemDiv->close();
                 $this->itemDiv->open();
             }
-            $this->innerDiv->separate();
         }
     }
 
