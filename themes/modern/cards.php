@@ -37,7 +37,7 @@ function printCard($img, $name, $description, $link, $options){
         if(isset($options['tag'])) echo '<span class="tag tag-blue">' . $options['tag'] . '</span>';
 
         $descPrinted = false;
-        $iconLinkExists = isset($options['icon_link']) || isset($options['more_icon_links']);
+        $iconLinkExists = !empty($options['icon_link']) || !empty($options['more_icon_links']);
         if($link || $iconLinkExists) {
             $allIconLinks = [];
             if($iconLinkExists) {

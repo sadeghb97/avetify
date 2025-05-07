@@ -126,6 +126,43 @@ class Routing {
         return substr($curLink, $pos + 1);
     }
 
+    public static function getUrlScheme($url) : string {
+        $parts = parse_url($url);
+        return !empty($parts['scheme']) ? $parts['scheme'] : "";
+    }
+
+    public static function getUrlHost($url) : string {
+        $parts = parse_url($url);
+        return !empty($parts['host']) ? $parts['host'] : "";
+    }
+
+    public static function getUrlPath($url) : string {
+        $parts = parse_url($url);
+        return !empty($parts['path']) ? $parts['path'] : "";
+    }
+
+    public static function getUrlQuery($url) : string {
+        $parts = parse_url($url);
+        return !empty($parts['query']) ? $parts['query'] : "";
+    }
+
+    public static function getUrlParams($url) : array {
+        $parts = parse_url($url);
+        if(empty($parts['query'])) return [];
+        parse_str($parts['query'], $queryParams);
+        return $queryParams;
+    }
+
+    public static function getUrlPureLink($url) : string {
+        $parts = parse_url($url);
+        $pureLink = "";
+        if(!empty($parts['scheme'])){
+            $pureLink .= ($parts['scheme'] . "//");
+        }
+        if(!empty($parts['path'])) $pureLink .= ($parts['path']);
+        return $pureLink;
+    }
+
     public static function removeParamFromCurrentLink($paramKey) : string {
         $protocol = self::getServerProtocol();
         $host = $_SERVER['HTTP_HOST'];
