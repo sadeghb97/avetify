@@ -12,7 +12,15 @@ abstract class ModernSetRenderer extends SetRenderer {
         $niceDiv->open();
         Printer::boldPrint($this->getTitle());
         $niceDiv->close();
-        echo '<div class="container" style="margin-top: 12px;">';
+        echo '<div ';
+        Styler::classStartAttribute();
+        Styler::addClass("container");
+        Styler::closeAttribute();
+        Styler::startAttribute();
+        Styler::addStyle(CSS::marginTop, "12px");
+        Styler::addStyle(CSS::paddingBottom, "12px");
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
     }
 
     public function closeContainer() {
