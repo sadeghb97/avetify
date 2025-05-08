@@ -76,7 +76,7 @@ function printCard($img, $name, $description, $link, $options){
             if(count($allIconLinks) > 0) {
                 foreach ($allIconLinks as $iconLink) {
                     echo '<a href="' . $iconLink['link'] . '" target="_blank" style="margin-left: 8px;">';
-                    echo '<img src="' . $iconLink['icon'] . '" style="height: 21px; width: auto;" />';
+                    echo '<img src="' . $iconLink['icon'] . '" style="height: 30px; width: auto; border-radius: 15px; margin-bottom: 4px;" />';
                     echo '</a>';
                 }
             }
