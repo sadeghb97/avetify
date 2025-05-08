@@ -21,7 +21,15 @@ class JSInterface {
     public static function redirect(string $url, $delay = 0){
         ?>
         <script>
-            redir("<?php echo $url; ?>", <?php echo $delay; ?>)
+            redir("<?php echo html_entity_decode($url); ?>", <?php echo $delay; ?>)
+        </script>
+        <?php
+    }
+
+    public static function urlInNewTab(string $url){
+        ?>
+        <script>
+            window.open('<?php echo html_entity_decode($url); ?>', '_blank');
         </script>
         <?php
     }

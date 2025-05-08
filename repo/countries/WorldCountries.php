@@ -39,10 +39,7 @@ class WorldCountries {
 
     public function extractCountryFlag($countryCode) : array | null {
         $country = $this->getCountryDetails($countryCode);
-        if($country == null){
-            echo "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDD: " . $countryCode . br();
-            return null;
-        }
+        if($country == null) return null;
 
         if(!isset($country['dep']) || !$country['dep']) {
             $browserFlag =

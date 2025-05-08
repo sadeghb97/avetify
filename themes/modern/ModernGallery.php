@@ -2,6 +2,7 @@
 
 class ModernGallery extends ModernSetRenderer {
     public RecordContextMenu | null $contextMenu = null;
+    public bool $openMenuOnNormalClick = false;
 
     public function renderRecordMain($item, $index) {
         $name = ($index + 1) . ": " . $this->setModifier->getItemTitle($item);
@@ -14,6 +15,7 @@ class ModernGallery extends ModernSetRenderer {
         $options = [];
         if($this->contextMenu != null){
             $options['context_menu'] = $this->contextMenu;
+            $options['context_menu_on_click'] = $this->openMenuOnNormalClick;
             $options['cmr_id'] = $this->setModifier->getItemId($item);
         }
         $altLink = $this->setModifier->getItemAltLink($item);

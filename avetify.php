@@ -160,14 +160,14 @@ require_once "repo/countries/World.php";
 require_once "repo/countries/CountriesTable.php";
 
 $AVETIFY_ROOT_PATH = "";
-$AVETIFY_PHYSICAL_ROOT_PATH = "";
+$PHP_DOCUMENT_ROOT = "";
 
 define("AVETIFY_VERSION", "0.11");
 define("AVETIFY_BUILD", 2);
 
-function initAvetify($rootPath, $physicalRoot = ""){
+function initAvetify($rootPath, $phpDocumentRoot = ""){
     global $AVETIFY_ROOT_PATH;
-    global $AVETIFY_PHYSICAL_ROOT_PATH;
+    global $PHP_DOCUMENT_ROOT;
     $AVETIFY_ROOT_PATH = $rootPath;
-    $AVETIFY_PHYSICAL_ROOT_PATH = $physicalRoot;
+    $PHP_DOCUMENT_ROOT = $phpDocumentRoot;
 }

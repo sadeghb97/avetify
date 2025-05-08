@@ -34,4 +34,16 @@ class WebModifier {
         if($this->htmlModifier != null) $this->htmlModifier->applyModifiers();
         if($this->styler != null) $this->styler->applyStyles();
     }
+
+    public function pushStyle(string $styleKey, string $styleValue){
+        if($this->styler) $this->styler->pushStyle($styleKey, $styleValue);
+    }
+
+    public function pushModifier(string $modifierKey, string $modifierValue){
+        if($this->htmlModifier) $this->htmlModifier->pushStyle($modifierKey, $modifierValue);
+    }
+
+    public function pushClass(string $className){
+        if($this->styler) $this->styler->pushClass($className);
+    }
 }

@@ -6,6 +6,9 @@ function printCard($img, $name, $description, $link, $options){
     if(!empty($options['context_menu'])){
         $omc = $options['context_menu']->openMenuJSCall($options['cmr_id']);
         HTMLInterface::addAttribute("oncontextmenu", $omc);
+        if($options['context_menu_on_click']){
+            HTMLInterface::addAttribute("onclick", $omc);
+        }
     }
 
     if(!empty($options['image_mode'])){

@@ -6,20 +6,18 @@ class Routing {
         return $AVETIFY_ROOT_PATH;
     }
 
-    public static function getAvetifyPhysicalRoot() : string {
-        global $AVETIFY_PHYSICAL_ROOT_PATH;
-        if(isCli()) return $AVETIFY_PHYSICAL_ROOT_PATH;
-        return "";
+    public static function getPHPDocumentRoot() : string {
+        global $PHP_DOCUMENT_ROOT;
+        if(isCli()) return $PHP_DOCUMENT_ROOT;
+        return $_SERVER['DOCUMENT_ROOT'];
     }
 
     public static function serverPathFromAvetify($path) : string {
-        return self::getAvetifyPhysicalRoot() .
-            $_SERVER['DOCUMENT_ROOT'] . self::getAvetifyRoot() . $path;
+        return self::getPHPDocumentRoot() . self::getAvetifyRoot() . $path;
     }
 
     public static function serverRootPath($path) : string {
-        return self::getAvetifyPhysicalRoot() .
-            self::removeRedundantPath($_SERVER['DOCUMENT_ROOT'] . self::getAvetifyRoot() . '../') .
+        return self::removeRedundantPath(self::getPHPDocumentRoot() . self::getAvetifyRoot() . '../') .
             $path;
     }
 
