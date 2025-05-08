@@ -42,7 +42,7 @@ class Routing {
     public static function srpToBrp($serverPath) : string {
         $adjustedPath = self::removeRedundantPath($serverPath);
 
-        $documentRoot = $_SERVER['DOCUMENT_ROOT'];
+        $documentRoot = self::getPHPDocumentRoot();
         if(str_starts_with($adjustedPath, $documentRoot)){
             //a root address starts with /
             $adjustedPath = substr($adjustedPath, strlen($documentRoot));
@@ -52,7 +52,7 @@ class Routing {
     }
 
     public static function brpToSrp($browserRootPath){
-        return $_SERVER['DOCUMENT_ROOT'] . $browserRootPath;
+        return self::getPHPDocumentRoot() . $browserRootPath;
     }
 
     public static function removeRedundantPath($path) : string {
@@ -103,14 +103,17 @@ class Routing {
     }
 
     public static function getServerProtocol() : string {
-        return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443)
-            ? "https://" : "http://";
+        if(!empty($_SERVER['HTTPS']) && !empty($_SERVER['SERVER_PORT'])) {
+            return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443)
+                ? "https://" : "http://";
+        }
+        return "";
     }
 
     public static function currentPureLink() : string {
         $protocol = self::getServerProtocol();
-        $host = $_SERVER['HTTP_HOST'];
-        $uri = $_SERVER['REQUEST_URI'];
+        $host = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : "";
+        $uri = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : "";
         $uriWithoutParams = strtok($uri, '?');
         return $protocol . $host . $uriWithoutParams;
     }
@@ -163,16 +166,16 @@ class Routing {
 
     public static function removeParamFromCurrentLink($paramKey) : string {
         $protocol = self::getServerProtocol();
-        $host = $_SERVER['HTTP_HOST'];
-        $uri = $_SERVER['REQUEST_URI'];
+        $host = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : "";
+        $uri = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : "";
         $newRequestUri = self::removeQueryParamFromUrl($uri, $paramKey);
         return $protocol . $host . $newRequestUri;
     }
 
     public static function addParamToCurrentLink($paramKey, $paramValue="") : string {
         $protocol = self::getServerProtocol();
-        $host = $_SERVER['HTTP_HOST'];
-        $uri = $_SERVER['REQUEST_URI'];
+        $host = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : "";
+        $uri = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : "";
         $newRequestUri = self::addParamToLink($uri, $paramKey, $paramValue);
         return $protocol . $host . $newRequestUri;
     }
