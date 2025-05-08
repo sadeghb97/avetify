@@ -25,6 +25,11 @@ class URLBuilder {
         return $this;
     }
 
+    public function removeParam($param) : URLBuilder {
+        if(isset($this->params[$param])) unset($this->params[$param]);
+        return $this;
+    }
+
     public function getClone() : URLBuilder {
         $urlBuilder = new URLBuilder($this->baseUrl);
         $urlBuilder->params = array_merge([], $this->params);
