@@ -103,11 +103,9 @@ class Routing {
     }
 
     public static function getServerProtocol() : string {
-        if(!empty($_SERVER['HTTPS']) && !empty($_SERVER['SERVER_PORT'])) {
-            return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443)
-                ? "https://" : "http://";
-        }
-        return "";
+        if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') return 'https://';
+        if (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 80) return 'http://';
+        return '';
     }
 
     public static function currentPureLink() : string {
