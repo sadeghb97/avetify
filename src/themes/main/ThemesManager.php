@@ -96,6 +96,7 @@ class ThemesManager {
         self::importContextMenuStyles();
         self::importListerStyles();
         self::importSortableJS();
+        self::importJS(AssetsManager::getAsset("components/lister/lister.js"));
     }
 
     public static function importCropperTools(){
@@ -116,6 +117,10 @@ class ThemesManager {
         self::importStyle(AssetsManager::getAsset("components/highlight/highlightjs-copy.min.css"));
         self::importJS(AssetsManager::getAsset("components/highlight/highlight.min.js"));
         self::importJS(AssetsManager::getAsset("components/highlight/highlightjs-copy.min.js"));
+    }
+
+    public static function importStandingsTools(){
+        self::importStyle(AssetsManager::getAsset("components/standings/standings.css"));
     }
 
     public static function importMainJSInterface(){

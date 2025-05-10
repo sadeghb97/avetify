@@ -9,7 +9,7 @@ class LeagueStandings {
     }
 
     public static function importStyles(){
-        ThemesManager::importStyle(Routing::getAvetifyRoot() . "standings/standings.css");
+        ThemesManager::importStandingsTools();
         echo '<link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">';
     }
 

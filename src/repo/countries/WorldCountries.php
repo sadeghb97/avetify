@@ -4,7 +4,7 @@ class WorldCountries {
     private array $map = [];
 
     public function __construct(){
-        $countriesRaw = file_get_contents(__DIR__ . "/countries.json");
+        $countriesRaw = file_get_contents(ReposManager::getRepo("countries/countries.json"));
         $countries = json_decode($countriesRaw, true);
 
         foreach ($countries as $country){

@@ -1,6 +1,3 @@
-const grids = []
-const maxGrids = 120
-
 function str_rot13(str) {
 	return (str + '').replace(/[a-z]/gi, function (s) {
 		return String.fromCharCode(s.charCodeAt(0) + (s.toLowerCase() < 'n' ? 13 : -13));
@@ -256,17 +253,6 @@ function renameGalleries(moreArgs){
 		const submitTypeElement = document.getElementById("submit_type");
 		submitTypeElement.value = "rename"
 		if(listerSubmit(moreArgs)) form.submit()
-	}
-}
-
-for(let i=0; maxGrids>i; i++) {
-	grids[i] = document.getElementById('gridDemo' + i)
-	if(grids[i]) {
-		new Sortable(grids[i], {
-			animation: 150,
-			group: 'shared', // set both lists to same group
-			ghostClass: 'blue-background-class'
-		});
 	}
 }
 
