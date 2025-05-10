@@ -1,0 +1,16 @@
+{
+  "name": "sadeghb97/avetify",
+  "description": "A lightweight and easy to use framework on PHP.",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Avetify\\": "src/"
+    }
+  },
+  "extra": {
+    "assets-dir": "assets"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}
