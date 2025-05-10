@@ -97,6 +97,7 @@ require_once "src/components/images/CroppableImage.php";
 require_once "src/components/images/CroppingImage.php";
 require_once "src/components/images/ImageCropper.php";
 require_once "src/components/buttons/AbsoluteButton.php";
+require_once "src/components/buttons/PageToggleButton.php";
 require_once "src/components/modifiers/ImageModifiers.php";
 
 require_once "src/lister/SBListCategory.php";
