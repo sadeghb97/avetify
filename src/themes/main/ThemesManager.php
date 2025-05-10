@@ -4,7 +4,8 @@ class ThemesManager {
     public bool $noNavigationMenu = false;
     public bool $includesListerTools = false;
     public bool $includesCropperTools = false;
-    public bool $includesCodingContentsTools = false;
+    public bool $includesCodingFieldTools = false;
+    public bool $includesHighlightCodesTools = false;
     public ?NavigationRenderer $navigationRenderer = null;
 
     public function __construct(){
@@ -30,9 +31,7 @@ class ThemesManager {
         $this->moreHeaderTags();
     }
 
-    public function moreHeaderTags(){
-
-    }
+    public function moreHeaderTags(){}
 
     public function generalHeaderTags(){
         $this->loadFavicon();
@@ -46,7 +45,8 @@ class ThemesManager {
         $this->importGalleryGrids();
         if($this->includesListerTools) self::importListerTools();
         if($this->includesCropperTools) self::importCropperTools();
-        if($this->includesCodingContentsTools) self::importHighlightCodeTools();
+        if($this->includesCodingFieldTools) self::importCodingFieldTools();
+        if($this->includesHighlightCodesTools) self::importHighlightCodeTools();
     }
 
     public function loadFavicon(){}
@@ -109,9 +109,13 @@ class ThemesManager {
 
     public static function importQuillEditor(){
         self::importStyle(AssetsManager::getAsset("components/quill/quill.snow.css"));
-        self::importStyle(AssetsManager::getAsset("components/quill/quill_avt.css"));
         self::importJS(AssetsManager::getAsset("components/quill/quill.min.js"));
-        self::importJS(AssetsManager::getAsset("components/quill/quill_avt.js"));
+    }
+
+    public static function importCodingFieldTools(){
+        self::importQuillEditor();
+        self::importStyle(AssetsManager::getAsset("components/coding/quill_codes.css"));
+        self::importJS(AssetsManager::getAsset("components/coding/quill_codes.js"));
     }
 
     public static function importHighlightCodeTools(){

@@ -1,6 +1,6 @@
-function defaultInitEditor(editorId){
+function defaultInitEditor(editorId, contents){
     const editor = document.getElementById(editorId);
-    return new Quill(editor, {
+    const quill = new Quill(editor, {
         theme: 'snow',
         modules: {
             toolbar: [
@@ -14,6 +14,9 @@ function defaultInitEditor(editorId){
             ]
         }
     });
+
+    quill.root.innerHTML = contents;
+    return quill;
 }
 
 function addChildAfter(wholeMainKey, childId, blocksData) {

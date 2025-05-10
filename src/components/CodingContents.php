@@ -1,18 +1,6 @@
 <?php
 
-class CodingContents implements Placeable {
-    /** @var CodingContentBlock[] */
-    public array $blocks = [];
-
-    public function __construct(public string $contents) {
-        if($this->contents){
-            $blocksList = json_decode($this->contents);
-            foreach ($blocksList as $block){
-                $this->blocks[] = new CodingContentBlock($block);
-            }
-        }
-    }
-
+class CodingContents extends CodingBlocks implements Placeable {
     public function place(WebModifier $webModifier = null) {
         $vertDiv = new VertDiv(8);
         $vertDiv->open();
@@ -36,9 +24,4 @@ class CodingContents implements Placeable {
 
         $vertDiv->close();
     }
-}
-
-class CodingContentBlock extends DataModel {
-    public string $wrapper = "";
-    public string $contents = "";
 }

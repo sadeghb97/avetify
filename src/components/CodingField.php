@@ -1,28 +1,52 @@
 <?php
 
-class CodingField implements Placeable {
-    public array $sectionIds = [];
+class CodingField extends CodingBlocks implements Placeable {
+    public function __construct(public string $label, public string $mainKey,
+                                string $initValue, public string $defWrapper = ""){
+        parent::__construct($initValue);
+        if(count($this->blocks) == 0){
+            $newBlock = new CodingContentBlock([]);
+            $this->blocks[] = $newBlock;
+        }
 
-    public function __construct(public string $label, public string $mainKey, public string $initValue){}
+        foreach ($this->blocks as &$block){
+            $block->id = $this->mainKey . "_editor_" . hrtime(true);
+        }
+    }
 
     public function place(WebModifier $webModifier = null) {
         CodingWrappersDatalist::placeDatalist();
         echo '<div ';
+        Styler::startAttribute();
+        Styler::addStyle(CSS::marginTop, "8px");
+        Styler::closeAttribute();
         HTMLInterface::addAttribute("id", $this->getMainContainerId());
         HTMLInterface::closeTag();
-        $this->addBlock();
+
+        $labelModifier = WebModifier::createInstance();
+        $labelModifier->pushStyle(CSS::fontWeight, "bold");
+        $labelModifier->pushStyle(CSS::marginBottom, "2px");
+        HTMLInterface::placeDiv($this->label, $labelModifier);
+
+        foreach ($this->blocks as $block) {
+            $this->addBlock($block);
+        }
+
         HTMLInterface::closeDiv();
-        FormUtils::placeHiddenField($this->getMainElementId(), $this->initValue);
+        FormUtils::placeHiddenField($this->getMainElementId(), $this->contents);
 
         $refParams =  "'{$this->getMainElementId()}', {$this->getJSDataVarName()}";
         ?>
         <script>
             const <?php echo $this->getJSDataVarName(); ?> = [];
 
-            <?php foreach ($this->sectionIds as $sectionId) { ?>
-                <?php echo $this->getJSDataVarName(); ?>.push({
-                id: '<?php echo $sectionId; ?>',
-                quill: defaultInitEditor('<?php echo $sectionId; ?>')
+            <?php foreach ($this->blocks as $block) {
+                $blockId = $block->id;
+                $blockContents = $block->contents;
+            ?>
+            <?php echo $this->getJSDataVarName(); ?>.push({
+                id: '<?php echo $blockId; ?>',
+                quill: defaultInitEditor('<?php echo $blockId; ?>', '<?php echo json_encode($blockContents); ?>')
             })
             <?php } ?>
 
@@ -31,21 +55,13 @@ class CodingField implements Placeable {
             }, true);
         </script>
         <?php
-
-        /*echo '<textarea id="tmp_result" rows="15", cols="80"></textarea>';
-
-        echo '<button ';
-        HTMLInterface::addAttribute("type", "text");
-        HTMLInterface::addAttribute("onclick", "refreshCodingFieldDataElement(" . $refParams . ");");
-        HTMLInterface::closeTag();
-        echo '➕';
-        echo '</button>';*/
     }
 
-    public function addBlock(){
-        $newEditorId = $this->mainKey . "_editor_" . hrtime(true);
-        $this->sectionIds[] = $newEditorId;
+    public function addBlock(CodingContentBlock $block){
+        $newEditorId = $block->id;
         $wrapperId = $newEditorId . "_wrapper";
+        $initWrapperValue = $this->defWrapper;
+        if($block->wrapper) $initWrapperValue = $block->wrapper;
 
         echo '<div id="' . $wrapperId . '" class="editor-wrapper avt-wrapper" style="position: relative;">';
         echo '<div ';
@@ -96,6 +112,7 @@ class CodingField implements Placeable {
         HTMLInterface::addAttribute("id", $newEditorId . "_type");
         HTMLInterface::addAttribute("list", CodingWrappersDatalist::DATALIST_KEY);
         HTMLInterface::addAttribute("placeholder", "Select Wrapper");
+        HTMLInterface::addAttribute("value", $initWrapperValue);
         HTMLInterface::closeSingleTag();
 
         HTMLInterface::closeDiv();

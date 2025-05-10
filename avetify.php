@@ -5,6 +5,7 @@ require_once "src/routing/ReposManager.php";
 
 require_once "src/interface/Interface.php";
 require_once "src/interface/Placeable.php";
+require_once "src/interface/EntityView.php";
 require_once "src/interface/AVTContainer.php";
 require_once "src/interface/Styler.php";
 require_once "src/interface/HTMLModifier.php";
@@ -62,6 +63,7 @@ require_once "src/entities/fields/date_fields.php";
 require_once "src/entities/fields/flag_fields.php";
 require_once "src/entities/fields/EntityAvatarField.php";
 require_once "src/entities/fields/EntitySelectField.php";
+require_once "src/entities/fields/EntityCodingField.php";
 
 require_once "src/fields/JSDataElement.php";
 require_once "src/fields/JSDatalist.php";
@@ -89,6 +91,7 @@ require_once "src/components/CountrySelector.php";
 require_once "src/components/SetSelector.php";
 require_once "src/components/SingleSelector.php";
 require_once "src/components/AvtDialog.php";
+require_once "src/components/CodingBlocks.php";
 require_once "src/components/CodingField.php";
 require_once "src/components/CodingContents.php";
 require_once "src/components/images/PlaceableImage.php";

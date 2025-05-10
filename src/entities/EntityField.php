@@ -25,7 +25,10 @@ class EntityField
     public function __construct($key, $title){
         $this->key = $key;
         $this->title = $title;
+        $this->postConstruct();
     }
+
+    public function postConstruct(){}
 
     public function setType(string $type) : EntityField {
         $this->type = $type;

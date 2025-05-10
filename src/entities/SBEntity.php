@@ -409,6 +409,9 @@ abstract class SBEntity extends SetModifier {
                     $selectField->setNameIdentifier = true;
                     $selectField->place($sModifier);
                 }
+                else if($field instanceof EntityCodingField && $fieldType == EntityCodingField::CodingFieldType){
+                    $field->place($curRecordObject);
+                }
                 else {
                     $classApplier = new Styler();
                     $classApplier->pushClass("empty");
