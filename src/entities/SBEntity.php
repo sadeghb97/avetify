@@ -476,7 +476,7 @@ abstract class SBEntity extends SetModifier {
         if($record && $this->deletable){
             $deleteButton = new AbsoluteFormButton($this->getFormId(),
                 $this->getDeleteTriggerKey(), ["right" => "20px", "bottom" => "20px"],
-                Routing::getAvtImage("remove.svg"),
+                AssetsManager::getImage("remove.svg"),
                 $this->getFormTriggerElementId());
             $deleteButton->confirmMessage = "Are you sure to delete this "
                 . strtolower($this->entityName) . "?";

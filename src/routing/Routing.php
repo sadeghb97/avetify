@@ -12,21 +12,9 @@ class Routing {
         return $_SERVER['DOCUMENT_ROOT'];
     }
 
-    public static function serverPathFromAvetify($path) : string {
-        return self::getPHPDocumentRoot() . self::getAvetifyRoot() . $path;
-    }
-
     public static function serverRootPath($path) : string {
         return self::removeRedundantPath(self::getPHPDocumentRoot() . self::getAvetifyRoot() . '../') .
             $path;
-    }
-
-    public static function browserPathFromAvetify($path) : string {
-        return self::getAvetifyRoot() . $path;
-    }
-
-    public static function getAvtImage($path) : string {
-        return self::browserPathFromAvetify("assets/img/" . $path);
     }
 
     public static function getBackupFilesDir() : string {

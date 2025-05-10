@@ -6,7 +6,7 @@ class GreenTheme extends ThemesManager {
     }
 
     public function moreHeaderTags(){
-        self::importStyle(Routing::browserPathFromAvetify("themes/green/styles.css"));
-        self::importJS(Routing::browserPathFromAvetify("themes/green/scripts.js"));
+        self::importStyle(AssetsManager::getAsset("themes/green/styles.css"));
+        self::importJS(AssetsManager::getAsset("themes/green/scripts.js"));
     }
 }

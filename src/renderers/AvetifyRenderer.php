@@ -4,7 +4,7 @@ class AvetifyRenderer implements PageRenderer {
     public function renderPage($title = "Avetify") {
         $theme = new AvetifyTheme();
         $theme->placeHeader($title);
-        $avtImage = Routing::browserPathFromAvetify("assets/img/avetify.webp");
+        $avtImage = AssetsManager::getImage("avetify.webp");
 
         $theme->openBody();
         HTMLInterface::openContainer();

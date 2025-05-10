@@ -130,39 +130,39 @@ class ManageGalleryLister extends SBLister {
             $prevRepo = $this->galleryRepo->parentRelativePath;
             $prevLink = Routing::addParamToCurrentLink("gp", $prevRepo);
 
-            $prevButton = new AbsoluteButton(Routing::getAvtImage("arrow_left.svg"),
+            $prevButton = new AbsoluteButton(AssetsManager::getImage("arrow_left.svg"),
                 ["top" => "20px", "left" => "20px"],
                 "redir('" . $prevLink . "');");
             $prevButton->place();
 
-            $prevCloneButton = new AbsoluteButton(Routing::getAvtImage("tab_duplicate.svg"),
+            $prevCloneButton = new AbsoluteButton(AssetsManager::getImage("tab_duplicate.svg"),
                 ["top" => "70px", "left" => "20px"],
                 "openTab('" . $prevLink . "');");
             $prevCloneButton->place();
         }
 
-        $toggleButton = new AbsoluteButton(Routing::getAvtImage("view_alt.svg"),
+        $toggleButton = new AbsoluteButton(AssetsManager::getImage("view_alt.svg"),
             ["top" => "20px", "right" => "20px"], $this->jsToggleGalleryMode());
         $toggleButton->place();
 
         if(!$this->galleryRepo->readOnly) {
-            $addButton = new AbsoluteButton(Routing::getAvtImage("add_box.svg"),
+            $addButton = new AbsoluteButton(AssetsManager::getImage("add_box.svg"),
                 ["bottom" => "20px", "left" => "20px"], "addVirtualGallery()");
             $addButton->place();
 
-            $updateButton = new AbsoluteButton(Routing::getAvtImage("commit.svg"),
+            $updateButton = new AbsoluteButton(AssetsManager::getImage("commit.svg"),
                 ["bottom" => "20px", "left" => "90px"], "updateGalleryConfigs(jsArgs)");
             $updateButton->place();
 
-            $submitButton = new AbsoluteButton(Routing::getAvtImage("send.svg"),
+            $submitButton = new AbsoluteButton(AssetsManager::getImage("send.svg"),
                 ["bottom" => "20px", "right" => "20px"], "submitGalleries(jsArgs)");
             $submitButton->place();
 
-            $submitButton = new AbsoluteButton(Routing::getAvtImage("pen.svg"),
+            $submitButton = new AbsoluteButton(AssetsManager::getImage("pen.svg"),
                 ["bottom" => "20px", "right" => "90px"], "renameGalleries(jsArgs)");
             $submitButton->place();
 
-            $resetButton = new AbsoluteButton(Routing::getAvtImage("layers_clear.svg"),
+            $resetButton = new AbsoluteButton(AssetsManager::getImage("layers_clear.svg"),
                 ["bottom" => "20px", "right" => "160px"], "resetGalleryConfigs()");
             $resetButton->place();
         }

@@ -43,17 +43,17 @@ class WorldCountries {
 
         if(!isset($country['dep']) || !$country['dep']) {
             $browserFlag =
-                Routing::browserPathFromAvetify("assets/img/flags/cdc/") . $country['alpha2'] . ".png";
+                AssetsManager::getImage("flags/cdc/") . $country['alpha2'] . ".png";
             $physicalFlag =
-                Routing::serverPathFromAvetify("assets/img/flags/cdc/") . $country['alpha2'] . ".png";
+                AssetsManager::getImage("flags/cdc/") . $country['alpha2'] . ".png";
             return [$browserFlag, $physicalFlag];
         }
 
         if($country['dep'] === True){
             $browserFlag =
-                Routing::browserPathFromAvetify("assets/img/flags/more/") . $country['alpha2'] . ".png";
+                AssetsManager::getImage("flags/more/") . $country['alpha2'] . ".png";
             $physicalFlag =
-                Routing::serverPathFromAvetify("assets/img/flags/more/") . $country['alpha2'] . ".png";
+                AssetsManager::getImage("flags/more/") . $country['alpha2'] . ".png";
             return [$browserFlag, $physicalFlag];
         }
 

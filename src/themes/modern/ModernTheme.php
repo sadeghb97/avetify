@@ -2,8 +2,8 @@
 
 class ModernTheme extends ThemesManager {
     public function moreHeaderTags(){
-        self::importStyle(Routing::browserPathFromAvetify("themes/modern/styles.css"));
-        self::importStyle(Routing::browserPathFromAvetify("themes/modern/card_styles.css"));
-        self::importJS(Routing::browserPathFromAvetify("themes/modern/scripts.js"));
+        self::importStyle(AssetsManager::getAsset("themes/modern/styles.css"));
+        self::importStyle(AssetsManager::getAsset("themes/modern/card_styles.css"));
+        self::importJS(AssetsManager::getAsset("themes/modern/scripts.js"));
     }
 }

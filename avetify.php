@@ -1,5 +1,7 @@
 <?php
 require_once "src/routing/Routing.php";
+require_once "src/routing/AssetsManager.php";
+require_once "src/routing/ReposManager.php";
 
 require_once "src/interface/Interface.php";
 require_once "src/interface/Placeable.php";

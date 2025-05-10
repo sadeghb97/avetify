@@ -30,7 +30,7 @@ class AbsoluteButton implements Placeable {
 
 class PrimaryButton extends AbsoluteButton {
     public function __construct(string $rawOnclick = "") {
-        parent::__construct(Routing::browserPathFromAvetify("assets/img/sync.svg"),
+        parent::__construct(AssetsManager::getImage("sync.svg"),
             ["bottom" => "20px", "inset-inline-end" => "20px"], $rawOnclick);
     }
 }

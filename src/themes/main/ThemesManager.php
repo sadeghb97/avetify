@@ -92,74 +92,74 @@ class ThemesManager {
         echo '></script>';
     }
 
-    public static function importCropperTools(){
-        self::importStyle(Routing::browserPathFromAvetify("externals/cropper/cropper.min.css"));
-        self::importJS(Routing::browserPathFromAvetify("externals/cropper/cropper.min.js"));
-        self::importJS(Routing::browserPathFromAvetify("themes/assets/avt_cropper.js"));
-    }
-
     public static function importListerTools(){
         self::importContextMenuStyles();
         self::importListerStyles();
         self::importSortableJS();
     }
 
+    public static function importCropperTools(){
+        self::importStyle(AssetsManager::getAsset("components/cropper/cropper.min.css"));
+        self::importJS(AssetsManager::getAsset("components/cropper/cropper.min.js"));
+        self::importJS(AssetsManager::getAsset("components/cropper/avt_cropper.js"));
+    }
+
     public static function importQuillEditor(){
-        self::importStyle(Routing::browserPathFromAvetify("externals/quill/quill.snow.css"));
-        self::importStyle(Routing::browserPathFromAvetify("externals/quill/quill_avt.css"));
-        self::importJS(Routing::browserPathFromAvetify("externals/quill/quill.min.js"));
-        self::importJS(Routing::browserPathFromAvetify("externals/quill/quill_avt.js"));
+        self::importStyle(AssetsManager::getAsset("components/quill/quill.snow.css"));
+        self::importStyle(AssetsManager::getAsset("components/quill/quill_avt.css"));
+        self::importJS(AssetsManager::getAsset("components/quill/quill.min.js"));
+        self::importJS(AssetsManager::getAsset("components/quill/quill_avt.js"));
     }
 
     public static function importHighlightCodeTools(){
-        self::importStyle(Routing::browserPathFromAvetify("externals/highlight/agate.min.css"));
-        self::importStyle(Routing::browserPathFromAvetify("externals/highlight/highlightjs-copy.min.css"));
-        self::importJS(Routing::browserPathFromAvetify("externals/highlight/highlight.min.js"));
-        self::importJS(Routing::browserPathFromAvetify("externals/highlight/highlightjs-copy.min.js"));
+        self::importStyle(AssetsManager::getAsset("components/highlight/agate.min.css"));
+        self::importStyle(AssetsManager::getAsset("components/highlight/highlightjs-copy.min.css"));
+        self::importJS(AssetsManager::getAsset("components/highlight/highlight.min.js"));
+        self::importJS(AssetsManager::getAsset("components/highlight/highlightjs-copy.min.js"));
     }
 
     public static function importMainJSInterface(){
-        self::importJS(Routing::browserPathFromAvetify("themes/assets/interface.js"));
+        self::importJS(AssetsManager::getAsset("themes/main/js/interface.js"));
     }
 
     public static function importMainStyles(){
-        self::importStyle(Routing::browserPathFromAvetify("themes/assets/main.css"));
+        self::importStyle(AssetsManager::getAsset("themes/main/css/main.css"));
     }
 
     public static function importAvtJSFields(){
-        self::importJS(Routing::browserPathFromAvetify("fields/fields.js"));
+        self::importJS(AssetsManager::getAsset("themes/main/js/fields.js"));
     }
 
     public static function importAvtJSDialogs(){
-        self::importJS(Routing::browserPathFromAvetify("themes/assets/dialogs.js"));
+        self::importJS(AssetsManager::getAsset("themes/main/js/dialogs.js"));
     }
 
     public static function importBootstrap(){
-        self::importStyle(Routing::browserPathFromAvetify("externals/bootstrap.min.css"));
+        self::importStyle(AssetsManager::getAsset("components/bootstrap/bootstrap.min.css"));
     }
 
     public static function importJoshButtons(){
-        self::importStyle(Routing::browserPathFromAvetify("themes/assets/josh_buttons.css"));
+        self::importStyle(AssetsManager::getAsset("themes/main/css/josh_buttons.css"));
     }
 
     public static function importGalleryGrids(){
-        self::importStyle(Routing::browserPathFromAvetify("themes/assets/gallery_grid.css"));
+        self::importStyle(AssetsManager::getAsset("themes/main/css/gallery_grid.css"));
     }
 
     public static function importContextMenuStyles(){
-        self::importStyle(Routing::browserPathFromAvetify("themes/assets/context_menu.css"));
+        self::importStyle(AssetsManager::getAsset("themes/main/css/context_menu.css"));
     }
 
     public static function importListerStyles(){
-        self::importStyle(Routing::browserPathFromAvetify("lister/lister.css"));
+        self::importStyle(AssetsManager::getAsset("components/lister/lister.css"));
     }
 
     public static function importSortableJS(){
-        ThemesManager::importJS(Routing::browserPathFromAvetify("lister/sortable.js"));
+        ThemesManager::importJS(AssetsManager::getAsset("components/lister/sortable.js"));
     }
 
     public static function importGeneralFonts(){
-        self::importStyle(Routing::browserPathFromAvetify("assets/fonts/fonts.css"));
+        self::importStyle(AssetsManager::getAsset("fonts/fonts.css"));
     }
 
     public function appendBodyStyles(){}
