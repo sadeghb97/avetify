@@ -40,12 +40,6 @@ class CodingField implements Placeable {
         HTMLInterface::closeTag();
         echo '➕';
         echo '</button>';*/
-
-        /*echo '<pre><code class="language-javascript" style="text-align: left">
-            function sayHello() {
-                console.log("Hello, world!");
-            }
-        </code></pre>';*/
     }
 
     public function addBlock(){

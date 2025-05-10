@@ -1,5 +1,5 @@
 <?php
 
 interface PageRenderer {
-    public function renderPage(string $title);
+    public function renderPage(?string $title = null);
 }

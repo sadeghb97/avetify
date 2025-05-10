@@ -4,7 +4,7 @@ abstract class TaskPageRenderer implements PageRenderer {
     public string $formId = "form_task";
     public string $triggerIdentifier = "trigger_task";
 
-    public function renderPage(string $title) {
+    public function renderPage(?string $title = "Heavy Task") {
         if(!isCli()) {
             $theme = $this->getTheme();
             $theme->placeHeader($title);

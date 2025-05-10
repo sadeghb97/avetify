@@ -90,6 +90,7 @@ require_once "src/components/SetSelector.php";
 require_once "src/components/SingleSelector.php";
 require_once "src/components/AvtDialog.php";
 require_once "src/components/CodingField.php";
+require_once "src/components/CodingContents.php";
 require_once "src/components/images/PlaceableImage.php";
 require_once "src/components/images/IconButton.php";
 require_once "src/components/images/CroppableImage.php";

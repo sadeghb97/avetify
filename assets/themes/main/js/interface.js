@@ -102,6 +102,11 @@ document.addEventListener('keydown', function (e) {
 });
 
 window.addEventListener('DOMContentLoaded', () => {
+    if (window.hljs && typeof hljs.highlightAll === "function") {
+        hljs.addPlugin(new CopyButtonPlugin());
+        hljs.highlightAll();
+    }
+
     const input = document.querySelector('input:not([type="hidden"]):not([type="checkbox"])');
     if(!input) return;
 
@@ -138,9 +143,4 @@ window.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('keydown', warmUp, { once: true });
     window.addEventListener('touchstart', warmUp, { once: true });
     window.addEventListener('mousemove', warmUp, { once: true });
-
-    if (window.hljs && typeof hljs.highlightAll === "function") {
-        hljs.addPlugin(new CopyButtonPlugin());
-        hljs.highlightAll();
-    }
 });

@@ -4,6 +4,7 @@ class ThemesManager {
     public bool $noNavigationMenu = false;
     public bool $includesListerTools = false;
     public bool $includesCropperTools = false;
+    public bool $includesCodingContentsTools = false;
     public ?NavigationRenderer $navigationRenderer = null;
 
     public function __construct(){
@@ -45,6 +46,7 @@ class ThemesManager {
         $this->importGalleryGrids();
         if($this->includesListerTools) self::importListerTools();
         if($this->includesCropperTools) self::importCropperTools();
+        if($this->includesCodingContentsTools) self::importHighlightCodeTools();
     }
 
     public function loadFavicon(){}
