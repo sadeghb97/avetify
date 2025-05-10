@@ -37,6 +37,7 @@ require_once "utils/number_utils.php";
 require_once "utils/network_utils.php";
 require_once "utils/string_utils.php";
 require_once "utils/Arrays.php";
+require_once "utils/fluent.php";
 
 require_once "network/URLBuilder.php";
 require_once "network/NetworkFetcher.php";

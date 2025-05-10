@@ -21,6 +21,11 @@ abstract class SBTableLinkField extends SBTableField {
         echo $title;
         echo '</a>';
     }
+
+    public function setBlank() : SBTableField {
+        $this->isBlank = true;
+        return $this;
+    }
 }
 
 class SBTableSimpleLinkField extends SBTableLinkField {
@@ -29,11 +34,23 @@ class SBTableSimpleLinkField extends SBTableLinkField {
     }
 
     public function getValue($item): string {
-        return SBTableSimpleField::getValueByKey($item, $this->key);
+        return EntityUtils::getSimpleValue($item, $this->key);
     }
 
     function getLinkValue($item): string {
-        return SBTableSimpleField::getValueByKey($item, $this->linkKey);
+        return EntityUtils::getSimpleValue($item, $this->linkKey);
+    }
+}
+
+class TableMainLinkField extends SBTableLinkField {
+    function getLinkValue($item): string {
+        return $item->getItemLink();
+    }
+}
+
+class TableAltLinkField extends SBTableLinkField {
+    function getLinkValue($item): string {
+        return $item->getItemAltLink();
     }
 }
 
