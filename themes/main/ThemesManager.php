@@ -98,6 +98,26 @@ class ThemesManager {
         self::importJS(Routing::browserPathFromAvetify("themes/assets/avt_cropper.js"));
     }
 
+    public static function importListerTools(){
+        self::importContextMenuStyles();
+        self::importListerStyles();
+        self::importSortableJS();
+    }
+
+    public static function importQuillEditor(){
+        self::importStyle(Routing::browserPathFromAvetify("externals/quill/quill.snow.css"));
+        self::importStyle(Routing::browserPathFromAvetify("externals/quill/quill_avt.css"));
+        self::importJS(Routing::browserPathFromAvetify("externals/quill/quill.min.js"));
+        self::importJS(Routing::browserPathFromAvetify("externals/quill/quill_avt.js"));
+    }
+
+    public static function importHighlightCodeTools(){
+        self::importStyle(Routing::browserPathFromAvetify("externals/highlight/agate.min.css"));
+        self::importStyle(Routing::browserPathFromAvetify("externals/highlight/highlightjs-copy.min.css"));
+        self::importJS(Routing::browserPathFromAvetify("externals/highlight/highlight.min.js"));
+        self::importJS(Routing::browserPathFromAvetify("externals/highlight/highlightjs-copy.min.js"));
+    }
+
     public static function importMainJSInterface(){
         self::importJS(Routing::browserPathFromAvetify("themes/assets/interface.js"));
     }
@@ -124,12 +144,6 @@ class ThemesManager {
 
     public static function importGalleryGrids(){
         self::importStyle(Routing::browserPathFromAvetify("themes/assets/gallery_grid.css"));
-    }
-
-    public static function importListerTools(){
-        self::importContextMenuStyles();
-        self::importListerStyles();
-        self::importSortableJS();
     }
 
     public static function importContextMenuStyles(){

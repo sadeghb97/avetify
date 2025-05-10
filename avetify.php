@@ -86,6 +86,7 @@ require_once "components/CountrySelector.php";
 require_once "components/SetSelector.php";
 require_once "components/SingleSelector.php";
 require_once "components/AvtDialog.php";
+require_once "components/CodingField.php";
 require_once "components/images/PlaceableImage.php";
 require_once "components/images/IconButton.php";
 require_once "components/images/CroppableImage.php";

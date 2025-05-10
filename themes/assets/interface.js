@@ -138,4 +138,9 @@ window.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('keydown', warmUp, { once: true });
     window.addEventListener('touchstart', warmUp, { once: true });
     window.addEventListener('mousemove', warmUp, { once: true });
+
+    if (window.hljs && typeof hljs.highlightAll === "function") {
+        hljs.addPlugin(new CopyButtonPlugin());
+        hljs.highlightAll();
+    }
 });
