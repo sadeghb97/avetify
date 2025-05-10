@@ -18,7 +18,7 @@ class CodingContents extends CodingBlocks implements Placeable {
             Styler::addStyle("text-align", "left");
             Styler::closeAttribute();
             HTMLInterface::closeTag();
-            echo $blockContents;
+            echo preg_replace('#<p[^>]*>(.*?)</p>#is', "\n$1", $blockContents);
             echo '</code></pre>';
         }
 

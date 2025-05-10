@@ -33,7 +33,8 @@ class CodingField extends CodingBlocks implements Placeable {
         }
 
         HTMLInterface::closeDiv();
-        FormUtils::placeHiddenField($this->getMainElementId(), $this->contents);
+        $htmlSafeContents = htmlspecialchars($this->contents, ENT_QUOTES, 'UTF-8');
+        FormUtils::placeHiddenField($this->getMainElementId(), $htmlSafeContents);
 
         $refParams =  "'{$this->getMainElementId()}', {$this->getJSDataVarName()}";
         ?>
@@ -43,10 +44,11 @@ class CodingField extends CodingBlocks implements Placeable {
             <?php foreach ($this->blocks as $block) {
                 $blockId = $block->id;
                 $blockContents = $block->contents;
+                $safeContents = trim(json_encode($blockContents), '"');
             ?>
             <?php echo $this->getJSDataVarName(); ?>.push({
                 id: '<?php echo $blockId; ?>',
-                quill: defaultInitEditor('<?php echo $blockId; ?>', '<?php echo json_encode($blockContents); ?>')
+                quill: defaultInitEditor('<?php echo $blockId; ?>', '<?php echo $safeContents; ?>')
             })
             <?php } ?>
 

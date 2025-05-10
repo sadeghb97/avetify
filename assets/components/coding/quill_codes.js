@@ -15,6 +15,7 @@ function defaultInitEditor(editorId, contents){
         }
     });
 
+    console.log("CC", contents, "rr")
     quill.root.innerHTML = contents;
     return quill;
 }

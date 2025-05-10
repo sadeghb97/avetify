@@ -6,7 +6,7 @@ class CodingBlocks {
 
     public function __construct(public string $contents) {
         if($this->contents){
-            $blocksList = json_decode($this->contents);
+            $blocksList = json_decode($this->contents, true);
             foreach ($blocksList as $rawBlock){
                 $block = new CodingContentBlock($rawBlock);
                 $this->blocks[] = $block;
