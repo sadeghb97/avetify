@@ -3,7 +3,7 @@
 class PageToggleButton implements Placeable {
     public string $nextPage = "";
 
-    public function __construct(public array $pages) {
+    public function __construct(public array $pages, public array $positionStyles) {
         $curScript = Routing::currentScriptName();
         $key = array_search($curScript, $this->pages);
 
@@ -24,7 +24,7 @@ class PageToggleButton implements Placeable {
 
     public function place(WebModifier $webModifier = null) {
         $button = new LinkAbsoluteButton(AssetsManager::getImage("view_alt.svg"),
-            ["left" => "20px", "top", "50px"], $this->buildNextPageUrl());
+            $this->positionStyles, $this->buildNextPageUrl());
         $button->isBlank = false;
         $button->place($webModifier);
     }
