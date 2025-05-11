@@ -1,5 +1,7 @@
 <?php
-abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLink {
+abstract class SBLister implements EntityManager {
+    use EntityManagerTrait;
+
     public array $allItems = [];
     public array $initItemsMap = [];
     public bool $placeDefaultTriggers = true;
@@ -27,10 +29,6 @@ abstract class SBLister implements EntityID, EntityImage, EntityTitle, EntityLin
 
     public function setItems($items){
         $this->allItems = $items;
-    }
-
-    public function getItemLink($record): string {
-        return "";
     }
 
     public function setCardImageDimension($cw, $hmp = 1.3){

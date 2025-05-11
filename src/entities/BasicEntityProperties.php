@@ -20,6 +20,8 @@ interface HaveAltLink {
     public function getItemAltLink() : string;
 }
 
+interface EntityProfile extends HaveID, HaveTitle, HaveImage, HaveLink, HaveAltLink {}
+
 interface HaveImageRatio {
     public function getItemRatio() : float;
 }
@@ -44,36 +46,8 @@ interface EntityAltLink {
     public function getItemAltLink($record) : string;
 }
 
+interface EntityManager extends EntityID, EntityTitle, EntityImage, EntityLink, EntityAltLink {}
+
 interface EntityImageRatio {
     public function getItemRatio($record) : float;
-}
-
-trait DefaultEntityTitle {
-    public function getItemTitle($record) : string {
-        return EntityUtils::getMultiChoiceValue($record, ["name", "title"]);
-    }
-}
-
-trait DefaultEntityID {
-    public function getItemId($record) : string {
-        return EntityUtils::getMultiChoiceValue($record, ["id", "pk"]);
-    }
-}
-
-trait DefaultEntityImage {
-    public function getItemImage($record) : string {
-        return EntityUtils::getMultiChoiceValue($record, ["image", "avatar"]);
-    }
-}
-
-trait DefaultEntityLink {
-    public function getItemLink($record) : string {
-        return EntityUtils::getMultiChoiceValue($record, ["url", "link", "href"]);
-    }
-}
-
-trait DefaultEntityAltLink {
-    public function getItemLink($record) : string {
-        return "";
-    }
 }

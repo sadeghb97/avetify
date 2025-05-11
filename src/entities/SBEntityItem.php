@@ -1,7 +1,9 @@
 <?php
 
-abstract class SBEntityItem extends DataModel implements HaveID, HaveTitle, HaveImage, HaveLink, HaveAltLink {
+abstract class SBEntityItem extends DataModel implements EntityProfile {
     use Tagged;
+    use EntityProfileTrait;
+
     public static function createInstance(string $className, array $data): SBEntityItem {
         if (!is_subclass_of($className, SBEntityItem::class)) {
             throw new InvalidArgumentException("$className must extend SBEntityItem");
@@ -20,21 +22,4 @@ abstract class SBEntityItem extends DataModel implements HaveID, HaveTitle, Have
     }
 
     abstract public function deleteAllResources();
-
-    public function getItemAltLink(): string {
-        return "";
-    }
-
-    public function getItemTitle(): string {
-        if(property_exists($this, "name")) return $this->name;
-        if(property_exists($this, "title")) return $this->title;
-        return "";
-    }
-
-    public function getItemId(): string {
-        if(property_exists($this, "id")) return $this->id;
-        if(property_exists($this, "pk")) return $this->pk;
-        if(property_exists($this, "slug")) return $this->slug;
-        return "";
-    }
 }

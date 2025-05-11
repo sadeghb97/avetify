@@ -11,7 +11,6 @@ abstract class DBLister extends SBLister {
         parent::__construct($this->fetchAllItems());
     }
 
-    /** @return Footballer[] */
     abstract public function fetchAllItems() : array;
 
     public function updateItems(){
