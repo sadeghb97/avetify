@@ -139,7 +139,12 @@ class CodingWrappersDatalist extends JSDatalist {
     public const DATALIST_KEY = "coding_wrappers_datalist";
 
     public function __construct(){
-        $records = [
+        $records = self::wrappersList();
+        parent::__construct(self::DATALIST_KEY, $records, "slug", "title");
+    }
+
+    public static function wrappersList() : array {
+        return [
             ["slug" => "plain", "title" => "Plain"],
             ["slug" => "bash", "title" => "Bash"],
             ["slug" => "c", "title" => "C"],
@@ -164,8 +169,6 @@ class CodingWrappersDatalist extends JSDatalist {
             ["slug" => "yaml", "title" => "YAML"],
             ["slug" => "output", "title" => "Output"]
         ];
-
-        parent::__construct(self::DATALIST_KEY, $records, "slug", "title");
     }
 
     public static function placeDatalist() : ?JSDatalist {

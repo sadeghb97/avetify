@@ -14,7 +14,7 @@ class EntityCodingField extends EntityField implements EntityView {
         $codingField->place();
     }
 
-    public function setDefWrapper(string $wrapper) : EntityCodingField {
+    public function setWrapper(string $wrapper) : EntityCodingField {
         $this->defWrapper = $wrapper;
         return $this;
     }
