@@ -1,6 +1,7 @@
 <?php
 
 abstract class DBConnection extends mysqli {
+    private static ?self $instance = null;
     public string $lastQuery = "";
 
     public abstract function getHost() : string;
@@ -20,6 +21,13 @@ abstract class DBConnection extends mysqli {
         catch (Exception $ex){
             throw $dbException;
         }
+    }
+
+    public static function getInstance(): static {
+        if (!static::$instance) {
+            static::$instance = new static();
+        }
+        return static::$instance;
     }
 
     /** @param DBFilter[] $filters
