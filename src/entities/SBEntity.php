@@ -7,6 +7,7 @@ abstract class SBEntity extends SetModifier {
     public bool $deletable = true;
     public string $entityName = "Record";
     public string $entityModel = "";
+    public string $urlParamEntityKey = "pk";
 
     public function __construct($dbConnection, string $key = "sbn"){
         parent::__construct($key);
@@ -180,15 +181,19 @@ abstract class SBEntity extends SetModifier {
         return $record;
     }
 
-    public function getCurrentRecordPk() : string | null {
-        if(isset($_GET['pk'])) return $_GET['pk'];
+    public function isEntityReceivedFromUrl() : bool {
+        return isset($_GET[$this->urlParamEntityKey]);
+    }
+
+    public function getCurrentRecordPrimaryKey() : string | null {
+        if($this->isEntityReceivedFromUrl()) return $_GET[$this->urlParamEntityKey];
         return null;
     }
 
     public function getCurrentRecord(){
-        $pk = $this->getCurrentRecordPk();
+        $pk = $this->getCurrentRecordPrimaryKey();
         if($pk){
-            $this->latestFetchedRecord = $this->getRecord($_GET['pk']);
+            $this->latestFetchedRecord = $this->getRecord($pk);
             return $this->latestFetchedRecord;
         }
         return null;
@@ -256,7 +261,7 @@ abstract class SBEntity extends SetModifier {
     public function extendRecord(&$item){}
 
     public function printForm($options = null){
-        $pk = $this->getCurrentRecordPk();
+        $pk = $this->getCurrentRecordPrimaryKey();
         $record = $this->getCurrentRecord();
         if($pk && !$record) return;
         $curRecordObject = $this->getRecordObject($record);
@@ -532,7 +537,7 @@ abstract class SBEntity extends SetModifier {
                     echo ')' . br();
 
                     if($this->redirectOnInsert) {
-                        $newRecordUrl = Routing::addParamToCurrentLink("pk", $entityPk);
+                        $newRecordUrl = Routing::addParamToCurrentLink($this->urlParamEntityKey, $entityPk);
                         $justNewRecordInserted = true;
                     }
                 }
