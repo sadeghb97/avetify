@@ -1,5 +1,5 @@
 <?php
-abstract class SBLister implements EntityManager {
+abstract class SBLister implements EntityManager, PageRenderer {
     use EntityManagerTrait;
 
     public array $allItems = [];
@@ -580,7 +580,7 @@ abstract class SBLister implements EntityManager {
         }
     }
 
-    function renderPage(){
+    function renderPage(?string $title = null){
         $this->openPage();
         $this->renderBody();
     }

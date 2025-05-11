@@ -18,11 +18,17 @@ abstract class DBLister extends SBLister {
     }
 
     public function dbHandleLists(array $lists){
+        if(!$this->dbListKey && !$this->dbPriorityKey) return;
+
         foreach ($lists as $listIndex => $list){
             foreach ($list as $priority => $itemPk){
                 $updatedValue = $this->listIndexToNewOrgPk($listIndex);
-                $sql = "UPDATE " . $this->tableName . " SET " . $this->dbListKey . "=" . $updatedValue;
-                if($this->dbPriorityKey) $sql .= (", " . $this->dbPriorityKey . "=" . $priority);
+                $sql = "UPDATE " . $this->tableName . " SET ";
+                if($this->dbListKey){
+                    $sql .= ($this->dbListKey . "=" . $updatedValue . " ");
+                    if($this->dbPriorityKey) $sql .= ", ";
+                }
+                if($this->dbPriorityKey) $sql .= ($this->dbPriorityKey . "=" . $priority);
                 $sql .= " WHERE " . $this->dbPrimaryKey . "=";
                 if($this->pkIsNumeric) $sql .= "'";
                 $sql .= $itemPk;

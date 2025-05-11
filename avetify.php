@@ -7,6 +7,7 @@ require_once "src/interface/Interface.php";
 require_once "src/interface/Placeable.php";
 require_once "src/interface/EntityView.php";
 require_once "src/interface/AVTContainer.php";
+require_once "src/interface/PageRenderer.php";
 require_once "src/interface/Styler.php";
 require_once "src/interface/HTMLModifier.php";
 require_once "src/interface/HTMLInterface.php";
@@ -49,6 +50,7 @@ require_once "src/network/HeadersFetcher.php";
 require_once "src/network/ProxyHeadersFetcher.php";
 
 require_once "src/entities/BasicEntityProperties.php";
+require_once "src/entities/EntityTraits.php";
 require_once "src/entities/SBEntityItem.php";
 require_once "src/entities/SetModifier.php";
 require_once "src/entities/SBSet.php";
@@ -158,7 +160,6 @@ require_once "src/themes/modern/ModernGallery.php";
 require_once "src/themes/modern/ModernRatioGallery.php";
 require_once "src/themes/modern/cards.php";
 
-require_once "src/renderers/PageRenderer.php";
 require_once "src/renderers/AvetifyRenderer.php";
 require_once "src/renderers/TaskPageRenderer.php";
 
