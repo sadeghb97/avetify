@@ -15,7 +15,12 @@ function defaultInitEditor(editorId, contents){
         }
     });
 
-    console.log("CC", contents, "rr")
+    const Delta = Quill.import('delta');
+    quill.clipboard.addMatcher(Node.ELEMENT_NODE, function(node, delta) {
+        const plaintext = node.innerText || node.textContent;
+        return new Delta().insert(plaintext);
+    });
+
     quill.root.innerHTML = contents;
     return quill;
 }
@@ -59,11 +64,13 @@ function initClonedBlock(cloneWrapper, wholeMainKey, childId, newChildId, blocks
     const createButton = cloneWrapper.querySelector("#" + childId + "_create")
     const moveUpButton = cloneWrapper.querySelector("#" + childId + "_moveup")
     const moveDownButton = cloneWrapper.querySelector("#" + childId + "_movedown")
+    const plainButton = cloneWrapper.querySelector("#" + childId + "_plain")
     const typeInput = cloneWrapper.querySelector("#" + childId + "_type")
 
     createButton.id = newChildId + "_create"
     moveUpButton.id = newChildId + "_moveup"
     moveDownButton.id = newChildId + "_movedown"
+    plainButton.id = newChildId + "_plain"
     typeInput.id = newChildId + "_type"
 
     createButton.onclick = function() {
@@ -76,6 +83,10 @@ function initClonedBlock(cloneWrapper, wholeMainKey, childId, newChildId, blocks
 
     moveDownButton.onclick = function() {
         moveElementDown(wholeMainKey, newChildId, blocksData)
+    };
+
+    plainButton.onclick = function() {
+        setPlainWrapper(wholeMainKey, newChildId, blocksData)
     };
 }
 
@@ -115,6 +126,11 @@ function moveElementDown(wholeMainKey, childId, blocksData) {
     moveElementInContainer(wholeMainKey, childId, blocksData, false)
 }
 
+function setPlainWrapper(wholeMainKey, childId, blocksData){
+    const wrapperInput = document.getElementById(childId + "_type")
+    wrapperInput.value = "Plain"
+}
+
 function swapArrayElements(arr, index1, index2) {
     if (
         index1 < 0 || index1 >= arr.length ||
@@ -127,7 +143,6 @@ function swapArrayElements(arr, index1, index2) {
 function refreshCodingFieldDataElement(wholeMainKey, blocksData){
     const resultFields = []
     const dataElement = document.getElementById(wholeMainKey)
-    const dispElement = document.getElementById("tmp_result")
 
     blocksData.forEach((blockData) => {
         const quill = blockData.quill
@@ -145,7 +160,6 @@ function refreshCodingFieldDataElement(wholeMainKey, blocksData){
     })
 
     dataElement.value = JSON.stringify(resultFields)
-    dispElement.value = JSON.stringify(resultFields)
 }
 
 function isQuillContentEmpty(quill) {

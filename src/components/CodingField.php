@@ -109,6 +109,14 @@ class CodingField extends CodingBlocks implements Placeable {
         echo '⬇️';
         echo '</button>';
 
+        echo '<button ';
+        HTMLInterface::addAttribute("onclick", "setPlainWrapper(" . $params . ");");
+        HTMLInterface::addAttribute("type","button");
+        HTMLInterface::addAttribute("id", $newEditorId . "_plain");
+        HTMLInterface::closeTag();
+        echo '<span style="font-weight: bold; color: #005cbf">P</span>';
+        echo '</button>';
+
         echo '<input ';
         HTMLInterface::addAttribute("type", "text");
         HTMLInterface::addAttribute("id", $newEditorId . "_type");
