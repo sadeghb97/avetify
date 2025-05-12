@@ -10,6 +10,7 @@ abstract class SBLister implements EntityManager, PageRenderer {
     public bool $focusMode = false;
     public bool $galleryMode = false;
     public bool $noCacheMode = false;
+    public bool $mainLinksBlank = true;
     protected int | null $cardImageWidth = null;
     protected float | null $cardImageHeightMultiplier = null;
     public WebModifier $containerModifier;
@@ -415,7 +416,7 @@ abstract class SBLister implements EntityManager, PageRenderer {
         if ($link) {
             echo '<a ';
             HTMLInterface::addAttribute("href", $link);
-            HTMLInterface::addAttribute("target", "_blank");
+            if($this->mainLinksBlank) HTMLInterface::addAttribute("target", "_blank");
             HTMLInterface::addAttribute("class", "lister-item-link");
             HTMLInterface::closeTag();
         }

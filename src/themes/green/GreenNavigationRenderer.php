@@ -1,6 +1,8 @@
 <?php
 
 class GreenNavigationRenderer extends NavigationRenderer {
+    public bool $autoActiveDetect = true;
+
     public function place(WebModifier $webModifier = null) {
         if(count($this->navigation->sections) == 0) return;
         $this->openNavbar();
@@ -81,10 +83,10 @@ class GreenNavigationRenderer extends NavigationRenderer {
             $title = $nav->title;
             $link = $nav->link;
             $linkFn = Routing::getBaseUrlFilename($link);
-            $isActive = false;
             $equalFn = $serverFn == $linkFn;
+            $isActive = $nav->isActive;
 
-            if($equalFn){
+            if($this->autoActiveDetect && !$isActive && $equalFn){
                 $isActive = true;
                 if(count($nav->params) > 0){
                     $params = $nav->params;
@@ -98,11 +100,12 @@ class GreenNavigationRenderer extends NavigationRenderer {
                 }
             }
 
-            $this->addMenu($title, $link, $isActive);
+            $this->addMenu($title, $link, $nav->modifier, $isActive);
         }
     }
 
-    public function addMenu(string $title, string $link, bool $isActive = false, bool $floatRight = false){
+    public function addMenu(string $title, string $link, ?WebModifier $modifier = null,
+                            bool $isActive = false, bool $floatRight = false){
         echo '<li ';
         Styler::startAttribute();
         if($floatRight) Styler::addStyle("float", "right");
@@ -110,11 +113,16 @@ class GreenNavigationRenderer extends NavigationRenderer {
         HTMLInterface::closeTag();
 
         echo '<a ';
+        Styler::startAttribute();
+        HTMLInterface::appendStyles($modifier);
+        Styler::closeAttribute();
         Styler::classStartAttribute();
         Styler::addClass("navbar-link");
         if($isActive) Styler::addClass("active");
+        HTMLInterface::appendClasses($modifier);
         Styler::closeAttribute();
         HTMLInterface::addAttribute("href", $link);
+        HTMLInterface::applyModifiers($modifier);
         HTMLInterface::closeTag();
         echo $title;
         echo '</a>';

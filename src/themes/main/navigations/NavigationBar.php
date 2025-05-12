@@ -1,6 +1,7 @@
 <?php
 
 class NavigationBar extends Detailed {
+    public ?WebModifier $modifier = null;
     /** @var NavigationSection[] */
     public array $sections = [];
 
@@ -10,6 +11,7 @@ class NavigationBar extends Detailed {
 }
 
 class NavigationSection extends Detailed {
+    public ?WebModifier $modifier = null;
     /** @var NavigationLink[] */
     public array $menuLinks = [];
 
@@ -19,7 +21,9 @@ class NavigationSection extends Detailed {
 }
 
 class NavigationLink extends Detailed {
+    public ?WebModifier $modifier = null;
     public array $params = [];
+
     public function __construct(public string $title, public string $link, public bool $isActive = false) {}
 
     public function addParam(string $key, string $value) : NavigationLink {
