@@ -154,6 +154,7 @@ require_once "src/themes/classic/ClassicNavigationRenderer.php";
 require_once "src/themes/classic/ClassicLabel.php";
 require_once "src/themes/green/GreenTheme.php";
 require_once "src/themes/green/GreenTableRenderer.php";
+require_once "src/themes/green/GreenListerRenderer.php";
 require_once "src/themes/green/GreenNavigationRenderer.php";
 require_once "src/themes/modern/ModernTheme.php";
 require_once "src/themes/modern/ModernSetRenderer.php";

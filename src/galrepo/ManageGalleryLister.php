@@ -249,7 +249,7 @@ class ManageGalleryLister extends SBLister {
     public function printSubRepo(GalleryRepo $subRepo, $itemRank){
         echo '<div class="grid-square" ';
         Styler::startAttribute();
-        $this->appendCardWidthStyles();
+        $this->appendCardStyles();
         Styler::closeAttribute();
         echo '>';
 
