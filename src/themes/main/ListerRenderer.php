@@ -72,6 +72,7 @@ abstract class ListerRenderer extends BaseSetRenderer {
 
     public function appendCardStyles(){
         Styler::addStyle(CSS::display, "inline-block");
+        Styler::addStyle(CSS::margin, "12px");
     }
 
     public function openRecord($record, $moreDetails = null) {

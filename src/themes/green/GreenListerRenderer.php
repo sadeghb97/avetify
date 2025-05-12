@@ -60,7 +60,7 @@ class GreenListerRenderer extends ListerRenderer {
         Styler::closeAttribute();
         Styler::startAttribute();
         Styler::addStyle(CSS::marginTop, "12px");
-        Styler::addStyle(CSS::marginBottom, "6px");
+        if(!$avatar) Styler::addStyle(CSS::marginBottom, "6px");
         Styler::closeAttribute();
         HTMLInterface::closeTag();
 
