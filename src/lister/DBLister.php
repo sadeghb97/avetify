@@ -1,20 +1,21 @@
 <?php
 
 abstract class DBLister extends SBLister {
-    public function __construct(public DBConnection $conn,
+    public function __construct(string $key,
+                                public DBConnection $conn,
                                 public string $tableName,
                                 public string $dbListKey,
                                 public string $dbPriorityKey,
                                 public string $dbPrimaryKey = "pk",
                                 public bool $pkIsNumeric = true
     ) {
-        parent::__construct($this->fetchAllItems());
+        parent::__construct($key, $this->fetchAllItems());
     }
 
     abstract public function fetchAllItems() : array;
 
     public function updateItems(){
-        $this->setItems($this->fetchAllItems());
+        $this->loadRawRecords($this->fetchAllItems());
     }
 
     public function dbHandleLists(array $lists){

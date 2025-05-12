@@ -1,9 +1,8 @@
 <?php
-abstract class SBLister implements EntityManager, PageRenderer {
+abstract class SBLister extends SetModifier implements PageRenderer {
     use EntityManagerTrait;
 
     protected ?ThemesManager $theme = null;
-    public array $allItems = [];
     public array $initItemsMap = [];
     public bool $placeDefaultTriggers = true;
     public int $maxTitleLength = 0;
@@ -16,8 +15,10 @@ abstract class SBLister implements EntityManager, PageRenderer {
     public WebModifier $containerModifier;
     public string $containerId;
 
-    public function __construct($items){
-        $this->setItems($items);
+    public function __construct(string $key, array $items){
+        parent::__construct($key);
+        $this->loadRawRecords($items);
+
         $this->containerId = "lister_" . time();
         $this->containerModifier = WebModifier::createInstance();
         $this->containerModifier->htmlModifier->pushModifier(Attrs::id, $this->containerId);
@@ -27,10 +28,6 @@ abstract class SBLister implements EntityManager, PageRenderer {
 
         if($this->galleryMode)$this->containerModifier->styler->pushClass("gallery");
         else if($this->focusMode)$this->containerModifier->styler->pushClass("focus");
-    }
-
-    public function setItems($items){
-        $this->allItems = $items;
     }
 
     public function setCardImageDimension($cw, $hmp = 1.3){
@@ -112,11 +109,11 @@ abstract class SBLister implements EntityManager, PageRenderer {
     }
 
     function initLists(){
-        foreach ($this->allItems as $item){
+        foreach ($this->currentRecords as $item){
             $this->initItemsMap[$this->getItemId($item)] = $this->catOrgPkToListIndex($item);
         }
 
-        usort($this->allItems, function ($a, $b){
+        usort($this->currentRecords, function ($a, $b){
             $aValue = $this->initItemsMap[$this->getItemId($a)];
             $bValue = $this->initItemsMap[$this->getItemId($b)];
 
@@ -337,8 +334,8 @@ abstract class SBLister implements EntityManager, PageRenderer {
 
     public function printCategoryCards(SBListCategory $category, &$cursor){
         $itemRank = 1;
-        while($cursor < count($this->allItems) && $this->initItemsMap[$this->getItemId($this->allItems[$cursor])] <= $category->index) {
-            $this->printItemCard($this->allItems[$cursor], $category, $itemRank);
+        while($cursor < count($this->currentRecords) && $this->initItemsMap[$this->getItemId($this->currentRecords[$cursor])] <= $category->index) {
+            $this->printItemCard($this->currentRecords[$cursor], $category, $itemRank);
             $cursor++;
             $itemRank++;
         }
@@ -478,7 +475,7 @@ abstract class SBLister implements EntityManager, PageRenderer {
     public function readyForm(){
         $allFieldIds = [];
         foreach ($this->getItemFields() as $field){
-            foreach ($this->allItems as $item){
+            foreach ($this->currentRecords as $item){
                 $allFieldIds[] = $field['key'] . "_" . $this->getItemId($item);
             }
         }
@@ -492,7 +489,8 @@ abstract class SBLister implements EntityManager, PageRenderer {
         );
     }
 
-    public function openPage(){
+    public function openPage(string $title = ""){
+        $finalTitle = $title ? $title : $this->getPageTitle();
         if(!$this->theme) $this->theme = $this->getTheme();
         $theme = $this->getTheme();
         $theme->placeHeader($this->getPageTitle());
