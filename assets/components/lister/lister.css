@@ -124,20 +124,18 @@ code {
 	border: solid 1px rgb(0,0,0,0.2);
 	padding: 10px;
 	font-size: 18pt;
+	border-radius: 8px;
 }
 
 .gallery .grid-square {
-	border-radius: 8px;
 	padding: 0;
 }
 
 .focus .grid-square {
-	border-radius: 8px;
 	padding: 0 0 8px;
 }
 
 .focus-force .grid-square {
-	border-radius: 8px !important;
 	padding: 0 0 8px !important;
 }
 
@@ -155,16 +153,16 @@ code {
 	display: block;
 	margin: auto;
 	object-fit: cover;
+
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
 }
 
 .gallery .lister-item-img {
 	border-radius: 8px;
 }
 
-.focus .lister-item-img {
-	border-top-left-radius: 8px;
-	border-top-right-radius: 8px;
-}
+.focus .lister-item-img {}
 
 .focus-force .lister-item-img {
 	border-radius: 8px 8px 0 0 !important;
