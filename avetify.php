@@ -128,21 +128,6 @@ require_once "src/table/fields/VisualSelectField.php";
 require_once "src/crawling/Scrapper.php";
 require_once "src/crawling/RawDocumentLoader.php";
 
-require_once "src/galrepo/GalleryRepo.php";
-require_once "src/galrepo/ManageGalleryLister.php";
-
-require_once "src/standings/LeagueStandings.php";
-require_once "src/standings/Competitor.php";
-
-require_once "src/modules/Flusher.php";
-require_once "src/modules/SecureNetwork.php";
-require_once "src/modules/Printer.php";
-require_once "src/modules/SetPlexer.php";
-
-require_once "src/forms/FormUtils.php";
-require_once "src/forms/FormButton.php";
-require_once "src/forms/SBForm.php";
-
 require_once "src/themes/main/ThemesManager.php";
 require_once "src/themes/main/BaseSetRenderer.php";
 require_once "src/themes/main/SetRenderer.php";
@@ -161,6 +146,22 @@ require_once "src/themes/modern/ModernSetRenderer.php";
 require_once "src/themes/modern/ModernGallery.php";
 require_once "src/themes/modern/ModernRatioGallery.php";
 require_once "src/themes/modern/cards.php";
+
+require_once "src/galrepo/GalleryRepo.php";
+require_once "src/galrepo/GreenGalleryRenderer.php";
+require_once "src/galrepo/ManageGalleryLister.php";
+
+require_once "src/standings/LeagueStandings.php";
+require_once "src/standings/Competitor.php";
+
+require_once "src/modules/Flusher.php";
+require_once "src/modules/SecureNetwork.php";
+require_once "src/modules/Printer.php";
+require_once "src/modules/SetPlexer.php";
+
+require_once "src/forms/FormUtils.php";
+require_once "src/forms/FormButton.php";
+require_once "src/forms/SBForm.php";
 
 require_once "src/renderers/AvetifyRenderer.php";
 require_once "src/renderers/TaskPageRenderer.php";

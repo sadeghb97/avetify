@@ -5,8 +5,8 @@ class GreenListerRenderer extends ListerRenderer {
     public bool $galleryMode = false;
     public bool $noCacheMode = false;
     public bool $mainLinksBlank = true;
-    protected int | null $cardImageWidth = null;
-    protected float | null $cardImageHeightMultiplier = null;
+    public int | null $cardImageWidth = null;
+    public float | null $cardImageHeightMultiplier = null;
     public WebModifier $containerModifier;
     public string $containerId;
 
@@ -27,6 +27,11 @@ class GreenListerRenderer extends ListerRenderer {
         echo '<div ';
         Styler::classStartAttribute();
         Styler::addClass("grid-square");
+        Styler::closeAttribute();
+        Styler::startAttribute();
+        if($this->cardImageWidth) {
+            Styler::addStyle(CSS::width, ($this->cardImageWidth + 25) . "px");
+        }
         Styler::closeAttribute();
         HTMLInterface::closeTag();
 
@@ -130,13 +135,6 @@ class GreenListerRenderer extends ListerRenderer {
     public function setCardImageDimension($cw, $hmp = 1.3){
         $this->cardImageWidth = $cw;
         $this->cardImageHeightMultiplier = $hmp;
-    }
-
-    public function appendCardStyles(){
-        if($this->cardImageWidth) {
-            Styler::addStyle(CSS::width, ($this->cardImageWidth + 25) . "px");
-        }
-        Styler::addStyle(CSS::display, "inline-block");
     }
 
     public function appendImageWidthStyles(){

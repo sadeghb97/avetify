@@ -70,6 +70,10 @@ abstract class ListerRenderer extends BaseSetRenderer {
         $this->closeCollection();
     }
 
+    public function appendCardStyles(){
+        Styler::addStyle(CSS::display, "inline-block");
+    }
+
     public function openRecord($record, $moreDetails = null) {
         $itemId = $this->lister->getItemId($record);
         echo '<div ';
