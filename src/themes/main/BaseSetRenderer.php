@@ -43,6 +43,10 @@ abstract class BaseSetRenderer {
         $this->theme->loadHeaderElements();
     }
 
+    public function closePage(){
+        $this->theme->lateImports();
+    }
+
     public function renderBody(){
         $this->onRecordsAdjusted();
 
@@ -61,6 +65,7 @@ abstract class BaseSetRenderer {
     public function renderPage(){
         $this->openPage();
         $this->renderBody();
+        $this->closePage();
     }
 
     public function onRecordsAdjusted() : void {}

@@ -37,79 +37,64 @@ class ListerRenderer extends BaseSetRenderer {
     }
 
     public function openContainer() {
-        // TODO: Implement openContainer() method.
+        $this->lister->catchNewList();
+        $this->lister->initLists();
+        $this->lister->initJsArgs();
+        $this->lister->placeMenu();
+
+        echo '<div ';
+        HTMLInterface::applyClasses($this->containerModifier);
+        HTMLInterface::applyStyles($this->containerModifier);
+        HTMLInterface::applyModifiers($this->containerModifier);
+        HTMLInterface::closeTag();
+
+        echo '<div id="grid" class="col">';
     }
 
     public function closeContainer() {
-        // TODO: Implement closeContainer() method.
+        $this->formMoreFields();
+        echo '<input type="hidden" id="newlist" name="newlist">
+              <input type="hidden" id="lister_params" name="lister_params">
+        </form>';
+
+        if($this->lister->placeDefaultTriggers) {
+            if ($this->lister->isPrintRankEnabled() && $this->lister->isRearrangeRanksEnabled()) {
+                HTMLInterface::addAbsoluteIconButton(AssetsManager::getImage('arrange.png'),
+                    [
+                        "inset-inline-start" => "20px",
+                        "bottom" => "20px"
+                    ],
+                    "rearrangeRanks()");
+            }
+
+            $primaryButton = new PrimaryButton("listerSubmit(jsArgs); submitForm('lister_form');");
+            $primaryButton->place();
+        }
+
+        ThemesManager::importJS(AssetsManager::getAsset('components/lister/init_lister.js'));
+        $this->lister->initMenu();
+        $this->lister->readyForm();
+        $this->moreBodyContents();
+
+        $this->closePage();
+    }
+
+    public function openCollection(WebModifier $webModifier = null) {
+        echo '<form method="post" id="lister_form" name="lister_form">';
+    }
+
+    public function closeCollection(WebModifier $webModifier = null) {
+        echo '</div>';
+    }
+
+    public function renderSet() {
+        $this->openCollection();
+        $this->renderAllCategories();
+        $this->closeCollection();
     }
 
     public function renderRecordMain($item, int $index) {
         // TODO: Implement renderRecordMain() method.
-    }
-
-    public function renderAllCategories(){
-        $cursor = 0;
-        $categories = $this->lister->getCategories();
-        $perm = $this->lister->getPermanentCategoriesCount();
-        if($perm == null) $perm = count($categories);
-
-        for($i=0; count($categories)>$i; $i++){
-            $this->printCategorySection($categories[$i], $cursor, $perm <= $i);
-        }
-    }
-
-    public function printCategorySection(SBListCategory $category, &$cursor, $hide = false){
-        $categoryTitle = $category->title;
-        $msecID = "msec_" . $category->index;
-        $msecTitleID = "msec_title_" . $category->index;
-        echo '<div class="magham-section" id="' . $msecID . '" ';
-        echo ' style="display: ' . (!$hide ? "block" : "none") . ';"';
-        echo ' >';
-        echo '<div class="magham-box">';
-        echo '<span class="magham-degree" id="' . $msecTitleID . '">' . $categoryTitle . '</span>';
-        echo '</div>';
-        echo '<div id="gridDemo' . $category->index . '" class="row" ';
-        Styler::startAttribute();
-        Styler::addStyle("overflow", "auto");
-        Styler::addStyle("position", "relative");
-        Styler::addStyle("justify-content", "center");
-        Styler::closeAttribute();
-        echo ' >';
-        $this->printCategoryCards($category, $cursor);
-        echo '</div>';
-        echo '<hr />';
-        echo '</div>';
-    }
-
-    public function printCategoryCards(SBListCategory $category, &$cursor){
-        $itemRank = 1;
-        while($cursor < count($this->lister->currentRecords) &&
-            $this->lister->initItemsMap[$this->lister->getItemId($this->lister->currentRecords[$cursor])] <= $category->index) {
-            $this->printItemCard($this->lister->currentRecords[$cursor], $category, $itemRank);
-            $cursor++;
-            $itemRank++;
-        }
-    }
-
-    public function appendCardWidthStyles(){
-        if($this->cardImageWidth) {
-            Styler::addStyle(CSS::width, ($this->cardImageWidth + 25) . "px");
-        }
-    }
-
-    public function appendImageWidthStyles(){
-        if($this->cardImageWidth != null){
-            $finalImageWidth = ($this->focusMode || $this->galleryMode) ? $this->cardImageWidth + 25 :
-                $this->cardImageWidth;
-
-            Styler::addStyle(CSS::width, $finalImageWidth . "px");
-            if($this->cardImageHeightMultiplier > 0){
-                $imageHeight = (int)($this->cardImageHeightMultiplier * $finalImageWidth);
-                Styler::addStyle(CSS::height, $imageHeight . "px");
-            }
-            else Styler::addStyle(CSS::height, $this->cardImageWidth . "px");
-        }
     }
 
     public function printItemCard($item, SBListCategory | null $category, $itemRank){
@@ -223,6 +208,70 @@ class ListerRenderer extends BaseSetRenderer {
         echo '</div>';
     }
 
+    public function renderAllCategories(){
+        $cursor = 0;
+        $categories = $this->lister->getCategories();
+        $perm = $this->lister->getPermanentCategoriesCount();
+        if($perm == null) $perm = count($categories);
+
+        for($i=0; count($categories)>$i; $i++){
+            $this->printCategorySection($categories[$i], $cursor, $perm <= $i);
+        }
+    }
+
+    public function printCategorySection(SBListCategory $category, &$cursor, $hide = false){
+        $categoryTitle = $category->title;
+        $msecID = "msec_" . $category->index;
+        $msecTitleID = "msec_title_" . $category->index;
+        echo '<div class="magham-section" id="' . $msecID . '" ';
+        echo ' style="display: ' . (!$hide ? "block" : "none") . ';"';
+        echo ' >';
+        echo '<div class="magham-box">';
+        echo '<span class="magham-degree" id="' . $msecTitleID . '">' . $categoryTitle . '</span>';
+        echo '</div>';
+        echo '<div id="gridDemo' . $category->index . '" class="row" ';
+        Styler::startAttribute();
+        Styler::addStyle("overflow", "auto");
+        Styler::addStyle("position", "relative");
+        Styler::addStyle("justify-content", "center");
+        Styler::closeAttribute();
+        echo ' >';
+        $this->printCategoryCards($category, $cursor);
+        echo '</div>';
+        echo '<hr />';
+        echo '</div>';
+    }
+
+    public function printCategoryCards(SBListCategory $category, &$cursor){
+        $itemRank = 1;
+        while($cursor < count($this->lister->currentRecords) &&
+            $this->lister->initItemsMap[$this->lister->getItemId($this->lister->currentRecords[$cursor])] <= $category->index) {
+            $this->printItemCard($this->lister->currentRecords[$cursor], $category, $itemRank);
+            $cursor++;
+            $itemRank++;
+        }
+    }
+
+    public function appendCardWidthStyles(){
+        if($this->cardImageWidth) {
+            Styler::addStyle(CSS::width, ($this->cardImageWidth + 25) . "px");
+        }
+    }
+
+    public function appendImageWidthStyles(){
+        if($this->cardImageWidth != null){
+            $finalImageWidth = ($this->focusMode || $this->galleryMode) ? $this->cardImageWidth + 25 :
+                $this->cardImageWidth;
+
+            Styler::addStyle(CSS::width, $finalImageWidth . "px");
+            if($this->cardImageHeightMultiplier > 0){
+                $imageHeight = (int)($this->cardImageHeightMultiplier * $finalImageWidth);
+                Styler::addStyle(CSS::height, $imageHeight . "px");
+            }
+            else Styler::addStyle(CSS::height, $this->cardImageWidth . "px");
+        }
+    }
+
     public function openPage(string $title = ""){
         $finalTitle = $title ? $title : $this->getTitle();
         if(!$this->theme) $this->theme = $this->getTheme();
@@ -242,51 +291,6 @@ class ListerRenderer extends BaseSetRenderer {
         $theme = new GreenTheme();
         $theme->includesListerTools = true;
         return $theme;
-    }
-
-    function renderBody(){
-        $this->lister->catchNewList();
-        $this->lister->initLists();
-        $this->lister->initJsArgs();
-        $this->lister->placeMenu();
-
-        echo '<div ';
-        HTMLInterface::applyClasses($this->containerModifier);
-        HTMLInterface::applyStyles($this->containerModifier);
-        HTMLInterface::applyModifiers($this->containerModifier);
-        HTMLInterface::closeTag();
-
-        echo '<div id="grid" class="col">';
-
-        echo '<form method="post" id="lister_form" name="lister_form">';
-        $this->renderAllCategories();
-        echo '</div>';
-
-        $this->formMoreFields();
-        echo '<input type="hidden" id="newlist" name="newlist">
-              <input type="hidden" id="lister_params" name="lister_params">
-        </form>';
-
-        if($this->lister->placeDefaultTriggers) {
-            if ($this->lister->isPrintRankEnabled() && $this->lister->isRearrangeRanksEnabled()) {
-                HTMLInterface::addAbsoluteIconButton(AssetsManager::getImage('arrange.png'),
-                    [
-                        "inset-inline-start" => "20px",
-                        "bottom" => "20px"
-                    ],
-                    "rearrangeRanks()");
-            }
-
-            $primaryButton = new PrimaryButton("listerSubmit(jsArgs); submitForm('lister_form');");
-            $primaryButton->place();
-        }
-
-        ThemesManager::importJS(AssetsManager::getAsset('components/lister/init_lister.js'));
-        $this->lister->initMenu();
-        $this->lister->readyForm();
-        $this->moreBodyContents();
-
-        $this->closePage();
     }
 
     function renderPage(?string $title = null){
