@@ -8,6 +8,7 @@ abstract class SetModifier implements EntityManager {
     public bool $isSortable = true;
     public bool $isEditable = true;
     public SetRenderer | null $renderer = null;
+    public int $maxTitleLength = 0;
 
     public function __construct(public string $setKey){}
 
@@ -95,6 +96,10 @@ abstract class SetModifier implements EntityManager {
             $map[$id] = $index;
         }
         return $map;
+    }
+
+    public function getAdjustedTitle($item) : string {
+        return minimize($this->getItemTitle($item), $this->maxTitleLength);
     }
 
     public function getAllAvailableItemsCount() : int {

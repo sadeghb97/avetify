@@ -146,6 +146,7 @@ require_once "src/forms/SBForm.php";
 require_once "src/themes/main/ThemesManager.php";
 require_once "src/themes/main/BaseSetRenderer.php";
 require_once "src/themes/main/SetRenderer.php";
+require_once "src/themes/main/ListerRenderer.php";
 require_once "src/themes/main/navigations/NavigationBar.php";
 require_once "src/themes/main/navigations/SimpleNavigationBar.php";
 require_once "src/themes/main/navigations/NavigationRenderer.php";
