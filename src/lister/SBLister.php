@@ -86,7 +86,9 @@ abstract class SBLister extends SetModifier implements PageRenderer {
     }
 
     function getListerRenderer() : ListerRenderer {
-        return new GreenListerRenderer($this, new GreenTheme());
+        $th = new GreenTheme();
+        $th->includesListerTools = true;
+        return new GreenListerRenderer($this, $th);
     }
 
     function initLists(){

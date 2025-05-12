@@ -146,20 +146,19 @@ abstract class ListerRenderer extends BaseSetRenderer {
 
     public function openPage(string $title = ""){
         $finalTitle = $title ? $title : $this->getTitle();
-        if(!$this->theme) $this->theme = $this->getTheme();
-        $theme = $this->getTheme();
-        $theme->placeHeader($finalTitle);
+        if(!$this->theme) $this->theme = $this->defaultTheme();
+        $this->theme->placeHeader($finalTitle);
         echo '<body>';
-        $theme->loadHeaderElements();
+        $this->theme->loadHeaderElements();
     }
 
     public function closePage(){
-        if(!$this->theme) $this->theme = $this->getTheme();
+        if(!$this->theme) $this->theme = $this->defaultTheme();
         $this->theme->lateImports();
         echo '</body>';
     }
 
-    public function getTheme() : ThemesManager {
+    public function defaultTheme() : ThemesManager {
         $theme = new GreenTheme();
         $theme->includesListerTools = true;
         return $theme;
