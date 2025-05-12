@@ -47,9 +47,17 @@ class ThemesManager {
         if($this->includesCropperTools) self::importCropperTools();
         if($this->includesCodingFieldTools) self::importCodingFieldTools();
         if($this->includesHighlightCodesTools) self::importHighlightCodeTools();
+
+        if($this->navigationRenderer){
+            $this->navigationRenderer->headImports();
+        }
     }
 
-    public function loadFavicon(){}
+    public function lateImports(){
+        if($this->navigationRenderer){
+            $this->navigationRenderer->lateImports();
+        }
+    }
 
     public function loadHeaderElements(){
         if(!$this->noNavigationMenu && $this->navigationRenderer != null){
@@ -57,6 +65,8 @@ class ThemesManager {
         }
         AvtDialog::place();
     }
+
+    public function loadFavicon(){}
 
     public function getNavigationBar() : ?NavigationBar {
         return null;

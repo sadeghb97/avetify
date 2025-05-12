@@ -8,12 +8,62 @@ class GreenNavigationRenderer extends NavigationRenderer {
         $this->closeNavbar();
     }
 
+    public function headImports(){
+        ThemesManager::importStyle(AssetsManager::getAsset("themes/green/navbar/styles.css"));
+    }
+
+    public function lateImports(){
+        ThemesManager::importJS(AssetsManager::getAsset("themes/green/navbar/init.js"));
+    }
+
     public function openNavbar(){
-        echo '<ul>';
+        echo '<div ';
+        Styler::classStartAttribute();
+        Styler::addClass("navbar-wrapper");
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
+
+        echo '<button ';
+        Styler::classStartAttribute();
+        Styler::addClass("navbar-scroll-btn");
+        Styler::addClass("navbar-left");
+        Styler::addClass("hidden");
+        Styler::closeAttribute();
+        HTMLInterface::addAttribute(Attrs::id, "navbarScrollLeft");
+        HTMLInterface::closeTag();
+        echo '◀';
+        echo '</button>';
+
+        echo '<div ';
+        Styler::classStartAttribute();
+        Styler::addClass("navbar-scroll-container");
+        Styler::closeAttribute();
+        HTMLInterface::addAttribute(Attrs::id, "navbarScrollContainer");
+        HTMLInterface::closeTag();
+
+        echo '<ul ';
+        Styler::classStartAttribute();
+        Styler::addClass("navbar-list");
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
     }
 
     public function closeNavbar(){
         echo '</ul>';
+        echo '</div>';
+
+        echo '<button ';
+        Styler::classStartAttribute();
+        Styler::addClass("navbar-scroll-btn");
+        Styler::addClass("navbar-right");
+        Styler::addClass("hidden");
+        Styler::closeAttribute();
+        HTMLInterface::addAttribute(Attrs::id, "navbarScrollRight");
+        HTMLInterface::closeTag();
+        echo '▶';
+        echo '</button>';
+
+        echo '</div>';
     }
 
     public function navigations(){
@@ -60,10 +110,11 @@ class GreenNavigationRenderer extends NavigationRenderer {
         HTMLInterface::closeTag();
 
         echo '<a ';
-        $classes = "navlink";
-        if($isActive) $classes .= " active";
+        Styler::classStartAttribute();
+        Styler::addClass("navbar-link");
+        if($isActive) Styler::addClass("active");
+        Styler::closeAttribute();
         HTMLInterface::addAttribute("href", $link);
-        HTMLInterface::addAttribute("class", $classes);
         HTMLInterface::closeTag();
         echo $title;
         echo '</a>';

@@ -2,6 +2,7 @@
 abstract class SBLister implements EntityManager, PageRenderer {
     use EntityManagerTrait;
 
+    protected ?ThemesManager $theme = null;
     public array $allItems = [];
     public array $initItemsMap = [];
     public bool $placeDefaultTriggers = true;
@@ -491,9 +492,17 @@ abstract class SBLister implements EntityManager, PageRenderer {
     }
 
     public function openPage(){
+        if(!$this->theme) $this->theme = $this->getTheme();
         $theme = $this->getTheme();
         $theme->placeHeader($this->getPageTitle());
+        echo '<body>';
         $theme->loadHeaderElements();
+    }
+
+    public function closePage(){
+        if(!$this->theme) $this->theme = $this->getTheme();
+        $this->theme->lateImports();
+        echo '</body>';
     }
 
     public function getTheme() : ThemesManager {
@@ -503,7 +512,6 @@ abstract class SBLister implements EntityManager, PageRenderer {
     }
 
     function renderBody(){
-        echo '<body>';
         $this->catchNewList();
         $this->initLists();
         $this->initJsArgs();
@@ -544,7 +552,8 @@ abstract class SBLister implements EntityManager, PageRenderer {
         $this->initMenu();
         $this->readyForm();
         $this->moreBodyContents();
-        echo '</html>';
+
+        $this->closePage();
     }
 
     function catchNewList(){
@@ -583,5 +592,6 @@ abstract class SBLister implements EntityManager, PageRenderer {
     function renderPage(?string $title = null){
         $this->openPage();
         $this->renderBody();
+        $this->closePage();
     }
 }

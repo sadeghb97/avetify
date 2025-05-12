@@ -1,0 +1,63 @@
+.navbar-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    padding: 0 5px;
+}
+
+.navbar-scroll-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-grow: 1;
+    scrollbar-width: none;
+}
+
+.navbar-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.navbar-list {
+    display: inline-flex;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.navbar-list li {
+    display: inline-block;
+}
+
+.navbar-link {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.navbar-link:hover:not(.active) {
+    background-color: #111;
+}
+
+.navbar-link.active {
+    background-color: #04AA6D;
+    color: white;
+}
+
+.navbar-scroll-btn {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 14px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s;
+}
+
+.navbar-scroll-btn:hover {
+    background-color: #111;
+}
+
+.navbar-scroll-btn.hidden {
+    visibility: hidden;
+}
