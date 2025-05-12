@@ -5,12 +5,13 @@ class GreenGalleryRenderer extends GreenListerRenderer {
     public ?GalleryRepo $galRepo = null;
 
     public function postConstruct() {
+        parent::postConstruct();
+
         /** @var ManageGalleryLister $mgl */
         $mgl = $this->setModifier;
         $this->galleryLister = $mgl;
         $this->galRepo = $this->galleryLister->galleryRepo;
 
-        parent::postConstruct();
         $this->focusMode = true;
         $this->galleryMode = false;
         $this->noCacheMode = true;

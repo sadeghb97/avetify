@@ -8,7 +8,9 @@ class ManageGalleryLister extends SBLister {
     }
 
     public function getListerRenderer(): ListerRenderer {
-        return new GreenGalleryRenderer($this, new GreenTheme());
+        $th = new GreenTheme();
+        $th->includesListerTools = true;
+        return new GreenGalleryRenderer($this, $th);
     }
 
     public function getItemId($record): string {

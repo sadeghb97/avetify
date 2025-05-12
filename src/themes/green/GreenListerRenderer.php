@@ -7,11 +7,9 @@ class GreenListerRenderer extends ListerRenderer {
     public bool $mainLinksBlank = true;
     public int | null $cardImageWidth = null;
     public float | null $cardImageHeightMultiplier = null;
-    public WebModifier $containerModifier;
     public string $containerId;
 
-    public function postConstruct() {
-        parent::postConstruct();
+    public function prepareContainerModifier() {
         $this->containerId = "lister_" . time();
         $this->containerModifier = WebModifier::createInstance();
         $this->containerModifier->htmlModifier->pushModifier(Attrs::id, $this->containerId);

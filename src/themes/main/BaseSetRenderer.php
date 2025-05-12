@@ -1,6 +1,8 @@
 <?php
 
 abstract class BaseSetRenderer {
+    public WebModifier $containerModifier;
+
     public function __construct(public SetModifier $setModifier,
                                 public ThemesManager | null $theme,
                                 public bool | int $limit = false){
@@ -55,6 +57,7 @@ abstract class BaseSetRenderer {
             $this->renderSortLabels();
         }
 
+        $this->prepareContainerModifier();
         $this->openContainer();
         $this->renderLeadingItems();
         $this->renderSet();
@@ -68,6 +71,7 @@ abstract class BaseSetRenderer {
         $this->closePage();
     }
 
+    public function prepareContainerModifier(){}
     public function onRecordsAdjusted() : void {}
 
     public abstract function getTitle() : string;
