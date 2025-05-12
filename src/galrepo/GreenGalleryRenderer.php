@@ -110,6 +110,8 @@ class GreenGalleryRenderer extends GreenListerRenderer {
         echo '<div class="grid-square" ';
         Styler::startAttribute();
         $this->appendCardStyles();
+        $this->appendRecordCardStyles();
+
         Styler::closeAttribute();
         echo '>';
 

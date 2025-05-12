@@ -23,15 +23,19 @@ class GreenListerRenderer extends ListerRenderer {
         else if($this->focusMode)$this->containerModifier->styler->pushClass("focus");
     }
 
+    public function appendRecordCardStyles(){
+        if($this->cardImageWidth) {
+            Styler::addStyle(CSS::width, ($this->cardImageWidth + 25) . "px");
+        }
+    }
+
     public function renderRecordMain($item, int $index) {
         echo '<div ';
         Styler::classStartAttribute();
         Styler::addClass("grid-square");
         Styler::closeAttribute();
         Styler::startAttribute();
-        if($this->cardImageWidth) {
-            Styler::addStyle(CSS::width, ($this->cardImageWidth + 25) . "px");
-        }
+        $this->appendRecordCardStyles();
         Styler::closeAttribute();
         HTMLInterface::closeTag();
 
