@@ -30,36 +30,42 @@ class GreenListerRenderer extends ListerRenderer {
     }
 
     public function renderRecordMain($item, int $index) {
+        $itemId = $this->lister->getItemId($item);
+        $avatar = $this->lister->getItemImage($item);
+
         echo '<div ';
         Styler::classStartAttribute();
         Styler::addClass("grid-square");
         Styler::closeAttribute();
         Styler::startAttribute();
         $this->appendRecordCardStyles();
+        if($avatar) Styler::addStyle(CSS::minHeight, "180px");
         Styler::closeAttribute();
         HTMLInterface::closeTag();
 
-        $itemId = $this->lister->getItemId($item);
-        $avatar = $this->lister->getItemImage($item);
-        if($this->noCacheMode) $avatar .= ("?" . time());
-
-        echo '<img ';
-        HTMLInterface::addAttribute(Attrs::src, $avatar);
-        Styler::classStartAttribute();
-        Styler::addClass("lister-item-img");
-        Styler::closeAttribute();
-        Styler::startAttribute();
-        $this->appendImageWidthStyles();
-        Styler::closeAttribute();
-        HTMLInterface::closeSingleTag();
+        if($avatar) {
+            if($this->noCacheMode) $avatar .= ("?" . time());
+            echo '<img ';
+            HTMLInterface::addAttribute(Attrs::src, $avatar);
+            Styler::classStartAttribute();
+            Styler::addClass("lister-item-img");
+            Styler::closeAttribute();
+            Styler::startAttribute();
+            $this->appendImageWidthStyles();
+            Styler::closeAttribute();
+            HTMLInterface::closeSingleTag();
+        }
 
         echo '<div ';
         Styler::classStartAttribute();
         Styler::addClass("grid-square-footer");
         Styler::closeAttribute();
+        Styler::startAttribute();
+        Styler::addStyle(CSS::marginTop, "12px");
+        Styler::addStyle(CSS::marginBottom, "6px");
+        Styler::closeAttribute();
         HTMLInterface::closeTag();
 
-        HTMLInterface::placeVerticalDivider(12);
         if ($this->lister->isPrintRankEnabled()) {
             $rankStyler = new Styler();
             $rankStyler->pushStyle("font-size", "0.875rem");
