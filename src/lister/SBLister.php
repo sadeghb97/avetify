@@ -203,16 +203,17 @@ abstract class SBLister extends SetModifier implements PageRenderer {
     function placeMenu() {
         $this->menuId = $this->setKey . "_main_menu";
         $directCategories = $this->getDirectMenuCategories();
+
+        $colCount = 0;
+        $rowCount = 2;
         $halfWidth = 115;
-        $fullWidth = $halfWidth * 2;
+        $fullWidth = $halfWidth * $rowCount;
         $itemHeight = 20;
-        $rowCount = 0;
         if (count($directCategories) > 16) {
             $rowCount = round(count($directCategories) / 10);
             if ($rowCount > 3) $rowCount = 3;
             $fullWidth = $rowCount * $halfWidth;
         }
-        $colsCount = 0;
 
         echo '<div ';
         HTMLInterface::addAttribute("id", $this->menuId);
@@ -235,7 +236,7 @@ abstract class SBLister extends SetModifier implements PageRenderer {
                 . 'px;" onclick="action(\'' . $this->menuId . '\', 6, jsArgs)">';
             echo $this->getCopyImageWord();
             echo '</div>';
-            $colsCount++;
+            $colCount++;
         }
 
         if ($this->isRelegateAndPromoteEnabled()) {
@@ -248,7 +249,7 @@ abstract class SBLister extends SetModifier implements PageRenderer {
                 . 'px;" onclick="action(\'' . $this->menuId . '\', 3, jsArgs)">';
             echo $this->getRelegateWord();
             echo '</div>';
-            $colsCount++;
+            $colCount++;
         }
 
         if ($this->isFirstAndLastEnabled()) {
@@ -261,7 +262,7 @@ abstract class SBLister extends SetModifier implements PageRenderer {
                 . 'px;" onclick="action(\'' . $this->menuId . '\', 1, jsArgs)">';
             echo $this->getLastWord();
             echo '</div>';
-            $colsCount++;
+            $colCount++;
         }
 
         if ($this->isFastTransferEnabled()) {
@@ -269,7 +270,7 @@ abstract class SBLister extends SetModifier implements PageRenderer {
                 . 'px;" onclick="action(\'' . $this->menuId . '\', 4, jsArgs)">';
             echo $this->getFastTransferWord();
             echo '</div>';
-            $colsCount++;
+            $colCount++;
         }
 
         echo '</div>';
@@ -279,7 +280,7 @@ abstract class SBLister extends SetModifier implements PageRenderer {
             echo '</div>';
         }
 
-        $colsCount += ceil(count($directCategories) / $rowCount);
+        $colCount += ceil(count($directCategories) / $rowCount);
         echo '<div class="context-menu-row" id="menu_directs">';
         for($i = 0; count($directCategories)>$i; $i++){
             $isLast = count($directCategories) <= ($i + 1);
@@ -298,7 +299,7 @@ abstract class SBLister extends SetModifier implements PageRenderer {
         ?>
         <script>
             jsArgs['menu_width'] = <?php echo $fullWidth; ?>;
-            jsArgs['menu_height'] = <?php echo $colsCount * $itemHeight; ?>;
+            jsArgs['menu_height'] = <?php echo $colCount * $itemHeight; ?>;
         </script>
         <?php
     }
