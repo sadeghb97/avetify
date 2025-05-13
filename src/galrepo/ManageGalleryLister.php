@@ -30,9 +30,13 @@ class ManageGalleryLister extends SBLister {
         return substr($p, $pos + 1);
     }
 
-    public function getItemImage($item): string {
-        if(!$item) return "";
-        return Routing::srpToBrp($this->galleryRepo->path . $item->path);
+    public function getItemLink($record): string {
+        return $this->getItemImage($record);
+    }
+
+    public function getItemImage($record): string {
+        if(!$record) return "";
+        return Routing::srpToBrp($this->galleryRepo->path . $record->path);
     }
 
     public function getItemCategoryOriginalPk($item){

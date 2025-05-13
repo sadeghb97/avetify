@@ -134,12 +134,12 @@ function action(arg, menuArgs){
 		}
 	}
 	else if(arg === 5){
-		const triggeredImage = triggeredFile.firstElementChild.src
-		window.open(triggeredImage, '_blank');
+		const triggeredImage = findClosestChildrenByTag(triggeredFile, "img");
+		if(triggeredImage != null) window.open(triggeredImage.src, '_blank');
 	}
 	else if(arg === 6){
-		const triggeredImage = triggeredFile.firstElementChild.src
-		copyToClipboard(triggeredImage)
+		const triggeredImage = findClosestChildrenByTag(triggeredFile, "img");
+		if(triggeredImage != null) copyToClipboard(triggeredImage.src)
 	}
 	hideContextMenu()
 }

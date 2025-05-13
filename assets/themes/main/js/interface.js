@@ -69,6 +69,26 @@ function addParamToCurrentLink(paramKey, paramValue) {
     addParamToLink(window.location.href, paramKey, paramValue)
 }
 
+function findClosestChildrenByTag(parent, tagName) {
+    if (!(parent instanceof Element)) return null;
+    tagName = tagName.toUpperCase();
+
+    for (let child of parent.children) {
+        if (child.tagName === tagName) {
+            return child;
+        }
+    }
+
+    for (let child of parent.children) {
+        const found = findClosestChildrenByTag(child, tagName);
+        if (found) {
+            return found;
+        }
+    }
+
+    return null;
+}
+
 document.addEventListener('keydown', function (e) {
     const target = e.target;
     if (target.classList.contains('numeric-text')) {

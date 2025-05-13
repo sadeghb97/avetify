@@ -15,6 +15,7 @@ class GreenGalleryRenderer extends GreenListerRenderer {
         $this->focusMode = true;
         $this->galleryMode = false;
         $this->noCacheMode = true;
+        $this->mainLinksBlank = true;
         $this->cardImageWidth = 300;
     }
 
