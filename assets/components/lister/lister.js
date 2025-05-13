@@ -4,7 +4,8 @@ function str_rot13(str) {
 	});
 }
 
-function initMenu(){
+function initMenu(menuId, jsArgs){
+	if(!menuId) menuId = 'context-menu';
 	window.oncontextmenu = function (e) {
 		let fileTriggered = e.srcElement
 		if(!fileTriggered) return false
@@ -15,29 +16,26 @@ function initMenu(){
 		}
 
 		if(fileTriggered && fileTriggered.id.includes("lister-item")){
-			const contextMenu = document.getElementById("context-menu");
-			showMenu(contextMenu);
-
+			showMenu(menuId, jsArgs);
 			triggeredFile = fileTriggered
 			return false
 		}
 
 		fileTriggered = e.srcElement.parentElement.parentElement
 		if(fileTriggered && fileTriggered.id.includes("msec")){
-			const contextShift = document.getElementById("context-shift");
-			showMenu(contextShift);
+			showMenu("context-shift");
 
 			triggeredFile = fileTriggered
 			return false
 		}
 
-		hideContextMenu()
+		hideContextMenu(menuId)
 		return true
 	}
 
 	const scope = document.querySelector("body");
 	scope.addEventListener("click", () => {
-		hideContextMenu()
+		hideContextMenu(menuId)
 	});
 }
 
@@ -66,21 +64,21 @@ function listerSubmit(moreArgs){
 	return true;
 }
 
-function hideContextMenu (){
+function hideContextMenu (menuId){
 	try {
-		const contextMenu = document.getElementById("context-menu");
-		contextMenu.classList.remove("visible");
+		const contextMenu = document.getElementById(menuId);
+		if(contextMenu) contextMenu.classList.remove("visible");
 	}
 	catch (ex){}
 
 	try {
 		const contextShift = document.getElementById("context-shift");
-		contextShift.classList.remove("visible");
+		if(contextShift) contextShift.classList.remove("visible");
 	}
 	catch (ex){}
 }
 
-function action(arg, menuArgs){
+function action(menuId, arg, menuArgs){
 	if(arg === 0) {
 		const parentDiv = triggeredFile.parentElement
 		parentDiv.insertBefore(triggeredFile, parentDiv.firstChild);
@@ -141,7 +139,7 @@ function action(arg, menuArgs){
 		const triggeredImage = findClosestChildrenByTag(triggeredFile, "img");
 		if(triggeredImage != null) copyToClipboard(triggeredImage.src)
 	}
-	hideContextMenu()
+	hideContextMenu(menuId)
 }
 
 function rearrangeRanks(){
@@ -159,14 +157,14 @@ function rearrangeRanks(){
 	})
 }
 
-function transfer(tier){
+function transfer(menuId, tier){
 	const grid = document.getElementById("gridDemo" + tier)
 
 	const parentDiv = triggeredFile.parentElement
 	parentDiv.removeChild(triggeredFile)
 	grid.appendChild(triggeredFile)
 
-	hideContextMenu()
+	hideContextMenu(menuId)
 }
 
 function shift(){
@@ -192,14 +190,38 @@ function shift(){
 	}
 }
 
-function showMenu(menu){
+function showMenu(menuId, jsArgs){
+	const menu = document.getElementById(menuId)
+	if(!menu) return;
+
+	const screenWidth = window.innerWidth;
+	const screenHeight = window.innerHeight;
 	const { clientX: mouseX, clientY: mouseY } = event;
-	menu.style.top = `${mouseY}px`;
-	menu.style.left = `${mouseX}px`;
+
+	const menuWidth = (jsArgs && "menu_width" in jsArgs) ? jsArgs['menu_width'] : 0;
+	const menuHeight = (jsArgs && "menu_height" in jsArgs) ? jsArgs['menu_height'] : 0;
+
+	const finalTop = (mouseY + menuHeight) > screenHeight ? screenHeight - menuHeight : mouseY
+	const finalLeft = (mouseX + menuWidth) > screenWidth ? screenWidth - menuWidth : mouseX
+
+	console.log(mouseX, menuWidth, screenWidth, finalLeft)
+	console.log(mouseY, menuHeight, screenHeight, finalTop)
+
+	menu.style.top = `${finalTop}px`;
+	menu.style.left = `${finalLeft}px`;
 
 	menu.classList.remove("visible");
 	setTimeout(() => {
 		menu.classList.add("visible");
+
+		setTimeout(() => {
+			const menuRealSize = menu.getBoundingClientRect();
+			if(menuRealSize.width > 0 && menuRealSize.height > 0) {
+				if (jsArgs && "menu_width" in jsArgs) jsArgs['menu_width'] = menuRealSize.width;
+				if (jsArgs && "menu_height" in jsArgs) jsArgs['menu_height'] = menuRealSize.height;
+				console.log("RealSize", jsArgs['menu_width'], jsArgs['menu_height'])
+			}
+		}, 220)
 	});
 }
 

@@ -5,6 +5,7 @@ abstract class SBLister extends SetModifier implements PageRenderer {
     public ?ListerRenderer $listerRenderer = null;
     public array $initItemsMap = [];
     public bool $placeDefaultTriggers = true;
+    public string $menuId = "";
 
     public function __construct(string $key, array $items){
         parent::__construct($key);
@@ -191,60 +192,84 @@ abstract class SBLister extends SetModifier implements PageRenderer {
 
     function initJsArgs(){
         echo '<script>';
-        echo 'const jsArgs = {"lists_count": ' . count($this->getCategories()) . '}';
+        echo 'const jsArgs = {' .
+            '"lists_count": ' . count($this->getCategories()) . ', ' .
+            '"menu_width": ' . 0 . ', ' .
+            '"menu_height": ' . 0 . ', ' .
+            '}';
         echo '</script>';
     }
 
     function placeMenu() {
+        $this->menuId = $this->setKey . "_main_menu";
         $directCategories = $this->getDirectMenuCategories();
-
-        $fullWidth = 230;
         $halfWidth = 115;
-        echo '<div id="context-menu" class="context-menu-nice" ';
+        $fullWidth = $halfWidth * 2;
+        $itemHeight = 20;
+        $rowCount = 0;
         if (count($directCategories) > 16) {
-            $rowCount = (int)(count($directCategories) / 10);
+            $rowCount = round(count($directCategories) / 10);
             if ($rowCount > 3) $rowCount = 3;
-            $menuWidth = $rowCount * $halfWidth;
-            $fullWidth = $menuWidth;
-            echo 'style="width: ' . $menuWidth . '"';
+            $fullWidth = $rowCount * $halfWidth;
         }
-        echo ' >';
+        $colsCount = 0;
+
+        echo '<div ';
+        HTMLInterface::addAttribute("id", $this->menuId);
+        Styler::classStartAttribute();
+        Styler::addClass("context-menu-nice");
+        Styler::closeAttribute();
+        Styler::startAttribute();
+        Styler::addStyle("width", $fullWidth . "px");
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
 
         echo '<div class="context-menu-row">';
         if ($this->isOpenImageEnabled()) {
-            echo '<div class="item" style="width:' . $halfWidth . 'px" onclick="action(5, jsArgs)">';
+            echo '<div class="item" style="width:' . $halfWidth . 'px; height: ' . $itemHeight
+                . 'px;" onclick="action(\'' . $this->menuId . '\', 5, jsArgs)">';
             echo $this->getOpenImageWord();
             echo '</div>';
 
-            echo '<div class="item" style="width:' . $halfWidth . 'px" onclick="action(6, jsArgs)">';
+            echo '<div class="item" style="width:' . $halfWidth . 'px; height: ' . $itemHeight
+                . 'px;" onclick="action(\'' . $this->menuId . '\', 6, jsArgs)">';
             echo $this->getCopyImageWord();
             echo '</div>';
+            $colsCount++;
         }
 
         if ($this->isRelegateAndPromoteEnabled()) {
-            echo '<div class="item" style="width:' . $halfWidth . 'px" onclick="action(2, jsArgs)">';
+            echo '<div class="item" style="width:' . $halfWidth . 'px; height: ' . $itemHeight
+                . 'px;" onclick="action(\'' . $this->menuId . '\', 2, jsArgs)">';
             echo $this->getPromoteWord();
             echo '</div>';
 
-            echo '<div class="item" style="width:' . $halfWidth . 'px" onclick="action(3, jsArgs)">';
+            echo '<div class="item" style="width:' . $halfWidth . 'px; height: ' . $itemHeight
+                . 'px;" onclick="action(\'' . $this->menuId . '\', 3, jsArgs)">';
             echo $this->getRelegateWord();
             echo '</div>';
+            $colsCount++;
         }
 
         if ($this->isFirstAndLastEnabled()) {
-            echo '<div class="item" style="width:' . $halfWidth . 'px" onclick="action(0, jsArgs)">';
+            echo '<div class="item" style="width:' . $halfWidth . 'px; height: ' . $itemHeight
+                . 'px;" onclick="action(\'' . $this->menuId . '\', 0, jsArgs)">';
             echo $this->getFirstWord();
             echo '</div>';
 
-            echo '<div class="item" style="width:' . $halfWidth . 'px" onclick="action(1, jsArgs)">';
+            echo '<div class="item" style="width:' . $halfWidth . 'px; height: ' . $itemHeight
+                . 'px;" onclick="action(\'' . $this->menuId . '\', 1, jsArgs)">';
             echo $this->getLastWord();
             echo '</div>';
+            $colsCount++;
         }
 
         if ($this->isFastTransferEnabled()) {
-            echo '<div class="item" style="width:' . $fullWidth . 'px" onclick="action(4, jsArgs)">';
+            echo '<div class="item" style="width:' . $fullWidth . 'px; height: ' . $itemHeight
+                . 'px;" onclick="action(\'' . $this->menuId . '\', 4, jsArgs)">';
             echo $this->getFastTransferWord();
             echo '</div>';
+            $colsCount++;
         }
 
         echo '</div>';
@@ -254,12 +279,14 @@ abstract class SBLister extends SetModifier implements PageRenderer {
             echo '</div>';
         }
 
+        $colsCount += ceil(count($directCategories) / $rowCount);
         echo '<div class="context-menu-row" id="menu_directs">';
         for($i = 0; count($directCategories)>$i; $i++){
             $isLast = count($directCategories) <= ($i + 1);
             $isOddItem = ($i % 2) == 0;
             $w = $isLast && $isOddItem ? ($fullWidth . "px") : ($halfWidth . "px");
-            echo '<div class="item" style="width: ' . $w . '" onclick="transfer(' .
+            echo '<div class="item" style="width: ' . $w . '; height: ' . $itemHeight
+                . 'px;" onclick="transfer(\'' . $this->menuId . '\', ' .
                 $directCategories[$i]->index . ')">';
             echo  $directCategories[$i]->title;
             echo '</div>';
@@ -267,11 +294,19 @@ abstract class SBLister extends SetModifier implements PageRenderer {
 
         echo '</div>';
         echo '</div>';
+
+        ?>
+        <script>
+            jsArgs['menu_width'] = <?php echo $fullWidth; ?>;
+            jsArgs['menu_height'] = <?php echo $colsCount * $itemHeight; ?>;
+        </script>
+        <?php
     }
 
     function initMenu(){
+        $params = "'{$this->menuId}', jsArgs";
         echo '<script>';
-        echo 'initMenu();';
+        echo 'initMenu(' . $params . ');';
         echo '</script>';
     }
 
