@@ -19,7 +19,14 @@ class SingleSelector implements Placeable {
         echo '<div ';
         Styler::classStartAttribute();
         Styler::addClass("visual-select-box");
+        HTMLInterface::appendClasses($webModifier);
         Styler::closeAttribute();
+
+        Styler::startAttribute();
+        HTMLInterface::appendStyles($webModifier);
+        Styler::closeAttribute();
+
+        HTMLInterface::applyModifiers($webModifier);
         HTMLInterface::closeTag();
 
         echo '<div ';

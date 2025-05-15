@@ -1,7 +1,7 @@
 <?php
 
 class VisualSelectField extends SBEditableField {
-    public int $selectorWidth = 0;
+    public int $maxSelectorWidth = 0;
     public bool $disableAutoSubmit = true;
 
     public function __construct(string $title, string $key, public JSDatalist $datalist) {
@@ -15,16 +15,16 @@ class VisualSelectField extends SBEditableField {
         $selector = new SingleSelector($this->title,
             $this->getEditableFieldIdentifier($item), $value, $this->datalist);
         $selectorModifier = WebModifier::createInstance();
-        if($this->selectorWidth > 0){
-            $selectorModifier->styler->pushStyle("width", $this->selectorWidth . "px");
+        if($this->maxSelectorWidth > 0){
+            $selectorModifier->styler->pushStyle("max-width", $this->maxSelectorWidth . "px");
         }
         $selector->disableAutoSubmit = $this->disableAutoSubmit;
         $selector->place($selectorModifier);
         HTMLInterface::closeDiv();
     }
 
-    public function setSelectorWidth(int $width) : VisualSelectField {
-        $this->selectorWidth = $width;
+    public function setMaxSelectorWidth(int $width) : VisualSelectField {
+        $this->maxSelectorWidth = $width;
         return $this;
     }
 
