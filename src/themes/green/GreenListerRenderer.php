@@ -155,7 +155,11 @@ class GreenListerRenderer extends ListerRenderer {
                 $imageHeight = (int)($this->cardImageHeightMultiplier * $finalImageWidth);
                 Styler::addStyle(CSS::height, $imageHeight . "px");
             }
-            else Styler::addStyle(CSS::height, $this->cardImageWidth . "px");
+            else if($this->galleryMode || $this->focusMode){
+                $imageHeight = (int)(1 * $finalImageWidth);
+                Styler::addStyle(CSS::height, $imageHeight . "px");
+            }
+            else Styler::addStyle(CSS::height, "auto");
         }
     }
 }

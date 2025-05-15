@@ -49,6 +49,7 @@ class GalleryRepo {
             $this->originalRecordsConfMap = $configs['items'];
         }
 
+        $this->subRepos = [];
         $this->virtualFolders = [];
         $this->allRecords = [];
 
@@ -168,10 +169,10 @@ class GalleryRepo {
                     }
                 }
             }
-
-            $this->storeConfigs($this->originalVirtualGalsMap, $this->originalRecordsConfMap);
-            $this->loadRecords();
         }
+
+        $this->storeConfigs($this->originalVirtualGalsMap, $this->originalRecordsConfMap);
+        $this->loadRecords();
     }
 
     public function temporaryRename($fullFn, $pureFn, $starter, $extension, &$recs, &$indexMap) : bool {

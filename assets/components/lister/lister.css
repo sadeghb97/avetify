@@ -153,6 +153,7 @@ code {
 	display: block;
 	margin: auto;
 	object-fit: cover;
+	object-position: center top;
 
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
