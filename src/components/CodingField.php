@@ -6,6 +6,7 @@ class CodingField extends CodingBlocks implements Placeable {
         parent::__construct($initValue);
         if(count($this->blocks) == 0){
             $newBlock = new CodingContentBlock([]);
+            $newBlock->wrapper = $this->defWrapper;
             $this->blocks[] = $newBlock;
         }
 
@@ -62,8 +63,7 @@ class CodingField extends CodingBlocks implements Placeable {
     public function addBlock(CodingContentBlock $block){
         $newEditorId = $block->id;
         $wrapperId = $newEditorId . "_wrapper";
-        $initWrapperValue = $this->defWrapper;
-        if($block->wrapper) $initWrapperValue = $block->wrapper;
+        $initWrapperValue = $block->wrapper;
 
         echo '<div id="' . $wrapperId . '" class="editor-wrapper avt-wrapper" style="position: relative;">';
         echo '<div ';
