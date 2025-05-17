@@ -5,7 +5,11 @@ class ReposManager {
         return Routing::getPHPDocumentRoot() . Routing::getAvetifyRoot() . $path;
     }
 
+    public static function getFile(string $avtRelativePath) : string {
+        return self::serverPathFromAvetify("$avtRelativePath");
+    }
+
     public static function getRepo(string $avtRelativePath) : string {
-        return self::serverPathFromAvetify("data/$avtRelativePath");
+        return self::getFile("data/$avtRelativePath");
     }
 }

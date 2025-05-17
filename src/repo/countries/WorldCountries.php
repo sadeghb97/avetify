@@ -45,7 +45,7 @@ class WorldCountries {
             $browserFlag =
                 AssetsManager::getImage("flags/cdc/") . $country['alpha2'] . ".png";
             $physicalFlag =
-                AssetsManager::getImage("flags/cdc/") . $country['alpha2'] . ".png";
+                ReposManager::getFile("assets/img/flags/cdc/") . $country['alpha2'] . ".png";
             return [$browserFlag, $physicalFlag];
         }
 
@@ -53,7 +53,7 @@ class WorldCountries {
             $browserFlag =
                 AssetsManager::getImage("flags/more/") . $country['alpha2'] . ".png";
             $physicalFlag =
-                AssetsManager::getImage("flags/more/") . $country['alpha2'] . ".png";
+                ReposManager::getRepo("assets/img/flags/more/") . $country['alpha2'] . ".png";
             return [$browserFlag, $physicalFlag];
         }
 
