@@ -18,6 +18,12 @@ abstract class SBEntity extends SetModifier {
         return $this->getRecords();
     }
 
+    public function getItemId($record): string {
+        $superKey = $this->getSuperKey();
+        if($superKey) return EntityUtils::getSimpleValue($record, $superKey);
+        return parent::getItemId($record);
+    }
+
     /** @return SBEntityItem[] */
     public function getRecordObjects(int $offset, int $limit) : array {
         $recs = $this->getRecords($offset, $limit);
@@ -109,7 +115,7 @@ abstract class SBEntity extends SetModifier {
         if(count($fields) <= 0 && !$pk) return "";
 
         $exp = "";
-        foreach ($this->entityWhereFields() as $key => $value) {
+        foreach ($fields as $key => $value) {
             if($exp) $exp .= " AND ";
             else $exp .= " ";
 
