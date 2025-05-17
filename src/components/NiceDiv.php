@@ -18,7 +18,7 @@ class NiceDiv implements AVTContainer {
 
     public array $htmlModifiers = [];
 
-    public function __construct(public string $sepSize){}
+    public function __construct(public string $sepSize = "0px"){}
 
     public function addStyle($key, $value){
         $this->styles[$key] = $value;

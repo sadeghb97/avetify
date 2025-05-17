@@ -33,6 +33,11 @@
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    opacity: 0.9;
+}
+
+.navbar-link:hover {
+    opacity: 1;
 }
 
 .navbar-link:hover:not(.active) {

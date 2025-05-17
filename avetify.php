@@ -66,6 +66,8 @@ require_once "src/entities/fields/flag_fields.php";
 require_once "src/entities/fields/EntityAvatarField.php";
 require_once "src/entities/fields/EntitySelectField.php";
 require_once "src/entities/fields/EntityCodingField.php";
+require_once "src/entities/fields/EntityHiddenField.php";
+require_once "src/entities/fields/EntityDisabledField.php";
 
 require_once "src/fields/JSDataElement.php";
 require_once "src/fields/JSDatalist.php";

@@ -249,11 +249,12 @@ abstract class SBEntity extends SetModifier {
         return $this->conn->query($this->deleteRecordQuery($pk));
     }
 
-    public function printEntityLinkedName($entity){
-        echo '<a href="' . $this->entityPage() . '?pk=' . $entity[$this->getSuperKey()] . '" target="_blank"';
+    public function printEntityLinkedName($record){
+        echo '<a href="' . $this->entityPage() . '?' .
+            $this->urlParamEntityKey . '=' . $this->getItemId($record) . '" target="_blank"';
         echo ' style="text-decoration: none; font-weight: bold;" >';
         echo '<span style="color: Black;">';
-        echo $entity[$this->getTitleKey()];
+        echo $this->getItemTitle($record);
         echo '</sapn>';
         echo '</a>';
     }
@@ -263,7 +264,8 @@ abstract class SBEntity extends SetModifier {
     public function printForm($options = null){
         $pk = $this->getCurrentRecordPrimaryKey();
         $record = $this->getCurrentRecord();
-        if($pk && !$record) return;
+        if(!$record && (!$this->isPatchRecordEnabled() || $pk)) return;
+
         $curRecordObject = $this->getRecordObject($record);
 
         HTMLInterface::placeVerticalDivider(12);
@@ -274,13 +276,15 @@ abstract class SBEntity extends SetModifier {
             $dataSet->place();
         }
 
-        echo '<form ';
-        HTMLInterface::addAttribute("method", "post");
-        HTMLInterface::addAttribute("name", $this->getFormId());
-        HTMLInterface::addAttribute("id", $this->getFormId());
-        HTMLInterface::addAttribute("enctype", "multipart/form-data");
-        HTMLInterface::addAttribute("onsubmit", $this->jsValidateForm());
-        HTMLInterface::closeTag();
+        if($this->isPatchRecordEnabled()) {
+            echo '<form ';
+            HTMLInterface::addAttribute("method", "post");
+            HTMLInterface::addAttribute("name", $this->getFormId());
+            HTMLInterface::addAttribute("id", $this->getFormId());
+            HTMLInterface::addAttribute("enctype", "multipart/form-data");
+            HTMLInterface::addAttribute("onsubmit", $this->jsValidateForm());
+            HTMLInterface::closeTag();
+        }
 
         echo '<fieldset><legend>Insert & Update</legend>';
 
@@ -379,13 +383,11 @@ abstract class SBEntity extends SetModifier {
                     echo $value;
                     echo '</textarea>';
                 }
-                else if($field->hidden){
-                    echo '<input ';
-                    HTMLInterface::addAttribute("type","hidden");
-                    HTMLInterface::addAttribute("name", $key);
-                    HTMLInterface::addAttribute("id", $key);
-                    HTMLInterface::addAttribute("value", $value ? $value : "");
-                    HTMLInterface::closeSingleTag();
+                else if($field instanceof EntityHiddenField && $fieldType == "hidden"){
+                    $field->place($curRecordObject);
+                }
+                else if($field instanceof EntityDisabledField){
+                    $field->place($curRecordObject);
                 }
                 else if($field instanceof EntityFlagField && $fieldType == "country"){
                     $catFactory = $field->countriesACFactory;
@@ -477,9 +479,11 @@ abstract class SBEntity extends SetModifier {
         Styler::closeAttribute();
         HTMLInterface::closeTag();
 
-        $submitModifier = WebModifier::createInstance();
-        $submitModifier->htmlModifier->pushModifier("name", "entity_form");
-        FormUtils::placeSubmitButton("Submit", "", 8, $submitModifier);
+        if($this->isPatchRecordEnabled()) {
+            $submitModifier = WebModifier::createInstance();
+            $submitModifier->htmlModifier->pushModifier("name", "entity_form");
+            FormUtils::placeSubmitButton("Submit", "", 8, $submitModifier);
+        }
 
         if($record && $this->deletable){
             $deleteButton = new AbsoluteFormButton($this->getFormId(),
@@ -492,7 +496,8 @@ abstract class SBEntity extends SetModifier {
         }
 
         HTMLInterface::closeDiv();
-        echo '</form>';
+
+        if($this->isPatchRecordEnabled()) echo '</form>';
     }
 
     public function handleForm($options = null){
@@ -649,6 +654,10 @@ abstract class SBEntity extends SetModifier {
         $record = $this->getCurrentRecord();
         if(!$record) return null;
         return $this->getRecordObject($record);
+    }
+
+    public function isPatchRecordEnabled() : bool {
+        return true;
     }
 
     //extension inside main legend
