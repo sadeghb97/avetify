@@ -1,4 +1,4 @@
-function defaultInitEditor(editorId, contents){
+function defaultInitEditor(editorId, contents, dir){
     const editor = document.getElementById(editorId);
     const quill = new Quill(editor, {
         theme: 'snow',
@@ -8,7 +8,7 @@ function defaultInitEditor(editorId, contents){
                 [{ 'color': [] }, { 'background': [] }],
                 ['bold', 'italic', 'underline'],
                 [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                [{ 'align': [] }],
+                [{ 'align': [] }, { 'direction': 'rtl' }],
                 ['link'],
                 ['clean']
             ]
@@ -22,6 +22,14 @@ function defaultInitEditor(editorId, contents){
     });
 
     quill.root.innerHTML = contents;
+
+    const length = quill.getLength();
+    const align = dir !== "ltr" ? "right" : "left";
+    quill.formatLine(0, length, {
+        direction: dir,
+        align: align
+    });
+
     return quill;
 }
 
@@ -48,8 +56,9 @@ function addChildAfter(wholeMainKey, childId, blocksData) {
         container.appendChild(cloneWrapper);
     }
 
-    const newQuill = defaultInitEditor(newChildId)
-    newQuill.root.innerHTML = ''
+    const direction = blocksData[childIndex].quill.getFormat().direction || 'ltr';
+    const defContents = direction === "rtl" ? "*" : ""
+    const newQuill = defaultInitEditor(newChildId, defContents, direction)
     blocksData.splice(childIndex + 1, 0, {
         id: newChildId,
         quill: newQuill
@@ -149,12 +158,14 @@ function refreshCodingFieldDataElement(wholeMainKey, blocksData){
         const wrapperField = document.getElementById(blockData.id + "_type")
         if(!isQuillContentEmpty(quill)){
             const contents = quill.root.innerHTML
+            const direction = quill.getFormat().direction || 'ltr';
             const wrapperValue = wrapperField.value
             console.log(wrapperField, blockData.id + "_type")
 
             resultFields.push({
                 "contents": contents,
-                "wrapper": wrapperValue
+                "wrapper": wrapperValue,
+                "dir": direction
             })
         }
     })

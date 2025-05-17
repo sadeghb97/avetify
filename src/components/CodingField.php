@@ -45,11 +45,12 @@ class CodingField extends CodingBlocks implements Placeable {
             <?php foreach ($this->blocks as $block) {
                 $blockId = $block->id;
                 $blockContents = $block->contents;
+                $blockDir = $block->dir;
                 $safeContents = trim(json_encode($blockContents), '"');
             ?>
             <?php echo $this->getJSDataVarName(); ?>.push({
                 id: '<?php echo $blockId; ?>',
-                quill: defaultInitEditor('<?php echo $blockId; ?>', '<?php echo $safeContents; ?>')
+                quill: defaultInitEditor('<?php echo $blockId; ?>', '<?php echo $safeContents; ?>', '<?php echo $blockDir; ?>')
             })
             <?php } ?>
 
