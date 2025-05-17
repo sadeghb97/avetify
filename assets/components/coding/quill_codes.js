@@ -57,7 +57,7 @@ function addChildAfter(wholeMainKey, childId, blocksData) {
     }
 
     const direction = blocksData[childIndex].quill.getFormat().direction || 'ltr';
-    const defContents = direction === "rtl" ? "*" : ""
+    const defContents = ""
     const newQuill = defaultInitEditor(newChildId, defContents, direction)
     blocksData.splice(childIndex + 1, 0, {
         id: newChildId,
