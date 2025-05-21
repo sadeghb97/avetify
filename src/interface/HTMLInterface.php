@@ -42,14 +42,27 @@
          echo '<a ';
          self::addAttribute("href", $href);
          self::applyModifiers($modifier);
-         if($modifier && $modifier->styler != null) $modifier->styler->applyStyles();
+
+         Styler::startAttribute();
+         self::appendStyles($modifier);
+         Styler::closeAttribute();
+
+         Styler::classStartAttribute();
+         self::appendClasses($modifier);
+         Styler::closeAttribute();
+
          echo ' >';
      }
 
      public static function placeLink(string $href, string $title, WebModifier | null $modifier = null){
-         self::openLink($href, $modifier);
-         echo $title;
-         echo '</a>';
+         if(!isCli()) {
+             self::openLink($href, $modifier);
+             echo $title;
+             echo '</a>';
+         }
+         else {
+             echo "\033]8;;$href\033\\$title\033]8;;\033\\";
+         }
      }
 
      public static function placeText(string $content, WebModifier | null $modifier = null){
