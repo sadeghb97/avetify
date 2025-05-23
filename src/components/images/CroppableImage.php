@@ -93,4 +93,8 @@ class CroppableImage {
     public function getJSRatioVarName() : string {
         return $this->id . "__ration";
     }
+
+    public function setAutoSubmitFormId(string $formId){
+        $this->cropParams["auto_submit_form_id"] = $formId;
+    }
 }

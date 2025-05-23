@@ -5,6 +5,7 @@ class EntityAvatarField extends EntityField {
     public bool $manualCrop = false;
     public int $width = 0;
     public int $height = 0;
+    public bool $autoSubmit = false;
 
     public function __construct(string $path, public string $uniqueKey,
                                 int $imageType = IMAGETYPE_JPEG){
@@ -42,6 +43,11 @@ class EntityAvatarField extends EntityField {
         return $this;
     }
 
+    public function setAutoSubmit() : EntityAvatarField {
+        $this->autoSubmit = true;
+        return $this;
+    }
+
     public function getCroppingImage(SBEntity $entity, $record) : ?CroppingImage {
         $cid = $entity->setKey . "_" . $this->key;
         if($record instanceof SBEntityItem){
@@ -62,6 +68,9 @@ class EntityAvatarField extends EntityField {
         $niceDiv->open();
 
         $croppingImage = $this->getCroppingImage($entity, $record);
+        if($this->autoSubmit){
+            $croppingImage->setAutoSubmitFormId($entity->getFormId());
+        }
 
         if($this->width > 0) $croppingImage->presentFromWidth($this->width);
         else if($this->height > 0) $croppingImage->presentFromHeight($this->height);

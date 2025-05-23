@@ -126,6 +126,8 @@ require_once "src/table/fields/FlagFields.php";
 require_once "src/table/fields/SelectField.php";
 require_once "src/table/fields/SetSelectField.php";
 require_once "src/table/fields/VisualSelectField.php";
+require_once "src/table/fields/ApiFields.php";
+require_once "src/table/fields/DerivedFields.php";
 
 require_once "src/crawling/Scrapper.php";
 require_once "src/crawling/RawDocumentLoader.php";

@@ -62,6 +62,14 @@ class ModernixRenderer extends SetRenderer {
 
         if($link) HTMLInterface::closeLink();
 
+        if($this->setModifier instanceof SBTable){
+            foreach ($this->setModifier->fields as $field){
+                NiceDiv::justOpen();
+                $field->presentValue($item);
+                HTMLInterface::closeDiv();
+            }
+        }
+
         echo '</div>';
     }
 

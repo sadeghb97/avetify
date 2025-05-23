@@ -25,7 +25,7 @@ class SBTable extends SetModifier {
     public function setFields(array $fields){
         $this->fields = $fields;
 
-        foreach ($this->fields as $field){
+        foreach ($this->getAllFields() as $field){
             if($field->isEditable()){
                 if($field instanceof SBEditableField) $field->namespace = $this->setKey;
                 $field->idGetter = $this;
@@ -38,10 +38,24 @@ class SBTable extends SetModifier {
         }
     }
 
+    /** @return SBTableField[] */
+    public function getAllFields() : array {
+        $pureFields = [];
+        foreach ($this->fields as $field){
+            if($field instanceof FieldsContainer){
+                foreach ($field->childs as $pField){
+                    $pureFields[] = $pField;
+                }
+            }
+            else $pureFields[] = $field;
+        }
+        return $pureFields;
+    }
+
     /** @return SortFactor[] An array of MyClass instances */
     public function getDefaultSortFactors() : array {
         $out = [];
-        foreach ($this->fields as $field){
+        foreach ($this->getAllFields() as $field){
             if($field->isSortable){
                 $out[] = new SBTableSortField($field);
             }
@@ -87,7 +101,7 @@ class SBTable extends SetModifier {
         else if (isset($_POST[$tableRenderer->getFormFieldsName()])) {
             if($this->enableCreatingRow) {
                 $creatingFields = [];
-                foreach ($this->fields as $field) {
+                foreach ($this->getAllFields() as $field) {
                     if ($field->onCreateField != null) {
                         $crFieldKey = $field->onCreateField->getEditableFieldIdentifier(null);
                         $crKey = $field->onCreateField->key;
@@ -125,7 +139,7 @@ class SBTable extends SetModifier {
 
     public function getFieldsMap() : array {
         $fieldsMap = [];
-        foreach ($this->fields as $field){
+        foreach ($this->getAllFields() as $field){
             $fieldsMap[$field->key] = $field;
         }
         return $fieldsMap;
