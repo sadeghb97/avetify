@@ -148,6 +148,8 @@ require_once "src/themes/modern/ModernSetRenderer.php";
 require_once "src/themes/modern/ModernGallery.php";
 require_once "src/themes/modern/ModernRatioGallery.php";
 require_once "src/themes/modern/cards.php";
+require_once "src/themes/modernix/ModernixTheme.php";
+require_once "src/themes/modernix/ModernixRenderer.php";
 
 require_once "src/galrepo/GalleryRepo.php";
 require_once "src/galrepo/GreenGalleryRenderer.php";
