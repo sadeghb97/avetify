@@ -2,13 +2,21 @@
   "name": "sadeghb97/avetify",
   "description": "A lightweight and easy to use framework on PHP.",
   "type": "library",
+  "license": "MIT",
   "autoload": {
     "psr-4": {
       "Avetify\\": "src/"
     }
   },
-  "require": {},
-  "license": "MIT",
-  "minimum-stability": "stable",
-  "prefer-stable": true
+  "require": {
+    "php": ">=8.0"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "keywords": ["framework", "php", "microframework", "avetify"],
+  "homepage": "https://github.com/sadeghb97/avetify",
+  "support": {
+    "issues": "https://github.com/sadeghb97/avetify/issues",
+    "source": "https://github.com/sadeghb97/avetify"
+  }
 }
