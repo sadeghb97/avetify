@@ -1,4 +1,5 @@
 <?php
+namespace Avetify;
 
 class AvetifyManager {
     private static string $basePath;
@@ -7,6 +8,9 @@ class AvetifyManager {
     private static string $assetBaseUrl;
     private static string $assetBasePath;
     private static string $dataBasePath;
+
+    public const AVETIFY_VERSION = "0.12";
+    public const AVETIFY_BUILD_NUMBER = 3;
 
     public static function init(string $basePath, string $publicPath, string $publicUrl, string $assetUrl): void {
         self::$basePath   = rtrim($basePath, DIRECTORY_SEPARATOR);
