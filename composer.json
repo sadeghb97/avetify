@@ -11,7 +11,6 @@
   "require": {
     "php": ">=8.0"
   },
-  "minimum-stability": "dev",
   "prefer-stable": true,
   "keywords": ["framework", "php", "microframework", "avetify"],
   "homepage": "https://github.com/sadeghb97/avetify",
