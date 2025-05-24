@@ -1,7 +1,6 @@
 <?php
+require_once "src/AvetifyManager.php";
 require_once "src/routing/Routing.php";
-require_once "src/routing/AssetsManager.php";
-require_once "src/routing/ReposManager.php";
 
 require_once "src/interface/Interface.php";
 require_once "src/interface/Placeable.php";
@@ -178,5 +177,3 @@ require_once "src/calc/IRDateStatsCalculator.php";
 require_once "src/repo/countries/WorldCountries.php";
 require_once "src/repo/countries/World.php";
 require_once "src/repo/countries/CountriesTable.php";
-
-require_once "src/avetify.php";

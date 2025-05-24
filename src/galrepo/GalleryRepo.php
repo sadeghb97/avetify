@@ -85,7 +85,7 @@ class GalleryRepo {
 
         $this->bigIndex = count($files) + 1000;
         foreach ($files as $file){
-            $adjustedFilename = Routing::prunePath($file, $this->path);
+            $adjustedFilename = Routing::cutPath($file, $this->path);
 
             $fileGalId = "";
             $imageIndex = $this->bigIndex;

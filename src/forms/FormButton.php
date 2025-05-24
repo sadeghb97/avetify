@@ -95,7 +95,7 @@ class PrimaryFormButton extends AbsoluteFormButton {
                                 string $formTriggerElementId = "") {
         parent::__construct($formIdentifier, $triggerIdentifier,
             ["bottom" => "20px", "inset-inline-end" => "20px"],
-            AssetsManager::getImage("sync.svg"), $formTriggerElementId);
+            AvetifyManager::imageUrl("sync.svg"), $formTriggerElementId);
     }
 }
 
@@ -105,6 +105,6 @@ class DeleteFormButton extends AbsoluteFormButton {
                                 string $formTriggerElementId = "") {
         parent::__construct($formIdentifier, $triggerIdentifier,
             ["bottom" => "20px", "inset-inline-start" => "20px"],
-            AssetsManager::getImage("remove.svg"), $formTriggerElementId);
+            AvetifyManager::imageUrl("remove.svg"), $formTriggerElementId);
     }
 }

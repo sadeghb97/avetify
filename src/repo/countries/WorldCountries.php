@@ -4,7 +4,7 @@ class WorldCountries {
     private array $map = [];
 
     public function __construct(){
-        $countriesRaw = file_get_contents(ReposManager::getRepo("countries/countries.json"));
+        $countriesRaw = file_get_contents(AvetifyManager::dataPath("countries/countries.json"));
         $countries = json_decode($countriesRaw, true);
 
         foreach ($countries as $country){
@@ -43,17 +43,17 @@ class WorldCountries {
 
         if(!isset($country['dep']) || !$country['dep']) {
             $browserFlag =
-                AssetsManager::getImage("flags/cdc/") . $country['alpha2'] . ".png";
+                AvetifyManager::imageUrl("flags/cdc/") . $country['alpha2'] . ".png";
             $physicalFlag =
-                ReposManager::getFile("assets/img/flags/cdc/") . $country['alpha2'] . ".png";
+                AvetifyManager::assetPath("img/flags/cdc/") . $country['alpha2'] . ".png";
             return [$browserFlag, $physicalFlag];
         }
 
         if($country['dep'] === True){
             $browserFlag =
-                AssetsManager::getImage("flags/more/") . $country['alpha2'] . ".png";
+                AvetifyManager::imageUrl("flags/more/") . $country['alpha2'] . ".png";
             $physicalFlag =
-                ReposManager::getRepo("assets/img/flags/more/") . $country['alpha2'] . ".png";
+                AvetifyManager::assetPath("img/flags/more/") . $country['alpha2'] . ".png";
             return [$browserFlag, $physicalFlag];
         }
 

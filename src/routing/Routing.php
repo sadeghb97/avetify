@@ -1,20 +1,20 @@
 <?php
 
 class Routing {
-    public static function getAvetifyRoot() : string {
-        global $AVETIFY_ROOT_PATH;
-        return $AVETIFY_ROOT_PATH;
-    }
-
-    public static function getPHPDocumentRoot() : string {
-        global $PHP_DOCUMENT_ROOT;
-        if(isCli()) return $PHP_DOCUMENT_ROOT;
-        return $_SERVER['DOCUMENT_ROOT'];
-    }
-
     public static function serverRootPath($path) : string {
-        return self::removeRedundantPath(self::getPHPDocumentRoot() . self::getAvetifyRoot() . '../') .
-            $path;
+        return self::prunePath(AvetifyManager::publicPath($path));
+    }
+
+    public static function browserRootPath($path) : string {
+        return self::prunePath(AvetifyManager::publicUrl($path));
+    }
+
+    public static function srpToBrp($serverPath) : string {
+        return self::prunePath(AvetifyManager::convertPathToUrl($serverPath));
+    }
+
+    public static function brpToSrp($browserRootPath){
+        return self::prunePath(AvetifyManager::convertUrlToPath($browserRootPath));
     }
 
     public static function getBackupFilesDir() : string {
@@ -23,27 +23,7 @@ class Routing {
         return $dir;
     }
 
-    public static function browserRootPath($path) : string {
-        return self::removeRedundantPath(self::getAvetifyRoot() . '../') . $path;
-    }
-
-    public static function srpToBrp($serverPath) : string {
-        $adjustedPath = self::removeRedundantPath($serverPath);
-
-        $documentRoot = self::getPHPDocumentRoot();
-        if(str_starts_with($adjustedPath, $documentRoot)){
-            //a root address starts with /
-            $adjustedPath = substr($adjustedPath, strlen($documentRoot));
-        }
-
-        return $adjustedPath;
-    }
-
-    public static function brpToSrp($browserRootPath){
-        return self::getPHPDocumentRoot() . $browserRootPath;
-    }
-
-    public static function removeRedundantPath($path) : string {
+    public static function prunePath($path) : string {
         $startsWithSlash = str_starts_with($path, "/");
         $endsWithSlash = str_ends_with($path, "/");
         $parts = explode('/', $path);
@@ -68,7 +48,7 @@ class Routing {
             ($startsWithSlash ? "/" : "") . implode('/', $stack) . ($endsWithSlash ? "/" : "");
     }
 
-    public static function prunePath($longPath, $needle) : string {
+    public static function cutPath($longPath, $needle) : string {
         if(str_contains($longPath, $needle)){
             $pos = strpos($longPath, $needle);
             return substr($longPath, $pos + strlen($needle));

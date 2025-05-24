@@ -48,39 +48,39 @@ class GreenGalleryRenderer extends GreenListerRenderer {
             $prevRepo = $this->galRepo->parentRelativePath;
             $prevLink = Routing::addParamToCurrentLink("gp", $prevRepo);
 
-            $prevButton = new AbsoluteButton(AssetsManager::getImage("arrow_left.svg"),
+            $prevButton = new AbsoluteButton(AvetifyManager::imageUrl("arrow_left.svg"),
                 ["top" => "20px", "left" => "20px"],
                 "redir('" . $prevLink . "');");
             $prevButton->place();
 
-            $prevCloneButton = new AbsoluteButton(AssetsManager::getImage("tab_duplicate.svg"),
+            $prevCloneButton = new AbsoluteButton(AvetifyManager::imageUrl("tab_duplicate.svg"),
                 ["top" => "70px", "left" => "20px"],
                 "openTab('" . $prevLink . "');");
             $prevCloneButton->place();
         }
 
-        $toggleButton = new AbsoluteButton(AssetsManager::getImage("view_alt.svg"),
+        $toggleButton = new AbsoluteButton(AvetifyManager::imageUrl("view_alt.svg"),
             ["top" => "20px", "right" => "20px"], $this->jsToggleGalleryMode());
         $toggleButton->place();
 
         if(!$this->galRepo->readOnly) {
-            $addButton = new AbsoluteButton(AssetsManager::getImage("add_box.svg"),
+            $addButton = new AbsoluteButton(AvetifyManager::imageUrl("add_box.svg"),
                 ["bottom" => "20px", "left" => "20px"], "addVirtualGallery()");
             $addButton->place();
 
-            $updateButton = new AbsoluteButton(AssetsManager::getImage("commit.svg"),
+            $updateButton = new AbsoluteButton(AvetifyManager::imageUrl("commit.svg"),
                 ["bottom" => "20px", "left" => "90px"], "updateGalleryConfigs(jsArgs)");
             $updateButton->place();
 
-            $submitButton = new AbsoluteButton(AssetsManager::getImage("send.svg"),
+            $submitButton = new AbsoluteButton(AvetifyManager::imageUrl("send.svg"),
                 ["bottom" => "20px", "right" => "20px"], "submitGalleries(jsArgs)");
             $submitButton->place();
 
-            $submitButton = new AbsoluteButton(AssetsManager::getImage("pen.svg"),
+            $submitButton = new AbsoluteButton(AvetifyManager::imageUrl("pen.svg"),
                 ["bottom" => "20px", "right" => "90px"], "renameGalleries(jsArgs)");
             $submitButton->place();
 
-            $resetButton = new AbsoluteButton(AssetsManager::getImage("layers_clear.svg"),
+            $resetButton = new AbsoluteButton(AvetifyManager::imageUrl("layers_clear.svg"),
                 ["bottom" => "20px", "right" => "160px"], "resetGalleryConfigs()");
             $resetButton->place();
         }

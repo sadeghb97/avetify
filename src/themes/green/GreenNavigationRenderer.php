@@ -11,8 +11,8 @@ class GreenNavigationRenderer extends NavigationRenderer {
     }
 
     public function headImports(){
-        ThemesManager::importStyle(AssetsManager::getAsset("themes/green/navbar/styles.css"));
-        ThemesManager::importJS(AssetsManager::getAsset("themes/green/navbar/init.js"));
+        ThemesManager::importStyle(AvetifyManager::assetUrl("themes/green/navbar/styles.css"));
+        ThemesManager::importJS(AvetifyManager::assetUrl("themes/green/navbar/init.js"));
     }
 
     public function openNavbar(){

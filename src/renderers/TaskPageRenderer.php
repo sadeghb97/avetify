@@ -26,7 +26,7 @@ abstract class TaskPageRenderer implements PageRenderer {
     }
 
     public function getTriggerImage(): string {
-        return AssetsManager::getImage("send.svg");
+        return AvetifyManager::imageUrl("send.svg");
     }
 
     abstract public function getTheme() : ThemesManager;

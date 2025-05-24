@@ -22,7 +22,7 @@ class CountriesTable extends SBTable {
     }
 
     public function fetchCountries(){
-        $jsFilename = ReposManager::getRepo("countries/countries.json");
+        $jsFilename = AvetifyManager::dataPath("countries/countries.json");
         return json_decode(file_get_contents($jsFilename), true);
     }
 

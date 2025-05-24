@@ -36,7 +36,7 @@ abstract class ListerRenderer extends BaseSetRenderer {
 
         if($this->lister->placeDefaultTriggers) {
             if ($this->lister->isPrintRankEnabled() && $this->lister->isRearrangeRanksEnabled()) {
-                HTMLInterface::addAbsoluteIconButton(AssetsManager::getImage('arrange.png'),
+                HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('arrange.png'),
                     [
                         "inset-inline-start" => "20px",
                         "bottom" => "20px"
@@ -48,7 +48,7 @@ abstract class ListerRenderer extends BaseSetRenderer {
             $primaryButton->place();
         }
 
-        ThemesManager::importJS(AssetsManager::getAsset('components/lister/init_lister.js'));
+        ThemesManager::importJS(AvetifyManager::assetUrl('components/lister/init_lister.js'));
         $this->lister->initMenu();
         $this->lister->readyForm();
         $this->moreBodyContents();
