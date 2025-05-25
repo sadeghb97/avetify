@@ -1,6 +1,7 @@
 <?php
 namespace Avetify\Fields;
 
+use Avetify\Fields\JSTextFields\JSInputField;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;

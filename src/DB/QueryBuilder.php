@@ -84,8 +84,3 @@ class QueryBuilder {
         return $sql;
     }
 }
-
-class QueryField {
-    public function __construct(public $value, public bool $isNumeric, public string $key = ""){
-    }
-}

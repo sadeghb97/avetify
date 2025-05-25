@@ -1,6 +1,11 @@
 <?php
 namespace Avetify\Entities;
 
+use Avetify\Entities\BasicProperties\EntityManager;
+use Avetify\Entities\BasicProperties\Traits\EntityManagerTrait;
+use Avetify\Entities\FilterFactors\FilterFactor;
+use Avetify\Entities\Sorters\Sorter;
+use Avetify\Entities\Sorters\SortFactor;
 use Avetify\Themes\Main\SetRenderer;
 use function Avetify\Utils\minimize;
 

@@ -1,10 +1,10 @@
 <?php
 namespace Avetify\Themes\Modern;
 
-use Avetify\Entities\RecordContextMenu;
+use Avetify\Entities\ContextMenus\RecordContextMenu;
 use Avetify\Fields\APIMedalField;
 use Avetify\Fields\APISpanField;
-use Avetify\Fields\APITextField;
+use Avetify\Fields\JSTextFields\APITextField;
 
 class ModernGallery extends ModernSetRenderer {
     public RecordContextMenu | null $contextMenu = null;
@@ -12,7 +12,7 @@ class ModernGallery extends ModernSetRenderer {
 
     public function renderRecordMain($item, $index) {
         $name = ($index + 1) . ": " . $this->setModifier->getItemTitle($item);
-        printCard($this->setModifier->getItemImage($item), $name, "",
+        ModernThemeBadCards::printCard($this->setModifier->getItemImage($item), $name, "",
             $this->setModifier->getItemLink($item),
             $this->getCardOptions($item));
     }
@@ -103,11 +103,5 @@ class ModernGallery extends ModernSetRenderer {
 
     public function smallerTitle() : bool {
         return false;
-    }
-}
-
-class ModernGalleryMedal {
-    public function __construct(public string $icon, public string $title,
-                                public int $count, public string $link = ""){
     }
 }

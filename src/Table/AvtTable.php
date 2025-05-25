@@ -2,11 +2,11 @@
 namespace Avetify\Table;
 
 use Avetify\Entities\SetModifier;
-use Avetify\Entities\SortFactor;
+use Avetify\Entities\Sorters\SortFactor;
 use Avetify\Fields\JSDataElement;
-use Avetify\Table\Fields\CheckboxField;
-use Avetify\Table\Fields\EditableField;
-use Avetify\Table\Fields\FieldsContainer;
+use Avetify\Table\Fields\EditableFields\CheckboxField;
+use Avetify\Table\Fields\EditableFields\EditableField;
+use Avetify\Table\Fields\FieldsContainers\FieldsContainer;
 use Avetify\Table\Fields\TableField;
 use Avetify\Table\Fields\TableSortField;
 use Avetify\Themes\Green\GreenTableRenderer;

@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Entities\Fields;
 
-use Avetify\Components\CodingField;
+use Avetify\Components\Coding\CodingField;
 use Avetify\Entities\EntityField;
 use Avetify\Entities\EntityUtils;
 use Avetify\Interface\EntityView;

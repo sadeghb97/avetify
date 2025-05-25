@@ -13,25 +13,3 @@ class NavigationBar extends Detailed {
         $this->sections[] = $section;
     }
 }
-
-class NavigationSection extends Detailed {
-    public ?WebModifier $modifier = null;
-    /** @var NavigationLink[] */
-    public array $menuLinks = [];
-
-    public function pushLink(NavigationLink $link){
-        $this->menuLinks[] = $link;
-    }
-}
-
-class NavigationLink extends Detailed {
-    public ?WebModifier $modifier = null;
-    public array $params = [];
-
-    public function __construct(public string $title, public string $link, public bool $isActive = false) {}
-
-    public function addParam(string $key, string $value) : NavigationLink {
-        $this->params[$key] = $value;
-        return $this;
-    }
-}

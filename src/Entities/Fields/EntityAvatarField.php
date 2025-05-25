@@ -1,8 +1,8 @@
 <?php
 namespace Avetify\Entities\Fields;
 
-use Avetify\Components\Images\CroppingImage;
-use Avetify\Components\NiceDiv;
+use Avetify\Components\Containers\NiceDiv;
+use Avetify\Components\Images\Croppables\CroppingImage;
 use Avetify\Entities\AvtEntity;
 use Avetify\Entities\AvtEntityItem;
 use Avetify\Entities\EntityField;

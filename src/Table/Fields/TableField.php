@@ -4,6 +4,7 @@ namespace Avetify\Table\Fields;
 use Avetify\Entities\EntityUtils;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Styler;
+use Avetify\Table\Fields\EditableFields\EditableField;
 
 class TableField {
     public bool $isNumeric = false;

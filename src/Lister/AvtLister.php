@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Lister;
 
-use Avetify\Entities\EntityManagerTrait;
+use Avetify\Entities\BasicProperties\Traits\EntityManagerTrait;
 use Avetify\Entities\SetModifier;
 use Avetify\Forms\FormUtils;
 use Avetify\Interface\HTMLInterface;

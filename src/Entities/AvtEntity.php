@@ -2,15 +2,15 @@
 namespace Avetify\Entities;
 
 use Avetify\AvetifyManager;
-use Avetify\Components\CountrySelector;
-use Avetify\Components\NiceDiv;
+use Avetify\Components\Containers\NiceDiv;
+use Avetify\Components\Countries\CountrySelector;
 use Avetify\DB\DBConnection;
 use Avetify\Entities\Fields\EntityAvatarField;
 use Avetify\Entities\Fields\EntityCodingField;
 use Avetify\Entities\Fields\EntityDisabledField;
-use Avetify\Entities\Fields\EntityFlagField;
 use Avetify\Entities\Fields\EntityHiddenField;
 use Avetify\Entities\Fields\EntitySelectField;
+use Avetify\Entities\Fields\FlagFields\EntityFlagField;
 use Avetify\Fields\JSDataElement;
 use Avetify\Fields\JSDatalist;
 use Avetify\Fields\JSDynamicSelect;

@@ -1,7 +1,6 @@
 <?php
 namespace Avetify\Themes\Green;
 
-use Avetify\Components\NiceDiv;
 use Avetify\Interface\Attrs;
 use Avetify\Interface\CSS;
 use Avetify\Interface\HTMLInterface;

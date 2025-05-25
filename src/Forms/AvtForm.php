@@ -1,7 +1,8 @@
 <?php
 namespace Avetify\Forms;
 
-use Avetify\Components\NiceDiv;
+use Avetify\Components\Containers\NiceDiv;
+use Avetify\Forms\Buttons\FormButton;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\Styler;
@@ -73,14 +74,5 @@ class AvtForm {
 
     public function getCurrentTrigger() : string {
         return !empty($_POST[$this->getTriggerHiddenId()]) ? $_POST[$this->getTriggerHiddenId()] : "";
-    }
-}
-
-class FormHiddenProperty {
-    public function __construct(public string $hiddenPropertyId,
-                                public string $value,
-                                public bool $useId = true,
-                                public $useName = true
-    ){
     }
 }

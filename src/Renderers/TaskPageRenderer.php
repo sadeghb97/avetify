@@ -2,7 +2,7 @@
 namespace Avetify\Renderers;
 
 use Avetify\AvetifyManager;
-use Avetify\Forms\AbsoluteFormButton;
+use Avetify\Forms\Buttons\AbsoluteFormButton;
 use Avetify\Forms\FormUtils;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\PageRenderer;

@@ -1,5 +1,5 @@
 <?php
-namespace Avetify\Components;
+namespace Avetify\Interface;
 
 interface Submittable {
     public function onSubmit() : void;

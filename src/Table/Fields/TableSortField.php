@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Table\Fields;
 
-use Avetify\Entities\SortFactor;
+use Avetify\Entities\Sorters\SortFactor;
 
 class TableSortField extends SortFactor {
     public function __construct(public TableField $field){

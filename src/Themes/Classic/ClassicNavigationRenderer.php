@@ -1,8 +1,8 @@
 <?php
 namespace Avetify\Themes\Classic;
 
-use Avetify\Components\NiceDiv;
-use Avetify\Components\VertDiv;
+use Avetify\Components\Containers\NiceDiv;
+use Avetify\Components\Containers\VertDiv;
 use Avetify\Interface\CSS;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\WebModifier;

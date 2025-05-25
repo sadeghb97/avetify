@@ -2,9 +2,9 @@
 namespace Avetify\Fields;
 
 use Avetify\Entities\AvtEntityItem;
-use Avetify\Entities\EntityID;
-use Avetify\Entities\EntityImage;
-use Avetify\Entities\EntityTitle;
+use Avetify\Entities\BasicProperties\EntityID;
+use Avetify\Entities\BasicProperties\EntityImage;
+use Avetify\Entities\BasicProperties\EntityTitle;
 use Avetify\Entities\EntityUtils;
 use Avetify\Interface\Placeable;
 

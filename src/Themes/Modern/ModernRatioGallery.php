@@ -1,10 +1,10 @@
 <?php
 namespace Avetify\Themes\Modern;
 
-use Avetify\Components\NiceDiv;
-use Avetify\Components\VertDiv;
-use Avetify\Entities\EntityImageRatio;
-use Avetify\Entities\RecordContextMenu;
+use Avetify\Components\Containers\NiceDiv;
+use Avetify\Components\Containers\VertDiv;
+use Avetify\Entities\BasicProperties\EntityImageRatio;
+use Avetify\Entities\ContextMenus\RecordContextMenu;
 use Avetify\Entities\SetModifier;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Styler;

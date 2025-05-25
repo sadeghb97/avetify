@@ -232,7 +232,3 @@ class GalleryRepo {
         return $galleryPath . '.galconfigs.json';
     }
 }
-
-class GalleryRecord {
-    public function __construct(public int $galleryIndex, public string $path, public int $imageIndex){}
-}

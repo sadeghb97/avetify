@@ -1,6 +1,8 @@
 <?php
 namespace Avetify\Entities;
 
+use Avetify\Entities\BasicProperties\EntityProfile;
+use Avetify\Entities\BasicProperties\Traits\EntityProfileTrait;
 use Avetify\Models\DataModel;
 use Avetify\Models\Traits\Tagged;
 use InvalidArgumentException;

@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Table;
 
-use Avetify\Components\NiceDiv;
+use Avetify\Components\Containers\NiceDiv;
 use Avetify\DB\DBConnection;
 use Avetify\DB\QueryBuilder;
 use Avetify\DB\QueryField;

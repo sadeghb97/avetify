@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Themes\Modern;
 
-use Avetify\Components\VertDiv;
+use Avetify\Components\Containers\VertDiv;
 use Avetify\Entities\SetModifier;
 use Avetify\Interface\CSS;
 use Avetify\Interface\HTMLInterface;

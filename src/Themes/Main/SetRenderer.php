@@ -3,18 +3,18 @@ namespace Avetify\Themes\Main;
 
 use Avetify\Entities\SetModifier;
 use Avetify\Forms\AvtForm;
-use Avetify\Forms\DeleteFormButton;
-use Avetify\Forms\FormButton;
+use Avetify\Forms\Buttons\DeleteFormButton;
+use Avetify\Forms\Buttons\FormButton;
+use Avetify\Forms\Buttons\PrimaryFormButton;
 use Avetify\Forms\FormHiddenProperty;
 use Avetify\Forms\FormUtils;
-use Avetify\Forms\PrimaryFormButton;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\JSInterface;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 use Avetify\Table\AvtTable;
-use Avetify\Table\Fields\EditableField;
-use Avetify\Table\Fields\RecordSelectorField;
+use Avetify\Table\Fields\EditableFields\EditableField;
+use Avetify\Table\Fields\EditableFields\RecordSelectorField;
 use Avetify\Themes\Green\GreenTheme;
 
 abstract class SetRenderer extends BaseSetRenderer {

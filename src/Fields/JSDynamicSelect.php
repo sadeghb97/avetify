@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Fields;
 
-use Avetify\Components\NiceDiv;
+use Avetify\Components\Containers\NiceDiv;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\WebModifier;

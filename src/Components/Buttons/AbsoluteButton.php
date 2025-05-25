@@ -1,7 +1,6 @@
 <?php
 namespace Avetify\Components\Buttons;
 
-use Avetify\AvetifyManager;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\Styler;
@@ -32,29 +31,5 @@ class AbsoluteButton implements Placeable {
         HTMLInterface::closeTag();
         echo '<img src="' . $this->imageSrc . '" alt="Icon" style="width: 50px; height: 50px; border-radius: 50%;">';
         echo '</div>';
-    }
-}
-
-class PrimaryButton extends AbsoluteButton {
-    public function __construct(string $rawOnclick = "") {
-        parent::__construct(AvetifyManager::imageUrl("sync.svg"),
-            ["bottom" => "20px", "inset-inline-end" => "20px"], $rawOnclick);
-    }
-}
-
-class LinkAbsoluteButton extends AbsoluteButton {
-    public bool $isBlank = true;
-
-    public function __construct(string $imageSrc, array $positionStyles, public string $link) {
-        parent::__construct($imageSrc, $positionStyles, "");
-    }
-
-    public function place(WebModifier $webModifier = null) {
-        echo '<a ';
-        HTMLInterface::addAttribute("href", $this->link);
-        if($this->isBlank) HTMLInterface::addAttribute("target", "_blank");
-        HTMLInterface::closeTag();
-        parent::place($webModifier);
-        echo '</a>';
     }
 }

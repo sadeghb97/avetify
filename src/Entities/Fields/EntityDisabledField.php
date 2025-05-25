@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Entities\Fields;
 
-use Avetify\Components\NiceDiv;
+use Avetify\Components\Containers\NiceDiv;
 use Avetify\Entities\EntityField;
 use Avetify\Entities\EntityUtils;
 use Avetify\Forms\FormUtils;

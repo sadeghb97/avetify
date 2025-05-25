@@ -1,8 +1,8 @@
 <?php
 namespace Avetify\Themes\Modernix;
 
-use Avetify\Components\NiceDiv;
-use Avetify\Components\VertDiv;
+use Avetify\Components\Containers\NiceDiv;
+use Avetify\Components\Containers\VertDiv;
 use Avetify\Entities\SetModifier;
 use Avetify\Interface\CSS;
 use Avetify\Interface\HTMLInterface;

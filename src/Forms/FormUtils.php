@@ -1,8 +1,9 @@
 <?php
 namespace Avetify\Forms;
 
+use Avetify\Components\Buttons\JoshButton;
 use Avetify\Components\Images\IconButton;
-use Avetify\Components\JoshButton;
+use Avetify\Forms\Buttons\AbsoluteFormButton;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;

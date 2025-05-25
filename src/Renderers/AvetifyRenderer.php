@@ -2,17 +2,18 @@
 namespace Avetify\Renderers;
 
 use Avetify\AvetifyManager;
-use Avetify\Components\NiceDiv;
-use Avetify\Components\VertDiv;
+use Avetify\Components\Containers\NiceDiv;
+use Avetify\Components\Containers\VertDiv;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\PageRenderer;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 use Avetify\Themes\Green\GreenTheme;
+use Avetify\Themes\Main\ThemesManager;
 
 class AvetifyRenderer implements PageRenderer {
     public function renderPage($title = "Avetify") {
-        $theme = new AvetifyTheme();
+        $theme = $this->getTheme();
         $theme->placeHeader($title);
         $avtImage = AvetifyManager::imageUrl("avetify.webp");
 
@@ -48,13 +49,15 @@ class AvetifyRenderer implements PageRenderer {
         HTMLInterface::closeDiv();
         $theme->closeBody();
     }
-}
 
-class AvetifyTheme extends GreenTheme {
-    public function appendBodyStyles() {
-        Styler::addStyle("display", "flex");
-        Styler::addStyle("justify-content", "center");
-        Styler::addStyle("align-items", "center");
-        Styler::addStyle("height", "100%");
+    public static function getTheme() : ThemesManager {
+        return new class extends GreenTheme {
+            public function appendBodyStyles() {
+                Styler::addStyle("display", "flex");
+                Styler::addStyle("justify-content", "center");
+                Styler::addStyle("align-items", "center");
+                Styler::addStyle("height", "100%");
+            }
+        };
     }
 }

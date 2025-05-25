@@ -7,7 +7,7 @@ use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 use Avetify\Table\AvtTable;
-use Avetify\Table\Fields\RecordSelectorField;
+use Avetify\Table\Fields\EditableFields\RecordSelectorField;
 use Avetify\Table\Fields\TableField;
 use Avetify\Themes\Main\SetRenderer;
 use Avetify\Themes\Main\ThemesManager;

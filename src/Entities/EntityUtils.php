@@ -2,6 +2,7 @@
 namespace Avetify\Entities;
 
 use Avetify\DB\DBConnection;
+use Avetify\Entities\Sorters\SortDetails;
 
 class EntityUtils {
 
@@ -106,10 +107,5 @@ class EntityUtils {
             if($aVal < $bVal) return $multiplier * -1;
             else return $multiplier * 1;
         });
-    }
-}
-
-class SortDetails {
-    public function __construct(public string $sortKey, public bool $isAsc){
     }
 }

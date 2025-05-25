@@ -1,6 +1,5 @@
 <?php
 namespace Avetify\Externals\GumletImage;
-namespace Gumlet;
 
 use Exception;
 
