@@ -2,8 +2,7 @@
 namespace Avetify\Table\Fields\DateFields;
 
 use Avetify\Table\Fields\TableSimpleField;
-use function Avetify\Utils\getFormattedRecentTime;
-use function Avetify\Utils\getIRFormattedRecentTime;
+use Avetify\Utils\TimeUtils\TimeUtils;
 
 class RecentField extends TableSimpleField {
     public function __construct(string $title, string $key, public bool $isGlobal = true){
@@ -12,8 +11,8 @@ class RecentField extends TableSimpleField {
 
     public function presentValue($item) {
         $val = $this->getValue($item);
-        $timeStr = $this->isGlobal ?
-            getFormattedRecentTime(time(), (int) $val) : getIRFormattedRecentTime(time(), (int) $val);
+        $timeStr = $this->isGlobal ? TimeUtils::getFormattedRecentTime(time(), (int) $val)
+            : TimeUtils::getIRFormattedRecentTime(time(), (int) $val);
         echo $timeStr;
     }
 }

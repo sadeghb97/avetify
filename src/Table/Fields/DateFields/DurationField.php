@@ -2,8 +2,7 @@
 namespace Avetify\Table\Fields\DateFields;
 
 use Avetify\Table\Fields\TableSimpleField;
-use function Avetify\Utils\getFormattedDurationTime;
-use function Avetify\Utils\getIRFormattedDurationTime;
+use Avetify\Utils\TimeUtils\TimeUtils;
 
 class DurationField extends TableSimpleField {
     public function __construct(string $title, string $key, public bool $isGlobal = true){
@@ -13,7 +12,7 @@ class DurationField extends TableSimpleField {
     public function presentValue($item) {
         $val = $this->getValue($item);
         $timeStr = $this->isGlobal ?
-            getFormattedDurationTime((int) $val) : getIRFormattedDurationTime((int) $val);
+            TimeUtils::getFormattedDurationTime((int) $val) : TimeUtils::getIRFormattedDurationTime((int) $val);
         echo $timeStr;
     }
 }
