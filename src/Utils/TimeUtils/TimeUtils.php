@@ -1,5 +1,5 @@
 <?php
-namespace Avetify\Utils;
+namespace Avetify\Utils\TimeUtils;
 
 use Avetify\Externals\JDF;
 use Avetify\Utils\TimeUtils\RecentTime;
