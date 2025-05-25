@@ -2,9 +2,9 @@
 namespace Avetify\GalRepo;
 
 use Avetify\Files\Filer;
+use Avetify\Interface\Pout;
 use Avetify\Modules\Printer;
 use Avetify\Routing\Routing;
-use function Avetify\Utils\br;
 
 class GalleryRepo {
     private static array $extensions = ["jpg", "jpeg", "png", "webp", "gif"];
@@ -124,7 +124,7 @@ class GalleryRepo {
                 $simplifiedFilename = self::getSimplifiedFilename($currentServerFilename);
                 $targetFilename = $targetDir . $simplifiedFilename;
                 if(rename($currentServerFilename, $targetFilename)){
-                    echo $currentServerFilename . ' -> ' . $targetFilename . '<br>';
+                    echo $currentServerFilename . ' -> ' . $targetFilename . Pout::br();
                 }
             }
         }
@@ -167,7 +167,7 @@ class GalleryRepo {
                 }
 
                 if (rename($currentServerFilename, $targetFilename)) {
-                    echo $currentServerFilename . ' -> ' . $targetFilename . '<br>';
+                    echo $currentServerFilename . ' -> ' . $targetFilename . Pout::br();
                     if (isset($this->originalRecordsConfMap[$pureFilename])) {
                         $imageDetails = $this->originalRecordsConfMap[$pureFilename];
                         unset($this->originalRecordsConfMap[$pureFilename]);
@@ -186,7 +186,7 @@ class GalleryRepo {
         $newPureFn = $newStarter . $extension;
         $newFullFn = $this->path . $newPureFn;
 
-        echo "Temp Renaming $fullFn ---> $newFullFn" . br();
+        echo "Temp Renaming $fullFn ---> $newFullFn" . Pout::br();
 
         if(rename($fullFn, $newFullFn)){
             $recIndex = $indexMap[$pureFn];

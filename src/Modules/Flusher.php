@@ -1,8 +1,8 @@
 <?php
 namespace Avetify\Modules;
 
-use function Avetify\Utils\endline;
-use function Avetify\Utils\isCli;
+use Avetify\Interface\Pout;
+use Avetify\Utils\CliUtils;
 
 class Flusher {
     public string $key = "";
@@ -24,8 +24,8 @@ class Flusher {
 
     private function _bufferOut(){
         echo $this->key . " Flusher: " . $this->counter;
-        endline();
-        if(!isCli()) ob_flush();
+        Pout::endline();
+        if(!CliUtils::isCli()) ob_flush();
         flush();
         usleep($this->delayMs * 1000);
     }

@@ -1,6 +1,7 @@
 <?php
 namespace Avetify\Modules;
 
+use Avetify\Interface\Pout;
 use function Avetify\Utils\br;
 
 class SecureNetwork {
@@ -19,12 +20,12 @@ class SecureNetwork {
 
         if(!$this->reachMaxConsFails()) {
             echo $this->consFails . '/' . $this->maxConsFails . " -> "
-                . 'Sleep: ' . $this->delay . 's' . br();
+                . 'Sleep: ' . $this->delay . 's' . Pout::br();
             sleep($this->delay);
             return false;
         }
         else {
-            echo "Max consecutive fails reached" . br();
+            echo "Max consecutive fails reached" . Pout::br();
             return true;
         }
     }

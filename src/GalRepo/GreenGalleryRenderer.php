@@ -170,7 +170,7 @@ class GreenGalleryRenderer extends GreenListerRenderer {
         echo '</div>';
     }
 
-    function jsToggleGalleryMode(){
+    function jsToggleGalleryMode() : string {
         $out = "const container = document.getElementById('" . $this->containerId . "');";
         $out .= ("if (container.classList.contains('focus')) {");
         $out .= ("container.classList.remove('focus');");

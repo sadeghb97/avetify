@@ -5,8 +5,8 @@ use Avetify\Components\Containers\NiceDiv;
 use Avetify\Components\Containers\VertDiv;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Styler;
-use function Avetify\Utils\formatMegaNumber;
-use function Avetify\Utils\slugify;
+use Avetify\Utils\NumberUtils;
+use Avetify\Utils\StringUtils;
 
 class ModernThemeBadCards {
     public static function printCard($img, $name, $description, $link, $options){
@@ -126,12 +126,12 @@ class ModernThemeBadCards {
         if(isset($options['score'])){
             echo '<div>';
             echo '<div style="margin: auto; font-size: 32px; font-weight: bold; color: #674188;">'
-                . formatMegaNumber($options['score']['main']) . '</div>';
+                . NumberUtils::formatMegaNumber($options['score']['main']) . '</div>';
 
             foreach ($options['score'] as $scKey => $scValue){
                 if($scKey == 'main' || $scValue <= 0) continue;
                 echo '<span style="margin-left: 4px; margin-right: 4px;">' .
-                    $scKey . ': ' . formatMegaNumber($scValue) . '</span>';
+                    $scKey . ': ' . NumberUtils::formatMegaNumber($scValue) . '</span>';
             }
             echo '</div>';
         }
@@ -229,7 +229,7 @@ class ModernThemeBadCards {
         if(isset($options['span_texts'])){
             $tagsDiv = new NiceDiv(4);
             $tagsDiv->addModifier("id",
-                (isset($options['stpk']) ? $options['stpk'] : slugify($name)) . "_" . "spans");
+                (isset($options['stpk']) ? $options['stpk'] : StringUtils::slugify($name)) . "_" . "spans");
             $tagsDiv->open();
 
             foreach ($options['span_texts'] as $sptIndex => $spanText){

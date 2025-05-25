@@ -16,10 +16,11 @@ use Avetify\Fields\JSDatalist;
 use Avetify\Fields\JSDynamicSelect;
 use Avetify\Files\Filer;
 use Avetify\Files\ImageUtils;
-use Avetify\Forms\AbsoluteFormButton;
+use Avetify\Forms\Buttons\AbsoluteFormButton;
 use Avetify\Forms\FormUtils;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\JSInterface;
+use Avetify\Interface\Pout;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 use Avetify\Modules\Printer;
@@ -27,8 +28,6 @@ use Avetify\Network\NetworkFetcher;
 use Avetify\Routing\Routing;
 use Avetify\Themes\Green\GreenTheme;
 use Avetify\Themes\Main\ThemesManager;
-use function Avetify\Utils\br;
-use function Avetify\Utils\endline;
 
 abstract class AvtEntity extends SetModifier {
     public ?DBConnection $conn = null;
@@ -575,7 +574,7 @@ abstract class AvtEntity extends SetModifier {
                     $entityPk = $currentRecord[$this->getSuperKey()];
                     echo "Registered Successfully (";
                     $this->printEntityLinkedName($currentRecord);
-                    echo ')' . br();
+                    echo ')' . Pout::br();
 
                     if($this->redirectOnInsert) {
                         $newRecordUrl = Routing::addParamToCurrentLink($this->urlParamEntityKey, $entityPk);
@@ -659,7 +658,7 @@ abstract class AvtEntity extends SetModifier {
                         $this->deleteRecordResources($currentRecord);
                         $recordName = $this->getItemTitle($currentRecord);
                         Printer::warningPrint($recordName . ": Deleted");
-                        endline();
+                        Pout::endline();
                         JSInterface::redirect(Routing::currentPureLink(), 1000);
                         die;
                     }

@@ -7,7 +7,7 @@ use Avetify\Entities\FilterFactors\FilterFactor;
 use Avetify\Entities\Sorters\Sorter;
 use Avetify\Entities\Sorters\SortFactor;
 use Avetify\Themes\Main\SetRenderer;
-use function Avetify\Utils\minimize;
+use Avetify\Utils\StringUtils;
 
 abstract class SetModifier implements EntityManager {
     use EntityManagerTrait;
@@ -108,7 +108,7 @@ abstract class SetModifier implements EntityManager {
     }
 
     public function getAdjustedTitle($item) : string {
-        return minimize($this->getItemTitle($item), $this->maxTitleLength);
+        return StringUtils::minimize($this->getItemTitle($item), $this->maxTitleLength);
     }
 
     public function getAllAvailableItemsCount() : int {

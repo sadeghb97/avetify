@@ -1,8 +1,9 @@
 <?php
-namespace Avetify\Table\Fields\EditableFields;
+namespace Avetify\Table\Fields\EditableFields\SelectFields;
 
 use Avetify\Fields\JSDataSet;
 use Avetify\Fields\JSDynamicSelect;
+use Avetify\Table\Fields\EditableFields\EditableField;
 
 abstract class SelectField extends EditableField {
     public function presentValue($item) {

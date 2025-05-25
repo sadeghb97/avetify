@@ -4,7 +4,7 @@ namespace Avetify\Repo\Countries;
 use Avetify\AvetifyManager;
 use Avetify\Entities\EntityUtils;
 use Avetify\Table\AvtTable;
-use Avetify\Table\Fields\FlagField;
+use Avetify\Table\Fields\FlagFields\FlagField;
 use Avetify\Table\Fields\TableSimpleField;
 
 class CountriesTable extends AvtTable {

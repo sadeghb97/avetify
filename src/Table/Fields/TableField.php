@@ -232,5 +232,3 @@ class TableField {
         echo '</td>';
     }
 }
-
-class TableSimpleField extends TableField {}

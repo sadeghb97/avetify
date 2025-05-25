@@ -7,9 +7,9 @@ use Avetify\DB\QueryBuilder;
 use Avetify\DB\QueryField;
 use Avetify\Entities\AvtEntityItem;
 use Avetify\Entities\EntityUtils;
+use Avetify\Interface\Pout;
 use Avetify\Modules\Printer;
 use Avetify\Table\Fields\TableField;
-use function Avetify\Utils\endline;
 
 abstract class DBTable extends AvtTable {
     public bool $pkIsNumeric = true;
@@ -95,7 +95,7 @@ abstract class DBTable extends AvtTable {
             }
 
             $this->updateRecords();
-            endline();
+            Pout::endline();
         }
     }
 
@@ -126,7 +126,7 @@ abstract class DBTable extends AvtTable {
             if($this->conn->query($sql)) {
                 $this->printDBUpdateStatus($titlePrinter, $creatingFields, $messagePrinter, "Inserted");
                 $this->updateRecords();
-                endline();
+                Pout::endline();
             }
         }
     }

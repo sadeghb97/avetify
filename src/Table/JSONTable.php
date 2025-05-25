@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Table;
 
-use function Avetify\Utils\printPreArray;
+use Avetify\Interface\Pout;
 
 class JSONTable extends AvtTable {
     public function __construct(array $fields, public string $filename, string $key,
@@ -21,14 +21,14 @@ class JSONTable extends AvtTable {
     }
 
     public function handleCreatingFields($creatingFields) {
-        printPreArray($creatingFields, "CRF");
+        Pout::printPreArray($creatingFields, "CRF");
     }
 
     public function handleSubmittedFields($itemsFields) {
-        printPreArray($itemsFields, "IF");
+        Pout::printPreArray($itemsFields, "IF");
     }
 
     public function handleDeletingFields($deletingFields) {
-        printPreArray($deletingFields, "DF");
+        Pout::printPreArray($deletingFields, "DF");
     }
 }

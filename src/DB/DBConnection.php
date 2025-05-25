@@ -2,6 +2,7 @@
 namespace Avetify\DB;
 
 use Avetify\Entities\AvtEntityItem;
+use Avetify\Interface\Pout;
 use Exception;
 use mysqli;
 use mysqli_result;
@@ -65,7 +66,7 @@ abstract class DBConnection extends mysqli {
     public function query($sql, $queryName = null) : mysqli_result | bool {
         try { $result = parent::query($sql);}
         catch (Exception $ex){
-            echo $sql . br() . $this->error . br();
+            echo $sql . Pout::br() . $this->error . Pout::br();
         }
         $this->lastQuery = $sql;
         return $result;

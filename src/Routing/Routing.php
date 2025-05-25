@@ -17,7 +17,7 @@ class Routing {
         return self::prunePath(AvetifyManager::convertPathToUrl($serverPath));
     }
 
-    public static function brpToSrp($browserRootPath){
+    public static function brpToSrp($browserRootPath) : string {
         return self::prunePath(AvetifyManager::convertUrlToPath($browserRootPath));
     }
 
@@ -172,7 +172,7 @@ class Routing {
             (isset($parsedUrl['fragment']) ? '#' . $parsedUrl['fragment'] : '');
     }
 
-    public static function addParamToLink($requestUri, $paramKey, $paramValue){
+    public static function addParamToLink($requestUri, $paramKey, $paramValue) : string {
         $haveParam = !(!str_contains($requestUri, '?'));
 
         if(!$haveParam && $paramValue === null) return $requestUri;

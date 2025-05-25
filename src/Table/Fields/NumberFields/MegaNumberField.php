@@ -2,10 +2,10 @@
 namespace Avetify\Table\Fields\NumberFields;
 
 use Avetify\Table\Fields\TableSimpleField;
-use function Avetify\Utils\formatMegaNumber;
+use Avetify\Utils\NumberUtils;
 
 class MegaNumberField extends TableSimpleField {
     public function presentValue($item){
-        echo formatMegaNumber($this->getValue($item));
+        echo NumberUtils::formatMegaNumber($this->getValue($item));
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Components\Coding;
 
-use Avetify\Components\VertDiv;
+use Avetify\Components\Containers\VertDiv;
 use Avetify\Interface\CSS;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Placeable;

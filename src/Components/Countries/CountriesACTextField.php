@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Components\Countries;
 
-use Avetify\Fields\JSACTextField;
+use Avetify\Fields\JSTextFields\JSACTextField;
 use Avetify\Repo\Countries\World;
 
 class CountriesACTextField extends JSACTextField {

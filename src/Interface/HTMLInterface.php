@@ -2,7 +2,7 @@
 namespace Avetify\Interface;
 
  use Avetify\Components\Buttons\AbsoluteButton;
- use function Avetify\Utils\isCli;
+ use Avetify\Utils\CliUtils;
 
  class HTMLInterface {
      public static function addAttribute($attr, $value = null){
@@ -60,7 +60,7 @@ namespace Avetify\Interface;
      }
 
      public static function placeLink(string $href, string $title, WebModifier | null $modifier = null){
-         if(!isCli()) {
+         if(!CliUtils::isCli()) {
              self::openLink($href, $modifier);
              echo $title;
              echo '</a>';

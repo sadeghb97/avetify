@@ -24,7 +24,7 @@ require_once "src/Api/APIHelper.php";
 require_once "src/Api/JSONApiResponder.php";
 
 require_once "src/Externals/ImageManipulator.php";
-require_once "src/Externals/jdf.php";
+require_once "src/Externals/JDF.php";
 require_once "src/Externals/GumletImage/ImageResize.php";
 require_once "src/Externals/GumletImage/ImageResizeException.php";
 
@@ -37,13 +37,13 @@ require_once "src/Files/Filer.php";
 require_once "src/Files/ImageUtils.php";
 require_once "src/Files/RecycleCan.php";
 
-require_once "src/Utils/cli_utils.php";
-require_once "src/Utils/echo_utils.php";
-require_once "src/Utils/time_utils.php";
-require_once "src/Utils/number_utils.php";
-require_once "src/Utils/string_utils.php";
+require_once "src/Utils/TimeUtils/RecentTime.php";
+require_once "src/Utils/TimeUtils/TimeUtils.php";
+require_once "src/Utils/CliUtils.php";
+require_once "src/Utils/NumberUtils.php";
+require_once "src/Utils/StringUtils.php";
 require_once "src/Utils/Arrays.php";
-require_once "src/Utils/fluent.php";
+require_once "src/Utils/Fluent.php";
 
 require_once "src/Network/URLBuilder.php";
 require_once "src/Network/NetworkFetcher.php";
@@ -153,19 +153,45 @@ require_once "src/Table/AvtTable.php";
 require_once "src/Table/DBTable.php";
 require_once "src/Table/JSONTable.php";
 require_once "src/Table/Fields/TableField.php";
+require_once "src/Table/Fields/TableSimpleField.php";
 require_once "src/Table/Fields/TableSortField.php";
-require_once "src/Table/Fields/LinkFields.php";
-require_once "src/Table/Fields/ImageFields.php";
-require_once "src/Table/Fields/EditableFields.php";
-require_once "src/Table/Fields/NumberFields.php";
-require_once "src/Table/Fields/DateFields.php";
-require_once "src/Table/Fields/TextFields.php";
-require_once "src/Table/Fields/FlagFields.php";
-require_once "src/Table/Fields/SelectField.php";
-require_once "src/Table/Fields/SetSelectField.php";
-require_once "src/Table/Fields/VisualSelectField.php";
-require_once "src/Table/Fields/ApiFields.php";
-require_once "src/Table/Fields/DerivedFields.php";
+
+require_once "src/Table/Fields/LinkFields/TableMainLinkField.php";
+require_once "src/Table/Fields/LinkFields/TableLinkField.php";
+require_once "src/Table/Fields/LinkFields/TableAltLinkField.php";
+require_once "src/Table/Fields/LinkFields/TableSimpleLinkField.php";
+
+require_once "src/Table/Fields/ImageFields/TableAvatarField.php";
+require_once "src/Table/Fields/ImageFields/ExtendedAvatarField.php";
+
+require_once "src/Table/Fields/EditableFields/EditableField.php";
+require_once "src/Table/Fields/EditableFields/TextAreaTableField.php";
+require_once "src/Table/Fields/EditableFields/RecordSelectorField.php";
+require_once "src/Table/Fields/EditableFields/CheckboxField.php";
+require_once "src/Table/Fields/EditableFields/SelectFields/SelectField.php";
+require_once "src/Table/Fields/EditableFields/SelectFields/SetSelectField.php";
+require_once "src/Table/Fields/EditableFields/SelectFields/VisualSelectField.php";
+
+require_once "src/Table/Fields/NumberFields/ColoredField.php";
+require_once "src/Table/Fields/NumberFields/ExactColoredField.php";
+require_once "src/Table/Fields/NumberFields/PercentField.php";
+require_once "src/Table/Fields/NumberFields/MegaNumberField.php";
+
+require_once "src/Table/Fields/DateFields/RecentField.php";
+require_once "src/Table/Fields/DateFields/DurationField.php";
+require_once "src/Table/Fields/DateFields/IRDateField.php";
+require_once "src/Table/Fields/DateFields/TimeDurationField.php";
+
+require_once "src/Table/Fields/TextFields/TitleCaseField.php";
+
+require_once "src/Table/Fields/FlagFields/FlagField.php";
+require_once "src/Table/Fields/FlagFields/VisualSelectCountryField.php";
+
+require_once "src/Table/Fields/ApiFields/ApiIconField.php";
+
+require_once "src/Table/Fields/FieldsContainers/FieldsContainer.php";
+require_once "src/Table/Fields/FieldsContainers/RowFields.php";
+require_once "src/Table/Fields/FieldsContainers/ColumnFields.php";
 
 require_once "src/Crawling/Scrapper.php";
 require_once "src/Crawling/RawDocumentLoader.php";
@@ -187,7 +213,7 @@ require_once "src/Themes/Modern/ModernTheme.php";
 require_once "src/Themes/Modern/ModernSetRenderer.php";
 require_once "src/Themes/Modern/ModernGallery.php";
 require_once "src/Themes/Modern/ModernRatioGallery.php";
-require_once "src/Themes/Modern/cards.php";
+require_once "src/Themes/Modern/ModernThemeBadCards.php";
 require_once "src/Themes/Modernix/ModernixTheme.php";
 require_once "src/Themes/Modernix/ModernixRenderer.php";
 

@@ -1,11 +1,12 @@
 <?php
-namespace Avetify\Table\Fields\EditableFields;
+namespace Avetify\Table\Fields\EditableFields\SelectFields;
 
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Components\Selectors\SetSelector;
 use Avetify\Fields\JSDatalist;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\WebModifier;
+use Avetify\Table\Fields\EditableFields\EditableField;
 
 class SetSelectField extends EditableField {
     public int $selectorWidth = 0;

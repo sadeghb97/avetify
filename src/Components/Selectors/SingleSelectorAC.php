@@ -1,8 +1,8 @@
 <?php
 namespace Avetify\Components\Selectors;
 
-use Avetify\Fields\JSACTextField;
 use Avetify\Fields\JSDatalist;
+use Avetify\Fields\JSTextFields\JSACTextField;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;

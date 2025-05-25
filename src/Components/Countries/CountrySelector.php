@@ -1,8 +1,7 @@
 <?php
 namespace Avetify\Components\Countries;
 
-use Avetify\Components\NiceDiv;
-use Avetify\Fields\JSACTextField;
+use Avetify\Components\Containers\NiceDiv;
 use Avetify\Fields\JSDatalist;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\HTMLModifier;
