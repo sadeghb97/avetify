@@ -6,7 +6,6 @@ use Avetify\Interface\Pout;
 use Exception;
 use mysqli;
 use mysqli_result;
-use function Avetify\Utils\br;
 
 abstract class DBConnection extends mysqli {
     private static ?self $instance = null;

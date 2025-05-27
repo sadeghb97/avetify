@@ -9,7 +9,11 @@
     }
   },
   "require": {
-    "php": ">=8.0"
+    "php": ">=8.0",
+    "ext-mysqli": "*",
+    "ext-fileinfo": "*",
+    "ext-gd": "*",
+    "ext-exif": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
