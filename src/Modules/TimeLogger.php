@@ -14,7 +14,13 @@ class TimeLogger {
         $doneTime = (int) (microtime(true) * 1000);
         $duration = $doneTime - $this->lastTime;
         $this->lastTime = $doneTime;
-        echo $message . " ({$duration}ms)" . Pout::br();
+        $formattedDuration = self::getFormattedDuration($duration);
+        echo $message . " ({$formattedDuration})" . Pout::br();
+    }
+
+    private static function getFormattedDuration(int $durationMs) : string {
+        if($durationMs < 1000) return $durationMs . "ms";
+        return ($durationMs / 1000) . "s";
     }
 
     public function resetTime(){
