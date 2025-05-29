@@ -7,7 +7,7 @@ use Avetify\Forms\FormUtils;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\PageRenderer;
 use Avetify\Themes\Main\ThemesManager;
-use Avetify\Utils\CliUtils;
+use Avetify\Interface\Platform;
 use function Avetify\Utils\isCli;
 
 abstract class TaskPageRenderer implements PageRenderer {
@@ -15,7 +15,7 @@ abstract class TaskPageRenderer implements PageRenderer {
     public string $triggerIdentifier = "trigger_task";
 
     public function renderPage(?string $title = "Heavy Task") {
-        if(!CliUtils::isCli()) {
+        if(!Platform::isCli()) {
             $theme = $this->getTheme();
             $theme->placeHeader($title);
             $theme->loadHeaderElements();

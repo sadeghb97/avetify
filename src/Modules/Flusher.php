@@ -2,7 +2,7 @@
 namespace Avetify\Modules;
 
 use Avetify\Interface\Pout;
-use Avetify\Utils\CliUtils;
+use Avetify\Interface\Platform;
 
 class Flusher {
     public string $key = "";
@@ -25,7 +25,7 @@ class Flusher {
     private function _bufferOut(){
         echo $this->key . " Flusher: " . $this->counter;
         Pout::endline();
-        if(!CliUtils::isCli()) ob_flush();
+        if(!Platform::isCli()) ob_flush();
         flush();
         usleep($this->delayMs * 1000);
     }

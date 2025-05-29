@@ -2,6 +2,7 @@
 require_once "src/AvetifyManager.php";
 require_once "src/Routing/Routing.php";
 
+require_once "src/Interface/Platform.php";
 require_once "src/Interface/CSS.php";
 require_once "src/Interface/Attrs.php";
 require_once "src/Interface/HTMLEvents.php";
@@ -229,10 +230,14 @@ require_once "src/GalRepo/ManageGalleryLister.php";
 require_once "src/Standings/LeagueStandings.php";
 require_once "src/Standings/Competitor.php";
 
+require_once "src/Modules/Cli/CliColor.php";
+require_once "src/Modules/Cli/CliPrinter.php";
+require_once "src/Modules/Cli/Terminal.php";
 require_once "src/Modules/Flusher.php";
 require_once "src/Modules/SecureNetwork.php";
 require_once "src/Modules/Printer.php";
 require_once "src/Modules/SetPlexer.php";
+require_once "src/Modules/TimeLogger.php";
 
 require_once "src/Forms/FormUtils.php";
 require_once "src/Forms/FormHiddenProperty.php";

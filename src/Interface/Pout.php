@@ -1,25 +1,25 @@
 <?php
 namespace Avetify\Interface;
 
-use Avetify\Utils\CliUtils;
+use Avetify\Interface\Platform;
 
 class Pout {
     public static function br($count = 1) : string {
         $str = "";
         for($i=0; $count>$i; $i++){
-            $str .= (CliUtils::isCli() ? PHP_EOL : "<br>");
+            $str .= (Platform::isCli() ? PHP_EOL : "<br>");
         }
         return $str;
     }
 
     public static function endline($count = 1){
         for($i=0; $count>$i; $i++){
-            echo (CliUtils::isCli() ? PHP_EOL : "<br>");
+            echo (Platform::isCli() ? PHP_EOL : "<br>");
         }
     }
 
     public static function bufferOut(){
-        if(!CliUtils::isCli()) ob_flush();
+        if(!Platform::isCli()) ob_flush();
         flush();
         usleep(10000);
     }

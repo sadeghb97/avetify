@@ -4,7 +4,7 @@ namespace Avetify\Modules;
 use Avetify\Interface\CSS;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Styler;
-use Avetify\Utils\CliUtils;
+use Avetify\Interface\Platform;
 
 class Printer {
     public function __construct(public string $fontSize = "1rem", public string $fontWeight = "normal",
@@ -13,7 +13,7 @@ class Printer {
     }
 
     public function print($message){
-        if(!CliUtils::isCli()) {
+        if(!Platform::isCli()) {
             echo '<div ';
             Styler::startAttribute();
             Styler::addStyle("display", $this->inline ? "inline" : "block");
@@ -27,7 +27,7 @@ class Printer {
 
         echo $message;
 
-        if(!CliUtils::isCli()) {
+        if(!Platform::isCli()) {
             echo '</div>';
         }
     }
