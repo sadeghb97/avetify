@@ -13,7 +13,9 @@
     "ext-mysqli": "*",
     "ext-fileinfo": "*",
     "ext-gd": "*",
-    "ext-exif": "*"
+    "ext-exif": "*",
+    "ext-posix": "*",
+    "ext-pcntl": "*"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
