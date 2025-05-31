@@ -34,8 +34,11 @@ class GracefulShutdown {
     }
 
     public function handleShutdown() {
-        if (connection_aborted() || error_get_last() || php_sapi_name() === 'cli') {
+        if (connection_aborted() || error_get_last()) {
             $this->runCallback("Shutdown triggered");
+        }
+        else if(php_sapi_name() === 'cli'){
+            $this->runCallback("done");
         }
     }
 
