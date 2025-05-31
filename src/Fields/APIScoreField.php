@@ -7,7 +7,7 @@ use Avetify\Interface\WebModifier;
 
 class APIScoreField extends APIMedalField {
     public function __construct(public string $mainKey, public string $altKey,
-                                public int $initValue, public string $apiEndpoint
+                                public float $initValue, public string $apiEndpoint
     ){
         parent::__construct($mainKey, $altKey, "", $initValue, $apiEndpoint);
     }

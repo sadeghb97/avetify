@@ -9,7 +9,7 @@ use Avetify\Interface\WebModifier;
 
 class APIMedalField extends JSInputField {
     public function __construct(public string $recordKey, public string $medalKey,
-                                public string $icon, public int $medalInitValue,
+                                public string $icon, public float $medalInitValue,
                                 public string $apiEndpoint){
     }
 
