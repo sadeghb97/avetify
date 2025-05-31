@@ -84,7 +84,7 @@ class AvetifyManager {
      * @return string|null URL path relative to the web root, or null if not inside public dir
      */
     public static function convertPathToUrl(string $absolutePath): ?string {
-        $absolutePath = realpath($absolutePath);
+        $absolutePath = !str_contains($absolutePath, "?") ? realpath($absolutePath) : $absolutePath;
         $publicPath   = realpath(self::$publicBasePath);
 
         if ($absolutePath && str_starts_with($absolutePath, $publicPath)) {
