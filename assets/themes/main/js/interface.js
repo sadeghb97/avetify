@@ -66,7 +66,7 @@ function addParamToLink(url, paramKey, paramValue) {
 }
 
 function addParamToCurrentLink(paramKey, paramValue) {
-    addParamToLink(window.location.href, paramKey, paramValue)
+    return addParamToLink(window.location.href, paramKey, paramValue)
 }
 
 function findClosestChildrenByTag(parent, tagName) {

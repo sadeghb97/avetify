@@ -28,17 +28,26 @@ class APISpanField extends JSInputField {
 
         ?>
         <script>
-            addLongClickEvent('<?php echo $this->getFieldIdentifier() ?>', (fieldId) => {
-                applyField('<?php echo $this->recordKey; ?>',
-                    '<?php echo $this->fieldKey; ?>', '<?php echo $this->initValue; ?>',
-                    '<?php echo $this->apiEndpoint; ?>', (data) => {<?php echo $this->toggleCallback(); ?>});
-            })
+            addLongClickEvent(
+                '<?php echo $this->getFieldIdentifier() ?>',
+                (fieldId) => {
+                    applyField('<?php echo $this->recordKey; ?>',
+                        '<?php echo $this->fieldKey; ?>', '<?php echo $this->initValue; ?>',
+                        '<?php echo $this->apiEndpoint; ?>',
+                        (data) => {<?php echo $this->toggleCallback(); ?>}
+                    );
+                },
+                (fieldId) => {<?php echo $this->clickCallback(); ?>})
         </script>
         <?php
     }
 
     public function toggleCallback() : string {
         return 'console.log("ToggleData", data);';
+    }
+
+    public function clickCallback() : string {
+        return 'console.log("NormalClick", fieldId);';
     }
 
     public function appendMoreStyles(){}

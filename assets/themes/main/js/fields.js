@@ -68,33 +68,36 @@ function applyField(recordId, medalKey, newValue, apiEndpoint, callback){
         });
 }
 
-function addLongClickEvent(elementId, callback){
+function addLongClickEvent(elementId, longClickCallback, normalClickCallback) {
     const element = document.getElementById(elementId);
+    let pressTimer = null;
+    let wasLongPress = false;
 
-    element.addEventListener("mousedown", () => {
+    const startPress = () => {
+        wasLongPress = false;
+        pressTimer = setTimeout(() => {
+            wasLongPress = true;
+            longClickCallback(elementId);
+        }, 800);
+    };
+
+    const endPress = () => {
+        clearTimeout(pressTimer);
+        if (!wasLongPress) {
+            normalClickCallback(elementId);
+        }
+    };
+
+    element.addEventListener("mousedown", (event) => {
         if (event.button !== 0) return;
-        pressTimer = setTimeout(() => {
-            callback(elementId)
-        }, 800);
+        startPress();
     });
 
-    element.addEventListener("mouseup", () => {
-        clearTimeout(pressTimer);
-    });
+    element.addEventListener("mouseup", endPress);
+    element.addEventListener("mouseleave", () => clearTimeout(pressTimer));
 
-    element.addEventListener("mouseleave", () => {
-        clearTimeout(pressTimer);
-    });
-
-    element.addEventListener("touchstart", () => {
-        pressTimer = setTimeout(() => {
-            callback(elementId)
-        }, 800);
-    });
-
-    element.addEventListener("touchend", () => {
-        clearTimeout(pressTimer);
-    });
+    element.addEventListener("touchstart", startPress);
+    element.addEventListener("touchend", endPress);
 }
 
 function logSelectedRecord(field, childKey, selectedItem){

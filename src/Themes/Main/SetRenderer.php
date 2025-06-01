@@ -149,9 +149,7 @@ abstract class SetRenderer extends BaseSetRenderer {
             }
 
             if ($sbTable->isEditable) {
-                $formModifier = WebModifier::createInstance();
-                $formModifier->styler->pushClass("tables_panel");
-                $this->form->openForm($formModifier);
+                $this->form->openForm($this->getFormModifier());
             }
             else {
                 echo '<div ';
@@ -177,6 +175,10 @@ abstract class SetRenderer extends BaseSetRenderer {
                 HTMLInterface::closeDiv();
             }
         }
+    }
+
+    public function getFormModifier() : ?WebModifier {
+        return null;
     }
 
     public function renderCreatingElements(){}

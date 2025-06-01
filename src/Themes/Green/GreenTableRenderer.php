@@ -109,6 +109,12 @@ class GreenTableRenderer extends SetRenderer {
         $this->closeRecord($item);
     }
 
+    public function getFormModifier(): ?WebModifier {
+        $formModifier = WebModifier::createInstance();
+        $formModifier->pushClass("tables_panel");
+        return $formModifier;
+    }
+
     public function getTheme() : ThemesManager {
         return new GreenTheme();
     }

@@ -78,7 +78,8 @@ class ModernixRenderer extends SetRenderer {
 
         if($this->setModifier instanceof AvtTable){
             foreach ($this->setModifier->fields as $field){
-                NiceDiv::justOpen();
+                $vertDiv = new VertDiv(0);
+                $vertDiv->open();
                 $field->presentValue($item);
                 HTMLInterface::closeDiv();
             }
@@ -106,7 +107,7 @@ class ModernixRenderer extends SetRenderer {
         return new GreenTheme();
     }
 
-    public function openContainer() {
+    public function openCollection(WebModifier $webModifier = null) {
         $niceDiv = new VertDiv(0);
         $niceDiv->addStyle("margin-top", "16px");
         $niceDiv->open();
@@ -123,7 +124,7 @@ class ModernixRenderer extends SetRenderer {
         HTMLInterface::closeTag();
     }
 
-    public function closeContainer() {
+    public function closeCollection(WebModifier $webModifier = null) {
         echo '</div>';
     }
 }
