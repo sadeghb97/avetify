@@ -38,6 +38,7 @@ require_once "src/Models/Traits/Tagged.php";
 
 require_once "src/Files/Filer.php";
 require_once "src/Files/ImageUtils.php";
+require_once "src/Files/FfmpegUtils.php";
 require_once "src/Files/RecycleCan.php";
 
 require_once "src/Utils/TimeUtils/RecentTime.php";
@@ -214,6 +215,7 @@ require_once "src/Themes/Green/GreenTheme.php";
 require_once "src/Themes/Green/GreenTableRenderer.php";
 require_once "src/Themes/Green/GreenListerRenderer.php";
 require_once "src/Themes/Green/GreenNavigationRenderer.php";
+require_once "src/Themes/Modern/ModernGalleryMedal.php";
 require_once "src/Themes/Modern/ModernTheme.php";
 require_once "src/Themes/Modern/ModernSetRenderer.php";
 require_once "src/Themes/Modern/ModernGallery.php";
