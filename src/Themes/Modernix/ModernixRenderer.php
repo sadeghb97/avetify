@@ -54,6 +54,7 @@ class ModernixRenderer extends SetRenderer {
             $linkModifier = WebModifier::createInstance();
             $linkModifier->pushStyle(CSS::textDecoration, "none");
             $linkModifier->pushStyle(CSS::color, "Black");
+            if($this->blankLink) $linkModifier->pushModifier("target", "_blank");
             HTMLInterface::openLink($link, $linkModifier);
         }
 
@@ -61,7 +62,20 @@ class ModernixRenderer extends SetRenderer {
         Styler::startAttribute();
         Styler::closeAttribute();
         HTMLInterface::closeTag();
-        if(!$this->smallerTitle) echo '<h4>' . $title . '</h4>';
+
+        $row = "";
+        if($this->printRowIndex){
+            $rowFontSize = $this->smallerTitle ? "0.875rem" : "1.125rem";
+            $row = '<span style="font-size: ' . $rowFontSize
+                . '; font-weight: bold; color: grey;">' . ($index + 1) . ": " . '</span>';
+        }
+
+        if(!$this->smallerTitle){
+            echo '<h4>';
+            if($row) echo $row;
+            echo $title;
+            echo '</h4>';
+        }
         else {
             echo '<div ';
             Styler::startAttribute();
@@ -69,6 +83,7 @@ class ModernixRenderer extends SetRenderer {
             Styler::addStyle("font-size", "0.92rem");
             Styler::closeAttribute();
             HTMLInterface::closeTag();
+            if($row) echo $row;
             echo $title;
             HTMLInterface::closeDiv();
         }

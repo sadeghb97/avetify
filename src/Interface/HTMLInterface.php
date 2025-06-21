@@ -283,6 +283,12 @@ namespace Avetify\Interface;
          if($modifier && $modifier->htmlModifier != null) $modifier->htmlModifier->applyModifiers();
      }
 
+     public static function applyWebModifier(WebModifier | null $modifier){
+         self::applyModifiers($modifier);
+         self::applyStyles($modifier);
+         self::applyClasses($modifier);
+     }
+
      public static function addAbsoluteIconButton(string $imageSrc, array $positionStyles, string $rawOnclick = ""){
          $absButton = new AbsoluteButton($imageSrc, $positionStyles, $rawOnclick);
          $absButton->place();

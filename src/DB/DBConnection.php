@@ -115,6 +115,17 @@ abstract class DBConnection extends mysqli {
     }
 
     /** @param DBFilter[] $filters
+     * @return array
+     */
+    public function fetchFlatSet(string $tableName, string $key, array $filters = []) : array {
+        $sql = "SELECT $key FROM $tableName " . $this->getFilteringQuery($filters);
+        $list = $this->fetchSet($sql);
+        $out = [];
+        foreach ($list as $item) $out[] = $item[$key];
+        return $out;
+    }
+
+    /** @param DBFilter[] $filters
      * @return AvtEntityItem[]
      */
     public function fetchTable(string $className, string $tableName, array $filters = [], string $orderBy = "") : array {

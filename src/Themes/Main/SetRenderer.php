@@ -20,6 +20,7 @@ use Avetify\Themes\Green\GreenTheme;
 abstract class SetRenderer extends BaseSetRenderer {
     public AvtForm | null $form = null;
     public RecordSelectorField | null $selectorField = null;
+    public bool $blankLink = true;
     public bool $printRowIndex = true;
     public bool $useClassicButtons = false;
 
