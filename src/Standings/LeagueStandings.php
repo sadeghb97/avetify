@@ -13,7 +13,6 @@ class LeagueStandings {
 
     public static function importStyles(){
         ThemesManager::importStandingsTools();
-        echo '<link href="https://fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet">';
     }
 
     public function sort(){

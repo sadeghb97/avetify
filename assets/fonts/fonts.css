@@ -16,3 +16,18 @@
     src: url('IRANSansWeb.woff') format('truetype');
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 300 700;
+    font-display: swap;
+    src: url('Quicksand.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Fjalla One';
+    font-style: normal;
+    font-weight: 400;
+    src: url('FjallaOne.woff2') format('woff2');
+}
