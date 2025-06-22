@@ -15,9 +15,11 @@ class AvetifyRenderer implements PageRenderer {
     public function renderPage($title = "Avetify") {
         $theme = $this->getTheme();
         $theme->placeHeader($title);
-        $avtImage = AvetifyManager::imageUrl("avetify.webp");
+        $this->renderBody();
+    }
 
-        $theme->openBody();
+    public function renderBody() {
+        $avtImage = AvetifyManager::imageUrl("avetify.webp");
         HTMLInterface::openContainer();
         $div = new VertDiv(8);
         $div->open();
@@ -47,10 +49,9 @@ class AvetifyRenderer implements PageRenderer {
 
         $div->close();
         HTMLInterface::closeDiv();
-        $theme->closeBody();
     }
 
-    public static function getTheme() : ThemesManager {
+    public function getTheme() : ThemesManager {
         return new class extends GreenTheme {
             public function appendBodyStyles() {
                 Styler::addStyle("display", "flex");

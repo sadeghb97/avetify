@@ -147,6 +147,8 @@ require_once "src/Components/Buttons/PrimaryButton.php";
 require_once "src/Components/Buttons/LinkAbsoluteButton.php";
 require_once "src/Components/Buttons/PageToggleButton.php";
 require_once "src/Components/Buttons/JoshButton.php";
+require_once "src/Components/Charts/AvtChartDataSet.php";
+require_once "src/Components/Charts/AvtChart.php";
 require_once "src/Components/Modifiers/ImageModifiers.php";
 
 require_once "src/Lister/AvtLister.php";

@@ -8,7 +8,6 @@ use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\PageRenderer;
 use Avetify\Themes\Main\ThemesManager;
 use Avetify\Interface\Platform;
-use function Avetify\Utils\isCli;
 
 abstract class TaskPageRenderer implements PageRenderer {
     public string $formId = "form_task";
@@ -19,7 +18,12 @@ abstract class TaskPageRenderer implements PageRenderer {
             $theme = $this->getTheme();
             $theme->placeHeader($title);
             $theme->loadHeaderElements();
+        }
+        $this->renderBody();
+    }
 
+    public function renderBody() {
+        if(!Platform::isCli()) {
             if (!empty($_POST['task']) && $_POST['task'] == $this->triggerIdentifier) {
                 HTMLInterface::placeVerticalDivider(16);
                 $this->doTask();
@@ -39,6 +43,5 @@ abstract class TaskPageRenderer implements PageRenderer {
         return AvetifyManager::imageUrl("send.svg");
     }
 
-    abstract public function getTheme() : ThemesManager;
     abstract public function doTask();
 }

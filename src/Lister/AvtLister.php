@@ -6,13 +6,12 @@ use Avetify\Entities\SetModifier;
 use Avetify\Forms\FormUtils;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\JSInterface;
-use Avetify\Interface\PageRenderer;
 use Avetify\Interface\Styler;
 use Avetify\Themes\Green\GreenListerRenderer;
 use Avetify\Themes\Green\GreenTheme;
 use Avetify\Themes\Main\ListerRenderer;
 
-abstract class AvtLister extends SetModifier implements PageRenderer {
+abstract class AvtLister extends SetModifier {
     use EntityManagerTrait;
 
     public ?ListerRenderer $listerRenderer = null;

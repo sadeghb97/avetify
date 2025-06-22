@@ -14,6 +14,7 @@ class ThemesManager {
     public bool $includesCropperTools = false;
     public bool $includesCodingFieldTools = false;
     public bool $includesHighlightCodesTools = false;
+    public bool $includesChartTools = false;
     public ?NavigationRenderer $navigationRenderer = null;
 
     public function __construct(){
@@ -55,6 +56,7 @@ class ThemesManager {
         if($this->includesCropperTools) self::importCropperTools();
         if($this->includesCodingFieldTools) self::importCodingFieldTools();
         if($this->includesHighlightCodesTools) self::importHighlightCodeTools();
+        if($this->includesChartTools) self::importChartTools();
 
         if($this->navigationRenderer){
             $this->navigationRenderer->headImports();
@@ -117,6 +119,10 @@ class ThemesManager {
         self::importListerStyles();
         self::importSortableJS();
         self::importJS(AvetifyManager::assetUrl("components/lister/lister.js"));
+    }
+
+    public static function importChartTools(){
+        self::importJS(AvetifyManager::assetUrl("components/charts/chart.js"));
     }
 
     public static function importCropperTools(){
