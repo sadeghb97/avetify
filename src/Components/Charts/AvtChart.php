@@ -28,15 +28,10 @@ class AvtChart implements PageRenderer {
     }
 
     public function renderBody() {
-        echo '<div ';
-        HTMLInterface::closeTag();
-
         echo '<canvas ';
         HTMLInterface::addAttribute("id", $this->getCanvasId());
         HTMLInterface::closeTag();
         echo '</canvas>';
-
-        HTMLInterface::closeDiv();
 
         ?>
         <script>
