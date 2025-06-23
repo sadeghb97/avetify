@@ -43,6 +43,8 @@ class AvtChart implements PageRenderer {
             const canvasId = '<?php echo $this->getCanvasId(); ?>';
             const labels = <?php echo json_encode($this->labels); ?>;
             const datasets = <?php echo json_encode($this->datasets); ?>;
+            const minValue = <?php echo $this->min; ?>;
+            const maxValue = <?php echo $this->max; ?>;
 
             const data = {
                 labels: labels,
@@ -59,8 +61,8 @@ class AvtChart implements PageRenderer {
                     scales: {
                         y: {
                             type: 'linear',
-                            min: 500,
-                            max: 1500
+                            min: minValue,
+                            max: maxValue
                         }
                     }
                 }
