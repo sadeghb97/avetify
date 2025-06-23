@@ -189,27 +189,37 @@ class ModernThemeBadCards {
             }
         }
 
-        if(isset($options['medals'])){
-            echo '<div style="margin: auto; font-size: 16px; font-weight: bold; display: flex;">';
-
-            $iconStyle = "height: 48px; width: auto; margin-top: auto; margin-bottom: auto;";
-            $valueStyle = "margin-top: auto; margin-bottom: auto; margin-left: 8px; font-size: 1rem;";
-
-            foreach ($options['medals'] as $medal){
-                echo '<div style="margin-left: 6px; margin-right: 6px;">';
-                if($medal->link){
-                    echo '<a href="' . $medal->link . '" target="_blank">';
-                }
-                echo '<img src="' . $medal->icon . '" style="' . $iconStyle
-                    . '" title="' . $medal->title . '" />';
-                if($medal->link){
-                    echo '</a>';
-                }
-                echo '<span style="' . $valueStyle . ' color: #DC0083;">' . $medal->count . '</span>';
-                echo '</div>';
+        if(isset($options['medals'][0])){
+            if(is_array($options['medals'][0])){
+                $rows = $options['medals'];
             }
+            else $rows = [$options['medals']];
 
-            echo '</div>';
+            foreach ($rows as $row) {
+                echo '<div style="margin: auto; font-size: 16px; font-weight: bold; display: flex;">';
+
+                $iconStyle = "height: 48px; width: auto; margin-top: auto; margin-bottom: auto;";
+                $valueStyle = "margin-top: auto; margin-bottom: auto; margin-left: 8px; font-size: 1rem;";
+
+                foreach ($row as $medal) {
+                    if (!$medal->link && !$medal->count) continue;
+
+                    echo '<div style="margin-left: 6px; margin-right: 6px;">';
+                    if ($medal->link) {
+                        echo '<a href="' . $medal->link . '" target="_blank">';
+                    }
+                    echo '<img src="' . $medal->icon . '" style="' . $iconStyle
+                        . '" title="' . $medal->title . '" />';
+                    if ($medal->link) {
+                        echo '</a>';
+                    }
+                    echo '<span style="' . $valueStyle . ' color: #DC0083;">' . $medal->count . '</span>';
+                    echo '</div>';
+                }
+
+                echo '</div>';
+                HTMLInterface::placeVerticalDivider(4);
+            }
             HTMLInterface::placeVerticalDivider(12);
         }
 
