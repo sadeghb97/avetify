@@ -35,12 +35,12 @@ class TimeUtils {
         return strtotime($formattedDate . ' ' . $timezone);
     }
 
-    public static function getIRSimpleDate(int $time) : string {
-        return JDF::jdate("Y-m-d", $time, '', 'Asia/Tehran', 'en');
+    public static function getIRSimpleDate(int $time, string $separator = "-") : string {
+        return JDF::jdate("Y{$separator}m{$separator}d", $time, '', 'Asia/Tehran', 'en');
     }
 
-    public static function getIRYearMonthDate(int $time) : string {
-        return JDF::jdate("Y-m", $time, '', 'Asia/Tehran', 'en');
+    public static function getIRYearMonthDate(int $time, string $separator = "") : string {
+        return JDF::jdate("Y{$separator}m", $time, '', 'Asia/Tehran', 'en');
     }
 
     public static function getRecentTimeFromDuration(int $duration) : RecentTime {
