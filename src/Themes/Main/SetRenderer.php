@@ -130,8 +130,6 @@ abstract class SetRenderer extends BaseSetRenderer {
     }
 
     public function openContainer() {
-        echo '<div style="height: ' . 8 . 'px;"></div>';
-
         if($this->setModifier instanceof AvtTable) {
             /** @var AvtTable $sbTable */
             $sbTable = $this->setModifier;
@@ -156,7 +154,14 @@ abstract class SetRenderer extends BaseSetRenderer {
                 echo '<div ';
                 Styler::classStartAttribute();
                 Styler::addClass("tables_panel");
+                HTMLInterface::appendClasses($this->containerModifier);
                 Styler::closeAttribute();
+
+                Styler::startAttribute();
+                HTMLInterface::appendStyles($this->containerModifier);
+                Styler::closeAttribute();
+
+                HTMLInterface::applyModifiers($this->containerModifier);
                 HTMLInterface::closeTag();
             }
         }
