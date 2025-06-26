@@ -199,6 +199,11 @@ class ThemesManager {
 
     public function appendBodyStyles(){}
 
+    public function openPage($title){
+        $this->placeHeader($title);
+        $this->loadHeaderElements();
+    }
+
     public function openBody(){
         echo '<body ';
         Styler::startAttribute();
