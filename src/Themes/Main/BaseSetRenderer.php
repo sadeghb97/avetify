@@ -15,6 +15,7 @@ abstract class BaseSetRenderer {
     public function __construct(public SetModifier $setModifier,
                                 public ThemesManager | null $theme,
                                 public bool | int $limit = false){
+        $this->containerModifier = WebModifier::createInstance();
         $this->postConstruct();
     }
 
@@ -81,7 +82,6 @@ abstract class BaseSetRenderer {
     }
 
     public function prepareContainerModifier(){
-        if(!$this->containerModifier) $this->containerModifier = WebModifier::createInstance();
         $this->containerModifier->pushStyle(CSS::marginTop, $this->marginTop . "px");
         $this->containerModifier->pushStyle(CSS::marginBottom, $this->marginBottom . "px");
     }
