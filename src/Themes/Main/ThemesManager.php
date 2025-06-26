@@ -201,6 +201,7 @@ class ThemesManager {
 
     public function openPage($title){
         $this->placeHeader($title);
+        $this->openBody();
         $this->loadHeaderElements();
     }
 
