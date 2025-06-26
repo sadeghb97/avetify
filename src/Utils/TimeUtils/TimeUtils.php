@@ -67,6 +67,23 @@ class TimeUtils {
         return self::getRecentTimeFromDuration($now - $time);
     }
 
+    public static function getSummaryRecent(int $duration) : string {
+        $recent = self::getRecentTimeFromDuration($duration);
+        if($recent->days <= 0 && $recent->hours <= 0 && $recent->minutes <= 0) return 'Just Now';
+
+        if($recent->days > 0){
+            if($recent->hours > 0) return $recent->days . "d," . $recent->hours . 'h ago';
+            return ($recent['days'] . 'd ago');
+        }
+
+        if($recent->hours > 0){
+            if($recent->minutes > 0) return $recent->hours . "h," . $recent->minutes . 'm ago';
+            return ($recent->hours . 'h ago');
+        }
+
+        return $recent->minutes . 'm ago';
+    }
+
     public static function getFormattedDurationTime(int $duration, bool $isSummary = true, bool $durationMode = true) : string {
         $recent = self::getRecentTimeFromDuration($duration);
 
