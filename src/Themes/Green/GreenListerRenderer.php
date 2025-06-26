@@ -18,8 +18,9 @@ class GreenListerRenderer extends ListerRenderer {
     public string $containerId;
 
     public function prepareContainerModifier() {
+        parent::prepareContainerModifier();
         $this->containerId = "lister_" . time();
-        $this->containerModifier = WebModifier::createInstance();
+        if(!$this->containerModifier) $this->containerModifier = WebModifier::createInstance();
         $this->containerModifier->htmlModifier->pushModifier(Attrs::id, $this->containerId);
         $this->containerModifier->styler->pushClass("container");
         $this->containerModifier->styler->pushStyle(CSS::width, "90%");

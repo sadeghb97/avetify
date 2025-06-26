@@ -2,12 +2,15 @@
 namespace Avetify\Themes\Main;
 
 use Avetify\Entities\SetModifier;
+use Avetify\Interface\CSS;
 use Avetify\Interface\WebModifier;
 use Avetify\Routing\Routing;
 use Avetify\Themes\Classic\ClassicLabel;
 
 abstract class BaseSetRenderer {
     public WebModifier $containerModifier;
+    public int $marginTop = 20;
+    public int $marginBottom = 20;
 
     public function __construct(public SetModifier $setModifier,
                                 public ThemesManager | null $theme,
@@ -77,7 +80,12 @@ abstract class BaseSetRenderer {
         $this->closePage();
     }
 
-    public function prepareContainerModifier(){}
+    public function prepareContainerModifier(){
+        if(!$this->containerModifier) $this->containerModifier = WebModifier::createInstance();
+        $this->containerModifier->pushStyle(CSS::marginTop, $this->marginTop . "px");
+        $this->containerModifier->pushStyle(CSS::marginBottom, $this->marginBottom . "px");
+    }
+
     public function onRecordsAdjusted() : void {}
 
     public abstract function getTitle() : string;
