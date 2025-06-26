@@ -73,7 +73,7 @@ class TimeUtils {
 
         if($recent->days > 0){
             if($recent->hours > 0) return $recent->days . "d," . $recent->hours . 'h ago';
-            return ($recent['days'] . 'd ago');
+            return ($recent->days . 'd ago');
         }
 
         if($recent->hours > 0){
