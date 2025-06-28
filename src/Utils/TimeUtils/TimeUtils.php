@@ -39,7 +39,7 @@ class TimeUtils {
         return JDF::jdate("Y{$separator}m{$separator}d", $time, '', 'Asia/Tehran', 'en');
     }
 
-    public static function getIRYearMonthDate(int $time, string $separator = "") : string {
+    public static function getIRYearMonthDate(int $time, string $separator = "-") : string {
         return JDF::jdate("Y{$separator}m", $time, '', 'Asia/Tehran', 'en');
     }
 
