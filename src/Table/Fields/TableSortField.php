@@ -7,6 +7,7 @@ class TableSortField extends SortFactor {
     public function __construct(public TableField $field){
         parent::__construct($this->field->title, $this->field->key, !$this->field->isAscending,
             $this->field->isNumeric, $this->field->skipEmpties);
+        $this->isDefaultSort = $this->field->isDefaultSort;
     }
 
     public function getValue($item): float|string {

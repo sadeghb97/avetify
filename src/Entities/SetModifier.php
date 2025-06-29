@@ -40,6 +40,10 @@ abstract class SetModifier implements EntityManager {
     }
 
     public function getDefaultFactor() : Sorter | null {
+        $allSortFactors = $this->finalSortFactors();
+        foreach ($allSortFactors as $sf){
+            if($sf instanceof SortFactor && $sf->isDefaultSort) return $sf;
+        }
         return null;
     }
 
@@ -62,6 +66,7 @@ abstract class SetModifier implements EntityManager {
     }
 
     private function sortRecords(){
+        if(!$this->isSortable) return;
         $sortFactor = $this->getSortFactor();
         if($sortFactor == null) return;
         usort($this->currentRecords, [$sortFactor, 'compare']);

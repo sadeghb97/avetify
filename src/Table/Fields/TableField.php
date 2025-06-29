@@ -16,6 +16,7 @@ class TableField {
     protected bool $editable = false;
     public bool $skipEmpties = false;
     public bool $submitter = false;
+    public bool $isDefaultSort = false;
     public EditableField | null $onCreateField = null;
     public bool $requiredOnCreate = false;
     public string | null $backgroundColor = null;
@@ -86,6 +87,11 @@ class TableField {
 
     public function setNumeric() : TableField {
         $this->isNumeric = true;
+        return $this;
+    }
+
+    public function setDefaultSort() : TableField {
+        $this->isDefaultSort = true;
         return $this;
     }
 

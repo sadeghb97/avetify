@@ -3,6 +3,7 @@ namespace Avetify\Entities\Sorters;
 
 abstract class SortFactor implements Sorter {
     public bool $alterDirection = false;
+    public bool $isDefaultSort = false;
 
     public function __construct(public string $title, public string $factorKey,
                                 public bool $descIsDefault,
