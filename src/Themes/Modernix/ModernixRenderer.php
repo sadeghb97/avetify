@@ -47,6 +47,7 @@ class ModernixRenderer extends SetRenderer {
 
         $link = $this->setModifier->getItemLink($item);
         $title = $this->setModifier->getItemTitle($item);
+        $description = $this->setModifier->getItemDescription($item);
 
         echo '<div class="card__body">';
 
@@ -65,28 +66,21 @@ class ModernixRenderer extends SetRenderer {
 
         $row = "";
         if($this->printRowIndex){
-            $rowFontSize = $this->smallerTitle ? "0.875rem" : "1.125rem";
+            $rowFontSize = $this->smallerTitle ? "0.875rem" : "1rem";
             $row = '<span style="font-size: ' . $rowFontSize
                 . '; font-weight: bold; color: grey;">' . ($index + 1) . ": " . '</span>';
         }
 
-        if(!$this->smallerTitle){
-            echo '<h4>';
-            if($row) echo $row;
-            echo $title;
-            echo '</h4>';
-        }
-        else {
-            echo '<div ';
-            Styler::startAttribute();
-            Styler::addStyle("font-weight", "bold");
-            Styler::addStyle("font-size", "0.92rem");
-            Styler::closeAttribute();
-            HTMLInterface::closeTag();
-            if($row) echo $row;
-            echo $title;
-            HTMLInterface::closeDiv();
-        }
+        echo '<div ';
+        Styler::startAttribute();
+        Styler::addStyle("font-weight", "bold");
+        Styler::addStyle("font-size", $this->smallerTitle ? "1rem" : "1.125rem");
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
+        if($row) echo $row;
+        echo $title;
+        HTMLInterface::closeDiv();
+
         echo '</div>';
 
         if($link) HTMLInterface::closeLink();
@@ -100,7 +94,19 @@ class ModernixRenderer extends SetRenderer {
             }
         }
 
+        if($description){
+            echo '<p>' . $description . '</p>';
+        }
         echo '</div>';
+
+        $tags = $this->setModifier->getItemTags($item);
+        if(count($tags) > 0) {
+            echo '<div class="card__footer">';
+            foreach ($tags as $tag) {
+                echo '<span class="tag tag-blue">' . $tag . '</span>';
+            }
+            echo '</div>';
+        }
     }
 
     public function openRecord($record){

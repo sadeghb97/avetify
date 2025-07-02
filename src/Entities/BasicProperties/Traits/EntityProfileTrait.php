@@ -19,4 +19,13 @@ trait EntityProfileTrait {
     public function getItemAltLink(): string {
         return "";
     }
+
+    public function getItemDescription(): string {
+        if(property_exists($this, "description")) return $this->description;
+        return "";
+    }
+
+    public function getItemTags(): array {
+        return [];
+    }
 }

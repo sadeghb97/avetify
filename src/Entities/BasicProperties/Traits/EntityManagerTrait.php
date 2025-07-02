@@ -30,4 +30,14 @@ trait EntityManagerTrait {
         if($record instanceof EntityProfile) return $record->getItemAltLink();
         return "";
     }
+
+    public function getItemTags($record) : array {
+        if($record instanceof EntityProfile) return $record->getItemTags();
+        return [];
+    }
+
+    public function getItemDescription($record) : string {
+        if($record instanceof EntityProfile) return $record->getItemDescription();
+        return "";
+    }
 }
