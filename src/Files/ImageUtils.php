@@ -4,9 +4,8 @@ namespace Avetify\Files;
 class ImageUtils {
     public static function convert($filename, $targetExtension = null, $maxImageSize = null,
                                    $forcedWidthRatio = null, $forcedHeightRatio = null){
-
-        $commandStart = "mogrify " . ($targetExtension ? "-format " . $targetExtension . " " : "");
-        $commandEnd = " " . $filename . ($targetExtension ? " && rm " . $filename : "");
+        $commandStart = "env -i /usr/bin/mogrify " . ($targetExtension ? "-format " . $targetExtension . " " : "");
+        $commandEnd = " " . $filename . " 2>&1";
 
         $done = false;
         if($forcedWidthRatio && $forcedHeightRatio){
