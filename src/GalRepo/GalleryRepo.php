@@ -7,7 +7,7 @@ use Avetify\Modules\Printer;
 use Avetify\Routing\Routing;
 
 class GalleryRepo {
-    private static array $extensions = ["jpg", "jpeg", "png", "webp", "gif"];
+    private static array $extensions = ["jpg", "jpeg", "png", "webp", "avif", "gif"];
 
     public array $originalVirtualGalsMap = [];
     public array $originalRecordsConfMap = [];
@@ -23,11 +23,11 @@ class GalleryRepo {
     /** @var GalleryRecord[] $allRecords */
     public array $allRecords = [];
 
-    public null | GalleryRecord $cover = null;
+    public null | string $cover = null;
     public int $bigIndex = 0;
 
-    public function __construct(string $relativePath, public bool $recursive = true,
-                                public bool $readOnly = false){
+    public function __construct(string $relativePath, public int $depth = 0,
+                                public int $maxDepth = 1, public bool $readOnly = false){
         if(!str_ends_with($relativePath, "/")) $relativePath = $relativePath . "/";
         $this->relativePath = $relativePath;
         $this->parentRelativePath = Filer::getParentFilename($relativePath);
@@ -78,12 +78,16 @@ class GalleryRepo {
             $files = array_merge($files, glob($this->path . "*.$ext"));
         }
 
-        if($this->recursive) {
+        $altCover = null;
+        if($this->maxDepth > $this->depth) {
             $dirs = Filer::subDirs($this->path);
             natcasesort($dirs);
             foreach ($dirs as $dir) {
                 $pureDir = Filer::getPureFilename($dir);
-                $this->subRepos[] = new GalleryRepo($this->relativePath . $pureDir, false);
+                $sr = new GalleryRepo($this->relativePath . $pureDir . "/",
+                    $this->depth + 1, $this->maxDepth);
+                if(!$altCover && $sr->cover) $altCover = $sr->cover;
+                $this->subRepos[] = $sr;
             }
         }
 
@@ -106,8 +110,9 @@ class GalleryRepo {
         }
 
         if(count($this->allRecords) > 0){
-            $this->cover = $this->allRecords[0];
+            $this->cover = $this->relativePath . $this->allRecords[0]->path;
         }
+        else if($altCover) $this->cover = $altCover;
     }
 
     public function arrangeRepo(){

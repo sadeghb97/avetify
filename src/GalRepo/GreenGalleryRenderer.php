@@ -12,6 +12,7 @@ use Avetify\Themes\Green\GreenListerRenderer;
 class GreenGalleryRenderer extends GreenListerRenderer {
     public ?ManageGalleryLister $galleryLister = null;
     public ?GalleryRepo $galRepo = null;
+    public int $topButtonsMargin = 0;
 
     public function postConstruct() {
         parent::postConstruct();
@@ -58,18 +59,18 @@ class GreenGalleryRenderer extends GreenListerRenderer {
             $prevLink = Routing::addParamToCurrentLink("gp", $prevRepo);
 
             $prevButton = new AbsoluteButton(AvetifyManager::imageUrl("arrow_left.svg"),
-                ["top" => "20px", "left" => "20px"],
+                ["top" => ($this->topButtonsMargin + 20) . "px", "left" => "20px"],
                 "redir('" . $prevLink . "');");
             $prevButton->place();
 
             $prevCloneButton = new AbsoluteButton(AvetifyManager::imageUrl("tab_duplicate.svg"),
-                ["top" => "70px", "left" => "20px"],
+                ["top" => ($this->topButtonsMargin + 70) . "px", "left" => "20px"],
                 "openTab('" . $prevLink . "');");
             $prevCloneButton->place();
         }
 
         $toggleButton = new AbsoluteButton(AvetifyManager::imageUrl("view_alt.svg"),
-            ["top" => "20px", "right" => "20px"], $this->jsToggleGalleryMode());
+            ["top" => ($this->topButtonsMargin + 20) . "px", "right" => "20px"], $this->jsToggleGalleryMode());
         $toggleButton->place();
 
         if(!$this->galRepo->readOnly) {
@@ -126,8 +127,7 @@ class GreenGalleryRenderer extends GreenListerRenderer {
         Styler::closeAttribute();
         echo '>';
 
-        $avatar = $subRepo->cover ?
-            Routing::srpToBrp($subRepo->path . $subRepo->cover->path) : "";
+        $avatar = $subRepo->cover ?? "";
         echo '<img src="' . $avatar . '" class="lister-item-img" ';
         Styler::startAttribute();
         $this->appendImageWidthStyles();
