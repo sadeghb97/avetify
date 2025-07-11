@@ -1,7 +1,7 @@
 <?php
-namespace Avetify\Components\Charts;
+namespace Avetify\Components\Charts\LinearCharts;
 
-class AvtChartDataSet {
+class AvtLinearDataSet {
     public function __construct(
         public string $label,
         public array $data = [],

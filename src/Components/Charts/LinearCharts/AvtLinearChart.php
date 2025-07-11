@@ -1,12 +1,12 @@
 <?php
-namespace Avetify\Components\Charts;
+namespace Avetify\Components\Charts\LinearCharts;
 
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\PageRenderer;
 use Avetify\Themes\Green\GreenTheme;
 use Avetify\Themes\Main\ThemesManager;
 
-class AvtChart implements PageRenderer {
+class AvtLinearChart implements PageRenderer {
     public function __construct(
         public string $key,
         public array $labels,

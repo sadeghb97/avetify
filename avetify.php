@@ -151,8 +151,10 @@ require_once "src/Components/Buttons/PrimaryButton.php";
 require_once "src/Components/Buttons/LinkAbsoluteButton.php";
 require_once "src/Components/Buttons/PageToggleButton.php";
 require_once "src/Components/Buttons/JoshButton.php";
-require_once "src/Components/Charts/AvtChartDataSet.php";
-require_once "src/Components/Charts/AvtChart.php";
+require_once "src/Components/Charts/LinearCharts/AvtLinearChart.php";
+require_once "src/Components/Charts/LinearCharts/AvtLinearDataSet.php";
+require_once "src/Components/Charts/PieCharts/AvtPieChart.php";
+require_once "src/Components/Charts/AvtChartColors.php";
 require_once "src/Components/Modifiers/ImageModifiers.php";
 
 require_once "src/Lister/AvtLister.php";
