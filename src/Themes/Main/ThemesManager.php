@@ -9,6 +9,7 @@ use Avetify\Themes\Main\Navigations\NavigationBar;
 use Avetify\Themes\Main\Navigations\NavigationRenderer;
 
 class ThemesManager {
+    public string $lang = "en";
     public bool $noNavigationMenu = false;
     public bool $includesListerTools = false;
     public bool $includesCropperTools = false;
@@ -28,8 +29,8 @@ class ThemesManager {
 
     public function postConstruct(){}
 
-    public function placeHeader($title){
-        self::openHead();
+    public function placeHeader($title) {
+        $this->openHead();
         self::setHeaderTitle($title);
         $this->headerTags();
         self::closeHead();
@@ -215,9 +216,13 @@ class ThemesManager {
 
     public static function closeBody(){
         echo '</body>';
+        echo '</html>';
     }
 
-    public static function openHead(){
+    public function openHead() {
+        echo '<html ';
+        HTMLInterface::addAttribute("lang", $this->lang);
+        HTMLInterface::closeTag();
         echo '<head>';
     }
 
