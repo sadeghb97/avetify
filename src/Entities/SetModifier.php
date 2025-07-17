@@ -40,6 +40,10 @@ abstract class SetModifier implements EntityManager {
         return $this->setKey . "_" . $factorKey;
     }
 
+    public function getSortRawToken() : ?string {
+        return $_GET[$this->getSortKey()] ?? null;
+    }
+
     public function getDefaultFactor() : Sorter | null {
         $allSortFactors = $this->finalSortFactors();
         foreach ($allSortFactors as $sf){
@@ -49,10 +53,10 @@ abstract class SetModifier implements EntityManager {
     }
 
     public function getSortFactor() : Sorter | null {
-        if(!isset($_GET[$this->getSortKey()])) return $this->getDefaultFactor();
-        $sortFactorKey = $_GET[$this->getSortKey()];
-        $startWithMinus = str_starts_with($sortFactorKey, "-");
-        $pureSortFactorKey = $startWithMinus ? substr($sortFactorKey, 1) : $sortFactorKey;
+        $rawSortToken = $this->getSortRawToken();
+        if(!$rawSortToken) return $this->getDefaultFactor();
+        $startWithMinus = str_starts_with($rawSortToken, "-");
+        $pureSortFactorKey = $startWithMinus ? substr($rawSortToken, 1) : $rawSortToken;
         $allSortFactors = $this->finalSortFactors();
 
         foreach ($allSortFactors as $sf){
