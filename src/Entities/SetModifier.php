@@ -4,6 +4,7 @@ namespace Avetify\Entities;
 use Avetify\Entities\BasicProperties\EntityManager;
 use Avetify\Entities\BasicProperties\Traits\EntityManagerTrait;
 use Avetify\Entities\FilterFactors\FilterFactor;
+use Avetify\Entities\Models\EntityReceivedSort;
 use Avetify\Entities\Sorters\Sorter;
 use Avetify\Entities\Sorters\SortFactor;
 use Avetify\Themes\Main\SetRenderer;
@@ -44,6 +45,16 @@ abstract class SetModifier implements EntityManager {
         return $_GET[$this->getSortKey()] ?? null;
     }
 
+    public function getParsedReceivedSort() : ?EntityReceivedSort {
+        $rawSortToken = $this->getSortRawToken();
+        if($rawSortToken == null) return null;
+
+        $startWithMinus = str_starts_with($rawSortToken, "-");
+        $pureSortFactorKey = $startWithMinus ? substr($rawSortToken, 1) : $rawSortToken;
+
+        return new EntityReceivedSort($pureSortFactorKey, $startWithMinus);
+    }
+
     public function getDefaultFactor() : Sorter | null {
         $allSortFactors = $this->finalSortFactors();
         foreach ($allSortFactors as $sf){
@@ -53,10 +64,10 @@ abstract class SetModifier implements EntityManager {
     }
 
     public function getSortFactor() : Sorter | null {
-        $rawSortToken = $this->getSortRawToken();
-        if(!$rawSortToken) return $this->getDefaultFactor();
-        $startWithMinus = str_starts_with($rawSortToken, "-");
-        $pureSortFactorKey = $startWithMinus ? substr($rawSortToken, 1) : $rawSortToken;
+        $receivedSort = $this->getParsedReceivedSort();
+        if(!$receivedSort) return $this->getDefaultFactor();
+        $startWithMinus = $receivedSort->alterDirection;
+        $pureSortFactorKey = $receivedSort->key;
         $allSortFactors = $this->finalSortFactors();
 
         foreach ($allSortFactors as $sf){
