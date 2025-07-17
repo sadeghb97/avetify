@@ -18,6 +18,7 @@ abstract class SetModifier implements EntityManager {
     public bool $isEditable = true;
     public SetRenderer | null $renderer = null;
     public int $maxTitleLength = 0;
+    public bool $autoSort = true;
 
     public function __construct(public string $setKey){}
 
@@ -66,7 +67,7 @@ abstract class SetModifier implements EntityManager {
     }
 
     private function sortRecords(){
-        if(!$this->isSortable) return;
+        if(!$this->isSortable || !$this->autoSort) return;
         $sortFactor = $this->getSortFactor();
         if($sortFactor == null) return;
         usort($this->currentRecords, [$sortFactor, 'compare']);
