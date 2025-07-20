@@ -219,6 +219,48 @@ class TimeUtils {
 
         return $out;
     }
+
+    public static function formatDurationRT(RecentTime $rt, string $format): string {
+        $replacements = [
+            '{y}' => $rt->years,
+            '{m}' => $rt->months,
+            '{d}' => $rt->days,
+            '{h}' => $rt->hours,
+            '{n}' => $rt->minutes,
+            '{s}' => $rt->seconds,
+        ];
+        return strtr($format, $replacements);
+    }
+
+    public static function formatDuration(int $duration, string $format): string {
+        return self::formatDurationRT(self::getRecentTimeFromDuration($duration), $format);
+    }
+
+    public static function summaryFormatDurationRT(RecentTime $rt, string $imploder = ",", int $maxParts = 2): string {
+        $units = [
+            'Y' => $rt->years,
+            'M' => $rt->months,
+            'd' => $rt->days,
+            'h' => $rt->hours,
+            'n' => $rt->minutes,
+            's' => $rt->seconds,
+        ];
+
+        $nonZeroUnits = array_filter($units, fn($value) => $value > 0);
+
+        $parts = array_slice($nonZeroUnits, 0, $maxParts, true);
+
+        $formattedParts = [];
+        foreach ($parts as $unit => $value) {
+            $formattedParts[] = "{$value}{$unit}";
+        }
+
+        return implode($imploder, $formattedParts);
+    }
+
+    public static function summaryFormatDuration(int $duration, string $imploder = ",", int $maxParts = 2): string {
+        return self::summaryFormatDurationRT(self::getRecentTimeFromDuration($duration), $imploder, $maxParts);
+    }
 }
 
 

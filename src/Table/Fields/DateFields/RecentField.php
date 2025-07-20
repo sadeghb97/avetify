@@ -11,8 +11,7 @@ class RecentField extends TableSimpleField {
 
     public function presentValue($item) {
         $val = $this->getValue($item);
-        $timeStr = $this->isGlobal ? TimeUtils::getFormattedRecentTime(time(), (int) $val)
-            : TimeUtils::getIRFormattedRecentTime(time(), (int) $val);
-        echo $timeStr;
+        $duration = time() - ((int) $val);
+        echo TimeUtils::summaryFormatDuration($duration);
     }
 }
