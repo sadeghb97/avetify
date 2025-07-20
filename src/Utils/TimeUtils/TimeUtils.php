@@ -242,7 +242,7 @@ class TimeUtils {
             'M' => $rt->months,
             'd' => $rt->days,
             'h' => $rt->hours,
-            'n' => $rt->minutes,
+            'm' => $rt->minutes,
             's' => $rt->seconds,
         ];
 
