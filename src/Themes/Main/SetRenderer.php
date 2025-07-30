@@ -153,7 +153,6 @@ abstract class SetRenderer extends BaseSetRenderer {
             else {
                 echo '<div ';
                 Styler::classStartAttribute();
-                Styler::addClass("tables_panel");
                 HTMLInterface::appendClasses($this->containerModifier);
                 Styler::closeAttribute();
 

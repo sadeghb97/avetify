@@ -13,6 +13,7 @@ class TableField {
     public bool $isUnbreakable = false;
     public bool $isSortable = false;
     public bool $isAscending = false;
+    public array $tieBreaks = [];
     protected bool $editable = false;
     public bool $skipEmpties = false;
     public bool $submitter = false;
@@ -117,6 +118,11 @@ class TableField {
 
     public function setAscending() : TableField {
         $this->isAscending = true;
+        return $this;
+    }
+
+    public function setTiebreaks(array $tieBreaks) : TableField {
+        $this->tieBreaks = $tieBreaks;
         return $this;
     }
 

@@ -16,6 +16,8 @@ use Avetify\Themes\Main\ThemesManager;
 
 class ModernixRenderer extends SetRenderer {
     public bool $smallerTitle = false;
+    public ?WebModifier $cardModifiers = null;
+    public ?string $imageAspectRatio = null;
 
     public function __construct(SetModifier $setModifier, ThemesManager $theme,
                                 string $title = "Set", bool|int $limit = 5000){
@@ -37,9 +39,9 @@ class ModernixRenderer extends SetRenderer {
             Styler::closeAttribute();
 
             HTMLInterface::addAttribute("src", $avatar);
-            HTMLInterface::addAttribute("width", "600");
 
             Styler::startAttribute();
+            if($this->imageAspectRatio) Styler::addStyle("aspect-ratio", $this->imageAspectRatio);
             Styler::closeAttribute();
             HTMLInterface::closeTag();
             echo '</div>';
@@ -113,10 +115,14 @@ class ModernixRenderer extends SetRenderer {
         echo '<div ';
         Styler::classStartAttribute();
         Styler::addClass("card");
+        HTMLInterface::appendClasses($this->cardModifiers);
         Styler::closeAttribute();
 
         Styler::startAttribute();
+        HTMLInterface::appendStyles($this->cardModifiers);
         Styler::closeAttribute();
+
+        HTMLInterface::applyModifiers($this->cardModifiers);
         echo '>';
     }
 

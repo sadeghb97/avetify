@@ -1,9 +1,12 @@
 <?php
 namespace Avetify\Entities\Sorters;
 
+use Avetify\Entities\EntityUtils;
+
 abstract class SortFactor implements Sorter {
     public bool $alterDirection = false;
     public bool $isDefaultSort = false;
+    public array $tieBreaks = [];
 
     public function __construct(public string $title, public string $factorKey,
                                 public bool $descIsDefault,
@@ -28,23 +31,65 @@ abstract class SortFactor implements Sorter {
         return true;
     }
 
+    public function setTiebreaks(array $tieBreaks) : SortFactor {
+        $this->tieBreaks = $tieBreaks;
+        return $this;
+    }
+
     abstract public function getValue($item) : float | string;
 
+    public static function baseCompare($aValue, $bValue, bool $isNumeric, bool $isDescending): int {
+        if($aValue == $bValue) return 0;
+
+        $multiplier = $isDescending ? -1 : 1;
+        if(!$isNumeric) return $multiplier * strcmp($aValue, $bValue);
+        return $multiplier * ($aValue > $bValue ? 1 : -1);
+    }
+
     public function compare($itemA, $itemB) : int {
-        $isDescending = $this->isDescending();
         $qa = $this->isQualified($itemA);
         $qb = $this->isQualified($itemB);
         if($qa != $qb) return $qa ? -1 : 1;
 
-        $multiplier = $isDescending ? -1 : 1;
         $va = $this->getValue($itemA);
         $vb = $this->getValue($itemB);
 
-        if(!$this->isNumeric){
-            return $multiplier * strcmp($va, $vb);
+        $res = self::baseCompare($va, $vb, $this->isNumeric, $this->isDescending());
+        if($res != 0) return $res;
+
+        foreach ($this->tieBreaks as $tieBreak){
+            $skipEmpties = false;
+            $tbDesc = false;
+            $tbNumeric = false;
+
+            if(str_starts_with($tieBreak, "+")){
+                $tieBreak = substr($tieBreak, 1);
+                $skipEmpties = true;
+            }
+
+            if(str_starts_with($tieBreak, "-")){
+                $tieBreak = substr($tieBreak, 1);
+                $tbDesc = true;
+            }
+
+            if(str_starts_with($tieBreak, "#")){
+                $tieBreak = substr($tieBreak, 1);
+                $tbNumeric = true;
+            }
+
+            $aValue = EntityUtils::getSimpleValue($itemA, $tieBreak);
+            $bValue = EntityUtils::getSimpleValue($itemB, $tieBreak);
+
+            if($aValue != $bValue) {
+                if($skipEmpties) {
+                    if (!$aValue) return 1;
+                    if (!$bValue) return -1;
+                }
+                return self::baseCompare($aValue, $bValue, $tbNumeric, $tbDesc);
+            }
         }
-        if($va == $vb) return 0;
-        return $multiplier * ($va > $vb ? 1 : -1);
+
+        return 0;
     }
 }
 
