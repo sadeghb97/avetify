@@ -112,6 +112,7 @@ require_once "src/Fields/JSDataElement.php";
 require_once "src/Fields/JSDatalist.php";
 require_once "src/Fields/JSDataSet.php";
 require_once "src/Fields/APIMedalField.php";
+require_once "src/Fields/SimpleMedalField.php";
 require_once "src/Fields/APIScoreField.php";
 require_once "src/Fields/JSDynamicSelect.php";
 require_once "src/Fields/APISpanField.php";
@@ -184,6 +185,8 @@ require_once "src/Table/Fields/EditableFields/SelectFields/VisualSelectField.php
 
 require_once "src/Table/Fields/ImageFields/TableAvatarField.php";
 require_once "src/Table/Fields/ImageFields/ExtendedAvatarField.php";
+
+require_once "src/Table/Fields/MedalFields/SimpleIconField.php";
 
 require_once "src/Table/Fields/NumberFields/ColoredField.php";
 require_once "src/Table/Fields/NumberFields/ExactColoredField.php";

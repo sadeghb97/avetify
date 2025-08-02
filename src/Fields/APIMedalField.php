@@ -18,9 +18,12 @@ class APIMedalField extends JSInputField {
     }
 
     public function clickAction() : string {
-        return 'apiMedalClickAction(\'' . $this->getFieldIdentifier() . '\', \'' . $this->recordKey .
-            '\', \'' . $this->medalKey . '\', \'' . $this->medalInitValue .
-            '\', \'' . $this->apiEndpoint . '\')';
+        if($this->apiEndpoint) {
+            return 'apiMedalClickAction(\'' . $this->getFieldIdentifier() . '\', \'' . $this->recordKey .
+                '\', \'' . $this->medalKey . '\', \'' . $this->medalInitValue .
+                '\', \'' . $this->apiEndpoint . '\')';
+        }
+        else return "";
     }
 
     public function place(?WebModifier $webModifier = null){
