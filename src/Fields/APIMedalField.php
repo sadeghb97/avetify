@@ -28,7 +28,7 @@ class APIMedalField extends JSInputField {
 
     public function place(?WebModifier $webModifier = null){
         $div = new NiceDiv(0);
-        $div->baseOpen();
+        $div->baseOpen($webModifier);
         HTMLInterface::addAttribute("onclick", $this->clickAction());
         HTMLInterface::closeTag();
 

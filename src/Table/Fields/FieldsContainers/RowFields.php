@@ -5,7 +5,7 @@ use Avetify\Components\Containers\NiceDiv;
 
 class RowFields extends FieldsContainer {
     public function presentValue($item) {
-        $niceDiv = new NiceDiv(4);
+        $niceDiv = new NiceDiv($this->sepSize);
         $niceDiv->open();
 
         for($i=0; count($this->childs) > $i; $i++){

@@ -40,6 +40,11 @@ class NiceDiv implements AvtContainer {
         foreach ($this->styles as $key => $value) Styler::addStyle($key, $value);
         HTMLInterface::appendStyles($webModifier);
         Styler::closeAttribute();
+
+        Styler::classStartAttribute();
+        HTMLInterface::appendClasses($webModifier);
+        Styler::closeAttribute();
+
         foreach ($this->htmlModifiers as $modifierKey => $modifierValue){
             HTMLInterface::addAttribute($modifierKey, $modifierValue);
         }

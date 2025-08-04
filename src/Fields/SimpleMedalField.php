@@ -21,24 +21,7 @@ class SimpleMedalField extends APIMedalField {
 
     public function place(?WebModifier $webModifier = null){
         if($this->medalInitValue > 0) {
-            $div = new NiceDiv(0);
-            $div->baseOpen();
-            HTMLInterface::addAttribute("onclick", $this->clickAction());
-            HTMLInterface::closeTag();
-
-            HTMLInterface::placeImageWithHeight($this->icon, 48);
-            $div->separate();
-
-            echo '<sapn ';
-            Styler::startAttribute();
-            Styler::addStyle("font-weight", "bold");
-            Styler::closeAttribute();
-            HTMLInterface::addAttribute("id", $this->getFieldIdentifier());
-            HTMLInterface::closeTag();
-            echo $this->medalInitValue;
-            echo '</span>';
-
-            $div->close();
+            parent::place($webModifier);
         }
     }
 }
