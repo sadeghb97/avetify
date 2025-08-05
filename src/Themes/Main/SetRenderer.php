@@ -29,6 +29,7 @@ abstract class SetRenderer extends BaseSetRenderer {
                                 public string $title = "Set", bool|int $limit = 5000){
         if($theme == null) $theme = new GreenTheme();
         parent::__construct($setModifier, $theme, $limit);
+        $this->containerModifier = $this->getFormModifier();
     }
 
     public function getTitle(): string {
@@ -147,6 +148,8 @@ abstract class SetRenderer extends BaseSetRenderer {
                 }
             }
 
+            //$this->getFormModifier(): agar editable bashe baraye containere asli be kar mire
+            //$this->containerModifier: agar editable nabashe baraye containere asli be kar mire
             if ($sbTable->isEditable) {
                 $this->form->openForm($this->getFormModifier());
             }

@@ -2,6 +2,7 @@
 namespace Avetify\Table\Fields\FlagFields;
 
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\HTMLModifier;
 use Avetify\Interface\WebModifier;
 use Avetify\Repo\Countries\World;
 use Avetify\Table\Fields\TableField;
@@ -22,6 +23,8 @@ class FlagField extends TableField {
                 HTMLInterface::closeTag();
             }
 
+            if(!$webModifier) $webModifier = WebModifier::createInstance();
+            if(!$webModifier->htmlModifier) $webModifier->htmlModifier = new HTMLModifier();
             $webModifier->htmlModifier->pushModifier("title", $country['short_name']);
             HTMLInterface::placeImageWithHeight($flag, 50, $webModifier);
 
