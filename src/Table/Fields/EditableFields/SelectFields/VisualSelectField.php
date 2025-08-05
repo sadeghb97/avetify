@@ -16,8 +16,8 @@ class VisualSelectField extends EditableField {
         parent::__construct($title, $key);
     }
 
-    public function presentValue($item) {
-        NiceDiv::justOpen();
+    public function presentValue($item, ?WebModifier $webModifier = null) {
+        NiceDiv::justOpen($webModifier);
         $value = $this->getValue($item);
 
         $selector = new SingleSelector($this->title,

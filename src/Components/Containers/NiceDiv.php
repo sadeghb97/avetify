@@ -18,9 +18,9 @@ class NiceDiv implements AvtContainer {
         "gap" => "4px"
     ];
 
-    public static function justOpen(){
+    public static function justOpen(?WebModifier $webModifier = null) {
         $niceDiv = new NiceDiv(0);
-        $niceDiv->open();
+        $niceDiv->open($webModifier);
     }
 
     public array $htmlModifiers = [];

@@ -3,6 +3,7 @@ namespace Avetify\Table\Fields\MedalFields;
 
 use Avetify\Entities\BasicProperties\EntityProfile;
 use Avetify\Fields\SimpleMedalField;
+use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\TableField;
 
 class SimpleIconField extends TableField {
@@ -10,14 +11,14 @@ class SimpleIconField extends TableField {
         parent::__construct($title, $key);
     }
 
-    public function presentValue($item) {
+    public function presentValue($item, ?WebModifier $webModifier = null) {
         if($item instanceof EntityProfile) {
             $recordKey = $item->getItemId();
             $recordValue = $this->getValue($item);
             $medalField = new SimpleMedalField($recordKey, $this->key, $this->icon, $recordValue);
             if($this->skipEmpties) $medalField->setSkipEmpties();
 
-            $medalField->place();
+            $medalField->place($webModifier);
         }
     }
 }

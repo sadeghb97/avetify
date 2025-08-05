@@ -4,6 +4,7 @@ namespace Avetify\Table\Fields;
 use Avetify\Entities\EntityUtils;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Styler;
+use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\EditableFields\EditableField;
 
 class TableField {
@@ -82,7 +83,7 @@ class TableField {
         self::closeTD();
     }
 
-    public function presentValue($item){
+    public function presentValue($item, ?WebModifier $webModifier = null){
         echo $this->getValue($item);
     }
 

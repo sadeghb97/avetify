@@ -3,6 +3,7 @@ namespace Avetify\Table\Fields\LinkFields;
 
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Styler;
+use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\TableField;
 
 abstract class TableLinkField extends TableField {
@@ -15,14 +16,22 @@ abstract class TableLinkField extends TableField {
 
     abstract function getLinkValue($item) : string;
 
-    public function presentValue($item){
+    public function presentValue($item, ?WebModifier $webModifier = null){
         $title = $this->getValue($item);
         $link = $this->getLinkValue($item);
         echo '<a href="' . $link . '" style="';
         if($this->color != null) Styler::addStyle("color", $this->color);
+        HTMLInterface::appendStyles($webModifier);
         echo '" ';
+
+        Styler::classStartAttribute();
+        HTMLInterface::appendClasses($webModifier);
+        Styler::closeAttribute();
+
         if($this->isBlank) HTMLInterface::addAttribute("target", "_blank");
+        HTMLInterface::applyModifiers($webModifier);
         HTMLInterface::closeTag();
+
         echo $title;
         echo '</a>';
     }

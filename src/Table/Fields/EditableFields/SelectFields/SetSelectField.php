@@ -17,8 +17,8 @@ class SetSelectField extends EditableField {
         parent::__construct($title, $key);
     }
 
-    public function presentValue($item) {
-        NiceDiv::justOpen();
+    public function presentValue($item, ?WebModifier $webModifier = null) {
+        NiceDiv::justOpen($webModifier);
         $value = $this->getValue($item);
         $setSelector = new SetSelector($this->title,
             $this->getEditableFieldIdentifier($item), $value, $this->datalist);

@@ -1,7 +1,9 @@
 <?php
 namespace Avetify\Table\Fields\ImageFields;
 
+use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Styler;
+use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\TableField;
 
 class TableAvatarField extends TableField {
@@ -13,13 +15,21 @@ class TableAvatarField extends TableField {
         return $this->getValue($item);
     }
 
-    public function presentValue($item){
+    public function presentValue($item, ?WebModifier $webModifier = null){
         $image = $this->getSrc($item);
         echo '<img src="' . $image . '" style="';
         if($this->imageWidth){
             Styler::addStyle("width", $this->imageWidth);
             Styler::addStyle("height", "auto");
         }
-        echo '" >';
+        HTMLInterface::appendStyles($webModifier);
+        echo '" ';
+
+        Styler::classStartAttribute();
+        HTMLInterface::appendClasses($webModifier);
+        Styler::closeAttribute();
+
+        HTMLInterface::applyModifiers($webModifier);
+        HTMLInterface::closeSingleTag();
     }
 }

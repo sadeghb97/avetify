@@ -1,6 +1,7 @@
 <?php
 namespace Avetify\Table\Fields\DateFields;
 
+use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\TableSimpleField;
 
 class TimeDurationField extends TableSimpleField {
@@ -8,7 +9,7 @@ class TimeDurationField extends TableSimpleField {
         parent::__construct($title, $key);
     }
 
-    public function presentValue($item) {
+    public function presentValue($item, ?WebModifier $webModifier = null) {
         $val = $this->getValue($item);
         $hours = (int)($val / 3600);
         $rem = $val % 3600;

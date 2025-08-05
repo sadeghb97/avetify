@@ -3,10 +3,11 @@ namespace Avetify\Table\Fields\FlagFields;
 
 use Avetify\Components\Countries\CountriesACTextFactory;
 use Avetify\Components\Countries\CountrySelector;
+use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\EditableFields\EditableField;
 
 class VisualSelectCountryField extends EditableField {
-    public function presentValue($item){
+    public function presentValue($item, ?WebModifier $webModifier = null){
         $countrySelector = new CountrySelector(
             $this->getEditableFieldIdentifier($item),
             $this->getCountriesACFactory("countries-actext", $this->getEditableFieldIdentifier($item)),
@@ -14,7 +15,7 @@ class VisualSelectCountryField extends EditableField {
             true,
             $this->getValue($item)
         );
-        $countrySelector->place();
+        $countrySelector->place($webModifier);
     }
 
     public function getCountriesACFactory(

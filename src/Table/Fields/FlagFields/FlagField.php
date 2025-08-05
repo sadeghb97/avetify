@@ -7,7 +7,7 @@ use Avetify\Repo\Countries\World;
 use Avetify\Table\Fields\TableField;
 
 class FlagField extends TableField {
-    public function presentValue($item) {
+    public function presentValue($item, ?WebModifier $webModifier = null) {
         $countryCode = $this->getValue($item);
         $country = World::getCountry($countryCode);
         $flag = World::getCountryFlag($countryCode);
@@ -22,9 +22,8 @@ class FlagField extends TableField {
                 HTMLInterface::closeTag();
             }
 
-            $flagModifier = WebModifier::createInstance();
-            $flagModifier->htmlModifier->pushModifier("title", $country['short_name']);
-            HTMLInterface::placeImageWithHeight($flag, 50, $flagModifier);
+            $webModifier->htmlModifier->pushModifier("title", $country['short_name']);
+            HTMLInterface::placeImageWithHeight($flag, 50, $webModifier);
 
             if($countryLink) HTMLInterface::closeLink();
         }

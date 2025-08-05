@@ -3,20 +3,29 @@ namespace Avetify\Table\Fields\EditableFields;
 
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Styler;
+use Avetify\Interface\WebModifier;
 
 class TextAreaTableField extends EditableField {
     public int $rows = 10;
     public int $columns = 50;
 
-    public function presentValue($item) {
+    public function presentValue($item, ?WebModifier $webModifier = null) {
         echo '<textarea ';
         HTMLInterface::addAttribute("placeholder", $this->title);
         HTMLInterface::addAttribute("rows", $this->rows);
         HTMLInterface::addAttribute("cols", $this->columns);
         $this->appendMainAttributes($item);
+        HTMLInterface::applyModifiers($webModifier);
+
         Styler::startAttribute();
         $this->appendMainStyles($item);
+        HTMLInterface::appendStyles($webModifier);
         Styler::closeAttribute();
+
+        Styler::classStartAttribute();
+        HTMLInterface::appendClasses($webModifier);
+        Styler::closeAttribute();
+
         HTMLInterface::closeTag();
 
         if($item != null) {

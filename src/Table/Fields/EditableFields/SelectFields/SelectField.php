@@ -3,10 +3,11 @@ namespace Avetify\Table\Fields\EditableFields\SelectFields;
 
 use Avetify\Fields\JSDataSet;
 use Avetify\Fields\JSDynamicSelect;
+use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\EditableFields\EditableField;
 
 abstract class SelectField extends EditableField {
-    public function presentValue($item) {
+    public function presentValue($item, ?WebModifier $webModifier = null) {
         $dynamicSelect = new JSDynamicSelect(
             "",
             $this->getEditableFieldIdentifier($item),
@@ -14,7 +15,7 @@ abstract class SelectField extends EditableField {
             $this->getDataSetKey()
         );
         $dynamicSelect->setNameIdentifier = false;
-        $dynamicSelect->place();
+        $dynamicSelect->place($webModifier);
     }
 
     public function preLoad() {

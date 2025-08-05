@@ -3,6 +3,7 @@ namespace Avetify\Table\Fields\ApiFields;
 
 use Avetify\Entities\BasicProperties\EntityProfile;
 use Avetify\Fields\APIMedalField;
+use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\TableField;
 
 class ApiIconField extends TableField {
@@ -10,14 +11,14 @@ class ApiIconField extends TableField {
         parent::__construct($title, $key);
     }
 
-    public function presentValue($item) {
+    public function presentValue($item, ?WebModifier $webModifier = null) {
         if($item instanceof EntityProfile) {
             $recordKey = $item->getItemId();
             $recordValue = $this->getValue($item);
             $medalField = new APIMedalField($recordKey, $this->key, $this->icon,
                 $recordValue, $this->apiEndpoint);
 
-            $medalField->place();
+            $medalField->place($webModifier);
         }
     }
 }

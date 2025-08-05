@@ -4,6 +4,7 @@ namespace Avetify\Table\Fields\EditableFields;
 use Avetify\Entities\BasicProperties\EntityID;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Styler;
+use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\TableField;
 
 class EditableField extends TableField {
@@ -44,9 +45,8 @@ class EditableField extends TableField {
         Styler::addStyle("font-family", "inherit");
     }
 
-    public function presentValue($item){
+    public function presentValue($item, ?WebModifier $webModifier = null){
         $value = $this->getValue($item);
-        $classApplier = $this->getItemClassApplier($item);
 
         echo '<input ';
         HTMLInterface::addAttribute("type", "text");
@@ -56,23 +56,21 @@ class EditableField extends TableField {
 
         HTMLInterface::addAttribute("placeholder", $this->title);
         $this->appendMainAttributes($item);
+        HTMLInterface::applyModifiers($webModifier);
+
         Styler::startAttribute();
         $this->appendMainStyles($item);
         Styler::addStyle("height", "35px");
+        HTMLInterface::appendStyles($webModifier);
         Styler::closeAttribute();
 
-        if(count($classApplier->classes) > 0){
-            $classApplier->applyClasses();
-        }
+        Styler::classStartAttribute();
+        if($this->isNumeric) Styler::addClass("numeric-text");
+        if($this->submitter) Styler::addClass("submitter");
+        HTMLInterface::appendClasses($webModifier);
+        Styler::closeAttribute();
 
         HTMLInterface::closeSingleTag();
-    }
-
-    public function getItemClassApplier($item) : Styler {
-        $classApplier = new Styler();
-        if($this->isNumeric) $classApplier->pushClass("numeric-text");
-        if($this->submitter) $classApplier->pushClass("submitter");
-        return $classApplier;
     }
 
     public function onlyNameIdentifier(){

@@ -1,6 +1,7 @@
 <?php
 namespace Avetify\Table\Fields\DateFields;
 
+use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\TableSimpleField;
 use Avetify\Utils\TimeUtils\TimeUtils;
 
@@ -9,7 +10,7 @@ class RecentField extends TableSimpleField {
         parent::__construct($title, $key);
     }
 
-    public function presentValue($item) {
+    public function presentValue($item, ?WebModifier $webModifier = null) {
         $val = $this->getValue($item);
         $duration = time() - ((int) $val);
         echo TimeUtils::summaryFormatDuration($duration);
