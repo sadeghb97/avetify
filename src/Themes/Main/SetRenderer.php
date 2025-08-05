@@ -186,7 +186,7 @@ abstract class SetRenderer extends BaseSetRenderer {
     }
 
     public function getFormModifier() : ?WebModifier {
-        return null;
+        return WebModifier::createInstance();
     }
 
     public function renderCreatingElements(){}
