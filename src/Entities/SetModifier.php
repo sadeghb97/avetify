@@ -28,7 +28,7 @@ abstract class SetModifier implements EntityManager {
         return [];
     }
 
-    /** @return FilterFactor[] An array of MyClass instances */
+    /** @return FilterFactor[] */
     public function finalFilterFactors() : array {
         return [];
     }

@@ -62,9 +62,13 @@ abstract class BaseSetRenderer {
     public function renderBody(){
         $this->onRecordsAdjusted();
 
-        $allSortFactors = $this->setModifier->finalSortFactors();
-        if($this->setModifier->isSortable && count($allSortFactors) > 0){
-            $this->renderSortLabels();
+
+        if($this->setModifier->isSortable){
+            $allSortFactors = $this->setModifier->finalSortFactors();
+            if(count($allSortFactors) > 0) $this->renderSortLabels();
+
+            $allFilters = $this->setModifier->finalFilterFactors();
+            if(count($allFilters) > 0) $this->renderFilterLabels();
         }
 
         $this->prepareContainerModifier();
@@ -96,48 +100,70 @@ abstract class BaseSetRenderer {
     public function renderSortLabels(){
         $allSortFactors = $this->setModifier->finalSortFactors();
         echo '<div style="text-align: center; margin-top: 12px;">';
-        $defaultBg = 'Black';
-        $defaultColor = 'Cyan';
-        $alterBg = 'Black';
-        $alterColor = 'GoldenRod';
 
-        $clearLabel = new ClassicLabel(
-            "Clear",
-            Routing::removeParamFromCurrentLink($this->setModifier->getSortKey())
-        );
-        $clearLabel->place();
+        $this->renderSortLabel("Clear",
+            Routing::removeParamFromCurrentLink($this->setModifier->getSortKey()), false);
 
-        $currentSort = isset($_GET[$this->setModifier->getSortKey()]) ?
-            $_GET[$this->setModifier->getSortKey()] : null;
-        $startWithMinus = $currentSort ? str_starts_with($currentSort, "-") : false;
+        $currentSort = $_GET[$this->setModifier->getSortKey()] ?? null;
+        $startWithMinus = $currentSort && str_starts_with($currentSort, "-");
         $pureSort = null;
         if($currentSort != null){
             $pureSort = $startWithMinus ? substr($currentSort, 1) : $currentSort;
         }
 
         foreach ($allSortFactors as $sortFactor){
-            $finalBg = $defaultBg;
-            $finalColor = $defaultColor;
+            $alterStyle = false;
             $finalTitle = $sortFactor->title;
             $nextDescending = $sortFactor->descIsDefault;
             if($currentSort && $pureSort == $sortFactor->factorKey){
                 $nextDescending = !$startWithMinus;
-                $finalBg = $alterBg;
-                $finalColor = $alterColor;
+                $alterStyle = true;
                 $finalTitle .= ($startWithMinus ? " ↓" : " ↑");
             }
             $finalSortFactor = ($nextDescending ? "-" : "") . $sortFactor->factorKey;
 
-            $label = new ClassicLabel(
-                $finalTitle,
-                Routing::addParamToCurrentLink($this->setModifier->getSortKey(), $finalSortFactor),
-                $finalBg,
-                $finalColor
-            );
-            $label->place();
+            $this->renderSortLabel($finalTitle,
+                Routing::addParamToCurrentLink($this->setModifier->getSortKey(), $finalSortFactor), $alterStyle);
         }
 
         echo '</div>';
+    }
+
+    public function renderFilterLabels(){
+        $allFilters = $this->setModifier->finalFilterFactors();
+
+        foreach ($allFilters as $filter){
+            $filterKey = $this->setModifier->getFilterKey($filter->key);
+            echo '<div style="text-align: center; margin-top: 12px;">';
+
+            $this->renderFilterLabel("Clear",
+                Routing::removeParamFromCurrentLink($filterKey), false);
+
+            $currentFilter = $_GET[$filterKey] ?? null;
+            foreach ($filter->discreteFilters as $discreteFilterTitle => $discreteFilterValue){
+                $alterStyle = $currentFilter && $currentFilter == $discreteFilterValue;
+                $this->renderFilterLabel($discreteFilterTitle,
+                    Routing::addParamToCurrentLink($filterKey, $discreteFilterValue), $alterStyle);
+            }
+
+            echo '</div>';
+        }
+    }
+
+    public function renderSortLabel(string $title, string $link, bool $alterStyle): void {
+        $finalBg = !$alterStyle ? "Black" : "Black";
+        $finalColor = !$alterStyle ? "Cyan" : "GoldenRod";
+
+        $label = new ClassicLabel($title, $link, $finalBg, $finalColor);
+        $label->place();
+    }
+
+    public function renderFilterLabel(string $title, string $link, bool $alterStyle): void {
+        $finalBg = !$alterStyle ? "Black" : "Black";
+        $finalColor = !$alterStyle ? "Cyan" : "GoldenRod";
+
+        $label = new ClassicLabel($title, $link, $finalBg, $finalColor);
+        $label->place();
     }
 
     public function getItemBoxIdentifier($record) : string {

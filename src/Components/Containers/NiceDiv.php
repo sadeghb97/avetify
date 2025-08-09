@@ -35,20 +35,31 @@ class NiceDiv implements AvtContainer {
     }
 
     public function baseOpen(WebModifier $webModifier = null){
+        if($webModifier == null) $webModifier = WebModifier::createInstance();
+        if($webModifier->styler == null) $webModifier->styler = new Styler();
+
         echo '<div ';
-        Styler::startAttribute();
-        foreach ($this->styles as $key => $value) Styler::addStyle($key, $value);
-        HTMLInterface::appendStyles($webModifier);
-        Styler::closeAttribute();
+
+        foreach ($this->htmlModifiers as $modifierKey => $modifierValue){
+            if(trim(strtolower($modifierKey)) != "class") HTMLInterface::addAttribute($modifierKey, $modifierValue);
+            else {
+                $classes = explode(" ", $modifierValue);
+                foreach ($classes as $class) {
+                    $webModifier->styler->pushClass($class);
+                }
+            }
+        }
+
+        HTMLInterface::applyModifiers($webModifier);
 
         Styler::classStartAttribute();
         HTMLInterface::appendClasses($webModifier);
         Styler::closeAttribute();
 
-        foreach ($this->htmlModifiers as $modifierKey => $modifierValue){
-            HTMLInterface::addAttribute($modifierKey, $modifierValue);
-        }
-        HTMLInterface::applyModifiers($webModifier);
+        Styler::startAttribute();
+        foreach ($this->styles as $key => $value) Styler::addStyle($key, $value);
+        HTMLInterface::appendStyles($webModifier);
+        Styler::closeAttribute();
     }
 
     public function open(WebModifier $webModifier = null){

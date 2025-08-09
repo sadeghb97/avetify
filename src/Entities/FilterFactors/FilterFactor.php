@@ -2,12 +2,22 @@
 namespace Avetify\Entities\FilterFactors;
 
 use Avetify\Entities\EntityUtils;
-use Avetify\Entities\ValueGetter;
 
 abstract class FilterFactor {
-    public function __construct(public string $title, public string $key, public ValueGetter | null $getter = null){
-        if($this->getter == null) $this->getter = EntityUtils::defaultValueGetter($this->key);
+    public array $discreteFilters = [];
+
+    public function __construct(public string $title, public string $key){}
+
+    public function getItemRelatedValue($item) {
+        return EntityUtils::getSimpleValue($item, $this->key);
     }
 
-    public abstract function isQualified($item, $param) : bool;
+    public function isQualified($item, $param): bool {
+        return !!$this->getItemRelatedValue($item);
+    }
+
+    public function addDiscreteFilter($filterTitle, $filterValue): FilterFactor {
+        $this->discreteFilters[$filterTitle] = $filterValue;
+        return $this;
+    }
 }
