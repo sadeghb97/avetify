@@ -16,6 +16,9 @@ class ThemesManager {
     public bool $includesCodingFieldTools = false;
     public bool $includesHighlightCodesTools = false;
     public bool $includesChartTools = false;
+    public bool $includesBootstrap = false;
+    public bool $includesFontAwesome = false;
+    public bool $includesStatsStyles = false;
     public ?NavigationRenderer $navigationRenderer = null;
 
     public function __construct(){
@@ -58,6 +61,9 @@ class ThemesManager {
         if($this->includesCodingFieldTools) self::importCodingFieldTools();
         if($this->includesHighlightCodesTools) self::importHighlightCodeTools();
         if($this->includesChartTools) self::importChartTools();
+        if($this->includesBootstrap) self::importBootstrap();
+        if($this->includesFontAwesome) self::importFontAwesome();
+        if($this->includesStatsStyles) self::importStatStyles();
 
         if($this->navigationRenderer){
             $this->navigationRenderer->headImports();
@@ -172,7 +178,17 @@ class ThemesManager {
 
     public static function importBootstrap(){
         self::importStyle(AvetifyManager::assetUrl("components/bootstrap/bootstrap.min.css"));
+        self::importJS(AvetifyManager::assetUrl("components/bootstrap/bootstrap.bundle.min.js"));
     }
+
+    public static function importFontAwesome(){
+        self::importStyle(AvetifyManager::assetUrl("components/fontawesome/fontawesome.min.css"));
+    }
+
+    public static function importStatStyles(){
+        self::importStyle(AvetifyManager::assetUrl("styles/stats.css"));
+    }
+
 
     public static function importJoshButtons(){
         self::importStyle(AvetifyManager::assetUrl("themes/main/css/josh_buttons.css"));

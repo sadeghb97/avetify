@@ -97,7 +97,7 @@ abstract class SetRenderer extends BaseSetRenderer {
         if(!$sbTable->isEditable) return;
 
         $allJSEditableFields = [];
-        foreach ($sbTable->fields as $field) {
+        foreach ($sbTable->getAllFields() as $field) {
             foreach ($sbTable->currentRecords as $record) {
                 if ($field instanceof EditableField) {
                     $allJSEditableFields[] = $field->getEditableFieldIdentifier($record);
