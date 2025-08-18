@@ -10,10 +10,10 @@ use Avetify\Interface\WebModifier;
 
 class AvtForm {
     /** @var Placeable[] */
-    public array $triggers;
+    public array $triggers = [];
 
     /** @var FormHiddenProperty[] */
-    public array $hiddenData;
+    public array $hiddenData = [];
 
     public function __construct(public string $formIdentifier, public string $formMethod = "POST"){
     }

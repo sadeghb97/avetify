@@ -133,6 +133,8 @@ abstract class BaseSetRenderer {
         $allFilters = $this->setModifier->finalFilterFactors();
 
         foreach ($allFilters as $filter){
+            if(count($filter->discreteFilters) <= 0) return;
+
             $filterKey = $this->setModifier->getFilterKey($filter->key);
             echo '<div style="text-align: center; margin-top: 12px;">';
 

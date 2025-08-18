@@ -99,7 +99,7 @@ abstract class SetModifier implements EntityManager {
 
             foreach ($this->finalFilterFactors() as $filterFactor){
                 $filterKey = $this->getFilterKey($filterFactor->key);
-                if(isset($_GET[$filterKey]) && !$filterFactor->isQualified($record, $_GET[$filterKey])){
+                if(isset($_REQUEST[$filterKey]) && !$filterFactor->isQualified($record, $_REQUEST[$filterKey])){
                     $isQualified = false;
                     break;
                 }

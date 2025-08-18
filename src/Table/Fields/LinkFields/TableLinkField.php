@@ -19,21 +19,25 @@ abstract class TableLinkField extends TableField {
     public function presentValue($item, ?WebModifier $webModifier = null){
         $title = $this->getValue($item);
         $link = $this->getLinkValue($item);
-        echo '<a href="' . $link . '" style="';
-        if($this->color != null) Styler::addStyle("color", $this->color);
-        HTMLInterface::appendStyles($webModifier);
-        echo '" ';
 
-        Styler::classStartAttribute();
-        HTMLInterface::appendClasses($webModifier);
-        Styler::closeAttribute();
+        if($link) {
+            echo '<a href="' . $link . '" style="';
+            if ($this->color != null) Styler::addStyle("color", $this->color);
+            HTMLInterface::appendStyles($webModifier);
+            echo '" ';
 
-        if($this->isBlank) HTMLInterface::addAttribute("target", "_blank");
-        HTMLInterface::applyModifiers($webModifier);
-        HTMLInterface::closeTag();
+            Styler::classStartAttribute();
+            HTMLInterface::appendClasses($webModifier);
+            Styler::closeAttribute();
+
+            if($this->isBlank) HTMLInterface::addAttribute("target", "_blank");
+            HTMLInterface::applyModifiers($webModifier);
+            HTMLInterface::closeTag();
+        }
 
         echo $title;
-        echo '</a>';
+
+        if($link) echo '</a>';
     }
 
     public function setBlank() : TableField {
