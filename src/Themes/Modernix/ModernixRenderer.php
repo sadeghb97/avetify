@@ -1,7 +1,6 @@
 <?php
 namespace Avetify\Themes\Modernix;
 
-use Avetify\Components\Containers\NiceDiv;
 use Avetify\Components\Containers\VertDiv;
 use Avetify\Entities\SetModifier;
 use Avetify\Interface\CSS;
@@ -111,7 +110,7 @@ class ModernixRenderer extends SetRenderer {
         }
     }
 
-    public function openRecord($record){
+    public function openRecord($record, int $index){
         echo '<div ';
         Styler::classStartAttribute();
         Styler::addClass("card");
@@ -126,7 +125,7 @@ class ModernixRenderer extends SetRenderer {
         echo '>';
     }
 
-    public function closeRecord($record){
+    public function closeRecord($record, int $index){
         echo '</div>';
     }
 

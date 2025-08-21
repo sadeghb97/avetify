@@ -37,10 +37,6 @@ abstract class SetModifier implements EntityManager {
         return $this->setKey . "_sort";
     }
 
-    public function getFilterKey($factorKey) : string {
-        return $this->setKey . "_" . $factorKey;
-    }
-
     public function getSortRawToken() : ?string {
         return $_GET[$this->getSortKey()] ?? null;
     }
@@ -98,7 +94,7 @@ abstract class SetModifier implements EntityManager {
             $isQualified = true;
 
             foreach ($this->finalFilterFactors() as $filterFactor){
-                $filterKey = $this->getFilterKey($filterFactor->key);
+                $filterKey = $filterFactor->getFilterElementId();
                 if(isset($_REQUEST[$filterKey]) && !$filterFactor->isQualified($record, $_REQUEST[$filterKey])){
                     $isQualified = false;
                     break;

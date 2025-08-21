@@ -24,7 +24,7 @@ class GreenTableRenderer extends SetRenderer {
         /** @var AvtTable $sbTable */
         $sbTable = $this->setModifier;
 
-        $this->openRecord(null);
+        $this->openRecord(null, 0);
         if($this->printRowIndex) $this->placeEmptyTD();
         foreach ($sbTable->fields as $field){
             if($field->onCreateField != null){
@@ -33,7 +33,7 @@ class GreenTableRenderer extends SetRenderer {
             else $this->placeEmptyTD();
         }
         if($sbTable->enableSelectRecord) $this->placeEmptyTD();
-        $this->closeRecord(null);
+        $this->closeRecord(null, 0);
     }
 
     public function openCollection(WebModifier $webModifier = null){
@@ -63,7 +63,7 @@ class GreenTableRenderer extends SetRenderer {
             $field->renderHeaderTH();
         }
         if($sbTable->enableSelectRecord) TableField::renderIndexTH("Action");
-        $this->closeRecord(null);
+        $this->closeRecord(null, 0);
 
         if($sbTable->enableSelectRecord) {
             $this->selectorField = new RecordSelectorField("Action", $sbTable);
@@ -81,13 +81,13 @@ class GreenTableRenderer extends SetRenderer {
         echo '</div>';
     }
 
-    public function openRecord($record){
+    public function openRecord($record, int $index){
         echo '<tr style="';
         $this->normalTRStyles($record);
         echo '">';
     }
 
-    public function closeRecord($record){
+    public function closeRecord($record, int $index){
         echo '</td>';
     }
 
@@ -95,7 +95,7 @@ class GreenTableRenderer extends SetRenderer {
         /** @var AvtTable $sbTable */
         $sbTable = $this->setModifier;
 
-        $this->openRecord($item);
+        $this->openRecord($item, $index);
         if($this->printRowIndex) TableField::renderIndexTD(
             $index + 1, $sbTable->getItemLink($item));
         foreach ($sbTable->fields as $field){
@@ -106,7 +106,7 @@ class GreenTableRenderer extends SetRenderer {
             else $field->renderRecord($item);
         }
         if($sbTable->enableSelectRecord) $this->selectorField->renderRecord($item);
-        $this->closeRecord($item);
+        $this->closeRecord($item, $index);
     }
 
     public function getFormModifier(): ?WebModifier {

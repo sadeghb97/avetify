@@ -87,7 +87,7 @@ abstract class ListerRenderer extends BaseSetRenderer {
         Styler::addStyle(CSS::margin, "12px");
     }
 
-    public function openRecord($record, $moreDetails = null) {
+    public function openRecord($record, int $index) {
         $itemId = $this->lister->getItemId($record);
         echo '<div ';
         HTMLInterface::addAttribute(Attrs::id,'lister-item_' . $itemId);
@@ -99,18 +99,15 @@ abstract class ListerRenderer extends BaseSetRenderer {
         HTMLInterface::closeTag();
     }
 
-    public function closeRecord($record, $moreDetails = null) {
+    public function closeRecord($record, int $index) {
         echo '</div>';
     }
 
     public function printItemCard($item, ListerCategory | null $category, $itemRank){
-        $moreRecordDetails = [];
-        $moreRecordDetails["rank"] = $itemRank;
-
-        $this->openRecord($item, $moreRecordDetails);
+        $this->openRecord($item, $itemRank);
         $this->renderRecordMain($item, $itemRank);
         $this->moreRecordFields($item, $itemRank);
-        $this->closeRecord($item, $moreRecordDetails);
+        $this->closeRecord($item, $itemRank);
     }
 
     public function renderAllCategories(){

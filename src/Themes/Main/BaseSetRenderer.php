@@ -26,10 +26,10 @@ abstract class BaseSetRenderer {
         foreach ($this->setModifier->currentRecords as $itemIndex => $record){
             if(!$this->isQualified($record)) continue;
 
-            $this->openRecord($record);
+            $this->openRecord($record, $itemIndex);
             $this->renderRecordMain($record, $itemIndex);
             $this->moreRecordFields($record, $itemIndex);
-            $this->closeRecord($record);
+            $this->closeRecord($record, $itemIndex);
 
             if($this->limit && ($itemIndex + 1) >= $this->limit) break;
         }
@@ -46,8 +46,8 @@ abstract class BaseSetRenderer {
 
     public function openCollection(WebModifier $webModifier = null){}
     public function closeCollection(WebModifier $webModifier = null){}
-    public function openRecord($record){}
-    public function closeRecord($record){}
+    public function openRecord($record, int $index){}
+    public function closeRecord($record, int $index){}
     public function postConstruct(){}
 
     public function openPage(){
@@ -135,7 +135,7 @@ abstract class BaseSetRenderer {
         foreach ($allFilters as $filter){
             if(count($filter->discreteFilters) <= 0) return;
 
-            $filterKey = $this->setModifier->getFilterKey($filter->key);
+            $filterKey = $filter->getFilterElementId();
             echo '<div style="text-align: center; margin-top: 12px;">';
 
             $this->renderFilterLabel("Clear",
