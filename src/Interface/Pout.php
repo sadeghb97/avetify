@@ -19,7 +19,9 @@ class Pout {
     }
 
     public static function bufferOut(){
-        if(!Platform::isCli()) ob_flush();
+        if (ob_get_level() > 0) {
+            ob_flush();
+        }
         flush();
         usleep(10000);
     }
