@@ -24,6 +24,7 @@ class Flusher {
 
     private function _bufferOut(){
         echo $this->key . " Flusher: " . $this->counter;
+        Pout::endline();
         Pout::bufferOut();
         usleep($this->delayMs * 1000);
     }
