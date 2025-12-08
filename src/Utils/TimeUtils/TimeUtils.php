@@ -43,6 +43,59 @@ class TimeUtils {
         return JDF::jdate("Y{$separator}m", $time, '', 'Asia/Tehran', 'en');
     }
 
+    public static function jalaliDaysPassedInMonth(int $year, int $month): float
+    {
+        $month = max(1, min(12, $month));
+        list($cy, $cm, $cd) = explode('/', JDF::jdate('Y/m/d', time(), '', 'Asia/Tehran', 'en'));
+
+        if ($year > $cy) return 0.0;
+        if ($year == $cy && $month > $cm) return 0.0;
+
+        $monthLength = self::jalaliMonthDays($year, $month);
+
+        if ($year < $cy || ($year == $cy && $month < $cm)) {
+            return (float)$monthLength;
+        }
+
+        $secondsToday = time() - strtotime("today");
+        $fraction = $secondsToday / 86400;
+
+        return ($cd - 1) + $fraction;
+    }
+
+    public static function jalaliDaysPassedInYear(int $year): float{
+        list($cy, $cm, $cd) = explode('/', JDF::jdate('Y/m/d', time(), '', 'Asia/Tehran', 'en'));
+        if ($year > $cy) return 0.0;
+
+        $yearLength = self::jalaliYearDays($year);
+        if ($year < $cy) return (float)$yearLength;
+
+        $total = 0;
+        for ($m = 1; $m < $cm; $m++) {
+            $total += self::jalaliMonthDays($year, $m);
+        }
+
+        $secondsToday = time() - strtotime("today");
+        $fraction = $secondsToday / 86400;
+
+        $total += ($cd - 1) + $fraction;
+        return $total;
+    }
+
+    public static function jalaliMonthDays(int $year, int $month): int {
+        if ($month <= 6) return 31;
+        if ($month <= 11) return 30;
+        return self::jalaliIsLeapYear($year) ? 30 : 29;
+    }
+
+    public static function jalaliYearDays(int $year): int {
+        return self::jalaliIsLeapYear($year) ? 366 : 365;
+    }
+
+    public static function jalaliIsLeapYear(int $year): bool {
+        return JDF::jdate('L', strtotime("$year-01-01"), '', 'Asia/Tehran', 'en') == '1';
+    }
+
     public static function getRecentTimeFromDuration(int $duration) : RecentTime {
         $minuteLength = 60;
         $hourLength = 3600;
