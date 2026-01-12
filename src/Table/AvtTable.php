@@ -22,6 +22,7 @@ class AvtTable extends SetModifier {
 
     public bool $enableSelectRecord = false;
     public bool $enableCreatingRow = false;
+    public bool $creatingRowOnTop = false;
     public bool $forcePatchRecords = false;
     public bool $enableAutoPatchCreatedAt = false;
     public bool $enableAutoPatchUpdatedAt = false;

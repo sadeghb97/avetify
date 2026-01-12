@@ -70,13 +70,15 @@ class GreenTableRenderer extends SetRenderer {
             $this->selectorField->namespace = $sbTable->setKey;
             $this->selectorField->onlyIDIdentifier();
         }
+
+        if($sbTable->enableCreatingRow && $sbTable->creatingRowOnTop) $this->renderCreatingElements();
     }
 
     public function closeCollection(WebModifier $webModifier = null){
         /** @var AvtTable $sbTable */
         $sbTable = $this->setModifier;
 
-        if($sbTable->enableCreatingRow) $this->renderCreatingElements();
+        if($sbTable->enableCreatingRow && !$sbTable->creatingRowOnTop) $this->renderCreatingElements();
         echo '</table>';
         echo '</div>';
     }

@@ -13,6 +13,7 @@ use Avetify\Table\Fields\TableField;
 
 abstract class DBTable extends AvtTable {
     public bool $pkIsNumeric = true;
+    public string $dbFetchOrder = "";
 
     public function __construct(public DBConnection $conn, public string $dbTableName,
                                 public string $primaryKey, string $key){
@@ -152,7 +153,9 @@ abstract class DBTable extends AvtTable {
     }
 
     public function fetchDBRecords() : array {
-        return $this->conn->fetchSet("SELECT * FROM {$this->dbTableName}");
+        $fetchSql = "SELECT * FROM {$this->dbTableName}";
+        if($this->dbFetchOrder) $fetchSql .= (" ORDER BY " . $this->dbFetchOrder);
+        return $this->conn->fetchSet($fetchSql);
     }
 
     /** @return TableField[] */
