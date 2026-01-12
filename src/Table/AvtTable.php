@@ -23,6 +23,8 @@ class AvtTable extends SetModifier {
     public bool $enableSelectRecord = false;
     public bool $enableCreatingRow = false;
     public bool $forcePatchRecords = false;
+    public bool $enableAutoPatchCreatedAt = false;
+    public bool $enableAutoPatchUpdatedAt = false;
 
     public function __construct(array $fields, array $rawRecords, string $key, bool $isEditable = false){
         parent::__construct($key);

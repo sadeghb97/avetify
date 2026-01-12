@@ -14,7 +14,7 @@ abstract class SelectField extends EditableField {
             $this->getValue($item),
             $this->getDataSetKey()
         );
-        $dynamicSelect->setNameIdentifier = false;
+        $dynamicSelect->setNameIdentifier = $this->useNameIdentifier;
         $dynamicSelect->place($webModifier);
     }
 

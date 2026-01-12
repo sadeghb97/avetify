@@ -61,6 +61,10 @@ abstract class DBTable extends AvtTable {
             }
 
             if($queryRequired) {
+                if($this->enableAutoPatchUpdatedAt){
+                    $queryBuilder->addField(time(), true, "updated_at");
+                }
+
                 $sql = $queryBuilder->createUpdate(new QueryField($itemPk, $this->pkIsNumeric, $this->primaryKey));
                 if($this->conn->query($sql)) {
                     $this->printDBUpdateStatus($titlePrinter, $oldRecord, $messagePrinter, "Updated");
@@ -120,6 +124,10 @@ abstract class DBTable extends AvtTable {
                 $fieldDetails = $fieldsMap[$key];
                 $isNumericField = $fieldDetails && $fieldDetails->isNumeric;
                 $queryBuilder->addField($value, $isNumericField, $key);
+            }
+
+            if($this->enableAutoPatchCreatedAt){
+                $queryBuilder->addField(time(), true, "created_at");
             }
 
             $sql = $queryBuilder->createInsert(true);

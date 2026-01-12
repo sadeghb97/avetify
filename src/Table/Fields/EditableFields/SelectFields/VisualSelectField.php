@@ -22,6 +22,7 @@ class VisualSelectField extends EditableField {
 
         $selector = new SingleSelector($this->title,
             $this->getEditableFieldIdentifier($item), $value, $this->datalist);
+        $selector->useNameIdentifier = $this->useNameIdentifier;
         $selectorModifier = WebModifier::createInstance();
         if($this->maxSelectorWidth > 0){
             $selectorModifier->styler->pushStyle("max-width", $this->maxSelectorWidth . "px");

@@ -22,6 +22,7 @@ class SetSelectField extends EditableField {
         $value = $this->getValue($item);
         $setSelector = new SetSelector($this->title,
             $this->getEditableFieldIdentifier($item), $value, $this->datalist);
+        $setSelector->useNameIdentifier = $this->useNameIdentifier;
         $selectorModifier = WebModifier::createInstance();
         if($this->selectorWidth > 0){
             $selectorModifier->styler->pushStyle("width", $this->selectorWidth . "px");
