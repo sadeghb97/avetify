@@ -84,7 +84,7 @@ abstract class DBConnection extends mysqli {
      * @return array
      */
     public function fetchTableSet(string $tableName, DBFilterInterface $filter = null, string $orderBy = "") : array {
-        $sql = "SELECT * FROM $tableName " . ($filter ? $filter->toRawQuery() : "");
+        $sql = "SELECT * FROM $tableName " . ($filter ? ("WHERE " . $filter->toRawQuery() . " ") : "");
         if($orderBy) $sql .= (" ORDER BY " . $orderBy);
         return $this->fetchSet($sql);
     }
