@@ -3,11 +3,13 @@ namespace Avetify\Table\Fields;
 
 use Avetify\Entities\EntityUtils;
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\RecordFieldTrait;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\EditableFields\EditableField;
 
 class TableField {
+    use RecordFieldTrait;
     public bool $isNumeric = false;
     public bool $rtl = false;
     public bool $isCentered = true;
@@ -34,14 +36,6 @@ class TableField {
     }
 
     public function postConstruct(){}
-
-    public function getValue($item) : string {
-        if(!$item) return "";
-        if(!is_array($item) && !is_object($item)) return $item;
-        if(str_contains($this->key, "~")) $finalKeys = explode("~", $this->key);
-        else $finalKeys = $this->key;
-        return EntityUtils::getSimpleValue($item, $finalKeys);
-    }
 
     public function headerCellStyles(){
         if($this->rtl) {
@@ -81,10 +75,6 @@ class TableField {
         $this->openNormalTD($item);
         $this->presentValue($item);
         self::closeTD();
-    }
-
-    public function presentValue($item, ?WebModifier $webModifier = null){
-        echo $this->getValue($item);
     }
 
     public function setNumeric() : TableField {

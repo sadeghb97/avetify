@@ -1,18 +1,15 @@
 <?php
 namespace Avetify\Entities;
 
-use Avetify\Files\ImageUtils;
+use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\RecordFieldTrait;
+use Avetify\Interface\Styler;
+use Avetify\Interface\WebModifier;
 
 class EntityField {
+    use RecordFieldTrait;
     public ?string $key = null;
     public ?string $title = null;
-    public ?string $type = null;
-    public ?string $path = null;
-    public ?int $targetImageType = null;
-    public ?string $targetExt = null;
-    public ?string $maxImageSize = null;
-    public int $forcedWidthDimension = 0;
-    public int $forcedHeightDimension = 0;
     public bool $hidden = false;
     public bool $rtl = false;
     public bool $writable = false; // add field to edit and add forms
@@ -20,7 +17,6 @@ class EntityField {
     public bool $required = false; // must have value in add and edit forms
     public bool $numeric = false;
     public bool $special = false; //ignore it on auto insert and update queries
-    public bool $avatar = false; //ham special ham writable
     public bool $autoTimeCreate = false; //na special na writable
     public bool $autoTimeUpdate = false; //na special na writable
     //auto generated fields na special hastan na writable
@@ -101,16 +97,6 @@ class EntityField {
         return 0;
     }
 
-    public function setAvatar(string $path, string $imageType = IMAGETYPE_JPEG) : EntityField {
-        $this->special = true;
-        $this->writable = true;
-        $this->avatar = true;
-        $this->path = $path;
-        $this->targetImageType = $imageType;
-        $this->targetExt = ImageUtils::getImageExtension($imageType);
-        return $this;
-    }
-
     public function setAutoTimeCreate() : EntityField {
         $this->autoTimeCreate = true;
         return $this;
@@ -119,5 +105,63 @@ class EntityField {
     public function setAutoTimeUpdate() : EntityField {
         $this->autoTimeUpdate = true;
         return $this;
+    }
+
+    public function presentValue($item, ?WebModifier $webModifier = null) {
+        if($this->writable){
+            $this->presentWritableField($item, $webModifier);
+        }
+        else if($this->printable){
+            $this->presentReadonlyField($item, $webModifier);
+        }
+    }
+
+    public function presentWritableField($item, ?WebModifier $webModifier = null) {
+        $title = $this->title;
+        $key = $this->key;
+        $value = $this->getValue($item);
+
+        $classApplier = new Styler();
+        $classApplier->pushClass("empty");
+        if($this->numeric) $classApplier->pushClass("numeric-text");
+
+        echo '<input ';
+        HTMLInterface::addAttribute("type","text");
+        HTMLInterface::addAttribute("name", $key);
+        HTMLInterface::addAttribute("id", $key);
+        HTMLInterface::addAttribute("value", $value);
+        HTMLInterface::addAttribute("placeholder", $title);
+
+        Styler::classStartAttribute();
+        $classApplier->appendClasses();
+        Styler::closeAttribute();
+
+        Styler::startAttribute();
+        Styler::addStyle("width", "80%");
+        Styler::addStyle("font-size", "14pt");
+        Styler::addStyle("margin-top", "8px");
+        Styler::addStyle("margin-bottom", "8px");
+        Styler::addStyle("padding-left", "8px");
+        Styler::addStyle("padding-right", "8px");
+        Styler::addStyle("padding-top", "4px");
+        Styler::addStyle("padding-bottom", "4px");
+        if($this->rtl) {
+            Styler::addFontFaceStyle("IranSans");
+            Styler::addStyle("direction", "rtl");
+        }
+        Styler::closeAttribute();
+        HTMLInterface::closeSingleTag();
+    }
+
+    public function presentReadonlyField($item, ?WebModifier $webModifier = null) {
+        $value = $this->getValue($item);
+        echo '<div ';
+        Styler::startAttribute();
+        Styler::addStyle("margin-top", "6px");
+        Styler::addStyle("margin-bottom", "6px");
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
+        echo $this->title . ': ' . $value;
+        HTMLInterface::closeDiv();
     }
 }

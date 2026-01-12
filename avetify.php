@@ -9,7 +9,6 @@ require_once "src/Interface/HTMLEvents.php";
 require_once "src/Interface/Pout.php";
 require_once "src/Interface/Submittable.php";
 require_once "src/Interface/Placeable.php";
-require_once "src/Interface/EntityView.php";
 require_once "src/Interface/AvtContainer.php";
 require_once "src/Interface/PageRenderer.php";
 require_once "src/Interface/Styler.php";
@@ -17,6 +16,7 @@ require_once "src/Interface/HTMLModifier.php";
 require_once "src/Interface/WebModifier.php";
 require_once "src/Interface/HTMLInterface.php";
 require_once "src/Interface/JSInterface.php";
+require_once "src/Interface/RecordFieldTrait.php";
 
 require_once "src/DB/QueryField.php";
 require_once "src/DB/DBConnection.php";
@@ -104,6 +104,8 @@ require_once "src/Entities/Fields/EntitySelectField.php";
 require_once "src/Entities/Fields/EntityCodingField.php";
 require_once "src/Entities/Fields/EntityHiddenField.php";
 require_once "src/Entities/Fields/EntityDisabledField.php";
+require_once "src/Entities/Fields/EntityBooleanField.php";
+require_once "src/Entities/Fields/EntityHiddenField.php";
 
 require_once "src/Fields/JSTextFields/JSInputField.php";
 require_once "src/Fields/JSTextFields/JSTextField.php";

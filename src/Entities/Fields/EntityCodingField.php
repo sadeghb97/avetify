@@ -3,11 +3,9 @@ namespace Avetify\Entities\Fields;
 
 use Avetify\Components\Coding\CodingField;
 use Avetify\Entities\EntityField;
-use Avetify\Entities\EntityUtils;
-use Avetify\Interface\EntityView;
 use Avetify\Interface\WebModifier;
 
-class EntityCodingField extends EntityField implements EntityView {
+class EntityCodingField extends EntityField {
     public const CodingFieldType = "coding_field";
     public string $defWrapper = "";
 
@@ -15,14 +13,16 @@ class EntityCodingField extends EntityField implements EntityView {
         $this->type = self::CodingFieldType;
     }
 
-    public function place($record, ?WebModifier $modifier = null) {
-        $value = EntityUtils::getSimpleValue($record, $this->key);
-        $codingField = new CodingField($this->title, $this->key, $value, ucfirst($this->defWrapper));
-        $codingField->place();
-    }
-
     public function setWrapper(string $wrapper) : EntityCodingField {
         $this->defWrapper = $wrapper;
         return $this;
+    }
+
+    public function presentWritableField($item, ?WebModifier $webModifier = null) {
+        $key = $this->key;
+        $value = $this->getValue($item);
+
+        $codingField = new CodingField($this->title, $this->key, $value, ucfirst($this->defWrapper));
+        $codingField->place();
     }
 }

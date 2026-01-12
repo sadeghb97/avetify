@@ -6,6 +6,7 @@ use Avetify\Components\Containers\NiceDiv;
 use Avetify\Components\Countries\CountrySelector;
 use Avetify\DB\DBConnection;
 use Avetify\Entities\Fields\EntityAvatarField;
+use Avetify\Entities\Fields\EntityBooleanField;
 use Avetify\Entities\Fields\EntityCodingField;
 use Avetify\Entities\Fields\EntityDisabledField;
 use Avetify\Entities\Fields\EntityHiddenField;
@@ -329,177 +330,7 @@ abstract class AvtEntity extends SetModifier {
         HTMLInterface::placeHiddenField($this->getFormTriggerElementId(), "");
 
         foreach ($this->dataFields() as $field){
-            if($field->writable === True || ($field->writable && !$pk) ){
-                $fieldType = $field->type;
-                $title = $field->title;
-                $key = $field->key;
-                $value = isset($record[$key]) ? $record[$key] : null;
-
-                if($field->avatar){
-                    /** @var EntityAvatarField $avatarField */
-                    $avatarField = $field;
-
-                    $avExists = false;
-                    $avBrowserSrc = "";
-                    $avServerSrc = "";
-
-                    if($record){
-                        $avServerSrc = $avatarField->getServerSrc($record);
-                        $avBrowserSrc = $avatarField->getBrowserSrc($record);
-                        if(file_exists($avServerSrc)){
-                            $avExists = true;
-                        }
-                    }
-
-                    if($avExists && $avatarField->manualCrop){
-                        $avatarField->presentCroppingImage($this, $curRecordObject);
-                    }
-
-                    $div = new NiceDiv(12);
-                    $div->addStyle("margin-top", "8px");
-                    $div->addStyle("margin-bottom", "8px");
-                    $div->open();
-
-                    if(!$avExists) {
-                        HTMLInterface::placeText("$title: ");
-                        $div->separate();
-                    }
-
-                    echo '<input ';
-                    HTMLInterface::addAttribute("type", "file");
-                    HTMLInterface::addAttribute("name", $key);
-                    HTMLInterface::addAttribute("id", $key);
-                    HTMLInterface::addAttribute("class", "empty");
-                    Styler::startAttribute();
-                    Styler::addStyle("font-size", "13pt");
-                    Styler::closeAttribute();
-                    HTMLInterface::closeSingleTag();
-
-                    HTMLInterface::placePostInput($key, "", $title . " Url");
-
-                    if($avExists && !$avatarField->manualCrop){
-                        $avatarModifier = WebModifier::createInstance();
-                        $avatarModifier->styler->pushStyle("margin-bottom", "8px");
-                        HTMLInterface::placeImageWithHeight($avBrowserSrc . "?" . time(), 120,
-                            $avatarModifier);
-                        $div->separate();
-                    }
-
-                    $div->close();
-                }
-                else if($fieldType == "boolean"){
-                    echo $title . ' ';
-                    echo '<input ';
-                    HTMLInterface::addAttribute("type", "checkbox");
-                    HTMLInterface::addAttribute("value", "1");
-                    HTMLInterface::addAttribute("name", $key);
-                    HTMLInterface::addAttribute("id", $key);
-                    if($value) HTMLInterface::addAttribute("checked", "true");
-                    Styler::startAttribute();
-                    Styler::addStyle("margin-bottom", "8px");
-                    Styler::closeAttribute();
-                    HTMLInterface::closeSingleTag();
-                }
-                else if($fieldType == "text" || $fieldType == "set_text"){
-                    if($fieldType == "set_text"){
-                        $value = $value ? implode("\n", $value) : "";
-                    }
-
-                    echo '<span style="font-weight: 14;">' . $title . '</span><br>';
-                    echo '<textarea ';
-                    Styler::startAttribute();
-                    Styler::addStyle("margin-bottom", "8px");
-                    Styler::closeAttribute();
-                    HTMLInterface::addAttribute("name", $key);
-                    HTMLInterface::addAttribute("id", $key);
-                    HTMLInterface::addAttribute("rows", "8");
-                    HTMLInterface::addAttribute("cols", "150");
-                    HTMLInterface::closeTag();
-                    echo $value;
-                    echo '</textarea>';
-                }
-                else if($field instanceof EntityHiddenField && $fieldType == "hidden"){
-                    $field->place($curRecordObject);
-                }
-                else if($field instanceof EntityDisabledField){
-                    $field->place($curRecordObject);
-                }
-                else if($field instanceof EntityFlagField && $fieldType == "country"){
-                    $catFactory = $field->countriesACFactory;
-                    $catFactory->fieldKey = "countries-actext";
-                    $catFactory->childKey = $key ? $key : "";
-
-                    $csModifier = WebModifier::createInstance();
-                    $csModifier->styler->pushStyle("margin-top", "12px");
-                    $csModifier->styler->pushStyle("margin-bottom", "12px");
-
-                    $countrySelector = new CountrySelector(
-                        $key,
-                        $catFactory,
-                        "Select Nation",
-                        true,
-                        $value ? $value : ""
-                    );
-                    $countrySelector->setNameIdentifier = true;
-                    $countrySelector->place($csModifier);
-                }
-                else if($field instanceof EntitySelectField && $fieldType == "select"){
-                    $sModifier = WebModifier::createInstance();
-                    $sModifier->styler->pushStyle("margin-top", "8px");
-                    $sModifier->styler->pushStyle("margin-bottom", "8px");
-                    $selectField = new JSDynamicSelect($field->title, $key, $value, $field->dataSetKey);
-                    $selectField->setNameIdentifier = true;
-                    $selectField->place($sModifier);
-                }
-                else if($field instanceof EntityCodingField && $fieldType == EntityCodingField::CodingFieldType){
-                    $field->place($curRecordObject);
-                }
-                else {
-                    $classApplier = new Styler();
-                    $classApplier->pushClass("empty");
-                    if($field->numeric) $classApplier->pushClass("numeric-text");
-
-                    echo '<input ';
-                    HTMLInterface::addAttribute("type","text");
-                    HTMLInterface::addAttribute("name", $key);
-                    HTMLInterface::addAttribute("id", $key);
-                    HTMLInterface::addAttribute("value", $value ? $value : "");
-                    HTMLInterface::addAttribute("placeholder", $title);
-
-                    Styler::classStartAttribute();
-                    $classApplier->appendClasses();
-                    Styler::closeAttribute();
-
-                    Styler::startAttribute();
-                    Styler::addStyle("width", "80%");
-                    Styler::addStyle("font-size", "14pt");
-                    Styler::addStyle("margin-top", "8px");
-                    Styler::addStyle("margin-bottom", "8px");
-                    Styler::addStyle("padding-left", "8px");
-                    Styler::addStyle("padding-right", "8px");
-                    Styler::addStyle("padding-top", "4px");
-                    Styler::addStyle("padding-bottom", "4px");
-                    if($field->rtl) {
-                        Styler::addFontFaceStyle("IranSans");
-                        Styler::addStyle("direction", "rtl");
-                    }
-                    Styler::closeAttribute();
-                    HTMLInterface::closeSingleTag();
-                }
-            }
-            else if($pk && $field->printable) {
-                $key = $field->key;
-                $value = isset($record[$key]) ? $record[$key] : null;
-
-                echo '<div ';
-                Styler::startAttribute();
-                Styler::addStyle("margin-top", "6px");
-                Styler::addStyle("margin-bottom", "6px");
-                Styler::closeAttribute();
-                HTMLInterface::closeTag();
-                echo $field->title . ': ' . $value;
-                HTMLInterface::closeDiv();
-            }
+            $field->presentValue($curRecordObject);
         }
 
         $this->formMainExtension($options);
@@ -547,7 +378,7 @@ abstract class AvtEntity extends SetModifier {
 
             $avatarFields = [];
             foreach ($this->dataFields() as $field){
-                if($field->type == 'boolean' && $field->writable && !isset($data[$field->key])){
+                if($field instanceof EntityBooleanField && $field->writable && !isset($data[$field->key])){
                     $data[$field->key] = 0;
                 }
                 else if($field->autoTimeCreate){
@@ -556,7 +387,7 @@ abstract class AvtEntity extends SetModifier {
                 else if($field->autoTimeUpdate){
                     $data[$field->key] = time();
                 }
-                else if($field->avatar){
+                else if($field instanceof EntityAvatarField){
                     $avatarFields[] = $field;
                 }
 

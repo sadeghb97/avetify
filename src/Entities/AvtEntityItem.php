@@ -11,6 +11,9 @@ abstract class AvtEntityItem extends DataModel implements EntityProfile {
     use Tagged;
     use EntityProfileTrait;
 
+    public int $created_at = 0;
+    public int $updated_at = 0;
+
     public static function createInstance(string $className, array $data): AvtEntityItem {
         if (!is_subclass_of($className, AvtEntityItem::class)) {
             throw new InvalidArgumentException("$className must extend AvtEntityItem");
