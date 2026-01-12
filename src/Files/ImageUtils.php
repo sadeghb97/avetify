@@ -38,7 +38,7 @@ class ImageUtils {
             $command .= $commandEnd;
             exec($command);
 
-            if($targetExtension != $orgFileExtension){
+            if($targetExtension && $targetExtension != $orgFileExtension){
                 exec("rm " . $filename);
             }
         }

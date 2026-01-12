@@ -155,13 +155,15 @@ class EntityField {
 
     public function presentReadonlyField($item, ?WebModifier $webModifier = null) {
         $value = $this->getValue($item);
-        echo '<div ';
-        Styler::startAttribute();
-        Styler::addStyle("margin-top", "6px");
-        Styler::addStyle("margin-bottom", "6px");
-        Styler::closeAttribute();
-        HTMLInterface::closeTag();
-        echo $this->title . ': ' . $value;
-        HTMLInterface::closeDiv();
+        if(strlen($value) > 0) {
+            echo '<div ';
+            Styler::startAttribute();
+            Styler::addStyle("margin-top", "6px");
+            Styler::addStyle("margin-bottom", "6px");
+            Styler::closeAttribute();
+            HTMLInterface::closeTag();
+            echo $this->title . ': ' . $value;
+            HTMLInterface::closeDiv();
+        }
     }
 }
