@@ -38,6 +38,12 @@ input.numeric-text {
     margin: 3px;
 }
 
+.selbox-title{
+    font-weight: bold;
+    border-radius: 6px;
+    margin: 3px;
+}
+
 .avt-dialog-overlay {
     position: fixed;
     top: 0;

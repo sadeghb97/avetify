@@ -142,7 +142,7 @@ function addRecordToSelector(acField, selectorKey, cData, selectedRecord){
     const recordImage = selectedRecord['main_jsdl_avatar']
     const imagesDiv = document.getElementById(selectorKey + "_images")
     const valueElement = document.getElementById(selectorKey)
-    const imageElementId = selectorKey + "_item_" + recordId
+    const recordElementId = selectorKey + "_item_" + recordId
     const disableAutoSubmit = cData && 'disable_auto_submit' in cData && cData['disable_auto_submit']
     const tinyAvatars = cData && 'tiny_avatars' in cData && cData['tiny_avatars']
 
@@ -150,30 +150,43 @@ function addRecordToSelector(acField, selectorKey, cData, selectedRecord){
     window[selectedSetVarName].add(recordId)
     valueElement.value = [...window[selectedSetVarName]].join(',')
 
-    let imageElement = document.getElementById(imageElementId)
-    if(!imageElement){
-        imageElement = document.createElement("img")
-        imageElement.id = imageElementId
-        imageElement.src = recordImage
-        imageElement.title = recordName
-        imageElement.classList.add("selbox-img")
+    let recordElement = document.getElementById(recordElementId)
+    if(!recordElement){
+        if(recordImage) {
+            recordElement = document.createElement("img")
+            recordElement.id = recordElementId
+            recordElement.src = recordImage
+            recordElement.title = recordName
+            recordElement.classList.add("selbox-img")
 
-        if(tinyAvatars){
-            imageElement.style.height = "50px";
-            imageElement.style.width = "auto";
+            if (tinyAvatars) {
+                recordElement.style.height = "50px";
+                recordElement.style.width = "auto";
+            }
+        }
+        else {
+            recordElement = document.createElement("div")
+            recordElement.id = recordElementId
+            recordElement.innerHTML = "#" + recordName
+            recordElement.classList.add("selbox-title")
+
+            if (tinyAvatars) {
+                recordElement.style.height = "50px";
+                recordElement.style.width = "auto";
+            }
         }
 
-        imageElement.onclick = function() {
+        recordElement.onclick = function() {
             if(window[selectedSetVarName].has(recordId)){
                 removeSelectorItem(selectorKey, recordId)
             }
             else addRecordToSelector(acField, selectorKey, cData, selectedRecord)
         };
-        imagesDiv.appendChild(imageElement)
+        imagesDiv.appendChild(recordElement)
     }
     else {
-        imageElement.style.opacity = "1"
-        imageElement.style.filter = "none"
+        recordElement.style.opacity = "1"
+        recordElement.style.filter = "none"
     }
 
     if(acField) {
