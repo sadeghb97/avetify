@@ -20,7 +20,9 @@ require_once "src/Interface/JSInterface.php";
 
 require_once "src/DB/QueryField.php";
 require_once "src/DB/DBConnection.php";
+require_once "src/DB/DBFilterInterface.php";
 require_once "src/DB/DBFilter.php";
+require_once "src/DB/DBFilterCollection.php";
 require_once "src/DB/QueryBuilder.php";
 
 require_once "src/Api/APIHelper.php";

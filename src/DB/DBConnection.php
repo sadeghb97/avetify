@@ -37,31 +37,6 @@ abstract class DBConnection extends mysqli {
         return static::$instance;
     }
 
-    /** @param DBFilter[] $filters
-     * @return string
-     */
-    public function getFilteringQuery(array $filters) : string {
-        if(count($filters) < 1) return "";
-
-        $first = true;
-        $out = "WHERE ";
-
-        foreach ($filters as $filter){
-            if($first) $first = false;
-            else $out .= "AND ";
-
-            $out .= ($filter->key . " ");
-            $out .= ($filter->operator . " ");
-
-            if(!$filter->isNumeric) $out .= "'";
-            $out .= $filter->value;
-            if(!$filter->isNumeric) $out .= "'";
-            $out .= " ";
-        }
-
-        return $out;
-    }
-
     public function query($sql, $queryName = null) : mysqli_result | bool {
         try { $result = parent::query($sql);}
         catch (Exception $ex){
@@ -105,31 +80,20 @@ abstract class DBConnection extends mysqli {
         return $row[$property];
     }
 
-    /** @param DBFilter[] $filters
+    /** @param DBFilterInterface $filter
      * @return array
      */
-    public function fetchTableSet(string $tableName, array $filters = [], string $orderBy = "") : array {
-        $sql = "SELECT * FROM $tableName " . $this->getFilteringQuery($filters);
+    public function fetchTableSet(string $tableName, DBFilterInterface $filter = null, string $orderBy = "") : array {
+        $sql = "SELECT * FROM $tableName " . ($filter ? $filter->toRawQuery() : "");
         if($orderBy) $sql .= (" ORDER BY " . $orderBy);
         return $this->fetchSet($sql);
     }
 
-    /** @param DBFilter[] $filters
-     * @return array
-     */
-    public function fetchFlatSet(string $tableName, string $key, array $filters = []) : array {
-        $sql = "SELECT $key FROM $tableName " . $this->getFilteringQuery($filters);
-        $list = $this->fetchSet($sql);
-        $out = [];
-        foreach ($list as $item) $out[] = $item[$key];
-        return $out;
-    }
-
-    /** @param DBFilter[] $filters
+    /** @param DBFilterInterface $filter
      * @return AvtEntityItem[]
      */
-    public function fetchTable(string $className, string $tableName, array $filters = [], string $orderBy = "") : array {
-        $set = $this->fetchTableSet($tableName, $filters, $orderBy);
+    public function fetchTable(string $className, string $tableName, DBFilterInterface $filter = null, string $orderBy = "") : array {
+        $set = $this->fetchTableSet($tableName, $filter, $orderBy);
         $out = [];
         foreach ($set as $result){
             $out[] = AvtEntityItem::createInstance($className, $result);
