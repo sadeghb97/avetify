@@ -4,6 +4,7 @@ namespace Avetify\Files;
 class ImageUtils {
     public static function convert($filename, $targetExtension = null, $maxImageSize = null,
                                    $forcedWidthRatio = null, $forcedHeightRatio = null){
+        $orgFileExtension = Filer::getFileExtension($filename);
         $commandStart = "env -i /usr/bin/mogrify " . ($targetExtension ? "-format " . $targetExtension . " " : "");
         $commandEnd = " " . $filename . " 2>&1";
 
@@ -30,11 +31,16 @@ class ImageUtils {
             }
         }
 
+        // max image size = max image width in pixels
         if(!$done && ($maxImageSize || $targetExtension)) {
             $command = $commandStart;
             if ($maxImageSize) $command .= ("-resize " . $maxImageSize . " ");
             $command .= $commandEnd;
             exec($command);
+
+            if($targetExtension != $orgFileExtension){
+                exec("rm " . $filename);
+            }
         }
     }
 
