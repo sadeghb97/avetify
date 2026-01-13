@@ -492,7 +492,7 @@ abstract class AvtEntity extends SetModifier {
 
     protected function deleteRecordResources($record){
         $entityItem = $this->getRecordObject($record);
-        if($entityItem){
+        if($entityItem instanceof AvtEntityItem){
             $entityItem->deleteAllResources();
         }
     }
