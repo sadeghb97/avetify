@@ -166,6 +166,11 @@ class TableField {
        return $this->setFontWeight("bold");
     }
 
+    public function setMaxFieldCharacters(int $maxFieldCharacters) : TableField {
+        $this->maxFieldCharacters = $maxFieldCharacters;
+        return $this;
+    }
+
     public function isEditable() : bool {
         return $this->editable;
     }

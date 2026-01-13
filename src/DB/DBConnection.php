@@ -74,6 +74,16 @@ abstract class DBConnection extends mysqli {
         return $out;
     }
 
+    /** @return AvtEntityItem[] */
+    public function fetchRecords(string $className, $query) : array {
+        $set = $this->fetchSet($query);
+        $out = [];
+        foreach ($set as $result){
+            $out[] = AvtEntityItem::createInstance($className, $result);
+        }
+        return $out;
+    }
+
     public function fetchProperty($table, $idKey, $idValue, $property){
         $row = $this->fetchRow("SELECT $property FROM $table WHERE $idKey=$idValue");
         if(!$row) return null;
@@ -116,5 +126,14 @@ abstract class DBConnection extends mysqli {
         $recordAr = $this->fetchRecordItem($tableName, $pKey, $pValue, $pIsNumeric);
         if($recordAr == null) return null;
         return AvtEntityItem::createInstance($className, $recordAr);
+    }
+
+    public function getRawListExistFilter(string $key, string $value, string $separator = ",") : DBFilterCollection {
+        $filterCollection = new DBFilterCollection();
+        $filterCollection->addFilter(new DBFilter($key, "=", $value));
+        $filterCollection->addFilter(new DBFilter($key, "LIKE", "{$value}{$separator},%"));
+        $filterCollection->addFilter(new DBFilter($key, "LIKE", "%{$separator}{$value}"));
+        $filterCollection->addFilter(new DBFilter($key, "LIKE", "%{$separator}{$value}{$separator}%"));
+        return $filterCollection;
     }
 }
