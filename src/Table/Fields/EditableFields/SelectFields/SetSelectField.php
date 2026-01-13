@@ -29,6 +29,7 @@ class SetSelectField extends EditableField {
         }
         $setSelector->tinyAvatars = $this->tinyAvatars;
         $setSelector->disableAutoSubmit = $this->disableAutoSubmit;
+        $setSelector->isReadonly = $this->isReadonly;
         $setSelector->place($selectorModifier);
         HTMLInterface::closeDiv();
     }

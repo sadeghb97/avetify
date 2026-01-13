@@ -30,6 +30,7 @@ class TableField {
     public string | null $minWidth = null;
     public string | null $fontSize = null;
     public string | null $fontWeight = null;
+    public bool $isReadonly = false;
 
     public function __construct(public string $title, public string $key){
         $this->postConstruct();
@@ -168,6 +169,11 @@ class TableField {
 
     public function setMaxFieldCharacters(int $maxFieldCharacters) : TableField {
         $this->maxFieldCharacters = $maxFieldCharacters;
+        return $this;
+    }
+
+    public function setReadonly() : TableField {
+        $this->isReadonly = true;
         return $this;
     }
 

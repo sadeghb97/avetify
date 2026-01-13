@@ -145,6 +145,7 @@ function addRecordToSelector(acField, selectorKey, cData, selectedRecord){
     const recordElementId = selectorKey + "_item_" + recordId
     const disableAutoSubmit = cData && 'disable_auto_submit' in cData && cData['disable_auto_submit']
     const tinyAvatars = cData && 'tiny_avatars' in cData && cData['tiny_avatars']
+    const isReadonly = cData && 'is_readonly' in cData && cData['is_readonly']
 
     const selectedSetVarName = selectorKey + "_selected"
     window[selectedSetVarName].add(recordId)
@@ -176,12 +177,14 @@ function addRecordToSelector(acField, selectorKey, cData, selectedRecord){
             }
         }
 
-        recordElement.onclick = function() {
-            if(window[selectedSetVarName].has(recordId)){
-                removeSelectorItem(selectorKey, recordId)
-            }
-            else addRecordToSelector(acField, selectorKey, cData, selectedRecord)
-        };
+        if(!isReadonly) {
+            recordElement.onclick = function () {
+                if (window[selectedSetVarName].has(recordId)) {
+                    removeSelectorItem(selectorKey, recordId)
+                }
+                else addRecordToSelector(acField, selectorKey, cData, selectedRecord)
+            };
+        }
         imagesDiv.appendChild(recordElement)
     }
     else {

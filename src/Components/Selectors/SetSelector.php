@@ -15,6 +15,7 @@ class SetSelector implements Placeable {
     public bool $useNameIdentifier = false;
     public bool $disableAutoSubmit = false;
     public bool $tinyAvatars = false;
+    public bool $isReadonly = false;
 
     public function __construct(public string $label,
                                 public string $key,
@@ -36,11 +37,14 @@ class SetSelector implements Placeable {
         HTMLInterface::applyModifiers($webModifier);
         HTMLInterface::closeTag();
 
-        HTMLInterface::placeVerticalDivider(12);
-        $acText = new SetSelectorAC($this->key, $this->key, $this->initValue, $this->dlInfo, $this);
-        $acText->disableSubmitOnEnter = $this->disableAutoSubmit;
-        $acText->tinyAvatars = $this->tinyAvatars;
-        $acText->place();
+        HTMLInterface::placeVerticalDivider(8);
+
+        if(!$this->isReadonly) {
+            $acText = new SetSelectorAC($this->key, $this->key, $this->initValue, $this->dlInfo, $this);
+            $acText->disableSubmitOnEnter = $this->disableAutoSubmit;
+            $acText->tinyAvatars = $this->tinyAvatars;
+            $acText->place();
+        }
 
         $titleModifier = WebModifier::createInstance();
         $titleModifier->styler->pushStyle(CSS::fontSize, "11pt");
@@ -70,6 +74,7 @@ class SetSelector implements Placeable {
         return [
             "disable_auto_submit" => $this->disableAutoSubmit,
             "tiny_avatars" => $this->tinyAvatars,
+            "is_readonly" => $this->isReadonly,
         ];
     }
 
