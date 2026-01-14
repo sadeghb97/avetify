@@ -3,6 +3,8 @@ namespace Avetify\Entities;
 
 use Avetify\AvetifyManager;
 use Avetify\DB\DBConnection;
+use Avetify\Entities\Fields\Containers\EntityFieldsContainer;
+use Avetify\Entities\Fields\Containers\EntityRowFields;
 use Avetify\Entities\Fields\EntityAvatarField;
 use Avetify\Entities\Fields\EntityBooleanField;
 use Avetify\Fields\JSDatalist;
@@ -162,7 +164,11 @@ abstract class AvtEntity extends SetModifier {
 
     private function getField($fields, $key, $normalOnly = false) : ?EntityField {
         foreach ($fields as $field){
-            if($field->key == $key){
+            if($field instanceof EntityFieldsContainer && property_exists($field->recordField, "childs")){
+                $innerField = $this->getField($field->recordField->childs, $key, $normalOnly);
+                if($innerField) return $innerField;
+            }
+            else if($field->key == $key){
                 if(!$normalOnly || !$field->special) return $field;
                 return null;
             }

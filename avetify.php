@@ -107,6 +107,7 @@ require_once "src/Entities/Fields/EntityHiddenField.php";
 require_once "src/Entities/Fields/EntityDisabledField.php";
 require_once "src/Entities/Fields/EntityBooleanField.php";
 require_once "src/Entities/Fields/EntityTextAreaField.php";
+require_once "src/Entities/Fields/Containers/EntityFieldsContainer.php";
 require_once "src/Entities/Fields/Containers/EntityRowFields.php";
 require_once "src/Entities/Fields/Containers/EntityColumnFields.php";
 require_once "src/Entities/Fields/DateFields/CreatedAtField.php";
@@ -219,6 +220,7 @@ require_once "src/Table/Fields/FlagFields/VisualSelectCountryField.php";
 
 require_once "src/Table/Fields/ApiFields/ApiIconField.php";
 
+require_once "src/Table/Fields/Containers/TableFieldsContainer.php";
 require_once "src/Table/Fields/Containers/TableRowFields.php";
 require_once "src/Table/Fields/Containers/TableColumnFields.php";
 
