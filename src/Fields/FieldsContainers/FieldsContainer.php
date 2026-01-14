@@ -1,15 +1,15 @@
 <?php
-namespace Avetify\Table\Fields\FieldsContainers;
+namespace Avetify\Fields\FieldsContainers;
 
-use Avetify\Table\Fields\TableField;
+use Avetify\Fields\BaseRecordField;
 
-class FieldsContainer extends TableField {
-    /** @var TableField[] $childs */
+class FieldsContainer extends BaseRecordField {
+    /** @var BaseRecordField[] $childs */
     public array $childs = [];
     public int $sepSize = 4;
 
     public function __construct(string $title, string $key, array $childs){
-        parent::__construct($title, $key);
+        parent::__construct($key, $title);
         $this->childs = $childs;
     }
 

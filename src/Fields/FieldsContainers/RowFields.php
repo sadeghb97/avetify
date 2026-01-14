@@ -1,5 +1,5 @@
 <?php
-namespace Avetify\Table\Fields\FieldsContainers;
+namespace Avetify\Fields\FieldsContainers;
 
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Interface\WebModifier;
