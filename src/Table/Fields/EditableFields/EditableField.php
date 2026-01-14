@@ -3,13 +3,13 @@ namespace Avetify\Table\Fields\EditableFields;
 
 use Avetify\Entities\BasicProperties\EntityID;
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\TableField;
 
 class EditableField extends TableField {
-    public bool $useIDIdentifier = true;
-    public bool $useNameIdentifier = false;
+    use IdentifiedElementTrait;
 
     public function __construct(string $title, string $key,
                                 public EntityID | null $idGetter = null,
@@ -18,7 +18,7 @@ class EditableField extends TableField {
         $this->editable = true;
     }
 
-    public function getEditableFieldIdentifier($item) : string {
+    public function getElementIdentifier($item = null) : string {
         $id = "";
         if($this->namespace != null) $id = $this->namespace . '_';
         $id .= $this->key;
@@ -31,7 +31,7 @@ class EditableField extends TableField {
 
     function setFieldIdentifiers($item){
         if($this->idGetter != null) {
-            $fieldIdentifier = $this->getEditableFieldIdentifier($item);
+            $fieldIdentifier = $this->getElementIdentifier($item);
             if ($this->useIDIdentifier) HTMLInterface::addAttribute("id", $fieldIdentifier);
             if ($this->useNameIdentifier) HTMLInterface::addAttribute("name", $fieldIdentifier);
         }

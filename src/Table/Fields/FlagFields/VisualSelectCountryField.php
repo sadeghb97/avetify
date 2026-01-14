@@ -9,8 +9,8 @@ use Avetify\Table\Fields\EditableFields\EditableField;
 class VisualSelectCountryField extends EditableField {
     public function presentValue($item, ?WebModifier $webModifier = null){
         $countrySelector = new CountrySelector(
-            $this->getEditableFieldIdentifier($item),
-            $this->getCountriesACFactory("countries-actext", $this->getEditableFieldIdentifier($item)),
+            $this->getElementIdentifier($item),
+            $this->getCountriesACFactory("countries-actext", $this->getElementIdentifier($item)),
             "",
             true,
             $this->getValue($item)

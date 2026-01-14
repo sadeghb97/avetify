@@ -118,7 +118,7 @@ class AvtTable extends SetModifier {
                 $creatingFields = [];
                 foreach ($this->getAllFields() as $field) {
                     if ($field->onCreateField != null) {
-                        $crFieldKey = $field->onCreateField->getEditableFieldIdentifier(null);
+                        $crFieldKey = $field->onCreateField->getElementIdentifier(null);
                         $crKey = $field->onCreateField->key;
                         if ($field->onCreateField instanceof CheckboxField) {
                             $creatingFields[$crKey] = empty($_POST[$crFieldKey]) ? false : true;

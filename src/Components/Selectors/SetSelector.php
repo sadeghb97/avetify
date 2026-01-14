@@ -7,12 +7,13 @@ use Avetify\Forms\FormUtils;
 use Avetify\Interface\Attrs;
 use Avetify\Interface\CSS;
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
 class SetSelector implements Placeable {
-    public bool $useNameIdentifier = false;
+    use IdentifiedElementTrait;
     public bool $disableAutoSubmit = false;
     public bool $tinyAvatars = false;
     public bool $isReadonly = false;
@@ -52,7 +53,7 @@ class SetSelector implements Placeable {
         $titleModifier->styler->pushStyle(CSS::marginTop, "8px");
         $titleModifier->styler->pushStyle(CSS::marginBottom, "6px");
         HTMLInterface::placeDiv($this->label, $titleModifier);
-        FormUtils::placeHiddenField($this->getMainElementId(), $this->initValue, !$this->useNameIdentifier);
+        FormUtils::placeHiddenField($this->getElementIdentifier(), $this->initValue, !$this->useNameIdentifier);
 
         $niceDiv = new NiceDiv(0);
         $niceDiv->addModifier(Attrs::id, $this->getImagesDivId());
@@ -85,7 +86,7 @@ class SetSelector implements Placeable {
             . $this->dlInfo->getRecordsIdsMapJSVarName() . ', ' . $cmdJson . ');';
     }
 
-    public function getMainElementId() : string {
+    public function getElementIdentifier($item = null) : string {
         return $this->key;
     }
 

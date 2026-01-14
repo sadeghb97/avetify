@@ -10,7 +10,7 @@ abstract class SelectField extends EditableField {
     public function presentValue($item, ?WebModifier $webModifier = null) {
         $dynamicSelect = new JSDynamicSelect(
             "",
-            $this->getEditableFieldIdentifier($item),
+            $this->getElementIdentifier($item),
             $this->getValue($item),
             $this->getDataSetKey()
         );

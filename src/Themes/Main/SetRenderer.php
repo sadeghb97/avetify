@@ -100,11 +100,11 @@ abstract class SetRenderer extends BaseSetRenderer {
         foreach ($sbTable->getAllFields() as $field) {
             foreach ($sbTable->currentRecords as $record) {
                 if ($field instanceof EditableField) {
-                    $allJSEditableFields[] = $field->getEditableFieldIdentifier($record);
+                    $allJSEditableFields[] = $field->getElementIdentifier($record);
                 }
                 else if($sbTable->forcePatchRecords && $field->onCreateField != null){
                     $feField = $field->getForcedEditableClone();
-                    $allJSEditableFields[] = $feField->getEditableFieldIdentifier($record);
+                    $allJSEditableFields[] = $feField->getElementIdentifier($record);
                 }
             }
 
@@ -114,7 +114,7 @@ abstract class SetRenderer extends BaseSetRenderer {
         if($this->selectorField != null){
             $allSelectFields = [];
             foreach ($sbTable->currentRecords as $record) {
-                $allSelectFields[] = $this->selectorField->getEditableFieldIdentifier($record);
+                $allSelectFields[] = $this->selectorField->getElementIdentifier($record);
             }
         }
 

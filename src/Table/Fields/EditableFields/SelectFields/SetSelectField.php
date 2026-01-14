@@ -21,7 +21,7 @@ class SetSelectField extends EditableField {
         NiceDiv::justOpen($webModifier);
         $value = $this->getValue($item);
         $setSelector = new SetSelector($this->title,
-            $this->getEditableFieldIdentifier($item), $value, $this->datalist);
+            $this->getElementIdentifier($item), $value, $this->datalist);
         $setSelector->useNameIdentifier = $this->useNameIdentifier;
         $selectorModifier = WebModifier::createInstance();
         if($this->selectorWidth > 0){

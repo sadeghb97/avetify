@@ -4,12 +4,13 @@ namespace Avetify\Components\Selectors;
 use Avetify\Fields\JSDatalist;
 use Avetify\Forms\FormUtils;
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
 class SingleSelector implements Placeable {
-    public bool $useNameIdentifier = false;
+    use IdentifiedElementTrait;
     public bool $disableAutoSubmit = false;
 
     public function __construct(public string $label,
@@ -65,7 +66,7 @@ class SingleSelector implements Placeable {
         $selectorAc->place();
         HTMLInterface::closeDiv();
 
-        FormUtils::placeHiddenField($this->getMainElementId(), $this->initValue, !$this->useNameIdentifier);
+        FormUtils::placeHiddenField($this->getElementIdentifier(), $this->initValue, !$this->useNameIdentifier);
         HTMLInterface::closeDiv();
     }
 
@@ -75,7 +76,7 @@ class SingleSelector implements Placeable {
         ];
     }
 
-    public function getMainElementId() : string {
+    public function getElementIdentifier($item = null) : string {
         return $this->key;
     }
 

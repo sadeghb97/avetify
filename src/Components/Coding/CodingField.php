@@ -1,15 +1,16 @@
 <?php
 namespace Avetify\Components\Coding;
 
-use Avetify\Fields\JSDatalist;
 use Avetify\Forms\FormUtils;
 use Avetify\Interface\CSS;
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
 class CodingField extends CodingBlocks implements Placeable {
+    use IdentifiedElementTrait;
     public function __construct(public string $label, public string $mainKey,
                                 string $initValue, public string $defWrapper = ""){
         parent::__construct($initValue);
@@ -44,9 +45,9 @@ class CodingField extends CodingBlocks implements Placeable {
 
         HTMLInterface::closeDiv();
         $htmlSafeContents = htmlspecialchars($this->contents, ENT_QUOTES, 'UTF-8');
-        FormUtils::placeHiddenField($this->getMainElementId(), $htmlSafeContents);
+        FormUtils::placeHiddenField($this->getElementIdentifier(), $htmlSafeContents);
 
-        $refParams =  "'{$this->getMainElementId()}', {$this->getJSDataVarName()}";
+        $refParams =  "'{$this->getElementIdentifier()}', {$this->getJSDataVarName()}";
         ?>
         <script>
             const <?php echo $this->getJSDataVarName(); ?> = [];
@@ -95,7 +96,7 @@ class CodingField extends CodingBlocks implements Placeable {
         Styler::closeAttribute();
         HTMLInterface::closeTag();
 
-        $params = "'{$this->getMainElementId()}', '$newEditorId', {$this->getJSDataVarName()}";
+        $params = "'{$this->getElementIdentifier()}', '$newEditorId', {$this->getJSDataVarName()}";
 
         echo '<button ';
         HTMLInterface::addAttribute("onclick", "addChildAfter(" . $params . ");");
@@ -141,7 +142,7 @@ class CodingField extends CodingBlocks implements Placeable {
         HTMLInterface::closeDiv();
     }
 
-    public function getMainElementId() : string {
+    public function getElementIdentifier($item = null) : string {
         return $this->mainKey;
     }
 
