@@ -3,8 +3,8 @@ namespace Avetify\Table;
 
 use Avetify\Entities\SetModifier;
 use Avetify\Entities\Sorters\SortFactor;
-use Avetify\Fields\Containers\FieldsContainer;
 use Avetify\Interface\RecordFormTrait;
+use Avetify\Table\Fields\Containers\TableFieldsContainer;
 use Avetify\Table\Fields\EditableFields\CheckboxField;
 use Avetify\Table\Fields\EditableFields\EditableField;
 use Avetify\Table\Fields\TableField;
@@ -57,9 +57,11 @@ class AvtTable extends SetModifier {
     public function getAllFields() : array {
         $pureFields = [];
         foreach ($this->fields as $field){
-            if($field instanceof FieldsContainer){
-                foreach ($field->childs as $pField){
-                    $pureFields[] = $pField;
+            if($field instanceof TableFieldsContainer){
+                if(property_exists($field->recordField, "childs")) {
+                    foreach ($field->recordField->childs as $pField) {
+                        $pureFields[] = $pField;
+                    }
                 }
             }
             else $pureFields[] = $field;

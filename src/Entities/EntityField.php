@@ -13,6 +13,7 @@ class EntityField extends BaseRecordField {
     public bool $hidden = false;
     public bool $rtl = false;
     public bool $writable = false; // add field to edit and add forms
+    public bool $protected = false; // no patch on insert or create queries
     public bool $printable = true; // print in forms
     public bool $required = false; // must have value in add and edit forms
     public bool $numeric = false;
@@ -53,6 +54,11 @@ class EntityField extends BaseRecordField {
 
     public function setWritable() : EntityField {
         $this->writable = true;
+        return $this;
+    }
+
+    public function setProtected() : EntityField {
+        $this->protected = true;
         return $this;
     }
 

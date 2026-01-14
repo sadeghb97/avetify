@@ -15,7 +15,7 @@ class EntityTextAreaField extends EntityField {
     public function presentWritableField($item, ?WebModifier $webModifier = null) {
         $title = $this->title;
         $key = $this->key;
-        $value = $item[$key] ?? null;
+        $value = $this->getValue($item);
 
         if($this->setMode){
             $value = $value ? implode("\n", $value) : "";

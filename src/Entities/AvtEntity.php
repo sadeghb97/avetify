@@ -78,7 +78,7 @@ abstract class AvtEntity extends SetModifier {
         $count = 0;
         foreach ($data as $key => $value){
             $field = $this->getNormalField($fields, $key);
-            if(!$field) continue;
+            if(!$field || $field->protected) continue;
             $count++;
             $finalValue = $field->numeric ? $value : $this->conn->real_escape_string($value);
 
@@ -118,7 +118,7 @@ abstract class AvtEntity extends SetModifier {
         $count = 0;
         foreach ($data as $key => $value){
             $field = $this->getNormalField($fields, $key);
-            if(!$field) continue;
+            if(!$field || $field->protected) continue;
             $finalValue = $field->numeric ? $value : $this->conn->real_escape_string($value);
 
             $count++;
@@ -211,8 +211,12 @@ abstract class AvtEntity extends SetModifier {
         return $this->conn->fetchSet($this->getRecordsQuery($offset, $limit));
     }
 
-    public function getRecord($pk) {
-        $record = $this->conn->fetchRow($this->getRecordQuery($pk));
+    public function fetchRecord($pk) {
+        return $this->conn->fetchRow($this->getRecordQuery($pk));
+    }
+
+    public function getRecord($pk) : AvtEntityItem | array | null {
+        $record = $this->fetchRecord($pk);
         if($record) $this->extendRecord($record);
         return $record;
     }
@@ -226,7 +230,7 @@ abstract class AvtEntity extends SetModifier {
         return null;
     }
 
-    public function getCurrentRecord(){
+    public function getCurrentRecord() : AvtEntityItem | array | null {
         $pk = $this->getCurrentRecordPrimaryKey();
         if($pk){
             $this->latestFetchedRecord = $this->getRecord($pk);
