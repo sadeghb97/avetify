@@ -21,7 +21,7 @@ class SingleSelectorAC extends JSACTextField {
         Styler::closeAttribute();
         HTMLInterface::addAttribute("type", "text");
         HTMLInterface::addAttribute("list", $this->listIdentifier);
-        HTMLInterface::addAttribute("id", $this->getFieldIdentifier());
+        $this->placeElementIdAttributes();
         HTMLInterface::addAttribute("autocomplete", "off");
         if($this->label) HTMLInterface::addAttribute("placeholder", $this->label);
         $this->boundEnterEvent();

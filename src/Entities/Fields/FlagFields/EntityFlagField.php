@@ -30,7 +30,7 @@ class EntityFlagField extends EntityField {
             true,
             $value ? $value : ""
         );
-        $countrySelector->setNameIdentifier = true;
+        $countrySelector->useNameIdentifier = true;
         $countrySelector->place($csModifier);
     }
 }

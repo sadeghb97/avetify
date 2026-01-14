@@ -47,7 +47,7 @@ class SpecialTag extends JSField {
         <?php
     }
 
-    function place(?WebModifier $webModifier = null){
+    function place(?WebModifier $webModifier = null): void {
         $this->basicJSRules();
         if($webModifier == null) $webModifier = WebModifier::createInstance();
         if(!$this->parent->horizTags){

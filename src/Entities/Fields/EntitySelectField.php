@@ -19,7 +19,7 @@ class EntitySelectField extends EntityField {
         $sModifier->styler->pushStyle("margin-top", "8px");
         $sModifier->styler->pushStyle("margin-bottom", "8px");
         $selectField = new JSDynamicSelect($this->title, $key, $value, $this->dataSetKey);
-        $selectField->setNameIdentifier = true;
+        $selectField->useNameIdentifier = true;
         $selectField->place($sModifier);
     }
 }

@@ -3,10 +3,14 @@ namespace Avetify\Fields\JSTextFields;
 
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElementTrait;
+use Avetify\Interface\Placeable;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
-abstract class JSTextField extends JSInputField {
+abstract class JSTextField extends JSInputField implements Placeable {
+    use IdentifiedElementTrait;
+
     public string $listIdentifier = "";
     public bool $disableSubmitOnEnter = true;
 
@@ -14,7 +18,7 @@ abstract class JSTextField extends JSInputField {
                                 public string $initValue){
     }
 
-    public function getFieldIdentifier() : string {
+    public function getElementIdentifier($item = null) : string {
         if($this->childKey) return $this->fieldKey . "_" . $this->childKey;
         return $this->fieldKey;
     }
@@ -25,7 +29,7 @@ abstract class JSTextField extends JSInputField {
         HTMLInterface::closeTag();
 
         echo '<input ';
-        HTMLInterface::addAttribute("id", $this->getFieldIdentifier());
+        $this->placeElementIdAttributes();
         HTMLInterface::addAttribute("type", "text");
         if($this->label) HTMLInterface::addAttribute("placeholder", $this->label);
         $this->boundEnterEvent();
@@ -54,7 +58,7 @@ abstract class JSTextField extends JSInputField {
     public function presentListField(?WebModifier $webModifier = null){
         echo '<input ';
         HTMLInterface::addAttribute("list", $this->listIdentifier);
-        HTMLInterface::addAttribute("id", $this->getFieldIdentifier());
+        $this->placeElementIdAttributes();
         HTMLInterface::addAttribute("autocomplete", "off");
         if($this->label) HTMLInterface::addAttribute("placeholder", $this->label);
         $this->boundEnterEvent();

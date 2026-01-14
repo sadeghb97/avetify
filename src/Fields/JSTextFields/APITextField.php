@@ -8,7 +8,7 @@ class APITextField extends JSTextField {
     }
 
     public function applyText() : string {
-        return 'apiTextEnterAction(\'' . $this->getFieldIdentifier() . '\', \'' . $this->childKey .
+        return 'apiTextEnterAction(\'' . $this->getElementIdentifier() . '\', \'' . $this->childKey .
             '\', \'' . $this->fieldKey . '\', \'' .
             $this->apiEndpoint . '\', ' . $this->applyTextCallback() . ');';
     }

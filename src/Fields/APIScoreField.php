@@ -25,7 +25,7 @@ class APIScoreField extends APIMedalField {
         Styler::startAttribute();
         Styler::addStyle("font-weight", "bold");
         Styler::closeAttribute();
-        HTMLInterface::addAttribute("id", $this->getFieldIdentifier());
+        $this->placeElementIdAttributes();
         HTMLInterface::closeTag();
         echo $this->medalInitValue;
         echo '</span>';

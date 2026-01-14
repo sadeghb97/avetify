@@ -4,22 +4,25 @@ namespace Avetify\Fields;
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Fields\JSTextFields\JSInputField;
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElementTrait;
+use Avetify\Interface\Placeable;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
-class APIMedalField extends JSInputField {
+class APIMedalField extends JSInputField implements Placeable {
+    use IdentifiedElementTrait;
     public function __construct(public string $recordKey, public string $medalKey,
                                 public string $icon, public float $medalInitValue,
                                 public string $apiEndpoint){
     }
 
-    public function getFieldIdentifier() : string {
+    public function getElementIdentifier($item = null) {
         return $this->medalKey . "_" . $this->recordKey;
     }
 
     public function clickAction() : string {
         if($this->apiEndpoint) {
-            return 'apiMedalClickAction(\'' . $this->getFieldIdentifier() . '\', \'' . $this->recordKey .
+            return 'apiMedalClickAction(\'' . $this->getElementIdentifier() . '\', \'' . $this->recordKey .
                 '\', \'' . $this->medalKey . '\', \'' . $this->medalInitValue .
                 '\', \'' . $this->apiEndpoint . '\')';
         }
@@ -39,7 +42,7 @@ class APIMedalField extends JSInputField {
         Styler::startAttribute();
         Styler::addStyle("font-weight", "bold");
         Styler::closeAttribute();
-        HTMLInterface::addAttribute("id", $this->getFieldIdentifier());
+        $this->placeElementIdAttributes();
         HTMLInterface::closeTag();
         echo $this->medalInitValue;
         echo '</span>';

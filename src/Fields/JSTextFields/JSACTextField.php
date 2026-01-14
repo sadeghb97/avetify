@@ -33,7 +33,7 @@ class JSACTextField extends JSTextField {
         $cmdJson = json_encode($this->callbackMoreData());
         $cmdSafe = htmlspecialchars($cmdJson, ENT_QUOTES, 'UTF-8');
 
-        return 'acOnItemEntered(' . '\'' . $this->getFieldIdentifier() . '\', \'' . $this->childKey . '\''
+        return 'acOnItemEntered(' . '\'' . $this->getElementIdentifier() . '\', \'' . $this->childKey . '\''
             . ', ' . $this->dlInfo->getRecordsListJSVarName() . ', '
             . $cmdSafe . ', '
             . $this->enterCallbackName . ');';

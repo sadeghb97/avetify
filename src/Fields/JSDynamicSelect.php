@@ -3,11 +3,12 @@ namespace Avetify\Fields;
 
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\WebModifier;
 
 class JSDynamicSelect implements Placeable {
-    public bool $setNameIdentifier = false;
+    use IdentifiedElementTrait;
 
     public function __construct(public string $title, public string $elementId,
                                 public string|null $value, public string $dataSetId){
@@ -25,8 +26,7 @@ class JSDynamicSelect implements Placeable {
         }
 
         echo '<select ';
-        HTMLInterface::addAttribute("id", $this->elementId);
-        if($this->setNameIdentifier) HTMLInterface::addAttribute("name", $this->elementId);
+        $this->placeElementIdAttributes();
         HTMLInterface::closeTag();
         echo '</select>';
         $div->close();
@@ -46,5 +46,9 @@ class JSDynamicSelect implements Placeable {
                 })();
             </script>
         <?php
+    }
+
+    public function getElementIdentifier($item = null) {
+        return $this->elementId;
     }
 }

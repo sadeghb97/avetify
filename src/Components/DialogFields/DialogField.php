@@ -2,11 +2,13 @@
 namespace Avetify\Components\DialogFields;
 
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
 abstract class DialogField implements Placeable {
+    use IdentifiedElementTrait;
     public bool $isFlex = true;
 
     public function __construct(public string $id, public string $title, public string $value){}
@@ -50,16 +52,16 @@ abstract class DialogField implements Placeable {
         Styler::addStyle("margin-bottom", "3px;");
     }
 
-    public function setNameAndIdAttribute(){
-        HTMLInterface::addAttribute("id", $this->id);
-    }
-
     public function placeHiddenValue(){
         echo '<input type="hidden" ';
-        $this->setNameAndIdAttribute();
+        $this->placeElementIdAttributes();
         echo ' value="';
         echo $this->value;
         echo '" >';
+    }
+
+    public function getElementIdentifier($item = null) {
+        return $this->id;
     }
 
     public function getBoxId() : string {

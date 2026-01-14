@@ -60,7 +60,7 @@ class SpecialTags extends JSField {
         <?php
     }
 
-    public function place(?WebModifier $webModifier = null){
+    public function place(?WebModifier $webModifier = null): void {
         $this->basicJSRules();
         $tagsDiv = $this->horizTags ? new NiceDiv(4) : new VertDiv(4);
         $tagsDiv->open();

@@ -5,12 +5,13 @@ use Avetify\Components\Containers\NiceDiv;
 use Avetify\Fields\JSDatalist;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\HTMLModifier;
+use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\WebModifier;
 use Avetify\Repo\Countries\World;
 
 class CountrySelector implements Placeable {
-    public bool $setNameIdentifier = false;
+    use IdentifiedElementTrait;
 
     public function __construct(public string $mainElementId,
                                 public CountriesACTextFactory $countriesACFactory,
@@ -33,8 +34,7 @@ class CountrySelector implements Placeable {
         if($countryDetails != null) {
             HTMLInterface::addAttribute("value", $this->initCountryCode);
         }
-        HTMLInterface::addAttribute("id", $this->mainElementId);
-        if($this->setNameIdentifier) HTMLInterface::addAttribute("name", $this->mainElementId);
+        $this->placeElementIdAttributes();
         HTMLInterface::closeSingleTag();
 
         $acTextField = $this->countriesACFactory->create();
@@ -65,6 +65,10 @@ class CountrySelector implements Placeable {
         if($countryLink) HTMLInterface::closeLink();
 
         $div->close();
+    }
+
+    public function getElementIdentifier($item = null) {
+        return $this->mainElementId;
     }
 }
 
