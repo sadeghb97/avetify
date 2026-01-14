@@ -3,7 +3,7 @@ namespace Avetify\Table;
 
 use Avetify\Entities\SetModifier;
 use Avetify\Entities\Sorters\SortFactor;
-use Avetify\Fields\JSDataElement;
+use Avetify\Interface\RecordFormTrait;
 use Avetify\Table\Fields\EditableFields\CheckboxField;
 use Avetify\Table\Fields\EditableFields\EditableField;
 use Avetify\Table\Fields\FieldsContainers\FieldsContainer;
@@ -14,11 +14,10 @@ use Avetify\Themes\Green\GreenTheme;
 use Avetify\Themes\Main\SetRenderer;
 
 class AvtTable extends SetModifier {
+    use RecordFormTrait;
+
     /** @var TableField[] $fields */
     public array $fields;
-
-    /** @var JSDataElement[] */
-    public array $requiredDatalists = [];
 
     public bool $enableSelectRecord = false;
     public bool $enableCreatingRow = false;

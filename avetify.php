@@ -17,6 +17,7 @@ require_once "src/Interface/WebModifier.php";
 require_once "src/Interface/HTMLInterface.php";
 require_once "src/Interface/JSInterface.php";
 require_once "src/Interface/RecordFieldTrait.php";
+require_once "src/Interface/RecordFormTrait.php";
 
 require_once "src/DB/QueryField.php";
 require_once "src/DB/DBConnection.php";

@@ -22,7 +22,7 @@ class EditableField extends TableField {
         $id = "";
         if($this->namespace != null) $id = $this->namespace . '_';
         $id .= $this->key;
-        if($item != null) {
+        if($item != null && $this->idGetter != null) {
             $id .= "_";
             $id .= $this->idGetter->getItemId($item);
         }

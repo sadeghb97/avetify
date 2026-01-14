@@ -5,7 +5,6 @@ use Avetify\AvetifyManager;
 use Avetify\DB\DBConnection;
 use Avetify\Entities\Fields\EntityAvatarField;
 use Avetify\Entities\Fields\EntityBooleanField;
-use Avetify\Fields\JSDataElement;
 use Avetify\Fields\JSDatalist;
 use Avetify\Files\Filer;
 use Avetify\Files\ImageUtils;
@@ -14,6 +13,7 @@ use Avetify\Forms\FormUtils;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\JSInterface;
 use Avetify\Interface\Pout;
+use Avetify\Interface\RecordFormTrait;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 use Avetify\Modules\Printer;
@@ -23,6 +23,8 @@ use Avetify\Themes\Green\GreenTheme;
 use Avetify\Themes\Main\ThemesManager;
 
 abstract class AvtEntity extends SetModifier {
+    use RecordFormTrait;
+
     public ?DBConnection $conn = null;
     public $latestFetchedRecord = null;
     public bool $redirectOnInsert = true;
@@ -299,10 +301,7 @@ abstract class AvtEntity extends SetModifier {
         HTMLInterface::placeVerticalDivider(12);
         echo '<div style="width: 80%; margin: auto;">';
 
-        $dataSets = $this->getDataSets();
-        foreach ($dataSets as $dataSet){
-            $dataSet->place();
-        }
+        $this->placeFormDataLists();
 
         if($this->isPatchRecordEnabled()) {
             echo '<form ';
@@ -525,11 +524,6 @@ abstract class AvtEntity extends SetModifier {
     public function formMoreExtension($options){}
 
     public function manualHandleForm(){}
-
-    /** @return JSDataElement[] */
-    public function getDataSets() : array {
-        return [];
-    }
 
     public function entityPage() : string {
         return "";
