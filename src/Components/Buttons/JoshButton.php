@@ -2,10 +2,14 @@
 namespace Avetify\Components\Buttons;
 
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElementTrait;
+use Avetify\Interface\Placeable;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
-class JoshButton {
+class JoshButton implements Placeable {
+    use IdentifiedElementTrait;
+
     public function __construct(public string $title, public string $buttonId,
                                 public string $buttonStyle,
                                 public string $buttonType = "button"){
@@ -13,13 +17,13 @@ class JoshButton {
 
     public const WARNING_STYLE = "warning";
 
-    public function renderButton(WebModifier $webModifier = null){
+    public function place(WebModifier $webModifier = null) : void {
         $buttonStyle = "pushable";
         if($this->buttonStyle == "warning") $buttonStyle .= (' ' . $this->buttonStyle);
 
         echo '<button ';
         HTMLInterface::addAttribute("type", $this->buttonType);
-        if($this->buttonId) HTMLInterface::addAttribute("id", $this->buttonId);
+        $this->placeElementIdAttributes();
         HTMLInterface::addAttribute("onkeydown", 'return false;');
         Styler::classStartAttribute();
         Styler::addClass($buttonStyle);
@@ -38,5 +42,9 @@ class JoshButton {
         echo '</span>';
 
         echo '</button>';
+    }
+
+    public function getElementIdentifier($item = null): string {
+        return $this->buttonId;
     }
 }

@@ -55,7 +55,7 @@ class SpecialTag extends JSField {
         }
 
         $joshButton = new JoshButton($this->title, $this->fieldId, "warning");
-        $joshButton->renderButton($webModifier);
+        $joshButton->place($webModifier);
         $this->moreJSRules();
         $this->onClickRule();
     }

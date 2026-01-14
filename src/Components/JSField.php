@@ -14,7 +14,7 @@ abstract class JSField implements Placeable
 
     function onClickRule(){}
 
-    function place(?WebModifier $webModifier = null){
+    function place(?WebModifier $webModifier = null): void {
         $this->basicJSRules();
         $this->place();
         $this->moreJSRules();

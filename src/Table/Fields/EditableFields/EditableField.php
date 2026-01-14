@@ -31,9 +31,7 @@ class EditableField extends TableField {
 
     function setFieldIdentifiers($item){
         if($this->idGetter != null) {
-            $fieldIdentifier = $this->getElementIdentifier($item);
-            if ($this->useIDIdentifier) HTMLInterface::addAttribute("id", $fieldIdentifier);
-            if ($this->useNameIdentifier) HTMLInterface::addAttribute("name", $fieldIdentifier);
+            $this->placeElementIdAttributes($item);
         }
     }
 
