@@ -1,14 +1,12 @@
 <?php
 namespace Avetify\Table\Fields;
 
+use Avetify\Fields\BaseRecordField;
 use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\RecordField;
-use Avetify\Interface\RecordFieldTrait;
 use Avetify\Interface\Styler;
 use Avetify\Table\Fields\EditableFields\EditableField;
 
-class TableField implements RecordField {
-    use RecordFieldTrait;
+class TableField extends BaseRecordField {
     public bool $isNumeric = false;
     public bool $rtl = false;
     public bool $isCentered = true;
@@ -31,7 +29,8 @@ class TableField implements RecordField {
     public string | null $fontWeight = null;
     public bool $isReadonly = false;
 
-    public function __construct(public string $title, public string $key){
+    public function __construct(string $title, string $key){
+        parent::__construct($key, $title);
         $this->postConstruct();
     }
 

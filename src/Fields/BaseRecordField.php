@@ -1,12 +1,13 @@
 <?php
-namespace Avetify\Interface;
-use Avetify\Entities\EntityUtils;
+namespace Avetify\Fields;
 
-/*** Implements RecordField */
-trait RecordFieldTrait {
+use Avetify\Entities\EntityUtils;
+use Avetify\Interface\WebModifier;
+
+class BaseRecordField {
+    public function __construct(public string $key, public string $title){}
+
     public int $maxFieldCharacters = 0;
-    public string $title;
-    public string $key;
 
     public function getValue($item) : string {
         if(!$item) return "";

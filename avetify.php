@@ -9,7 +9,6 @@ require_once "src/Interface/HTMLEvents.php";
 require_once "src/Interface/Pout.php";
 require_once "src/Interface/Submittable.php";
 require_once "src/Interface/Placeable.php";
-require_once "src/Interface/RecordField.php";
 require_once "src/Interface/IdentifiedElementTrait.php";
 require_once "src/Interface/AvtContainer.php";
 require_once "src/Interface/PageRenderer.php";
@@ -18,7 +17,6 @@ require_once "src/Interface/HTMLModifier.php";
 require_once "src/Interface/WebModifier.php";
 require_once "src/Interface/HTMLInterface.php";
 require_once "src/Interface/JSInterface.php";
-require_once "src/Interface/RecordFieldTrait.php";
 require_once "src/Interface/RecordFormTrait.php";
 
 require_once "src/DB/QueryField.php";
@@ -59,6 +57,8 @@ require_once "src/Network/NetworkFetcher.php";
 require_once "src/Network/ProxyFetcher.php";
 require_once "src/Network/HeadersFetcher.php";
 require_once "src/Network/ProxyHeadersFetcher.php";
+
+require_once "src/Fields/BaseRecordField.php";
 
 require_once "src/Entities/Models/EntityReceivedSort.php";
 require_once "src/Entities/BasicProperties/HaveAltLink.php";

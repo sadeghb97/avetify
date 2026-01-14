@@ -1,15 +1,13 @@
 <?php
 namespace Avetify\Entities;
 
+use Avetify\Fields\BaseRecordField;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\IdentifiedElementTrait;
-use Avetify\Interface\RecordField;
-use Avetify\Interface\RecordFieldTrait;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
-class EntityField implements RecordField {
-    use RecordFieldTrait;
+class EntityField extends BaseRecordField {
     use IdentifiedElementTrait;
 
     public bool $hidden = false;
@@ -23,7 +21,8 @@ class EntityField implements RecordField {
     public bool $autoTimeUpdate = false; //na special na writable
     //auto generated fields na special hastan na writable
 
-    public function __construct(public string $key, public string $title){
+    public function __construct(string $key, string $title){
+        parent::__construct($key, $title);
         $this->postConstruct();
     }
 

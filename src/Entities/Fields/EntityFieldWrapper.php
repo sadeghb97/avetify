@@ -2,13 +2,16 @@
 namespace Avetify\Entities\Fields;
 
 use Avetify\Entities\EntityField;
-use Avetify\Interface\RecordField;
+use Avetify\Fields\BaseRecordField;
 use Avetify\Interface\WebModifier;
 
 class EntityFieldWrapper extends EntityField {
-    public function __construct(public RecordField $recordField) {
+    public function __construct(public BaseRecordField $recordField) {
         parent::__construct($recordField->key, $recordField->title);
-        $this->recordField->useNameIdentifier = true;
+
+        if(property_exists($this->recordField, "useNameIdentifier")) {
+            $this->recordField->useNameIdentifier = true;
+        }
     }
 
     public function presentValue($item, ?WebModifier $webModifier = null) {
