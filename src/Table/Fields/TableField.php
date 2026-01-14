@@ -1,14 +1,13 @@
 <?php
 namespace Avetify\Table\Fields;
 
-use Avetify\Entities\EntityUtils;
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\RecordField;
 use Avetify\Interface\RecordFieldTrait;
 use Avetify\Interface\Styler;
-use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\EditableFields\EditableField;
 
-class TableField {
+class TableField implements RecordField {
     use RecordFieldTrait;
     public bool $isNumeric = false;
     public bool $rtl = false;

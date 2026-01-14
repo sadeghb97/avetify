@@ -1,10 +1,12 @@
 <?php
 namespace Avetify\Interface;
-
 use Avetify\Entities\EntityUtils;
 
+/*** Implements RecordField */
 trait RecordFieldTrait {
     public int $maxFieldCharacters = 0;
+    public string $title;
+    public string $key;
 
     public function getValue($item) : string {
         if(!$item) return "";

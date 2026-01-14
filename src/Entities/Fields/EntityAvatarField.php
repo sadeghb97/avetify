@@ -135,8 +135,7 @@ class EntityAvatarField extends EntityField {
 
         echo '<input ';
         HTMLInterface::addAttribute("type", "file");
-        HTMLInterface::addAttribute("name", $key);
-        HTMLInterface::addAttribute("id", $key);
+        $this->placeElementIdAttributes();
         HTMLInterface::addAttribute("class", "empty");
         Styler::startAttribute();
         Styler::addStyle("font-size", "13pt");

@@ -77,7 +77,7 @@ class FormUtils {
                                              int $marginTop = 12, WebModifier $webModifier = null){
         $joshButton = new JoshButton($title, "", $buttonStyle, "submit");
         HTMLInterface::placeVerticalDivider($marginTop);
-        $joshButton->renderButton($webModifier);
+        $joshButton->place($webModifier);
     }
 
     public static function placeAbsSubmitButton(string $icon, string $formId, string $triggerName,

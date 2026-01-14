@@ -1,6 +1,7 @@
 <?php
 namespace Avetify\Entities\Fields;
 
+use Avetify\Components\Containers\NiceDiv;
 use Avetify\Entities\EntityField;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Styler;
@@ -20,17 +21,22 @@ class EntityTextAreaField extends EntityField {
             $value = $value ? implode("\n", $value) : "";
         }
 
+        $div = new NiceDiv(6);
+        $div->open();
+
         echo '<span style="font-weight: 14;">' . $title . '</span><br>';
         echo '<textarea ';
         Styler::startAttribute();
         Styler::addStyle("margin-bottom", "8px");
         Styler::closeAttribute();
-        HTMLInterface::addAttribute("name", $key);
-        HTMLInterface::addAttribute("id", $key);
+        $this->placeElementIdAttributes();
+        HTMLInterface::addAttribute("placeholder", $title);
         HTMLInterface::addAttribute("rows", "8");
         HTMLInterface::addAttribute("cols", "150");
         HTMLInterface::closeTag();
         echo $value;
         echo '</textarea>';
+
+        $div->close();
     }
 }

@@ -16,8 +16,7 @@ class EntityBooleanField extends EntityField {
         echo '<input ';
         HTMLInterface::addAttribute("type", "checkbox");
         HTMLInterface::addAttribute("value", "1");
-        HTMLInterface::addAttribute("name", $key);
-        HTMLInterface::addAttribute("id", $key);
+        $this->placeElementIdAttributes();
         if($value) HTMLInterface::addAttribute("checked", "true");
         Styler::startAttribute();
         Styler::addStyle("margin-bottom", "8px");

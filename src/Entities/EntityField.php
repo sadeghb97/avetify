@@ -2,14 +2,16 @@
 namespace Avetify\Entities;
 
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElementTrait;
+use Avetify\Interface\RecordField;
 use Avetify\Interface\RecordFieldTrait;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
-class EntityField {
+class EntityField implements RecordField {
     use RecordFieldTrait;
-    public ?string $key = null;
-    public ?string $title = null;
+    use IdentifiedElementTrait;
+
     public bool $hidden = false;
     public bool $rtl = false;
     public bool $writable = false; // add field to edit and add forms
@@ -21,9 +23,7 @@ class EntityField {
     public bool $autoTimeUpdate = false; //na special na writable
     //auto generated fields na special hastan na writable
 
-    public function __construct($key, $title){
-        $this->key = $key;
-        $this->title = $title;
+    public function __construct(public string $key, public string $title){
         $this->postConstruct();
     }
 
@@ -127,8 +127,7 @@ class EntityField {
 
         echo '<input ';
         HTMLInterface::addAttribute("type","text");
-        HTMLInterface::addAttribute("name", $key);
-        HTMLInterface::addAttribute("id", $key);
+        $this->placeElementIdAttributes();
         HTMLInterface::addAttribute("value", $value);
         HTMLInterface::addAttribute("placeholder", $title);
 
@@ -165,5 +164,9 @@ class EntityField {
             echo $this->title . ': ' . $value;
             HTMLInterface::closeDiv();
         }
+    }
+
+    public function getElementIdentifier($item = null) {
+        return $this->key;
     }
 }
