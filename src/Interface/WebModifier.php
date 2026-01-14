@@ -23,11 +23,13 @@ class WebModifier {
     }
 
     public function pushStyle(string $styleKey, string $styleValue){
-        if($this->styler) $this->styler->pushStyle($styleKey, $styleValue);
+        if(!$this->styler) $this->styler = new Styler();
+        $this->styler->pushStyle($styleKey, $styleValue);
     }
 
     public function pushModifier(string $modifierKey, string $modifierValue){
-        if($this->htmlModifier) $this->htmlModifier->pushModifier($modifierKey, $modifierValue);
+        if(!$this->htmlModifier) $this->htmlModifier = new HTMLModifier();
+        $this->htmlModifier->pushModifier($modifierKey, $modifierValue);
     }
 
     public function pushClass(string $className){

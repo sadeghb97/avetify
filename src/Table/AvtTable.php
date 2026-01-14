@@ -3,7 +3,7 @@ namespace Avetify\Table;
 
 use Avetify\Entities\SetModifier;
 use Avetify\Entities\Sorters\SortFactor;
-use Avetify\Fields\FieldsContainers\FieldsContainer;
+use Avetify\Fields\Containers\FieldsContainer;
 use Avetify\Interface\RecordFormTrait;
 use Avetify\Table\Fields\EditableFields\CheckboxField;
 use Avetify\Table\Fields\EditableFields\EditableField;

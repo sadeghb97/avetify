@@ -1,5 +1,5 @@
 <?php
-namespace Avetify\Fields\FieldsContainers;
+namespace Avetify\Fields\Containers;
 
 use Avetify\Fields\BaseRecordField;
 
@@ -8,7 +8,7 @@ class FieldsContainer extends BaseRecordField {
     public array $childs = [];
     public int $sepSize = 4;
 
-    public function __construct(string $title, string $key, array $childs){
+    public function __construct(string $key, string $title, array $childs){
         parent::__construct($key, $title);
         $this->childs = $childs;
     }

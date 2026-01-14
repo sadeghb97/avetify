@@ -99,9 +99,6 @@ require_once "src/Entities/ContextMenus/RecordContextMenu.php";
 require_once "src/Entities/ContextMenus/ContextMenuItem.php";
 require_once "src/Entities/FilterFactors/FilterFactor.php";
 require_once "src/Entities/FilterFactors/BooleanFilterFactor.php";
-require_once "src/Entities/Fields/DateFields/CreatedAtField.php";
-require_once "src/Entities/Fields/DateFields/UpdatedAtField.php";
-require_once "src/Entities/Fields/FlagFields/EntityFlagField.php";
 require_once "src/Entities/Fields/EntityFieldWrapper.php";
 require_once "src/Entities/Fields/EntityAvatarField.php";
 require_once "src/Entities/Fields/EntitySelectField.php";
@@ -110,6 +107,11 @@ require_once "src/Entities/Fields/EntityHiddenField.php";
 require_once "src/Entities/Fields/EntityDisabledField.php";
 require_once "src/Entities/Fields/EntityBooleanField.php";
 require_once "src/Entities/Fields/EntityTextAreaField.php";
+require_once "src/Entities/Fields/Containers/EntityRowFields.php";
+require_once "src/Entities/Fields/Containers/EntityColumnFields.php";
+require_once "src/Entities/Fields/DateFields/CreatedAtField.php";
+require_once "src/Entities/Fields/DateFields/UpdatedAtField.php";
+require_once "src/Entities/Fields/FlagFields/EntityFlagField.php";
 
 require_once "src/Fields/JSTextFields/JSInputField.php";
 require_once "src/Fields/JSTextFields/JSTextField.php";
@@ -124,6 +126,9 @@ require_once "src/Fields/SimpleMedalField.php";
 require_once "src/Fields/APIScoreField.php";
 require_once "src/Fields/JSDynamicSelect.php";
 require_once "src/Fields/APISpanField.php";
+require_once "src/Fields/Containers/FieldsContainer.php";
+require_once "src/Fields/Containers/RowFields.php";
+require_once "src/Fields/Containers/ColumnFields.php";
 
 require_once "src/Components/PlaceableTextField.php";
 require_once "src/Components/JSField.php";
@@ -175,6 +180,7 @@ require_once "src/Table/AvtTable.php";
 require_once "src/Table/DBTable.php";
 require_once "src/Table/JSONTable.php";
 require_once "src/Table/Fields/TableField.php";
+require_once "src/Table/Fields/TableFieldWrapper.php";
 require_once "src/Table/Fields/TableSimpleField.php";
 require_once "src/Table/Fields/TableSortField.php";
 
@@ -213,9 +219,8 @@ require_once "src/Table/Fields/FlagFields/VisualSelectCountryField.php";
 
 require_once "src/Table/Fields/ApiFields/ApiIconField.php";
 
-require_once "src/Table/Fields/FieldsContainers/FieldsContainer.php";
-require_once "src/Table/Fields/FieldsContainers/RowFields.php";
-require_once "src/Table/Fields/FieldsContainers/ColumnFields.php";
+require_once "src/Table/Fields/Containers/TableRowFields.php";
+require_once "src/Table/Fields/Containers/TableColumnFields.php";
 
 require_once "src/Crawling/Scrapper.php";
 require_once "src/Crawling/RawDocumentLoader.php";
