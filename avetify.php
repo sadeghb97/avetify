@@ -248,6 +248,7 @@ require_once "src/Themes/Modern/ModernSetRenderer.php";
 require_once "src/Themes/Modern/ModernGallery.php";
 require_once "src/Themes/Modern/ModernRatioGallery.php";
 require_once "src/Themes/Modern/ModernThemeBadCards.php";
+require_once "src/Themes/Modernix/Models/IconLink.php";
 require_once "src/Themes/Modernix/ModernixTheme.php";
 require_once "src/Themes/Modernix/ModernixRenderer.php";
 

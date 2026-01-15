@@ -1,6 +1,7 @@
 <?php
 namespace Avetify\Themes\Modernix;
 
+use Avetify\Components\Containers\NiceDiv;
 use Avetify\Components\Containers\VertDiv;
 use Avetify\Entities\SetModifier;
 use Avetify\Interface\CSS;
@@ -12,6 +13,7 @@ use Avetify\Table\AvtTable;
 use Avetify\Themes\Green\GreenTheme;
 use Avetify\Themes\Main\SetRenderer;
 use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Modernix\Models\IconLink;
 
 class ModernixRenderer extends SetRenderer {
     public bool $smallerTitle = false;
@@ -52,6 +54,11 @@ class ModernixRenderer extends SetRenderer {
 
         echo '<div class="card__body">';
 
+        $titleDiv = new NiceDiv(4);
+        $titleDiv->addStyle("background-color", "#269abc");
+        $titleDiv->addModifier("class", "contextmenu-exception");
+        $titleDiv->open();
+
         if($link){
             $linkModifier = WebModifier::createInstance();
             $linkModifier->pushStyle(CSS::textDecoration, "none");
@@ -85,6 +92,25 @@ class ModernixRenderer extends SetRenderer {
         echo '</div>';
 
         if($link) HTMLInterface::closeLink();
+
+        $allIconLinks = $this->getIconLinks($item);
+        if(count($allIconLinks) > 0) {
+            foreach ($allIconLinks as $iconLink) {
+                $iconLinkModifier = WebModifier::createInstance();
+                $iconLinkModifier->pushModifier("target", "_blank");
+                $iconLinkModifier->pushStyle("margin-left", "8px");
+                HTMLInterface::openLink($iconLink->link);
+
+                $imgModifier = WebModifier::createInstance();
+                $imgModifier->pushStyle("border-radius", "15px");
+                $imgModifier->pushStyle("margin-bottom", "4px");
+                HTMLInterface::placeImageWithHeight($iconLink->icon, 30, $imgModifier);
+
+                HTMLInterface::closeLink();
+            }
+        }
+
+        $titleDiv->close();
 
         if($this->setModifier instanceof AvtTable){
             foreach ($this->setModifier->fields as $field){
@@ -123,6 +149,11 @@ class ModernixRenderer extends SetRenderer {
 
         HTMLInterface::applyModifiers($this->cardModifiers);
         echo '>';
+    }
+
+    /** @return IconLink[] */
+    public function getIconLinks($record) : array {
+        return [];
     }
 
     public function closeRecord($record, int $index){
