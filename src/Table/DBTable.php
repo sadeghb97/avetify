@@ -44,6 +44,8 @@ abstract class DBTable extends AvtTable {
             foreach ($itemFields as $fk => $fv){
                 $qr = false;
                 $fieldDetails = $fieldsMap[$fk];
+                if($fieldDetails->isReadonly || !$fieldDetails->isEditable()) continue;
+
                 $isNumericField = $fieldDetails && $fieldDetails->isNumeric;
 
                 $oldValue = EntityUtils::getSimpleValue($oldRecord, $fk);
@@ -123,6 +125,8 @@ abstract class DBTable extends AvtTable {
 
             foreach ($creatingFields as $key => $value){
                 $fieldDetails = $fieldsMap[$key];
+                if($fieldDetails->isReadonly || !$fieldDetails->isEditable()) continue;
+
                 $isNumericField = $fieldDetails && $fieldDetails->isNumeric;
                 $queryBuilder->addField($value, $isNumericField, $key);
             }
