@@ -8,6 +8,7 @@ use Avetify\Forms\Buttons\FormButton;
 use Avetify\Interface\CSS;
 use Avetify\Interface\WebModifier;
 use Avetify\Routing\Routing;
+use Avetify\Table\AvtTable;
 use Avetify\Themes\Classic\ClassicLabel;
 
 abstract class BaseSetRenderer {
@@ -64,6 +65,9 @@ abstract class BaseSetRenderer {
     }
 
     public function renderBody(){
+        if($this->setModifier instanceof AvtTable) {
+            $this->setModifier->placeFormDataLists();
+        }
         $this->onRecordsAdjusted();
 
         if($this->setModifier->isSortable){
@@ -73,7 +77,7 @@ abstract class BaseSetRenderer {
             $allFilterFields = $this->setModifier->allFilterFields();
             if(count($allFilterFields) > 0){
                 $this->initFiltersForm();
-                $this->renderFilterFields();
+                $this->renderFilterFields($this->makeFiltersFormData());
             }
 
             $allDiscreteFilters = $this->setModifier->allDiscreteFactors();
@@ -172,10 +176,22 @@ abstract class BaseSetRenderer {
         }
     }
 
-    public function renderFilterFields() : void {
-        $this->filtersForm->openForm();
+    public function makeFiltersFormData() {
+        $filterFields = $this->setModifier->allFilterFields();
+        $formData = [];
 
-        $filtersFormData = $_POST;
+        foreach ($filterFields as $filterField){
+            if(!method_exists($filterField->recordField, "getElementIdentifier")) continue;
+            $filterKey = $filterField->recordField->getElementIdentifier();
+            if(isset($_REQUEST[$filterKey])) {
+                $formData[$filterField->key] = $_REQUEST[$filterKey];
+            }
+        }
+        return $formData;
+    }
+
+    public function renderFilterFields($filtersFormData) : void {
+        $this->filtersForm->openForm();
 
         $niceDiv = new NiceDiv();
         $filtersModifier = WebModifier::createInstance();
