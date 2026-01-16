@@ -121,9 +121,10 @@ abstract class SetModifier implements EntityManager {
 
                     if($filterKey && isset($_REQUEST[$filterKey])){
                         $filterValue = $_REQUEST[$filterKey];
-
-                        if(!$filterFactor->isQualified($record, $_REQUEST[$filterKey])) $isQualified = false;
-                        break;
+                        if(!$filterFactor->isQualified($record, $filterValue)){
+                            $isQualified = false;
+                            break;
+                        }
                     }
                 }
                 else if($filterFactor instanceof DiscreteFilterFactor){

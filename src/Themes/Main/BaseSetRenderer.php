@@ -172,7 +172,7 @@ abstract class BaseSetRenderer {
         }
     }
 
-    public function renderFilterFields(){
+    public function renderFilterFields() : void {
         $this->filtersForm->openForm();
 
         $filtersFormData = $_POST;
