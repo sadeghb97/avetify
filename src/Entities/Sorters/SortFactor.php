@@ -24,7 +24,7 @@ abstract class SortFactor implements Sorter {
         return $isDescending;
     }
 
-    public function isQualified($item) : bool {
+    public function sortQualified($item) : bool {
         if(!$this->skipEmpties) return true;
         $value = $this->getValue($item);
         if(!$value) return false;
@@ -47,8 +47,8 @@ abstract class SortFactor implements Sorter {
     }
 
     public function compare($itemA, $itemB) : int {
-        $qa = $this->isQualified($itemA);
-        $qb = $this->isQualified($itemB);
+        $qa = $this->sortQualified($itemA);
+        $qb = $this->sortQualified($itemB);
         if($qa != $qb) return $qa ? -1 : 1;
 
         $va = $this->getValue($itemA);

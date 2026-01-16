@@ -5,6 +5,7 @@ use Avetify\Entities\BasicProperties\EntityManager;
 use Avetify\Entities\BasicProperties\Traits\EntityManagerTrait;
 use Avetify\Entities\FilterFactors\DiscreteFilterFactor;
 use Avetify\Entities\FilterFactors\FilterFactor;
+use Avetify\Entities\FilterFactors\FilterField;
 use Avetify\Entities\Models\EntityReceivedSort;
 use Avetify\Entities\Sorters\Sorter;
 use Avetify\Entities\Sorters\SortFactor;
@@ -42,6 +43,16 @@ abstract class SetModifier implements EntityManager {
             if($factor instanceof DiscreteFilterFactor) $discreteFactors[] = $factor;
         }
         return $discreteFactors;
+    }
+
+    /** @return FilterField[] */
+    public function allFilterFields() : array {
+        $allFactors = $this->finalFilterFactors();
+        $filterFields = [];
+        foreach ($allFactors as $factor){
+            if($factor instanceof FilterField) $filterFields[] = $factor;
+        }
+        return $filterFields;
     }
 
     public function getSortKey() : string {
@@ -105,10 +116,23 @@ abstract class SetModifier implements EntityManager {
             $isQualified = true;
 
             foreach ($this->finalFilterFactors() as $filterFactor){
-                $filterKey = $filterFactor->getElementIdentifier();
-                if(isset($_REQUEST[$filterKey]) && !$filterFactor->isQualified($record, $_REQUEST[$filterKey] ?? "")){
-                    $isQualified = false;
-                    break;
+                if($filterFactor instanceof FilterField && method_exists($filterFactor->recordField, "getElementIdentifier")){
+                    $filterKey = $filterFactor->recordField->getElementIdentifier();
+
+                    if($filterKey && isset($_REQUEST[$filterKey])){
+                        $filterValue = $_REQUEST[$filterKey];
+
+                        if(!$filterFactor->isQualified($record, $_REQUEST[$filterKey])) $isQualified = false;
+                        break;
+                    }
+                }
+                else if($filterFactor instanceof DiscreteFilterFactor){
+                    $filterKey = $filterFactor->getElementIdentifier();
+
+                    if($filterKey && isset($_REQUEST[$filterKey]) && !$filterFactor->isQualified($record, $_REQUEST[$filterKey])){
+                        $isQualified = false;
+                        break;
+                    }
                 }
             }
 

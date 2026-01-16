@@ -15,7 +15,7 @@ class TableSortField extends SortFactor {
         return $this->field->getValue($item);
     }
 
-    public function isQualified($item): bool {
-        return $this->field->isQualified($item);
+    public function sortQualified($item): bool {
+        return $this->field->sortQualified($item);
     }
 }

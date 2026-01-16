@@ -1,6 +1,8 @@
 <?php
 namespace Avetify\Table;
 
+use Avetify\Entities\FilterFactors\FilterFactor;
+use Avetify\Entities\FilterFactors\FilterField;
 use Avetify\Entities\SetModifier;
 use Avetify\Entities\Sorters\SortFactor;
 use Avetify\Interface\RecordFormTrait;
@@ -88,6 +90,35 @@ class AvtTable extends SetModifier {
     /** @return SortFactor[] An array of MyClass instances */
     public function finalSortFactors() : array {
         return array_merge($this->getDefaultSortFactors(), $this->moreSortFactors());
+    }
+
+    /** @return FilterFactor[] An array of MyClass instances */
+    public function getDefaultFilterFactors() : array {
+        $out = [];
+        foreach ($this->getAllFields() as $field){
+            if($field->isFilterable){
+                $clonedField = clone $field;
+                $clonedField->isReadonly = false;
+                if(property_exists($clonedField, "useNameIdentifier")){
+                    $clonedField->useNameIdentifier = true;
+                }
+                if(property_exists($clonedField, "namespace")){
+                    $clonedField->namespace = "filters_" . $clonedField->namespace;
+                }
+                $out[] = new FilterField($clonedField);
+            }
+        }
+        return $out;
+    }
+
+    /** @return FilterFactor[] An array of MyClass instances */
+    public function moreFilterFactors() : array {
+        return [];
+    }
+
+    /** @return FilterFactor[] An array of MyClass instances */
+    public function finalFilterFactors() : array {
+        return array_merge($this->getDefaultFilterFactors(), $this->moreFilterFactors());
     }
 
     public function recordsLimit() : int {

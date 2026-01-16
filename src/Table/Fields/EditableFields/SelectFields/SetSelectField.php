@@ -50,4 +50,15 @@ class SetSelectField extends EditableField {
     }
 
     public function preLoad() {}
+
+    public function isQualified($item, $param): bool {
+        $setValue = $this->getValue($item);
+        $filterValue = $param;
+        if(!$filterValue) return true;
+
+        return $setValue == $filterValue ||
+            str_starts_with($setValue,"$filterValue,") ||
+            str_ends_with($setValue, ",$filterValue") ||
+            str_contains($setValue, ",$filterValue,");
+    }
 }

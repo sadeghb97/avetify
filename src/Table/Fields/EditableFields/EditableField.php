@@ -84,7 +84,7 @@ class EditableField extends TableField {
 
     public function bothIdentifier(){
         $this->useIDIdentifier = true;
-        $this->useIDIdentifier = true;
+        $this->useNameIdentifier = true;
     }
 
     public function preLoad(){}

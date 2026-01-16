@@ -1,13 +1,17 @@
 <?php
 namespace Avetify\Themes\Main;
 
+use Avetify\Components\Containers\NiceDiv;
 use Avetify\Entities\SetModifier;
+use Avetify\Forms\AvtForm;
+use Avetify\Forms\Buttons\FormButton;
 use Avetify\Interface\CSS;
 use Avetify\Interface\WebModifier;
 use Avetify\Routing\Routing;
 use Avetify\Themes\Classic\ClassicLabel;
 
 abstract class BaseSetRenderer {
+    public AvtForm | null $filtersForm = null;
     public WebModifier $containerModifier;
     public int $marginTop = 20;
     public int $marginBottom = 20;
@@ -62,13 +66,18 @@ abstract class BaseSetRenderer {
     public function renderBody(){
         $this->onRecordsAdjusted();
 
-
         if($this->setModifier->isSortable){
             $allSortFactors = $this->setModifier->finalSortFactors();
             if(count($allSortFactors) > 0) $this->renderSortLabels();
 
-            $allFilters = $this->setModifier->finalFilterFactors();
-            if(count($allFilters) > 0) $this->renderFilterLabels();
+            $allFilterFields = $this->setModifier->allFilterFields();
+            if(count($allFilterFields) > 0){
+                $this->initFiltersForm();
+                $this->renderFilterFields();
+            }
+
+            $allDiscreteFilters = $this->setModifier->allDiscreteFactors();
+            if(count($allDiscreteFilters) > 0) $this->renderFilterLabels();
         }
 
         $this->prepareContainerModifier();
@@ -96,6 +105,17 @@ abstract class BaseSetRenderer {
     public abstract function openContainer();
     public abstract function closeContainer();
     public abstract function renderRecordMain($item, int $index);
+
+    public function initFiltersForm() : void {
+        $this->filtersForm = new AvtForm($this->getFiltersFormIdentifier());
+        $applyButton = new FormButton($this->getFiltersFormIdentifier(), $this->getFiltersApplyButtonID(),
+            "Apply");
+        $clearButton = new FormButton($this->getFiltersFormIdentifier(), $this->getFiltersApplyButtonID(),
+            "Clear", "warning");
+
+        $this->filtersForm->addTrigger($applyButton);
+        $this->filtersForm->addTrigger($clearButton);
+    }
 
     public function renderSortLabels(){
         $allSortFactors = $this->setModifier->finalSortFactors();
@@ -152,6 +172,28 @@ abstract class BaseSetRenderer {
         }
     }
 
+    public function renderFilterFields(){
+        $this->filtersForm->openForm();
+
+        $filtersFormData = $_POST;
+
+        $niceDiv = new NiceDiv();
+        $filtersModifier = WebModifier::createInstance();
+        $filtersModifier->pushStyle("margin-top", "16px");
+        $filtersModifier->pushStyle("margin-bottom", "8px");
+        $niceDiv->open($filtersModifier);
+
+        $filterFields = $this->setModifier->allFilterFields();
+        foreach ($filterFields as $filterField){
+            $filterField->recordField->presentValue($filtersFormData);
+        }
+        $niceDiv->separate();
+        $this->filtersForm->placeTriggers(0);
+
+        $niceDiv->close();
+        $this->filtersForm->closeForm();
+    }
+
     public function renderSortLabel(string $title, string $link, bool $alterStyle): void {
         $finalBg = !$alterStyle ? "Black" : "Black";
         $finalColor = !$alterStyle ? "Cyan" : "GoldenRod";
@@ -170,5 +212,21 @@ abstract class BaseSetRenderer {
 
     public function getItemBoxIdentifier($record) : string {
         return $this->setModifier->setKey . "__box__" . $this->setModifier->getItemId($record);
+    }
+
+    public function getFiltersFormIdentifier() : string {
+        return $this->setModifier->setKey . "_" . "filters_form";
+    }
+
+    public function getFormIdentifier() : string {
+        return $this->setModifier->setKey . "_" . "table_form";
+    }
+
+    public function getFiltersApplyButtonID() : string {
+        return $this->setModifier->setKey . '_filters_apply';
+    }
+
+    public function getFiltersClearButtonID() : string {
+        return $this->setModifier->setKey . '_filters_clear';
     }
 }

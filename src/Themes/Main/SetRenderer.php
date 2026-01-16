@@ -37,46 +37,46 @@ abstract class SetRenderer extends BaseSetRenderer {
     }
 
     public function initForm(){
-        $this->form = new AvtForm($this->getFormName());
+        $this->form = new AvtForm($this->getFormIdentifier());
         $this->form->addHiddenElement(new FormHiddenProperty($this->getFormFieldsName(), ""));
         $this->form->addHiddenElement(new FormHiddenProperty($this->getFormSelectorName(), ""));
 
         if($this->setModifier instanceof AvtTable && $this->setModifier->isEditable) {
             $deleteButtonRequired = $this->setModifier->enableSelectRecord;
             if ($this->useClassicButtons) {
-                $this->placeClassicUpdateTrigger($this->getFormName(), $this->getUpdateButtonID());
+                $this->addClassicUpdateTrigger($this->getFormIdentifier(), $this->getUpdateButtonID());
 
                 if ($deleteButtonRequired) {
-                    $this->placeClassicDeleteTrigger($this->getFormName(), $this->getDeleteButtonID());
+                    $this->addClassicDeleteTrigger($this->getFormIdentifier(), $this->getDeleteButtonID());
                 }
             }
             else {
-                $this->placeUpdateTrigger($this->getFormName(), $this->getUpdateButtonID());
+                $this->addUpdateTrigger($this->getFormIdentifier(), $this->getUpdateButtonID());
 
                 if ($deleteButtonRequired) {
-                    $this->placeDeleteTrigger($this->getFormName(), $this->getDeleteButtonID());
+                    $this->addDeleteTrigger($this->getFormIdentifier(), $this->getDeleteButtonID());
                 }
             }
         }
     }
 
-    function placeUpdateTrigger($formId, $buttonId){
+    function addUpdateTrigger($formId, $buttonId){
         $this->form->addTrigger(new PrimaryFormButton($formId, $buttonId));
     }
 
-    function placeDeleteTrigger($formId, $buttonId){
+    function addDeleteTrigger($formId, $buttonId){
         $deleteConfirmMessage = $this->getConfirmMessage();
         $deleteTrigger = new DeleteFormButton($formId, $buttonId);
         if($deleteConfirmMessage) $deleteTrigger->enableConfirmMessage($deleteConfirmMessage);
         $this->form->addTrigger($deleteTrigger);
     }
 
-    function placeClassicUpdateTrigger($formId, $buttonId){
+    function addClassicUpdateTrigger($formId, $buttonId){
         $this->form->addTrigger(new FormButton($formId, $buttonId,
             "Update"));
     }
 
-    function placeClassicDeleteTrigger($formId, $buttonId){
+    function addClassicDeleteTrigger($formId, $buttonId){
         $deleteConfirmMessage = $this->getConfirmMessage();
         $deleteTrigger = new FormButton($formId, $buttonId,
             "Delete", "warning");
@@ -121,7 +121,7 @@ abstract class SetRenderer extends BaseSetRenderer {
         JSInterface::declareGlobalJSArgs($this->getJSArgsName());
         FormUtils::readyFormToCatchNoNamedFields(
             $this->getJSArgsName(),
-            $this->getFormName(),
+            $this->getFormIdentifier(),
             $this->getFormFieldsName(),
             json_encode($allJSEditableFields),
             $sbTable->isEditable,
@@ -136,6 +136,7 @@ abstract class SetRenderer extends BaseSetRenderer {
             $sbTable = $this->setModifier;
 
             $this->initForm();
+
             if ($sbTable->isEditable) $sbTable->catchSubmittedFields();
 
             $sbTable->placeFormDataLists();
@@ -188,10 +189,6 @@ abstract class SetRenderer extends BaseSetRenderer {
     }
 
     public function renderCreatingElements(){}
-
-    public function getFormName() : string {
-        return $this->setModifier->setKey . "_" . "table_form";
-    }
 
     public function getFormFieldsName() : string {
         return $this->setModifier->setKey . "_" . "table_fields";

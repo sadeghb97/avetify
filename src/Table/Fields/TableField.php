@@ -1,17 +1,19 @@
 <?php
 namespace Avetify\Table\Fields;
 
+use Avetify\Entities\FilterFactors\Qualifier;
 use Avetify\Fields\BaseRecordField;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Styler;
 use Avetify\Table\Fields\EditableFields\EditableField;
 
-class TableField extends BaseRecordField {
+class TableField extends BaseRecordField implements Qualifier {
     public bool $isNumeric = false;
     public bool $rtl = false;
     public bool $isCentered = true;
     public bool $isUnbreakable = false;
     public bool $isSortable = false;
+    public bool $isFilterable = false;
     public bool $isAscending = false;
     public array $tieBreaks = [];
     protected bool $editable = false;
@@ -106,6 +108,11 @@ class TableField extends BaseRecordField {
         return $this;
     }
 
+    public function setFilterable() : TableField {
+        $this->isFilterable = true;
+        return $this;
+    }
+
     public function setAscending() : TableField {
         $this->isAscending = true;
         return $this;
@@ -179,7 +186,11 @@ class TableField extends BaseRecordField {
         return $this->editable;
     }
 
-    public function isQualified($item) : bool {
+    public function isQualified($item, $param): bool {
+        return !!$this->getValue($item);
+    }
+
+    public function sortQualified($item) : bool {
         if(!$this->skipEmpties) return true;
         $value = $this->getValue($item);
         if(!$value) return false;

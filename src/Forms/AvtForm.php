@@ -53,8 +53,8 @@ class AvtForm {
         }
     }
 
-    public function placeTriggers(){
-        $div = new NiceDiv(8);
+    public function placeTriggers($trSepSize = 8){
+        $div = new NiceDiv($trSepSize);
         $div->open();
 
         foreach ($this->triggers as $trigger){

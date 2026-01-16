@@ -12,7 +12,7 @@ class ColoredField extends TableSimpleField {
     public function normalCellStyles($item){
         parent::normalCellStyles($item);
 
-        if($this->isQualified($item)) {
+        if($this->sortQualified($item)) {
             $val = $this->getValue($item);
 
             $chosenColor = null;
