@@ -1,27 +1,21 @@
 <?php
 namespace Avetify\Entities\FilterFactors;
 
-use Avetify\Entities\EntityUtils;
+use Avetify\Fields\BaseRecordField;
+use Avetify\Interface\IdentifiedElementTrait;
 
-abstract class FilterFactor {
-    public array $discreteFilters = [];
+abstract class FilterFactor extends BaseRecordField {
+    use IdentifiedElementTrait;
 
-    public function __construct(public string $title, public string $key, public string $namespace = ""){}
-
-    public function getItemRelatedValue($item) {
-        return EntityUtils::getSimpleValue($item, $this->key);
+    public function __construct(string $title, string $key, public string $namespace = ""){
+        parent::__construct($key, $title);
     }
 
     public function isQualified($item, $param): bool {
-        return !!$this->getItemRelatedValue($item);
+        return !!$this->getValue($item);
     }
 
-    public function addDiscreteFilter($filterTitle, $filterValue): FilterFactor {
-        $this->discreteFilters[$filterTitle] = $filterValue;
-        return $this;
-    }
-
-    public function getFilterElementId() : string {
+    public function getElementIdentifier($item = null){
         return $this->namespace ? $this->namespace . "_filter_" . $this->key : "filter_" . $this->key;
     }
 }

@@ -130,12 +130,12 @@ abstract class BaseSetRenderer {
     }
 
     public function renderFilterLabels(){
-        $allFilters = $this->setModifier->finalFilterFactors();
+        $allFilters = $this->setModifier->allDiscreteFactors();
 
         foreach ($allFilters as $filter){
             if(count($filter->discreteFilters) <= 0) return;
 
-            $filterKey = $filter->getFilterElementId();
+            $filterKey = $filter->getElementIdentifier();
             echo '<div style="text-align: center; margin-top: 12px;">';
 
             $this->renderFilterLabel("Clear",

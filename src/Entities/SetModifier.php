@@ -3,6 +3,7 @@ namespace Avetify\Entities;
 
 use Avetify\Entities\BasicProperties\EntityManager;
 use Avetify\Entities\BasicProperties\Traits\EntityManagerTrait;
+use Avetify\Entities\FilterFactors\DiscreteFilterFactor;
 use Avetify\Entities\FilterFactors\FilterFactor;
 use Avetify\Entities\Models\EntityReceivedSort;
 use Avetify\Entities\Sorters\Sorter;
@@ -31,6 +32,16 @@ abstract class SetModifier implements EntityManager {
     /** @return FilterFactor[] */
     public function finalFilterFactors() : array {
         return [];
+    }
+
+    /** @return DiscreteFilterFactor[] */
+    public function allDiscreteFactors() : array {
+        $allFactors = $this->finalFilterFactors();
+        $discreteFactors = [];
+        foreach ($allFactors as $factor){
+            if($factor instanceof DiscreteFilterFactor) $discreteFactors[] = $factor;
+        }
+        return $discreteFactors;
     }
 
     public function getSortKey() : string {
@@ -94,7 +105,7 @@ abstract class SetModifier implements EntityManager {
             $isQualified = true;
 
             foreach ($this->finalFilterFactors() as $filterFactor){
-                $filterKey = $filterFactor->getFilterElementId();
+                $filterKey = $filterFactor->getElementIdentifier();
                 if(isset($_REQUEST[$filterKey]) && !$filterFactor->isQualified($record, $_REQUEST[$filterKey] ?? "")){
                     $isQualified = false;
                     break;

@@ -98,6 +98,7 @@ require_once "src/Entities/Sorters/PipedSortFactors.php";
 require_once "src/Entities/ContextMenus/RecordContextMenu.php";
 require_once "src/Entities/ContextMenus/ContextMenuItem.php";
 require_once "src/Entities/FilterFactors/FilterFactor.php";
+require_once "src/Entities/FilterFactors/DiscreteFilterFactor.php";
 require_once "src/Entities/FilterFactors/BooleanFilterFactor.php";
 require_once "src/Entities/Fields/EntityFieldWrapper.php";
 require_once "src/Entities/Fields/EntityAvatarField.php";
