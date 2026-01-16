@@ -29,8 +29,6 @@ abstract class BaseSetRenderer {
     public function renderSet(){
         $this->openCollection();
         foreach ($this->setModifier->currentRecords as $itemIndex => $record){
-            if(!$this->isQualified($record)) continue;
-
             $this->openRecord($record, $itemIndex);
             $this->renderRecordMain($record, $itemIndex);
             $this->moreRecordFields($record, $itemIndex);
@@ -39,10 +37,6 @@ abstract class BaseSetRenderer {
             if($this->limit && ($itemIndex + 1) >= $this->limit) break;
         }
         $this->closeCollection();
-    }
-
-    public function isQualified($item) : bool {
-        return true;
     }
 
     public function renderLeadingItems(){}
