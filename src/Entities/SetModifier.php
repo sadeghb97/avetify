@@ -7,6 +7,7 @@ use Avetify\Entities\FilterFactors\DiscreteFilterFactor;
 use Avetify\Entities\FilterFactors\FilterFactor;
 use Avetify\Entities\FilterFactors\FilterField;
 use Avetify\Entities\Models\EntityReceivedSort;
+use Avetify\Entities\Models\PaginationConfigs;
 use Avetify\Entities\Sorters\Sorter;
 use Avetify\Entities\Sorters\SortFactor;
 use Avetify\Themes\Main\SetRenderer;
@@ -22,6 +23,7 @@ abstract class SetModifier implements EntityManager {
     public SetRenderer | null $renderer = null;
     public int $maxTitleLength = 0;
     public bool $autoSort = true;
+    public PaginationConfigs | null $paginationConfigs = null;
 
     public function __construct(public string $setKey){}
 
@@ -57,6 +59,10 @@ abstract class SetModifier implements EntityManager {
 
     public function getSortKey() : string {
         return $this->setKey . "_sort";
+    }
+
+    public function getPageKey() : string {
+        return $this->setKey . "_page";
     }
 
     public function getSortRawToken() : ?string {
@@ -106,6 +112,19 @@ abstract class SetModifier implements EntityManager {
         usort($this->currentRecords, [$sortFactor, 'compare']);
     }
 
+    private function paginateRecords() : void {
+        if(!$this->paginationConfigs) return;
+        $receivedPage = intval($_GET[$this->getPageKey()]) ?? 1;
+        if($receivedPage < 1) $receivedPage = 1;
+        $pageSize = $this->paginationConfigs->pageSize;
+        $curRecordsSize = count($this->currentRecords);
+        $lastPage = ceil($curRecordsSize / $pageSize);
+        $finalPage = min($receivedPage, $lastPage);
+        $recordsOffset = $pageSize * ($finalPage - 1);
+
+        $this->currentRecords = array_splice($this->currentRecords, $recordsOffset, $pageSize);
+    }
+
     public function simpleSort(string $key, bool $isAsc = true){
         EntityUtils::simpleSort($this->currentRecords, $key, $isAsc);
     }
@@ -149,6 +168,7 @@ abstract class SetModifier implements EntityManager {
     public function adjustRecords(){
         $this->filterRecords();
         $this->sortRecords();
+        $this->paginateRecords();
     }
 
     public function getCurrentRecordsIndexes() : array {

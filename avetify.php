@@ -61,6 +61,7 @@ require_once "src/Network/ProxyHeadersFetcher.php";
 require_once "src/Fields/BaseRecordField.php";
 
 require_once "src/Entities/Models/EntityReceivedSort.php";
+require_once "src/Entities/Models/PaginationConfigs.php";
 require_once "src/Entities/BasicProperties/HaveAltLink.php";
 require_once "src/Entities/BasicProperties/HaveID.php";
 require_once "src/Entities/BasicProperties/HaveImage.php";
