@@ -10,17 +10,20 @@ use Avetify\Interface\WebModifier;
 use Avetify\Routing\Routing;
 use Avetify\Table\AvtTable;
 use Avetify\Themes\Classic\ClassicLabel;
+use Avetify\Themes\Main\Pagination\PaginationRenderer;
 
 abstract class BaseSetRenderer {
     public AvtForm | null $filtersForm = null;
     public WebModifier $containerModifier;
     public int $marginTop = 20;
     public int $marginBottom = 20;
+    public PaginationRenderer | null $paginationRenderer = null;
 
     public function __construct(public SetModifier $setModifier,
                                 public ThemesManager | null $theme,
                                 public bool | int $limit = false){
         $this->containerModifier = WebModifier::createInstance();
+        $this->paginationRenderer = new PaginationRenderer($this->setModifier->paginationConfigs);
         $this->postConstruct();
     }
 
@@ -58,6 +61,12 @@ abstract class BaseSetRenderer {
         $this->theme->lateImports();
     }
 
+    public function placePagination() : void {
+        if($this->setModifier->paginationConfigs->pageSize > 0 && $this->paginationRenderer){
+            $this->paginationRenderer->place();
+        }
+    }
+
     public function renderBody(){
         if($this->setModifier instanceof AvtTable) {
             $this->setModifier->placeFormDataLists();
@@ -76,6 +85,10 @@ abstract class BaseSetRenderer {
 
             $allDiscreteFilters = $this->setModifier->allDiscreteFactors();
             if(count($allDiscreteFilters) > 0) $this->renderFilterLabels();
+
+            if($this->setModifier->paginationConfigs && !$this->setModifier->paginationConfigs->paginationOnBottom){
+                $this->placePagination();
+            }
         }
 
         $this->prepareContainerModifier();
@@ -83,6 +96,11 @@ abstract class BaseSetRenderer {
         $this->renderLeadingItems();
         $this->renderSet();
         $this->closeContainer();
+
+        if($this->setModifier->paginationConfigs && $this->setModifier->paginationConfigs->paginationOnBottom){
+            $this->placePagination();
+        }
+
         $this->renderFooter();
     }
 

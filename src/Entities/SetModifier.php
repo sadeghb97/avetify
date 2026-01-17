@@ -61,10 +61,6 @@ abstract class SetModifier implements EntityManager {
         return $this->setKey . "_sort";
     }
 
-    public function getPageKey() : string {
-        return $this->setKey . "_page";
-    }
-
     public function getSortRawToken() : ?string {
         return $_GET[$this->getSortKey()] ?? null;
     }
@@ -114,12 +110,11 @@ abstract class SetModifier implements EntityManager {
 
     private function paginateRecords() : void {
         if(!$this->paginationConfigs) return;
-        $receivedPage = intval($_GET[$this->getPageKey()]) ?? 1;
-        if($receivedPage < 1) $receivedPage = 1;
-        $pageSize = $this->paginationConfigs->pageSize;
         $curRecordsSize = count($this->currentRecords);
-        $lastPage = ceil($curRecordsSize / $pageSize);
-        $finalPage = min($receivedPage, $lastPage);
+        $this->paginationConfigs->recordsCount = $curRecordsSize;
+
+        $pageSize = $this->paginationConfigs->pageSize;
+        $finalPage = $this->paginationConfigs->getCurrentPage();
         $recordsOffset = $pageSize * ($finalPage - 1);
 
         $this->currentRecords = array_splice($this->currentRecords, $recordsOffset, $pageSize);

@@ -235,6 +235,7 @@ require_once "src/Themes/Main/ThemesManager.php";
 require_once "src/Themes/Main/BaseSetRenderer.php";
 require_once "src/Themes/Main/SetRenderer.php";
 require_once "src/Themes/Main/ListerRenderer.php";
+require_once "src/Themes/Main/Pagination/PaginationRenderer.php";
 require_once "src/Themes/Main/Navigations/NavigationLink.php";
 require_once "src/Themes/Main/Navigations/NavigationSection.php";
 require_once "src/Themes/Main/Navigations/NavigationBar.php";

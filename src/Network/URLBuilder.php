@@ -7,13 +7,13 @@ class URLBuilder {
     public array $params = [];
 
     public static function fromCurrent() : URLBuilder {
-        $urlBuilder = new URLBuilder();
+        $urlBuilder = new URLBuilder(Routing::currentPureLink());
         $urlBuilder->params = array_merge([], $_GET);
         return $urlBuilder;
     }
 
     public static function fromUrl(string $url) : URLBuilder {
-        $urlBuilder = new URLBuilder();
+        $urlBuilder = new URLBuilder(Routing::getUrlPureLink($url));
         $urlParams = Routing::getUrlQuery($url);
         parse_str($urlParams, $queryParams);
         $urlBuilder->params = $queryParams;
