@@ -129,7 +129,7 @@ abstract class DBConnection extends mysqli {
     }
 
     public function getRawListExistFilter(string $key, string $value, string $separator = ",") : DBFilterCollection {
-        $filterCollection = new DBFilterCollection();
+        $filterCollection = new DBFilterCollection(DBFilterCollection::OR_MODE);
         $filterCollection->addFilter(new DBFilter($key, "=", $value));
         $filterCollection->addFilter(new DBFilter($key, "LIKE", "{$value}{$separator},%"));
         $filterCollection->addFilter(new DBFilter($key, "LIKE", "%{$separator}{$value}"));

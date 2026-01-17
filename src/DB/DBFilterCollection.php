@@ -37,4 +37,8 @@ class DBFilterCollection implements DBFilterInterface {
         if(count($this->filters) > 1) $query = "($query)";
         return $query;
     }
+
+    public function count() : int {
+        return count($this->filters);
+    }
 }
