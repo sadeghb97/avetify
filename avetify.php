@@ -247,6 +247,7 @@ require_once "src/Themes/Green/GreenTheme.php";
 require_once "src/Themes/Green/GreenTableRenderer.php";
 require_once "src/Themes/Green/GreenListerRenderer.php";
 require_once "src/Themes/Green/GreenNavigationRenderer.php";
+require_once "src/Themes/Green/GreenPaginationRenderer.php";
 require_once "src/Themes/Modern/ModernGalleryMedal.php";
 require_once "src/Themes/Modern/ModernTheme.php";
 require_once "src/Themes/Modern/ModernSetRenderer.php";

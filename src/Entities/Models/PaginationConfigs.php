@@ -3,7 +3,7 @@ namespace Avetify\Entities\Models;
 
 class PaginationConfigs {
     public int $recordsCount = 0;
-    public bool $paginationOnBottom = true;
+    public bool $paginationOnBottom = false;
 
     public function __construct(public string $namespace, public int $pageSize) {}
 

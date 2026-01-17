@@ -10,6 +10,7 @@ use Avetify\Interface\WebModifier;
 use Avetify\Routing\Routing;
 use Avetify\Table\AvtTable;
 use Avetify\Themes\Classic\ClassicLabel;
+use Avetify\Themes\Green\GreenPaginationRenderer;
 use Avetify\Themes\Main\Pagination\PaginationRenderer;
 
 abstract class BaseSetRenderer {
@@ -23,7 +24,7 @@ abstract class BaseSetRenderer {
                                 public ThemesManager | null $theme,
                                 public bool | int $limit = false){
         $this->containerModifier = WebModifier::createInstance();
-        $this->paginationRenderer = new PaginationRenderer($this->setModifier->paginationConfigs);
+        $this->paginationRenderer = new GreenPaginationRenderer($this->setModifier->paginationConfigs);
         $this->postConstruct();
     }
 

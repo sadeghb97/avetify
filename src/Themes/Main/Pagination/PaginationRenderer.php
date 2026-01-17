@@ -8,13 +8,6 @@ use Avetify\Network\URLBuilder;
 use Avetify\Themes\Classic\ClassicLabel;
 
 class PaginationRenderer {
-    public string $pageBG = "";
-    public string $pageColor = "";
-    public string $activePageBG = "";
-    public string $activePageColor = "";
-    public string $navBG = "";
-    public string $navColor = "";
-
     public function __construct(public PaginationConfigs | null $configs, public int $labelsCount = 7) {}
 
     public function getTargetPageLink(int $targetPage) : string {
@@ -66,14 +59,14 @@ class PaginationRenderer {
 
     public function placeFirstPageItem(WebModifier | null $webModifier = null) : void {
         $targetPage = 1;
-        $label = new ClassicLabel("<<", $this->getTargetPageLink($targetPage), $this->navBG, $this->navColor);
+        $label = new ClassicLabel("<<", $this->getTargetPageLink($targetPage));
         $label->place();
     }
 
     public function placePreviousPageItem(WebModifier | null $webModifier = null) : void {
         $targetPage = $this->configs->getCurrentPage() - 1;
         if($targetPage < 1) $targetPage = 1;
-        $label = new ClassicLabel("<", $this->getTargetPageLink($targetPage), $this->navBG, $this->navColor);
+        $label = new ClassicLabel("<", $this->getTargetPageLink($targetPage));
         $label->place();
     }
 
@@ -82,13 +75,13 @@ class PaginationRenderer {
         $lastPage = $this->configs->getLatestPage();
         if($targetPage > $lastPage) $targetPage = $lastPage;
 
-        $label = new ClassicLabel(">", $this->getTargetPageLink($targetPage), $this->navBG, $this->navColor);
+        $label = new ClassicLabel(">", $this->getTargetPageLink($targetPage));
         $label->place();
     }
 
     public function placeLastPageItem(WebModifier | null $webModifier = null) : void {
         $targetPage = $this->configs->getLatestPage();
-        $label = new ClassicLabel(">>", $this->getTargetPageLink($targetPage), $this->navBG, $this->navColor);
+        $label = new ClassicLabel(">>", $this->getTargetPageLink($targetPage));
         $label->place();
     }
 

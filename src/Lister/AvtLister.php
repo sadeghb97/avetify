@@ -21,6 +21,8 @@ abstract class AvtLister extends SetModifier {
 
     public function __construct(string $key, array $items){
         parent::__construct($key);
+        $this->paginationConfigs = null;
+
         $this->listerRenderer = $this->getListerRenderer();
         $this->loadRawRecords($items);
     }
