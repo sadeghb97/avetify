@@ -403,7 +403,7 @@ abstract class AvtEntity extends SetModifier {
                 $this->adjustCreateData($data, $options);
                 $currentRecord = $this->insertRecord($data);
                 if ($currentRecord) {
-                    $entityPk = $currentRecord[$this->getSuperKey()];
+                    $entityPk = EntityUtils::getSimpleValue($currentRecord, $this->getSuperKey());
                     echo "Registered Successfully (";
                     $this->printEntityLinkedName($currentRecord);
                     echo ')' . Pout::br();

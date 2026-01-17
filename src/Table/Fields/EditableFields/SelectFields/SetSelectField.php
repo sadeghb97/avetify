@@ -53,12 +53,20 @@ class SetSelectField extends EditableField {
 
     public function isQualified($item, $param): bool {
         $setValue = $this->getValue($item);
+        if(!$setValue) return false;
+
         $filterValue = $param;
         if(!$filterValue) return true;
 
-        return $setValue == $filterValue ||
-            str_starts_with($setValue,"$filterValue,") ||
-            str_ends_with($setValue, ",$filterValue") ||
-            str_contains($setValue, ",$filterValue,");
+        $existsList = explode(",", $setValue);
+        $filterList = explode(",", $filterValue);
+
+        $existsSet = [];
+        foreach ($existsList as $i) $existsSet[$i] = true;
+
+        foreach ($filterList as $filterItem){
+            if(empty($existsSet[$filterItem])) return false;
+        }
+        return true;
     }
 }
