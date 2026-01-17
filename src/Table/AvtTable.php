@@ -3,6 +3,7 @@ namespace Avetify\Table;
 
 use Avetify\Entities\FilterFactors\FilterFactor;
 use Avetify\Entities\FilterFactors\FilterField;
+use Avetify\Entities\Models\PaginationConfigs;
 use Avetify\Entities\SetModifier;
 use Avetify\Entities\Sorters\SortFactor;
 use Avetify\Interface\RecordFormTrait;
@@ -30,6 +31,7 @@ class AvtTable extends SetModifier {
 
     public function __construct(array $fields, array $rawRecords, string $key, bool $isEditable = false){
         parent::__construct($key);
+        $this->paginationConfigs = new PaginationConfigs($this->setKey, $this->getPageRecordsCount());
 
         $this->isEditable = $isEditable;
         $this->renderer = $this->getTableRenderer();

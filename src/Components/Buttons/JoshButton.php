@@ -1,6 +1,7 @@
 <?php
 namespace Avetify\Components\Buttons;
 
+use Avetify\Interface\HTMLEvents;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
@@ -9,6 +10,8 @@ use Avetify\Interface\WebModifier;
 
 class JoshButton implements Placeable {
     use IdentifiedElementTrait;
+
+    public string $clickAction = "";
 
     public function __construct(public string $title, public string $buttonId,
                                 public string $buttonStyle,
@@ -25,6 +28,9 @@ class JoshButton implements Placeable {
         HTMLInterface::addAttribute("type", $this->buttonType);
         $this->placeElementIdAttributes();
         HTMLInterface::addAttribute("onkeydown", 'return false;');
+        if($this->clickAction) {
+            HTMLInterface::addAttribute(HTMLEvents::onClick, $this->clickAction);
+        }
         Styler::classStartAttribute();
         Styler::addClass($buttonStyle);
         HTMLInterface::appendClasses($webModifier);

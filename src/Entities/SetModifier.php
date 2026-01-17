@@ -25,9 +25,7 @@ abstract class SetModifier implements EntityManager {
     public bool $autoSort = true;
     public PaginationConfigs | null $paginationConfigs = null;
 
-    public function __construct(public string $setKey){
-        $this->paginationConfigs = new PaginationConfigs($this->setKey, $this->getPageRecordsCount());
-    }
+    public function __construct(public string $setKey){}
 
     /** @return Sorter[] An array of MyClass instances */
     public function finalSortFactors() : array {

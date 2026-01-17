@@ -1,11 +1,14 @@
 <?php
 namespace Avetify\Themes\Main;
 
+use Avetify\Components\Buttons\JoshButton;
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Entities\SetModifier;
 use Avetify\Forms\AvtForm;
+use Avetify\Forms\Buttons\ClearButton;
 use Avetify\Forms\Buttons\FormButton;
 use Avetify\Interface\CSS;
+use Avetify\Interface\JSInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Routing\Routing;
 use Avetify\Table\AvtTable;
@@ -127,8 +130,7 @@ abstract class BaseSetRenderer {
         $this->filtersForm = new AvtForm($this->getFiltersFormIdentifier());
         $applyButton = new FormButton($this->getFiltersFormIdentifier(), $this->getFiltersApplyButtonID(),
             "Apply");
-        $clearButton = new FormButton($this->getFiltersFormIdentifier(), $this->getFiltersApplyButtonID(),
-            "Clear", "warning");
+        $clearButton = new ClearButton("Clear", $this->getFiltersApplyButtonID(), "warning");
 
         $this->filtersForm->addTrigger($applyButton);
         $this->filtersForm->addTrigger($clearButton);

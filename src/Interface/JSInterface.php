@@ -1,6 +1,8 @@
 <?php
 namespace Avetify\Interface;
 
+use Avetify\Routing\Routing;
+
 class JSInterface {
     public static function declareGlobalJSArgs($argsName){
         ?>
@@ -23,6 +25,15 @@ class JSInterface {
         ?>
         <script>
             redir("<?php echo html_entity_decode($url); ?>", <?php echo $delay; ?>)
+        </script>
+        <?php
+    }
+
+    public static function refresh($delay = 0){
+        $currentUrl = Routing::getCurrentLink()
+        ?>
+        <script>
+            redir("<?php echo html_entity_decode($currentUrl); ?>", <?php echo $delay; ?>)
         </script>
         <?php
     }

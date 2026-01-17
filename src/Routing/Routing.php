@@ -80,6 +80,13 @@ class Routing {
         return '';
     }
 
+    public static function getCurrentLink() : string {
+        $protocol = self::getServerProtocol();
+        $host = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : "";
+        $uri = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : "";
+        return $protocol . $host . $uri;
+    }
+
     public static function currentPureLink() : string {
         $protocol = self::getServerProtocol();
         $host = !empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : "";

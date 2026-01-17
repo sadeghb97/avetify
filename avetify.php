@@ -279,6 +279,7 @@ require_once "src/Forms/FormUtils.php";
 require_once "src/Forms/FormHiddenProperty.php";
 require_once "src/Forms/AvtForm.php";
 require_once "src/Forms/Buttons/FormButton.php";
+require_once "src/Forms/Buttons/ClearButton.php";
 require_once "src/Forms/Buttons/AbsoluteFormButton.php";
 require_once "src/Forms/Buttons/PrimaryFormButton.php";
 require_once "src/Forms/Buttons/DeleteFormButton.php";
