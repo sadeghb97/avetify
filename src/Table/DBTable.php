@@ -39,6 +39,7 @@ abstract class DBTable extends AvtTable {
         foreach ($itemsFields as $itemPk => $itemFields){
             $queryBuilder->clear();
             $queryRequired = false;
+            if(!isset($indexesMap[$itemPk])) continue;
             $oldRecord = $this->currentRecords[$indexesMap[$itemPk]];
 
             foreach ($itemFields as $fk => $fv){
