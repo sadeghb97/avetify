@@ -263,6 +263,8 @@ require_once "src/GalRepo/GalleryRepo.php";
 require_once "src/GalRepo/GreenGalleryRenderer.php";
 require_once "src/GalRepo/ManageGalleryLister.php";
 
+require_once "src/Standings/Scoring/ScoreThreshold.php";
+require_once "src/Standings/Scoring/RangeScoring.php";
 require_once "src/Standings/LeagueStandings.php";
 require_once "src/Standings/Competitor.php";
 
