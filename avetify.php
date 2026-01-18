@@ -287,8 +287,9 @@ require_once "src/Forms/Buttons/DeleteFormButton.php";
 require_once "src/Renderers/AvetifyRenderer.php";
 require_once "src/Renderers/TaskPageRenderer.php";
 
-require_once "src/Calc/DateStatsCalculator.php";
-require_once "src/Calc/IRDateStatsCalculator.php";
+require_once "src/Calc/DateStats.php";
+require_once "src/Calc/IRDateStats.php";
+require_once "src/Calc/GlobalDateStats.php";
 
 require_once "src/Repo/Countries/WorldCountries.php";
 require_once "src/Repo/Countries/World.php";

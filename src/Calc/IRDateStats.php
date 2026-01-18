@@ -3,7 +3,7 @@ namespace Avetify\Calc;
 
 use Avetify\Externals\JDF;
 
-abstract class IRDateStatsCalculator extends DateStatsCalculator {
+abstract class IRDateStats extends DateStats {
     protected function getYear(int $time): int {
         return JDF::jdate("Y", $this->adjustTime($time), '', 'Asia/Tehran', 'en');
     }

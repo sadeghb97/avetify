@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Calc;
 
-abstract class DateStatsCalculator {
+abstract class DateStats {
     /** @var array[] */
     public array $yearStats = [];
 
