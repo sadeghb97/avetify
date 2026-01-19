@@ -1,11 +1,9 @@
 <?php
 namespace Avetify\Standings\Calc;
 
-use Avetify\Standings\Models\CandidateCompetitor;
 use Avetify\Standings\Models\DateStatItem;
 
 abstract class DateStats {
-    /** @var DateStatItem[] */
     public array $yearStats = [];
 
     protected function adjustTime(int $time) : int {
@@ -14,15 +12,8 @@ abstract class DateStats {
 
     protected abstract function getYear(int $time) : int;
     protected abstract function getMonth(int $time) : int;
-    protected abstract function applyRecord($stat, $record);
 
-    protected function getEmptyStatObject(int $year, int $month = 0) : DateStatItem {
-        return new DateStatItem($year, $month);
-    }
-
-    protected function getNewCandidateObject(string $candidateId) : CandidateCompetitor {
-        return new CandidateCompetitor($candidateId);
-    }
+    protected abstract function getEmptyStatObject(int $year, int $month = 0) : DateStatItem;
 
     public function pushRecord($record, $time) : void {
         if($time < 1000) return;
@@ -40,8 +31,8 @@ abstract class DateStats {
         $yearStatObject = $this->yearStats[$year][0];
         $monthStatObject = $this->yearStats[$year][$month];
 
-        $this->applyRecord($yearStatObject, $record);
-        $this->applyRecord($monthStatObject, $record);
+        $yearStatObject->applyRecord($record);
+        $monthStatObject->applyRecord($record);
     }
 
     public function sortStats(string $sortFactor = "overallScore") : void {
