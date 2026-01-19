@@ -263,10 +263,14 @@ require_once "src/GalRepo/GalleryRepo.php";
 require_once "src/GalRepo/GreenGalleryRenderer.php";
 require_once "src/GalRepo/ManageGalleryLister.php";
 
+require_once "src/Standings/Models/CandidateCompetitor.php";
 require_once "src/Standings/Scoring/ScoreThreshold.php";
 require_once "src/Standings/Scoring/RangeScoring.php";
 require_once "src/Standings/LeagueStandings.php";
 require_once "src/Standings/Competitor.php";
+require_once "src/Standings/Calc/DateStats.php";
+require_once "src/Standings/Calc/IRDateStats.php";
+require_once "src/Standings/Calc/GlobalDateStats.php";
 
 require_once "src/Modules/Cli/CliColor.php";
 require_once "src/Modules/Cli/CliPrinter.php";
@@ -288,10 +292,6 @@ require_once "src/Forms/Buttons/DeleteFormButton.php";
 
 require_once "src/Renderers/AvetifyRenderer.php";
 require_once "src/Renderers/TaskPageRenderer.php";
-
-require_once "src/Calc/DateStats.php";
-require_once "src/Calc/IRDateStats.php";
-require_once "src/Calc/GlobalDateStats.php";
 
 require_once "src/Repo/Countries/WorldCountries.php";
 require_once "src/Repo/Countries/World.php";

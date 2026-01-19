@@ -1,5 +1,5 @@
 <?php
-namespace Avetify\Calc;
+namespace Avetify\Standings\Calc;
 
 use Avetify\Externals\JDF;
 

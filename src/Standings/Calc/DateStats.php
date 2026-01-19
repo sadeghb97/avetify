@@ -1,8 +1,11 @@
 <?php
-namespace Avetify\Calc;
+namespace Avetify\Standings\Calc;
+
+use Avetify\Standings\Models\CandidateCompetitor;
+use Avetify\Standings\Models\DateStatItem;
 
 abstract class DateStats {
-    /** @var array[] */
+    /** @var DateStatItem[] */
     public array $yearStats = [];
 
     protected function adjustTime(int $time) : int {
@@ -11,21 +14,21 @@ abstract class DateStats {
 
     protected abstract function getYear(int $time) : int;
     protected abstract function getMonth(int $time) : int;
-    protected abstract function getEmptyStatObject(int $year, int $month = 0);
-    protected abstract function adjustStat($stat, $record);
+    protected abstract function applyRecord($stat, $record);
 
-    public function pushRecord($record, $time){
+    protected function getEmptyStatObject(int $year, int $month = 0) : DateStatItem {
+        return new DateStatItem($year, $month);
+    }
+
+    protected function getNewCandidateObject(string $candidateId) : CandidateCompetitor {
+        return new CandidateCompetitor($candidateId);
+    }
+
+    public function pushRecord($record, $time) : void {
         if($time < 1000) return;
-        $year = (int) trim($this->getYear($time));
-        $month = (int) trim($this->getMonth($time));
-        $this->_pushRecord($record, $year, $month);
-    }
+        $year = (int) trim($this->getYear($this->adjustTime($time)));
+        $month = (int) trim($this->getMonth($this->adjustTime($time)));
 
-    public function sortStats(){
-        ksort($this->yearStats);
-    }
-
-    protected function _pushRecord($record, int $year, int $month){
         if(!isset($this->yearStats[$year])){
             $this->yearStats[$year] = [];
             $this->yearStats[$year][0] = $this->getEmptyStatObject($year);
@@ -37,8 +40,17 @@ abstract class DateStats {
         $yearStatObject = $this->yearStats[$year][0];
         $monthStatObject = $this->yearStats[$year][$month];
 
-        $this->adjustStat($yearStatObject, $record);
-        $this->adjustStat($monthStatObject, $record);
+        $this->applyRecord($yearStatObject, $record);
+        $this->applyRecord($monthStatObject, $record);
+    }
+
+    public function sortStats(string $sortFactor = "overallScore") : void {
+        ksort($this->yearStats);
+        foreach ($this->yearStats as $ys){
+            for ($i = 0; 12>=$i; $i++){
+                $ys->sortCandidates($sortFactor);
+            }
+        }
     }
 
     public function getAllYearStats() : array {

@@ -1,5 +1,5 @@
 <?php
-namespace Avetify\Calc;
+namespace Avetify\Standings\Calc;
 
 abstract class GlobalDateStats extends DateStats {
     protected function getYear(int $time): int {
