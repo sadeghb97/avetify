@@ -39,7 +39,7 @@ abstract class DateStats {
         ksort($this->yearStats);
         foreach ($this->yearStats as $ys){
             for ($i = 0; 12>=$i; $i++){
-                $ys->sortCandidates($sortFactor);
+                $ys[$i]->sortCandidates($sortFactor);
             }
         }
     }

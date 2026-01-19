@@ -264,6 +264,7 @@ require_once "src/GalRepo/GreenGalleryRenderer.php";
 require_once "src/GalRepo/ManageGalleryLister.php";
 
 require_once "src/Standings/Models/CandidateCompetitor.php";
+require_once "src/Standings/Models/DateStatItem.php";
 require_once "src/Standings/Scoring/ScoreThreshold.php";
 require_once "src/Standings/Scoring/RangeScoring.php";
 require_once "src/Standings/LeagueStandings.php";
