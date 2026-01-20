@@ -13,7 +13,7 @@ class RangeScoring {
         EntityUtils::simpleSort($this->thresholds, "value", true);
     }
 
-    public function addThreshold(int $value, int $score) : void {
+    public function addThreshold(float $value, float $score) : void {
         $this->thresholds[] = new ScoreThreshold($value, $score);
         $this->sortThresholds();
     }
