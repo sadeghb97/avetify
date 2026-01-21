@@ -31,7 +31,6 @@ class AvtTable extends SetModifier {
 
     public function __construct(array $fields, array $rawRecords, string $key, bool $isEditable = false){
         parent::__construct($key);
-        $this->paginationConfigs = new PaginationConfigs($this->setKey, $this->getPageRecordsCount());
 
         $this->isEditable = $isEditable;
         $this->renderer = $this->getTableRenderer();
@@ -39,6 +38,10 @@ class AvtTable extends SetModifier {
         $this->setFields($fields);
         $this->loadRawRecords($rawRecords);
         $this->renderer->limit = $this->recordsLimit();
+    }
+
+    public function createPaginationConfigs(): ?PaginationConfigs {
+        return new PaginationConfigs($this->setKey, $this->getPageRecordsCount());
     }
 
     public function setFields(array $fields){
@@ -122,7 +125,7 @@ class AvtTable extends SetModifier {
     public function finalFilterFactors() : array {
         $filters = array_merge($this->getDefaultFilterFactors(), $this->moreFilterFactors());
         foreach ($filters as $filter){
-            $filter->namespace = $this->setKey;
+            if(property_exists($filter, "namespace")) $filter->namespace = $this->setKey;
         }
         return $filters;
     }

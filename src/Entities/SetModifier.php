@@ -25,7 +25,9 @@ abstract class SetModifier implements EntityManager {
     public bool $autoSort = true;
     public PaginationConfigs | null $paginationConfigs = null;
 
-    public function __construct(public string $setKey){}
+    public function __construct(public string $setKey){
+        $this->paginationConfigs = $this->createPaginationConfigs();
+    }
 
     /** @return Sorter[] An array of MyClass instances */
     public function finalSortFactors() : array {
@@ -189,6 +191,11 @@ abstract class SetModifier implements EntityManager {
 
     public function getPageRecordsCount() : int {
         return 100;
+    }
+
+    /** @return PaginationConfigs|null */
+    public function createPaginationConfigs(): ?PaginationConfigs {
+        return null;
     }
 
     public function openPage(string $title = ""){
