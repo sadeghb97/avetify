@@ -7,6 +7,7 @@ abstract class DateStats {
     public function __construct(public bool $logging = false){}
 
     public array $yearStats = [];
+    public DateStatItem | null $overallStats = null;
 
     protected function adjustTime(int $time) : int {
         return $time;
@@ -22,6 +23,9 @@ abstract class DateStats {
         $year = (int) trim($this->getYear($this->adjustTime($time)));
         $month = (int) trim($this->getMonth($this->adjustTime($time)));
 
+        if($this->overallStats == null){
+            $this->overallStats = $this->getEmptyStatObject(0);
+        }
         if(!isset($this->yearStats[$year])){
             $this->yearStats[$year] = [];
             $this->yearStats[$year][0] = $this->getEmptyStatObject($year);
@@ -33,6 +37,7 @@ abstract class DateStats {
         $yearStatObject = $this->yearStats[$year][0];
         $monthStatObject = $this->yearStats[$year][$month];
 
+        $this->overallStats->applyRecord($record, $this->logging);
         $yearStatObject->applyRecord($record, $this->logging);
         $monthStatObject->applyRecord($record, $this->logging);
     }

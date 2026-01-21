@@ -1,14 +1,12 @@
 <?php
 namespace Avetify\Themes\Main;
 
-use Avetify\Components\Buttons\JoshButton;
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Entities\SetModifier;
 use Avetify\Forms\AvtForm;
 use Avetify\Forms\Buttons\ClearButton;
 use Avetify\Forms\Buttons\FormButton;
 use Avetify\Interface\CSS;
-use Avetify\Interface\JSInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Routing\Routing;
 use Avetify\Table\AvtTable;
@@ -138,7 +136,18 @@ abstract class BaseSetRenderer {
 
     public function renderSortLabels(){
         $allSortFactors = $this->setModifier->finalSortFactors();
+        if(count($allSortFactors) <= 0) return;
+
+        $sortRows = [];
+        foreach ($allSortFactors as $sortFactor){
+            if(!isset($sortRows[$sortFactor->row - 1])) $sortRows[$sortFactor->row - 1] = [];
+            $sortRows[$sortFactor->row - 1][] = $sortFactor;
+        }
+
         echo '<div style="text-align: center; margin-top: 12px;">';
+
+        $div = new NiceDiv();
+        $div->open();
 
         $this->renderSortLabel("Clear",
             Routing::removeParamFromCurrentLink($this->setModifier->getSortKey()), false);
@@ -150,19 +159,31 @@ abstract class BaseSetRenderer {
             $pureSort = $startWithMinus ? substr($currentSort, 1) : $currentSort;
         }
 
-        foreach ($allSortFactors as $sortFactor){
-            $alterStyle = false;
-            $finalTitle = $sortFactor->title;
-            $nextDescending = $sortFactor->descIsDefault;
-            if($currentSort && $pureSort == $sortFactor->factorKey){
-                $nextDescending = !$startWithMinus;
-                $alterStyle = true;
-                $finalTitle .= ($startWithMinus ? " ↓" : " ↑");
-            }
-            $finalSortFactor = ($nextDescending ? "-" : "") . $sortFactor->factorKey;
+        $firstRowPrinted = false;
+        foreach ($sortRows as $rowIndex => $sortFactors) {
+            if(count($sortFactors) <= 0) continue;
 
-            $this->renderSortLabel($finalTitle,
-                Routing::addParamToCurrentLink($this->setModifier->getSortKey(), $finalSortFactor), $alterStyle);
+            if($firstRowPrinted) {
+                $div = new NiceDiv();
+                $div->open();
+            }
+            foreach ($sortFactors as $sortFactor) {
+                $alterStyle = false;
+                $finalTitle = $sortFactor->title;
+                $nextDescending = $sortFactor->descIsDefault;
+                if ($currentSort && $pureSort == $sortFactor->factorKey) {
+                    $nextDescending = !$startWithMinus;
+                    $alterStyle = true;
+                    $finalTitle .= ($startWithMinus ? " ↓" : " ↑");
+                }
+                $finalSortFactor = ($nextDescending ? "-" : "") . $sortFactor->factorKey;
+
+                $this->renderSortLabel($finalTitle,
+                    Routing::addParamToCurrentLink($this->setModifier->getSortKey(), $finalSortFactor), $alterStyle);
+            }
+            $div->close();
+
+            $firstRowPrinted = true;
         }
 
         echo '</div>';

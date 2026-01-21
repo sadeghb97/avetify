@@ -6,6 +6,7 @@ use Avetify\Entities\EntityUtils;
 abstract class SortFactor implements Sorter {
     public bool $alterDirection = false;
     public bool $isDefaultSort = false;
+    public int $row = 0;
     public array $tieBreaks = [];
 
     public function __construct(public string $title, public string $factorKey,
@@ -33,6 +34,11 @@ abstract class SortFactor implements Sorter {
 
     public function setTiebreaks(array $tieBreaks) : SortFactor {
         $this->tieBreaks = $tieBreaks;
+        return $this;
+    }
+
+    public function setRow(int $row) : SortFactor {
+        $this->row = $row;
         return $this;
     }
 
