@@ -22,6 +22,7 @@ class TableAvatarField extends TableField {
             Styler::addStyle("width", $this->imageWidth);
             Styler::addStyle("height", "auto");
         }
+        Styler::addStyle("margin", "auto");
         HTMLInterface::appendStyles($webModifier);
         echo '" ';
 

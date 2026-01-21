@@ -52,13 +52,23 @@ abstract class DBConnection extends mysqli {
         return mysqli_fetch_array($result, MYSQLI_ASSOC);
     }
 
-    public function fetchSet($query){
+    public function fetchSet($query) : array {
         $result = $this->query($query);
         if(!$result) return [];
 
         $out = [];
         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
             $out[] = $row;
+        }
+        return $out;
+    }
+
+    public function fetchAvtSet(string $className, $query) : array {
+        $set = $this->fetchSet($query);
+
+        $out = [];
+        foreach ($set as $result){
+            $out[] = AvtEntityItem::createInstance($className, $result);
         }
         return $out;
     }

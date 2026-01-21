@@ -8,7 +8,7 @@ abstract class DateStatItem {
     public array $candidates = [];
     private array $cndMap = [];
 
-    public abstract function applyRecord($record);
+    public abstract function applyRecord($record, bool $logging);
 
     protected function getNewCandidateObject(string $candidateId) : CandidateCompetitor {
         return new CandidateCompetitor($candidateId);

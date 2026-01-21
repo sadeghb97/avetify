@@ -4,14 +4,16 @@ namespace Avetify\Standings\Calc;
 use Avetify\Standings\Models\DateStatItem;
 
 abstract class DateStats {
+    public function __construct(public bool $logging = false){}
+
     public array $yearStats = [];
 
     protected function adjustTime(int $time) : int {
         return $time;
     }
 
-    protected abstract function getYear(int $time) : int;
-    protected abstract function getMonth(int $time) : int;
+    public abstract function getYear(int $time) : int;
+    public abstract function getMonth(int $time) : int;
 
     protected abstract function getEmptyStatObject(int $year, int $month = 0) : DateStatItem;
 
@@ -31,8 +33,8 @@ abstract class DateStats {
         $yearStatObject = $this->yearStats[$year][0];
         $monthStatObject = $this->yearStats[$year][$month];
 
-        $yearStatObject->applyRecord($record);
-        $monthStatObject->applyRecord($record);
+        $yearStatObject->applyRecord($record, $this->logging);
+        $monthStatObject->applyRecord($record, $this->logging);
     }
 
     public function sortStats(string $sortFactor = "overallScore") : void {

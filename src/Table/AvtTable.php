@@ -120,7 +120,11 @@ class AvtTable extends SetModifier {
 
     /** @return FilterFactor[] An array of MyClass instances */
     public function finalFilterFactors() : array {
-        return array_merge($this->getDefaultFilterFactors(), $this->moreFilterFactors());
+        $filters = array_merge($this->getDefaultFilterFactors(), $this->moreFilterFactors());
+        foreach ($filters as $filter){
+            $filter->namespace = $this->setKey;
+        }
+        return $filters;
     }
 
     public function recordsLimit() : int {
