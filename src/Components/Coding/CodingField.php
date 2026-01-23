@@ -31,7 +31,7 @@ class CodingField extends CodingBlocks implements Placeable {
         Styler::startAttribute();
         Styler::addStyle(CSS::marginTop, "8px");
         Styler::closeAttribute();
-        $this->placeElementIdAttributes();
+        HTMLInterface::addAttribute("id", $this->getMainContainerId());
         HTMLInterface::closeTag();
 
         $labelModifier = WebModifier::createInstance();

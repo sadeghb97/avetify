@@ -16,6 +16,7 @@ class EntityDisabledField extends EntityField {
         $title = $this->title;
         $key = $this->key;
         $value = $this->getValue($item);
+        if(strlen($value) <= 0) $value = $this->defaultValue;
 
         $niceDiv = new NiceDiv();
         $niceDiv->open();

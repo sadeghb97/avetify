@@ -31,16 +31,6 @@ class EntityField extends BaseRecordField {
 
     public function postConstruct(){}
 
-    public function setType(string $type) : EntityField {
-        $this->type = $type;
-        return $this;
-    }
-
-    public function setPath(string $path) : EntityField {
-        $this->path = $path;
-        return $this;
-    }
-
     public function setRtl() : EntityField {
         $this->rtl = true;
         return $this;
@@ -85,23 +75,6 @@ class EntityField extends BaseRecordField {
     public function setSpecial() : EntityField {
         $this->special = true;
         return $this;
-    }
-
-    public function setMaxImageSize(string $imageSize) : EntityField {
-        $this->maxImageSize = $imageSize;
-        return $this;
-    }
-
-    public function setImageForcedRatio(int $widthDim, int $heightDim) : EntityField {
-        $this->forcedWidthDimension = $widthDim;
-        $this->forcedHeightDimension = $heightDim;
-        return $this;
-    }
-
-    public function getImageForcedRatio() : float {
-        if($this->forcedWidthDimension > 0 && $this->forcedHeightDimension > 0)
-            return $this->forcedWidthDimension / $this->forcedHeightDimension;
-        return 0;
     }
 
     public function setAutoTimeCreate() : EntityField {

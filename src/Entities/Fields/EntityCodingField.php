@@ -6,12 +6,7 @@ use Avetify\Entities\EntityField;
 use Avetify\Interface\WebModifier;
 
 class EntityCodingField extends EntityField {
-    public const CodingFieldType = "coding_field";
     public string $defWrapper = "";
-
-    public function postConstruct() {
-        $this->type = self::CodingFieldType;
-    }
 
     public function setWrapper(string $wrapper) : EntityCodingField {
         $this->defWrapper = $wrapper;
@@ -19,7 +14,6 @@ class EntityCodingField extends EntityField {
     }
 
     public function presentWritableField($item, ?WebModifier $webModifier = null) {
-        $key = $this->key;
         $value = $this->getValue($item);
 
         $codingField = new CodingField($this->title, $this->key, $value, ucfirst($this->defWrapper));
