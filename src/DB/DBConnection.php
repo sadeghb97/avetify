@@ -141,9 +141,18 @@ abstract class DBConnection extends mysqli {
     public function getRawListExistFilter(string $key, string $value, string $separator = ",") : DBFilterCollection {
         $filterCollection = new DBFilterCollection(DBFilterCollection::OR_MODE);
         $filterCollection->addFilter(new DBFilter($key, "=", $value));
-        $filterCollection->addFilter(new DBFilter($key, "LIKE", "{$value}{$separator},%"));
+        $filterCollection->addFilter(new DBFilter($key, "LIKE", "{$value}{$separator}%"));
         $filterCollection->addFilter(new DBFilter($key, "LIKE", "%{$separator}{$value}"));
         $filterCollection->addFilter(new DBFilter($key, "LIKE", "%{$separator}{$value}{$separator}%"));
+        return $filterCollection;
+    }
+
+    public function getRawListExistFilterBySql(string $key, string $value, string $separator = ",") : DBFilterCollection {
+        $filterCollection = new DBFilterCollection(DBFilterCollection::OR_MODE);
+        $filterCollection->addFilter(new DBFilter($key, "=", $value, true));
+        $filterCollection->addFilter(new DBFilter($key, "LIKE", "CONCAT({$value}, '{$separator}%')", true));
+        $filterCollection->addFilter(new DBFilter($key, "LIKE", "CONCAT('%{$separator}', {$value})", true));
+        $filterCollection->addFilter(new DBFilter($key, "LIKE", "CONCAT('%{$separator}', {$value}, '{$separator}%')", true));
         return $filterCollection;
     }
 }
