@@ -52,6 +52,13 @@ abstract class DBConnection extends mysqli {
         return mysqli_fetch_array($result, MYSQLI_ASSOC);
     }
 
+    public function fetchAvtRecord(string $className, $query){
+        $result = $this->query($query);
+        if(!$result) return null;
+        $row = $this->fetchRow($query);
+        return AvtEntityItem::createInstance($className, $row);
+    }
+
     public function fetchSet($query) : array {
         $result = $this->query($query);
         if(!$result) return [];
@@ -80,6 +87,17 @@ abstract class DBConnection extends mysqli {
         $out = [];
         while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
             $out[$row[$mapKey]] = $row;
+        }
+        return $out;
+    }
+
+    public function fetchAvtMap(string $className, string $query, string $mapKey){
+        $result = $this->query($query);
+        if(!$result) return [];
+
+        $out = [];
+        while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
+            $out[$row[$mapKey]] = AvtEntityItem::createInstance($className, $row);;
         }
         return $out;
     }
