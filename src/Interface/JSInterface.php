@@ -45,4 +45,23 @@ class JSInterface {
         </script>
         <?php
     }
+
+    public static function setLocalStorageValue(string $key, string $value) : void {
+        ?>
+        <script>
+            localStorage.setItem(
+                    <?php echo json_encode($key); ?>,
+                    <?php echo json_encode($value); ?>
+            );
+        </script>
+        <?php
+    }
+
+    public static function removeLocalStorageValue(string $key) : void {
+        ?>
+        <script>
+            localStorage.removeItem(<?php echo json_encode($key); ?>);
+        </script>
+        <?php
+    }
 }

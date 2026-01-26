@@ -282,6 +282,7 @@ require_once "src/Modules/Printer.php";
 require_once "src/Modules/SetPlexer.php";
 require_once "src/Modules/TimeLogger.php";
 
+require_once "src/Forms/AvtSession.php";
 require_once "src/Forms/FormUtils.php";
 require_once "src/Forms/FormHiddenProperty.php";
 require_once "src/Forms/AvtForm.php";
