@@ -3,12 +3,13 @@ namespace Avetify\Table\Fields\EditableFields;
 
 use Avetify\Entities\BasicProperties\EntityID;
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\TableField;
 
-class EditableField extends TableField {
+class EditableField extends TableField implements IdentifiedElement {
     use IdentifiedElementTrait;
 
     public function __construct(string $title, string $key,

@@ -2,11 +2,12 @@
 namespace Avetify\Components;
 
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\WebModifier;
 
-class PlaceableTextField implements Placeable {
+class PlaceableTextField implements Placeable, IdentifiedElement {
     use IdentifiedElementTrait;
 
     public function __construct(public string $fieldId, public string $value = ""){

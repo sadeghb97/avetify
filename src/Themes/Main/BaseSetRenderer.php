@@ -7,6 +7,7 @@ use Avetify\Forms\AvtForm;
 use Avetify\Forms\Buttons\ClearButton;
 use Avetify\Forms\Buttons\FormButton;
 use Avetify\Interface\CSS;
+use Avetify\Interface\JSInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Routing\Routing;
 use Avetify\Table\AvtTable;
@@ -219,8 +220,10 @@ abstract class BaseSetRenderer {
         foreach ($filterFields as $filterField){
             if(!method_exists($filterField->recordField, "getElementIdentifier")) continue;
             $filterKey = $filterField->recordField->getElementIdentifier();
-            if(isset($_REQUEST[$filterKey])) {
-                $formData[$filterField->key] = $_REQUEST[$filterKey];
+            $globalStorageFilterKey = "filters_" . $filterKey;
+            if(isset($_POST[$filterKey])) {
+                JSInterface::setLocalStorageValue($globalStorageFilterKey, $_POST[$filterKey]);
+                $formData[$filterField->key] = $_POST[$filterKey];
             }
         }
         return $formData;
@@ -244,6 +247,18 @@ abstract class BaseSetRenderer {
 
         $niceDiv->close();
         $this->filtersForm->closeForm();
+        $this->loadFilterFields($filtersFormData);
+    }
+
+    public function loadFilterFields($filtersFormData) : void {
+        $filterFields = $this->setModifier->allFilterFields();
+        foreach ($filterFields as $filterField){
+            $filterKey = $filterField->recordField->getElementIdentifier();
+            $globalStorageFilterKey = "filters_" . $filterKey;
+            if(empty($filtersFormData[$filterField->key]) && method_exists($filterField->recordField, "loadValueUsingJSStorage")){
+                $filterField->recordField->loadValueUsingJSStorage($globalStorageFilterKey);
+            }
+        }
     }
 
     public function renderSortLabel(string $title, string $link, bool $alterStyle): void {

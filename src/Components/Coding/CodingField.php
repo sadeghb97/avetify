@@ -4,12 +4,13 @@ namespace Avetify\Components\Coding;
 use Avetify\Forms\FormUtils;
 use Avetify\Interface\CSS;
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
-class CodingField extends CodingBlocks implements Placeable {
+class CodingField extends CodingBlocks implements Placeable, IdentifiedElement {
     use IdentifiedElementTrait;
     public function __construct(public string $label, public string $mainKey,
                                 string $initValue, public string $defWrapper = ""){

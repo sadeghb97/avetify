@@ -3,12 +3,13 @@ namespace Avetify\Fields\JSTextFields;
 
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
-abstract class JSTextField extends JSInputField implements Placeable {
+abstract class JSTextField extends JSInputField implements Placeable, IdentifiedElement {
     use IdentifiedElementTrait;
 
     public string $listIdentifier = "";

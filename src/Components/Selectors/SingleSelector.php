@@ -4,12 +4,13 @@ namespace Avetify\Components\Selectors;
 use Avetify\Fields\JSDatalist;
 use Avetify\Forms\FormUtils;
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
-class SingleSelector implements Placeable {
+class SingleSelector implements Placeable, IdentifiedElement {
     use IdentifiedElementTrait;
     public bool $disableAutoSubmit = false;
 

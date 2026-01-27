@@ -9,6 +9,7 @@ use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\EditableFields\EditableField;
 
 class SetSelectField extends EditableField {
+    public SetSelector $setSelector;
     public int $selectorWidth = 0;
     public bool $tinyAvatars = false;
     public bool $disableAutoSubmit = false;
@@ -20,18 +21,22 @@ class SetSelectField extends EditableField {
     public function presentValue($item, ?WebModifier $webModifier = null) {
         NiceDiv::justOpen($webModifier);
         $value = $this->getValue($item);
-        $setSelector = new SetSelector($this->title,
+        $this->setSelector = new SetSelector($this->title,
             $this->getElementIdentifier($item), $value, $this->datalist);
-        $setSelector->useNameIdentifier = $this->useNameIdentifier;
+        $this->setSelector->useNameIdentifier = $this->useNameIdentifier;
         $selectorModifier = WebModifier::createInstance();
         if($this->selectorWidth > 0){
             $selectorModifier->styler->pushStyle("width", $this->selectorWidth . "px");
         }
-        $setSelector->tinyAvatars = $this->tinyAvatars;
-        $setSelector->disableAutoSubmit = $this->disableAutoSubmit;
-        $setSelector->isReadonly = $this->isReadonly;
-        $setSelector->place($selectorModifier);
+        $this->setSelector->tinyAvatars = $this->tinyAvatars;
+        $this->setSelector->disableAutoSubmit = $this->disableAutoSubmit;
+        $this->setSelector->isReadonly = $this->isReadonly;
+        $this->setSelector->place($selectorModifier);
         HTMLInterface::closeDiv();
+    }
+
+    public function loadValueUsingJSStorage(string $key): void {
+        $this->setSelector->loadValueUsingJSStorage($key);
     }
 
     public function setSelectorWidth(int $width) : SetSelectField {

@@ -7,12 +7,13 @@ use Avetify\Forms\FormUtils;
 use Avetify\Interface\Attrs;
 use Avetify\Interface\CSS;
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
-class SetSelector implements Placeable {
+class SetSelector implements Placeable, IdentifiedElement {
     use IdentifiedElementTrait;
     public bool $disableAutoSubmit = false;
     public bool $tinyAvatars = false;
@@ -61,14 +62,25 @@ class SetSelector implements Placeable {
         $niceDiv->close();
 
         HTMLInterface::closeDiv();
+        $initVarJS = "setSelectorFieldValue_" . $this->key;
 
-        $currentIds = $this->initValue ? explode(",", $this->initValue) : [];
-        ?>
-        <script>
-            var <?php echo $this->getJSSelectedListVarName(); ?> = new Set(<?php if(count($currentIds) > 0) echo json_encode($currentIds); ?>);
-            <?php echo $this->jsUpdateSelector(); ?>
-        </script>
-        <?php
+        echo '<script>';
+        echo 'var ' . $this->getJSSelectedListVarName() . ' = null;';
+        echo 'console.log(' . $this->getJSSelectedListVarName() . ');';
+        echo '{';
+        echo 'const ' . $initVarJS . ' = "' . $this->initValue . '";';
+        echo 'console.log(' . $initVarJS . ');';
+        echo $this->loadValueUsingJS($initVarJS);
+        echo '}';
+        echo '</script>';
+
+    }
+
+    public function loadValueUsingJS(string $valueVarName): string {
+        $out = ($this->getJSSelectedListVarName() . " = new Set($valueVarName ? $valueVarName.split(',') : []);");
+        $out .= 'console.log(' . $this->getJSSelectedListVarName() . ');';
+        $out .= $this->jsUpdateSelector();
+        return $out;
     }
 
     public function selectorMoreData() : array {

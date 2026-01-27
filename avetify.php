@@ -9,6 +9,7 @@ require_once "src/Interface/HTMLEvents.php";
 require_once "src/Interface/Pout.php";
 require_once "src/Interface/Submittable.php";
 require_once "src/Interface/Placeable.php";
+require_once "src/Interface/IdentifiedElement.php";
 require_once "src/Interface/IdentifiedElementTrait.php";
 require_once "src/Interface/AvtContainer.php";
 require_once "src/Interface/PageRenderer.php";

@@ -2,12 +2,13 @@
 namespace Avetify\Components\DialogFields;
 
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
-abstract class DialogField implements Placeable {
+abstract class DialogField implements Placeable, IdentifiedElement {
     use IdentifiedElementTrait;
     public bool $isFlex = true;
 

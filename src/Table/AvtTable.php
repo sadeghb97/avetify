@@ -29,6 +29,9 @@ class AvtTable extends SetModifier {
     public bool $enableAutoPatchCreatedAt = false;
     public bool $enableAutoPatchUpdatedAt = false;
 
+    private array | null $_defaultFilterFactors = null;
+    private array | null $_defaultSortFactors = null;
+
     public function __construct(array $fields, array $rawRecords, string $key, bool $isEditable = false){
         parent::__construct($key);
 
@@ -78,13 +81,14 @@ class AvtTable extends SetModifier {
 
     /** @return SortFactor[] An array of MyClass instances */
     public function getDefaultSortFactors() : array {
-        $out = [];
+        if($this->_defaultSortFactors !== null) return $this->_defaultSortFactors;
+        $this->_defaultSortFactors = [];
         foreach ($this->getAllFields() as $field){
             if($field->isSortable){
-                $out[] = new TableSortField($field);
+                $this->_defaultSortFactors[] = new TableSortField($field);
             }
         }
-        return $out;
+        return $this->_defaultSortFactors;
     }
 
     /** @return SortFactor[] An array of MyClass instances */
@@ -99,7 +103,8 @@ class AvtTable extends SetModifier {
 
     /** @return FilterFactor[] An array of MyClass instances */
     public function getDefaultFilterFactors() : array {
-        $out = [];
+        if($this->_defaultFilterFactors !== null) return $this->_defaultFilterFactors;
+        $this->_defaultFilterFactors = [];
         foreach ($this->getAllFields() as $field){
             if($field->isFilterable){
                 $clonedField = clone $field;
@@ -110,10 +115,10 @@ class AvtTable extends SetModifier {
                 if(property_exists($clonedField, "namespace")){
                     $clonedField->namespace = "filters_" . $clonedField->namespace;
                 }
-                $out[] = new FilterField($clonedField);
+                $this->_defaultFilterFactors[] = new FilterField($clonedField);
             }
         }
-        return $out;
+        return $this->_defaultFilterFactors;
     }
 
     /** @return FilterFactor[] An array of MyClass instances */

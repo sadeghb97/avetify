@@ -5,12 +5,13 @@ use Avetify\Components\Containers\NiceDiv;
 use Avetify\Fields\JSDatalist;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\HTMLModifier;
+use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\WebModifier;
 use Avetify\Repo\Countries\World;
 
-class CountrySelector implements Placeable {
+class CountrySelector implements Placeable, IdentifiedElement {
     use IdentifiedElementTrait;
 
     public function __construct(public string $mainElementId,

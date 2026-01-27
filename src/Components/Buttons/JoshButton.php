@@ -3,12 +3,13 @@ namespace Avetify\Components\Buttons;
 
 use Avetify\Interface\HTMLEvents;
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
-class JoshButton implements Placeable {
+class JoshButton implements Placeable, IdentifiedElement {
     use IdentifiedElementTrait;
 
     public string $clickAction = "";

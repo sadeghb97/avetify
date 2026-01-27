@@ -2,9 +2,10 @@
 namespace Avetify\Entities\FilterFactors;
 
 use Avetify\Fields\BaseRecordField;
+use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 
-abstract class DiscreteFilterFactor extends FilterFactor {
+abstract class DiscreteFilterFactor extends FilterFactor implements IdentifiedElement {
     use IdentifiedElementTrait;
     public array $discreteFilters = [];
 

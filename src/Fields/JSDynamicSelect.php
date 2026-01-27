@@ -3,11 +3,12 @@ namespace Avetify\Fields;
 
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\WebModifier;
 
-class JSDynamicSelect implements Placeable {
+class JSDynamicSelect implements Placeable, IdentifiedElement {
     use IdentifiedElementTrait;
 
     public function __construct(public string $title, public string $elementId,
