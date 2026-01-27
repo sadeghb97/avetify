@@ -130,6 +130,7 @@ abstract class BaseSetRenderer {
         $applyButton = new FormButton($this->getFiltersFormIdentifier(), $this->getFiltersApplyButtonID(),
             "Apply");
         $clearButton = new ClearButton("Clear", $this->getFiltersApplyButtonID(), "warning");
+        $clearButton->clickAction = $this->clearAllFiltersJS() . $clearButton->clickAction;
 
         $this->filtersForm->addTrigger($applyButton);
         $this->filtersForm->addTrigger($clearButton);
@@ -259,6 +260,26 @@ abstract class BaseSetRenderer {
                 $filterField->recordField->loadValueUsingJSStorage($globalStorageFilterKey);
             }
         }
+    }
+
+    public function clearAllFiltersJS() : string {
+        $rawKeys = $this->rawFilterFieldsGlobalStorageKeys();
+        return '{const keysList = \'' . $rawKeys . '\'.split(\',\');' .
+        'keysList.forEach((key) => {
+            localStorage.removeItem(key);
+        })}';
+    }
+
+    public function rawFilterFieldsGlobalStorageKeys() : string {
+        $out = "";
+        $filterFields = $this->setModifier->allFilterFields();
+        foreach ($filterFields as $filterField){
+            $filterKey = $filterField->recordField->getElementIdentifier();
+            $globalStorageFilterKey = "filters_" . $filterKey;
+            if($out) $out .= ",";
+            $out .= $globalStorageFilterKey;
+        }
+        return $out;
     }
 
     public function renderSortLabel(string $title, string $link, bool $alterStyle): void {
