@@ -17,12 +17,8 @@ class DBFilterCollection implements DBFilterInterface {
         return $newFilterCollection;
     }
 
-    public function addFilter(DBFilter $filter){
+    public function addFilter(DBFilterInterface $filter){
         $this->filters[] = $filter;
-    }
-
-    public function addFilterCollection(DBFilterCollection $filterCollection){
-        $this->filters[] = $filterCollection;
     }
 
     public function toRawQuery() : string {
