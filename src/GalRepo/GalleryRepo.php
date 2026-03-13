@@ -73,10 +73,7 @@ class GalleryRepo {
             $this->virtualFolders[$vgKey] = $virtualGallery;
         }
 
-        $files = [];
-        foreach (self::$extensions as $ext) {
-            $files = array_merge($files, glob($this->path . "*.$ext"));
-        }
+        $files = $this->getImageFiles();
 
         $altCover = null;
         if($this->maxDepth > $this->depth) {
@@ -93,7 +90,7 @@ class GalleryRepo {
 
         $confRecords = $this->originalRecordsConfMap;
 
-        $this->bigIndex = count($files) + 1000;
+        $this->bigIndex = count($files) + 10000;
         foreach ($files as $file){
             $adjustedFilename = Routing::cutPath($file, $this->path);
 
@@ -113,6 +110,25 @@ class GalleryRepo {
             $this->cover = $this->relativePath . $this->allRecords[0]->path;
         }
         else if($altCover) $this->cover = $altCover;
+    }
+
+    public function getImageFiles(): array {
+        $files = [];
+        foreach (self::$extensions as $ext) {
+            $files = array_merge($files, glob($this->path . "*.$ext"));
+        }
+
+        $noExtFiles = glob($this->path . "*");
+        $noExtFiles = array_filter($noExtFiles, function ($file) {
+            if (is_dir($file) || pathinfo($file, PATHINFO_EXTENSION)) {
+                return false;
+            }
+
+            $mime = @mime_content_type($file);
+            return str_starts_with($mime, 'image/');
+        });
+
+        return array_values(array_unique(array_merge($files, $noExtFiles)));
     }
 
     public function arrangeRepo(){

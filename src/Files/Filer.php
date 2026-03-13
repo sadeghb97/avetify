@@ -25,7 +25,7 @@ class Filer {
 
     public static function getFileExtension($filename) : string {
         $pos = strrpos($filename, ".");
-        if($pos < (strlen($filename) - 1)) return substr($filename, $pos + 1);
+        if($pos !== false && $pos < (strlen($filename) - 1)) return substr($filename, $pos + 1);
         return "";
     }
 

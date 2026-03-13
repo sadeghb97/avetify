@@ -121,13 +121,13 @@ abstract class AvtLister extends SetModifier {
                 if($aSec == $bSec){
                     $aAlt = $this->getAlterSortFactor($a);
                     $bAlt = $this->getAlterSortFactor($b);
-                    $res = $aAlt > $bAlt ? 1 : -1;
+                    $res = strnatcasecmp($aAlt, $bAlt);
                     return $this->isAlterSortAscending() ? $res : (-1 * $res);
                 }
-                $res = $aSec > $bSec ? 1 : -1;
+                $res = strnatcasecmp($aSec, $bSec);
                 return $this->isSecondarySortAscending() ? $res : (-1 * $res);
             }
-            return $aValue > $bValue ? 1 : -1;
+            return strnatcasecmp($aValue, $bValue);
         });
     }
 
