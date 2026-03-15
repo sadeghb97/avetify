@@ -5,6 +5,7 @@ use Avetify\Files\ImageUtils;
 use Avetify\Forms\FormUtils;
 use Avetify\Interface\HTMLInterface;
 use Avetify\Interface\Styler;
+use Avetify\Interface\WebModifier;
 use Avetify\Routing\Routing;
 
 class CroppableImage {
@@ -61,22 +62,26 @@ class CroppableImage {
         FormUtils::placeHiddenField($this->id . '_enabled', 0);
     }
 
-    public function presentFromWidth(int $size){
+    public function presentFromWidth(int $size, WebModifier $modifier = null){
         echo '<div ';
         Styler::startAttribute();
         Styler::addStyle("width", $size . "px");
+        if($modifier && $modifier->styler) $modifier->styler->appendStyles();
         Styler::closeAttribute();
+        if($modifier && $modifier->htmlModifier) $modifier->htmlModifier->applyModifiers();
         HTMLInterface::closeTag();
         $this->_present($size, true);
         HTMLInterface::closeDiv();
     }
 
-    public function presentFromHeight(int $size){
+    public function presentFromHeight(int $size, WebModifier $modifier = null){
         $widthSize = $size * $this->originalRatio;
         echo '<div ';
         Styler::startAttribute();
         Styler::addStyle("width", $widthSize . "px");
+        if($modifier && $modifier->styler) $modifier->styler->appendStyles();
         Styler::closeAttribute();
+        if($modifier && $modifier->htmlModifier) $modifier->htmlModifier->applyModifiers();
         HTMLInterface::closeTag();
         $this->_present($size, false);
         HTMLInterface::closeDiv();

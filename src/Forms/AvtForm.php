@@ -55,7 +55,9 @@ class AvtForm {
 
     public function placeTriggers($trSepSize = 8){
         $div = new NiceDiv($trSepSize);
-        $div->open();
+        $modifier = WebModifier::createInstance();
+        $modifier->pushStyle("margin-top", "8px");
+        $div->open($modifier);
 
         foreach ($this->triggers as $trigger){
             $div->placeItem($trigger);
