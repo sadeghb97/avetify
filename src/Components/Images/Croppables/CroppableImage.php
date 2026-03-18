@@ -10,6 +10,7 @@ use Avetify\Routing\Routing;
 
 class CroppableImage {
     public array $cropParams = [];
+    public bool $magickMode = false;
 
     public function __construct(public string $serverSrc, public string $id,
                                 public int $imageType = IMAGETYPE_JPEG,

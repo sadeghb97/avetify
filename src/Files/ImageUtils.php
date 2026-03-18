@@ -4,8 +4,8 @@ namespace Avetify\Files;
 use Exception;
 
 class ImageUtils {
-    public static function convert($filename, $targetExtension = null, $maxImageSize = null,
-                                   $forcedWidthRatio = null, $forcedHeightRatio = null){
+    public static function magickConvert($filename, $targetExtension = null, $maxImageSize = null,
+                                         $forcedWidthRatio = null, $forcedHeightRatio = null){
         $orgFileExtension = Filer::getFileExtension($filename);
         $commandStart = "env -i /usr/bin/mogrify " . ($targetExtension ? "-format " . $targetExtension . " " : "");
         $commandEnd = " " . $filename . " 2>&1";
@@ -44,6 +44,131 @@ class ImageUtils {
                 exec("rm " . $filename);
             }
         }
+    }
+
+    public static function magickCrop($filename, $width, $height, $x = 0, $y = 0, $outputPath = null) : bool  {
+        if (!file_exists($filename)) {
+            throw new Exception("File not found: $filename");
+        }
+
+        $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        $isAnimated = false;
+
+        switch ($ext) {
+            case 'gif':
+                $command = "identify -format '%n' " . escapeshellarg($filename) . " 2>/dev/null";
+                $result = shell_exec($command);
+                $frames = $result ? trim($result) : $result;
+                $isAnimated = ($frames && intval($frames) > 1);
+                break;
+
+            case 'webp':
+                $command = "strings " . escapeshellarg($filename) . " | grep ANMF | wc -l";
+                $result = shell_exec($command);
+                $chunks = $result ? trim($result) : $result;
+                $isAnimated = (intval($chunks) > 0);
+                break;
+        }
+
+        $mogrifyBin = "/usr/bin/mogrify";
+        $convertBin = "/usr/bin/convert";
+
+        if ($outputPath === null) {
+            $outputPath = $filename;
+        }
+
+        if ($isAnimated) {
+            $command = sprintf(
+                'env -i %s "%s" -coalesce -crop %dx%d+%d+%d +repage "%s" 2>&1',
+                $convertBin, $filename, $width, $height, $x, $y, $outputPath
+            );
+        } else {
+            if ($outputPath === $filename) {
+                $command = sprintf(
+                    'env -i %s -crop %dx%d+%d+%d "%s" +repage 2>&1',
+                    $mogrifyBin, $width, $height, $x, $y, $filename
+                );
+            } else {
+                $command = sprintf(
+                    'env -i %s "%s" -crop %dx%d+%d+%d +repage "%s" 2>&1',
+                    $convertBin, $filename, $width, $height, $x, $y, $outputPath
+                );
+            }
+        }
+
+        echo $command . '<br>';
+        exec($command, $output, $status);
+
+        if ($status !== 0) {
+            throw new Exception("Crop failed: " . implode("\n", $output));
+        }
+
+        return true;
+    }
+
+    public static function magickRotate($filename, $rotationMode = 1, $outputPath = null) : bool {
+        if (!file_exists($filename)) {
+            throw new Exception("File not found: $filename");
+        }
+
+        $rotationAngles = [1 => 90, 2 => 180, 3 => 270];
+        if (!isset($rotationAngles[$rotationMode])) {
+            throw new Exception("Invalid rotation mode. Must be 1, 2, or 3.");
+        }
+        $angle = $rotationAngles[$rotationMode];
+
+        $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        $isAnimated = false;
+
+        switch ($ext) {
+            case 'gif':
+                $command = "identify -format '%n' " . escapeshellarg($filename) . " 2>/dev/null";
+                $result = shell_exec($command);
+                $frames = $result ? trim($result) : $result;
+                $isAnimated = ($frames && intval($frames) > 1);
+                break;
+
+            case 'webp':
+                $command = "strings " . escapeshellarg($filename) . " | grep ANMF | wc -l";
+                $result = shell_exec($command);
+                $chunks = $result ? trim($result) : $result;
+                $isAnimated = (intval($chunks) > 0);
+                break;
+        }
+
+        $mogrifyBin = "/usr/bin/mogrify";
+        $convertBin = "/usr/bin/convert";
+
+        if ($outputPath === null) {
+            $outputPath = $filename;
+        }
+
+        if ($isAnimated) {
+            $command = sprintf(
+                'env -i %s "%s" -coalesce -rotate %d +repage "%s" 2>&1',
+                $convertBin, $filename, $angle, $outputPath
+            );
+        } else {
+            if ($outputPath === $filename) {
+                $command = sprintf(
+                    'env -i %s -rotate %d "%s" +repage 2>&1',
+                    $mogrifyBin, $angle, $filename
+                );
+            } else {
+                $command = sprintf(
+                    'env -i %s "%s" -rotate %d +repage "%s" 2>&1',
+                    $convertBin, $filename, $angle, $outputPath
+                );
+            }
+        }
+
+        exec($command, $output, $status);
+
+        if ($status !== 0) {
+            throw new Exception("Rotate failed: " . implode("\n", $output));
+        }
+
+        return true;
     }
 
     public static function rotateImage90($inputPath, $outputPath = null) : void {

@@ -458,7 +458,7 @@ abstract class AvtEntity extends SetModifier {
 
 
                         if($convertRequired) {
-                            ImageUtils::convert($targetFilename,
+                            ImageUtils::magickConvert($targetFilename,
                                 $extensionRequired ? $af->targetExt : null,
                                 $af->maxImageSize, $finalWD, $finalHD);
                         }

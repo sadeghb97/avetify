@@ -2,24 +2,30 @@
 namespace Avetify\Components\Images\Croppables;
 
 use Avetify\Externals\GumletImage\ImageResize;
-use Avetify\Externals\GumletImage\ImageResizeException;
+use Avetify\Files\ImageUtils;
 use Avetify\Files\RecycleCan;
 use Avetify\Interface\Pout;
 use Avetify\Models\Filename;
-use Avetify\Modules\Printer;
+use Exception;
 
 class CroppingImage extends CroppableImage {
     public function handleSubmit($x, $y, $w, $h) : bool {
         try {
-            $gumletImage = new ImageResize($this->serverSrc);
-            $orgFilename = new Filename($this->serverSrc);
-            $gumletImage->freecrop($w, $h, $x, $y);
-
             RecycleCan::saveBackupFile($this->id, $this->serverSrc);
-            $gumletImage->save($this->serverSrc, $this->imageType);
+
+            if(!$this->magickMode) {
+                $gumletImage = new ImageResize($this->serverSrc);
+                $orgFilename = new Filename($this->serverSrc);
+                $gumletImage->freecrop($w, $h, $x, $y);
+                $gumletImage->save($this->serverSrc, $this->imageType);
+            }
+            else {
+                ImageUtils::magickCrop($this->serverSrc, $w, $h, $x, $y);
+            }
+
             $this->onCropSuccess();
             return true;
-        } catch (ImageResizeException $e) {
+        } catch (Exception $e) {
             $this->onCropError($e->getMessage());
             return false;
         }
