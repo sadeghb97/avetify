@@ -121,14 +121,21 @@ abstract class AvtLister extends SetModifier {
                 if($aSec == $bSec){
                     $aAlt = $this->getAlterSortFactor($a);
                     $bAlt = $this->getAlterSortFactor($b);
-                    $res = strnatcasecmp($aAlt, $bAlt);
+                    $res = self::strNatCaseCompare($aAlt, $bAlt);
                     return $this->isAlterSortAscending() ? $res : (-1 * $res);
                 }
-                $res = strnatcasecmp($aSec, $bSec);
+                $res = self::strNatCaseCompare($aSec, $bSec);
                 return $this->isSecondarySortAscending() ? $res : (-1 * $res);
             }
-            return strnatcasecmp($aValue, $bValue);
+            return self::strNatCaseCompare($aValue, $bValue);
         });
+    }
+
+    private function strNatCaseCompare(string | null $string1, string | null $string2) : int {
+        if($string1 === null && $string2 === null) return 0;
+        if($string1 === null) return 1;
+        if($string2 === null) return -1;
+        return strnatcasecmp($string1, $string2);
     }
 
     public function getDirectMenuCategoriesIndexList() : array {
