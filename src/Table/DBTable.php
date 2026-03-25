@@ -3,17 +3,21 @@ namespace Avetify\Table;
 
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\DB\DBConnection;
+use Avetify\DB\DBFilter;
+use Avetify\DB\DBFilterCollection;
 use Avetify\DB\QueryBuilder;
 use Avetify\DB\QueryField;
 use Avetify\Entities\AvtEntityItem;
 use Avetify\Entities\EntityUtils;
 use Avetify\Interface\Pout;
 use Avetify\Modules\Printer;
+use Avetify\Table\Fields\ConstField;
 use Avetify\Table\Fields\TableField;
 
 abstract class DBTable extends AvtTable {
     public bool $pkIsNumeric = true;
     public string $dbFetchOrder = "";
+    public string | null $className = null;
 
     public function __construct(public DBConnection $conn, public string $dbTableName,
                                 public string $primaryKey, string $key){
@@ -126,7 +130,8 @@ abstract class DBTable extends AvtTable {
 
             foreach ($creatingFields as $key => $value){
                 $fieldDetails = $fieldsMap[$key];
-                if($fieldDetails->isReadonly || !$fieldDetails->isEditable()) continue;
+                $crField = $fieldDetails->onCreateField;
+                if(!$crField || $crField->isReadonly || !$crField->isEditable()) continue;
 
                 $isNumericField = $fieldDetails && $fieldDetails->isNumeric;
                 $queryBuilder->addField($value, $isNumericField, $key);
@@ -136,6 +141,11 @@ abstract class DBTable extends AvtTable {
                 $queryBuilder->addField(time(), true, "created_at");
             }
 
+            $constFields = $this->getConstFields();
+            foreach ($constFields as $constField){
+                $queryBuilder->addField($constField->value, $constField->isNumeric, $constField->key);
+            }
+
             $sql = $queryBuilder->createInsert(true);
             if($this->conn->query($sql)) {
                 $this->printDBUpdateStatus($titlePrinter, $creatingFields, $messagePrinter, "Inserted");
@@ -143,6 +153,11 @@ abstract class DBTable extends AvtTable {
                 Pout::endline();
             }
         }
+    }
+
+    /** @return ConstField[] */
+    public function getConstFields() : array {
+        return [];
     }
 
     protected function printDBUpdateStatus($recordPrinter, $record, $statusPrinter, $status){
@@ -158,9 +173,20 @@ abstract class DBTable extends AvtTable {
     }
 
     public function fetchDBRecords() : array {
-        $fetchSql = "SELECT * FROM {$this->dbTableName}";
-        if($this->dbFetchOrder) $fetchSql .= (" ORDER BY " . $this->dbFetchOrder);
-        return $this->conn->fetchSet($fetchSql);
+        $filter = null;
+        $constFields = $this->getConstFields();
+
+        if(count($constFields) > 0){
+            $filter = new DBFilterCollection();
+            foreach ($constFields as $constField){
+                $filter->addFilter(new DBFilter($constField->key, "=", $constField->value, $constField->isNumeric));
+            }
+        }
+
+        if($this->className){
+            return $this->conn->fetchTable($this->className, $this->dbTableName, $filter, $this->dbFetchOrder);
+        }
+        return $this->conn->fetchTableSet($this->dbTableName, $filter, $this->dbFetchOrder);
     }
 
     /** @return TableField[] */

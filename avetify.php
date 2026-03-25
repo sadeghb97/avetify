@@ -185,6 +185,7 @@ require_once "src/Lister/DBLister.php";
 require_once "src/Table/AvtTable.php";
 require_once "src/Table/DBTable.php";
 require_once "src/Table/JSONTable.php";
+require_once "src/Table/Fields/ConstField.php";
 require_once "src/Table/Fields/TableField.php";
 require_once "src/Table/Fields/TableFieldWrapper.php";
 require_once "src/Table/Fields/TableSimpleField.php";
