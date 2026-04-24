@@ -176,9 +176,17 @@ class ThemesManager {
         self::importJS(AvetifyManager::assetUrl("themes/main/js/dialogs.js"));
     }
 
-    public static function importBootstrap(){
+    public static function importBootstrapCSS(){
         self::importStyle(AvetifyManager::assetUrl("components/bootstrap/bootstrap.min.css"));
+    }
+
+    public static function importBootstrapJS(){
         self::importJS(AvetifyManager::assetUrl("components/bootstrap/bootstrap.bundle.min.js"));
+    }
+
+    public static function importBootstrap(){
+        self::importBootstrapCSS();
+        self::importBootstrapJS();
     }
 
     public static function importFontAwesome(){
