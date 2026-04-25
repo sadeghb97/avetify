@@ -10,7 +10,7 @@ class PersistLogger {
         if(!$this::checkLogFileExists()) return;
         $curScriptName = Routing::currentScriptName();
         $introLog = "******************** " . $curScriptName . ": Logging! ********************";
-        file_put_contents('file.txt'. $introLog . "\n", FILE_APPEND);
+        file_put_contents($this->logFilePath, $introLog . "\n", FILE_APPEND);
     }
 
     public function log(string $message = "") : void {
@@ -18,7 +18,7 @@ class PersistLogger {
         $ft = TimeUtils::formattedDateTime();
         $curScriptName = Routing::currentScriptName();
         $logLine = $ft . " - " . $curScriptName . ": " . $message;
-        file_put_contents('file.txt'. $logLine . "\n", FILE_APPEND);
+        file_put_contents($this->logFilePath, $logLine . "\n", FILE_APPEND);
     }
 
     public function checkLogFileExists() : bool {
