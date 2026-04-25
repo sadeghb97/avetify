@@ -4,6 +4,14 @@ namespace Avetify\Utils\TimeUtils;
 use Avetify\Externals\JDF;
 
 class TimeUtils {
+    public static function formattedDateTime(?int $timestamp = null): string {
+        if ($timestamp === null) {
+            $timestamp = time();
+        }
+
+        return date('Y-m-d H:i:s', $timestamp);
+    }
+
     public static function getShamsiYear(int $time): int {
         return JDF::jdate("Y", $time, '', 'Asia/Tehran', 'en');
     }

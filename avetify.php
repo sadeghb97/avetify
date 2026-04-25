@@ -283,6 +283,7 @@ require_once "src/Modules/SecureNetwork.php";
 require_once "src/Modules/Printer.php";
 require_once "src/Modules/SetPlexer.php";
 require_once "src/Modules/TimeLogger.php";
+require_once "src/Modules/PersistLogger.php";
 
 require_once "src/Forms/AvtSession.php";
 require_once "src/Forms/FormUtils.php";
