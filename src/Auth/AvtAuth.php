@@ -5,6 +5,29 @@ use Avetify\DB\DBConnection;
 use Avetify\Routing\Routing;
 use Throwable;
 
+/**
+ * Class AvtAuth
+ *
+ * This class handles user authentication and token management.
+ *
+ * Requirements:
+ * The following database tables must exist:
+ *
+ * Table: users
+ * - id INT(11) PRIMARY KEY
+ * - username VARCHAR(255)
+ * - password VARCHAR(255)
+ *
+ * Table: tokens
+ * - id INT(11) PRIMARY KEY (Optional)
+ * - user_id INT(11) (FOREIGN KEY -> users.id)
+ * - token_hash VARCHAR(255)
+ * - expires_at DATETIME
+ *
+ * Notes:
+ * - Passwords should be stored using password_hash()
+ * - token_hash should NOT store raw tokens
+ */
 class AvtAuth {
     public int $minUsernameLen = 4;
     public int $minPasswordLen = 6;
