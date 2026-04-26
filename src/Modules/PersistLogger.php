@@ -23,7 +23,9 @@ class PersistLogger {
 
     public function checkLogFileExists() : bool {
         if(!file_exists($this->logFilePath)){
-            if(!mkdir($this->logFilePath)) {
+            $line = "******************** Log file created! ********************";
+            $res = file_put_contents($this->logFilePath, $line);
+            if(!$res) {
                 echo "The log file cannot be created in: " . $this->logFilePath . Pout::br();
                 return false;
             }
