@@ -90,7 +90,7 @@ class AvtAuth {
             return ['ok' => false, 'error' => 'wrong_password'];
         }
 
-        $userId = (int)$user['id'];
+        $userId = $user['id'];
         $this->startAuthSession($userId, $username);
         $this->issueRememberMeToken($conn, $userId);
         session_write_close();
@@ -122,7 +122,7 @@ class AvtAuth {
             return ['ok' => false, 'error' => 'username_exists'];
         }
 
-        $userId = (int)$stmt->insert_id;
+        $userId = $stmt->insert_id;
         if ($userId <= 0) return ['ok' => false, 'error' => 'server_error'];
 
         $this->startAuthSession($userId, $username);
@@ -132,8 +132,7 @@ class AvtAuth {
         return ['ok' => true, 'user' => ['id' => $userId, 'username' => $username]];
     }
 
-    public function changePassword(DBConnection $conn, int $userId, string $currentPassword, string $newPassword): array {
-        $userId = (int)$userId;
+    public function changePassword(DBConnection $conn, string $userId, string $currentPassword, string $newPassword): array {
         $currentPassword = trim((string)$currentPassword);
         $newPassword = trim((string)$newPassword);
 
@@ -201,7 +200,7 @@ class AvtAuth {
                 return;
             }
 
-            $userId = (int)$row['user_id'];
+            $userId = $row['user_id'];
             $username = (string)($row['username'] ?? '');
 
             $this->revokeRememberMeToken($conn, $token);
@@ -237,12 +236,12 @@ class AvtAuth {
 
     private function startAuthSession(int $userId, string $username): void {
         session_regenerate_id(true);
-        $_SESSION[$this->sessionKey('user_id')] = (int)$userId;
+        $_SESSION[$this->sessionKey('user_id')] = $userId;
         $_SESSION[$this->sessionKey('username')] = (string)$username;
     }
 
     private function rememberMeCookieName(): string {
-        return $this->isHttpsRequest() ? 'remember_me' : 'remember_me_http';
+        return Routing::isHttpsRequest() ? 'remember_me' : 'remember_me_http';
     }
 
     private function authCookieBaseParams(): array {
