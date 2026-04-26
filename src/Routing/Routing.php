@@ -74,8 +74,15 @@ class Routing {
         return $url;
     }
 
+    public static function isHttpsRequest(): bool {
+        if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') return true;
+        if (!empty($_SERVER['SERVER_PORT']) && (int)$_SERVER['SERVER_PORT'] === 443) return true;
+        if (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && strtolower((string)$_SERVER['HTTP_X_FORWARDED_PROTO']) === 'https') return true;
+        return false;
+    }
+
     public static function getServerProtocol() : string {
-        if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') return 'https://';
+        if (self::isHttpsRequest()) return 'https://';
         if (!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 80) return 'http://';
         return '';
     }
