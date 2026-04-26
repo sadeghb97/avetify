@@ -31,6 +31,7 @@ require_once "src/Api/APIHelper.php";
 require_once "src/Api/JsonApiResponder.php";
 
 require_once "src/Auth/AvtAuth.php";
+require_once "src/Auth/FastAuthApiController.php";
 
 require_once "src/Externals/ImageManipulator.php";
 require_once "src/Externals/JDF.php";
