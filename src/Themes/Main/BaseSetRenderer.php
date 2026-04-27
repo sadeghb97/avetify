@@ -34,11 +34,13 @@ abstract class BaseSetRenderer {
 
     public function renderSet(){
         $this->openCollection();
+        $firstRowIndex = $this->setModifier->currentRecordsFirstRowIndex();
         foreach ($this->setModifier->currentRecords as $itemIndex => $record){
-            $this->openRecord($record, $itemIndex);
-            $this->renderRecordMain($record, $itemIndex);
-            $this->moreRecordFields($record, $itemIndex);
-            $this->closeRecord($record, $itemIndex);
+            $recordIndex = $firstRowIndex + $itemIndex;
+            $this->openRecord($record, $recordIndex);
+            $this->renderRecordMain($record, $recordIndex);
+            $this->moreRecordFields($record, $recordIndex);
+            $this->closeRecord($record, $recordIndex);
 
             if($this->limit && ($itemIndex + 1) >= $this->limit) break;
         }

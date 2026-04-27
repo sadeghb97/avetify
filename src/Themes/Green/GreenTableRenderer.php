@@ -99,8 +99,8 @@ class GreenTableRenderer extends SetRenderer {
 
         $this->openRecord($item, $index);
         if($this->printRowIndex){
-            $firstRowNumber = $this->setModifier->currentRecordsFirstRowIndex() + $index + 1;
-            TableField::renderIndexTD($firstRowNumber, $sbTable->getItemLink($item));
+            $rowNumber = $index + 1;
+            TableField::renderIndexTD($rowNumber, $sbTable->getItemLink($item));
         }
         foreach ($sbTable->fields as $field){
             if($sbTable->forcePatchRecords && !$field->isEditable() && $field->onCreateField != null){
