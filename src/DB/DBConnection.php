@@ -119,8 +119,8 @@ abstract class DBConnection extends mysqli {
     }
 
     private function fetchTableQueryWithFilter(string $tableName, DBFilterInterface $filter = null) : string {
-        $filterQuery = $filter->toRawQuery();
-        return "SELECT * FROM $tableName " . ($filterQuery ? ("WHERE " . $filter->toRawQuery() . " ") : "");
+        $filterQuery = $filter?->toRawQuery();
+        return "SELECT * FROM $tableName " . ($filterQuery ? ("WHERE " . $filterQuery . " ") : "");
     }
 
     public function fetchTableSize(string $tableName, DBFilterInterface $filter = null) : int {
