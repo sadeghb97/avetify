@@ -118,20 +118,38 @@ abstract class DBConnection extends mysqli {
         return $row[$property];
     }
 
+    private function fetchTableQueryWithFilter(string $tableName, DBFilterInterface $filter = null) : string {
+        $filterQuery = $filter->toRawQuery();
+        return "SELECT * FROM $tableName " . ($filterQuery ? ("WHERE " . $filter->toRawQuery() . " ") : "");
+    }
+
+    public function fetchTableSize(string $tableName, DBFilterInterface $filter = null) : int {
+        $tableSql = $this->fetchTableQueryWithFilter($tableName, $filter);
+        $countSql = "SELECT COUNT(*) as count FROM ($tableSql) as t";
+        $row = $this->fetchRow($countSql);
+        return $row['count'] ?? 0;
+    }
+
     /** @param DBFilterInterface $filter
      * @return array
      */
-    public function fetchTableSet(string $tableName, DBFilterInterface $filter = null, string $orderBy = "") : array {
-        $sql = "SELECT * FROM $tableName " . ($filter ? ("WHERE " . $filter->toRawQuery() . " ") : "");
+    public function fetchTableSet(string $tableName, DBFilterInterface $filter = null,
+                                  string $orderBy = "", int $limit = 0, int $offset = 0) : array {
+        $sql = $this->fetchTableQueryWithFilter($tableName, $filter);
         if($orderBy) $sql .= (" ORDER BY " . $orderBy);
+        if($limit > 0){
+            $sql .= " LIMIT $limit";
+            if($offset > 0) $sql .= " OFFSET $offset";
+        }
         return $this->fetchSet($sql);
     }
 
     /** @param DBFilterInterface $filter
      * @return AvtEntityItem[]
      */
-    public function fetchTable(string $className, string $tableName, DBFilterInterface $filter = null, string $orderBy = "") : array {
-        $set = $this->fetchTableSet($tableName, $filter, $orderBy);
+    public function fetchTable(string $className, string $tableName, DBFilterInterface $filter = null,
+                               string $orderBy = "", int $limit = 0, int $offset = 0) : array {
+        $set = $this->fetchTableSet($tableName, $filter, $orderBy, $limit, $offset);
         $out = [];
         foreach ($set as $result){
             $out[] = AvtEntityItem::createInstance($className, $result);

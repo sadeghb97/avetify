@@ -16,13 +16,15 @@ use Avetify\Table\Fields\TableField;
 
 abstract class DBTable extends AvtTable {
     public bool $pkIsNumeric = true;
-    public string $dbFetchOrder = "";
-    public string | null $className = null;
 
-    public function __construct(public DBConnection $conn, public string $dbTableName,
+    public function __construct(DBConnection $conn, string $dbTableName,
                                 public string $primaryKey, string $key){
 
-        parent::__construct($this->makeTableFields(), $this->fetchDBRecords(), $key, true);
+        $this->conn = $conn;
+        $this->dbTableName = $dbTableName;
+        $this->dbMode = true;
+        parent::__construct($this->makeTableFields(), [], $key, true);
+        $this->dbUpdateRecords();
     }
 
     public function getItemId($record): string {
@@ -82,7 +84,7 @@ abstract class DBTable extends AvtTable {
         }
 
         if($queryDone){
-            $this->updateRecords();
+            $this->dbUpdateRecords();
         }
     }
 
@@ -106,7 +108,7 @@ abstract class DBTable extends AvtTable {
                 }
             }
 
-            $this->updateRecords();
+            $this->dbUpdateRecords();
             Pout::endline();
         }
     }
@@ -149,15 +151,10 @@ abstract class DBTable extends AvtTable {
             $sql = $queryBuilder->createInsert(true);
             if($this->conn->query($sql)) {
                 $this->printDBUpdateStatus($titlePrinter, $creatingFields, $messagePrinter, "Inserted");
-                $this->updateRecords();
+                $this->dbUpdateRecords();
                 Pout::endline();
             }
         }
-    }
-
-    /** @return ConstField[] */
-    public function getConstFields() : array {
-        return [];
     }
 
     protected function printDBUpdateStatus($recordPrinter, $record, $statusPrinter, $status){
@@ -166,27 +163,6 @@ abstract class DBTable extends AvtTable {
         $recordPrinter->print($this->getItemTitle($record));
         $statusPrinter->print(": " . $status);
         $niceDiv->close();
-    }
-
-    public function updateRecords (){
-        $this->loadRawRecords($this->fetchDBRecords());
-    }
-
-    public function fetchDBRecords() : array {
-        $filter = null;
-        $constFields = $this->getConstFields();
-
-        if(count($constFields) > 0){
-            $filter = new DBFilterCollection();
-            foreach ($constFields as $constField){
-                $filter->addFilter(new DBFilter($constField->key, "=", $constField->value, $constField->isNumeric));
-            }
-        }
-
-        if($this->className){
-            return $this->conn->fetchTable($this->className, $this->dbTableName, $filter, $this->dbFetchOrder);
-        }
-        return $this->conn->fetchTableSet($this->dbTableName, $filter, $this->dbFetchOrder);
     }
 
     /** @return TableField[] */

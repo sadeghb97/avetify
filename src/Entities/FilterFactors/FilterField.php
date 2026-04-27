@@ -2,10 +2,12 @@
 namespace Avetify\Entities\FilterFactors;
 
 use Avetify\Fields\BaseRecordField;
+use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
-use Avetify\Table\Fields\DateFields\RecentField;
 
-class FilterField extends FilterFactor {
+class FilterField extends FilterFactor implements IdentifiedElement {
+    use IdentifiedElementTrait;
+
     public function __construct(public BaseRecordField $recordField){
         parent::__construct($this->recordField->key, $this->recordField->title);
     }
@@ -16,5 +18,12 @@ class FilterField extends FilterFactor {
         }
 
         return parent::isQualified($item, $param);
+    }
+
+    public function getElementIdentifier($item = null) {
+        if(method_exists($this->recordField, "getElementIdentifier")){
+            return $this->recordField->getElementIdentifier();
+        }
+        return null;
     }
 }

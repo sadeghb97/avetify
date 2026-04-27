@@ -6,7 +6,7 @@ use Avetify\Modules\Printer;
 
 abstract class DBLister extends AvtLister {
     public function __construct(string $key,
-                                public DBConnection $conn,
+                                DBConnection $conn,
                                 public string $tableName,
                                 public string $dbListKey,
                                 public string $dbPriorityKey,
@@ -14,6 +14,7 @@ abstract class DBLister extends AvtLister {
                                 public bool $pkIsNumeric = true
     ) {
         parent::__construct($key, $this->fetchAllItems());
+        $this->conn = $conn;
     }
 
     abstract public function fetchAllItems() : array;

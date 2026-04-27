@@ -75,8 +75,9 @@ class ModernixRenderer extends SetRenderer {
         $row = "";
         if($this->printRowIndex){
             $rowFontSize = $this->smallerTitle ? "0.875rem" : "1rem";
+            $firstRowNumber = $this->setModifier->currentRecordsFirstRowIndex() + $index + 1;
             $row = '<span style="font-size: ' . $rowFontSize
-                . '; font-weight: bold; color: grey;">' . ($index + 1) . ": " . '</span>';
+                . '; font-weight: bold; color: grey;">' . $firstRowNumber . ": " . '</span>';
         }
 
         echo '<div ';

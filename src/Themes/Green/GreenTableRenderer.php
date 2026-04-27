@@ -98,8 +98,10 @@ class GreenTableRenderer extends SetRenderer {
         $sbTable = $this->setModifier;
 
         $this->openRecord($item, $index);
-        if($this->printRowIndex) TableField::renderIndexTD(
-            $index + 1, $sbTable->getItemLink($item));
+        if($this->printRowIndex){
+            $firstRowNumber = $this->setModifier->currentRecordsFirstRowIndex() + $index + 1;
+            TableField::renderIndexTD($firstRowNumber, $sbTable->getItemLink($item));
+        }
         foreach ($sbTable->fields as $field){
             if($sbTable->forcePatchRecords && !$field->isEditable() && $field->onCreateField != null){
                 $feField = $field->getForcedEditableClone();

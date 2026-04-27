@@ -52,6 +52,29 @@ abstract class SortFactor implements Sorter {
         return $multiplier * ($aValue > $bValue ? 1 : -1);
     }
 
+    public function _extractDetailsFromTiebreak(string $tieBreak) : array {
+        $skipEmpties = false;
+        $tbDesc = false;
+        $tbNumeric = false;
+
+        if(str_starts_with($tieBreak, "+")){
+            $tieBreak = substr($tieBreak, 1);
+            $skipEmpties = true;
+        }
+
+        if(str_starts_with($tieBreak, "-")){
+            $tieBreak = substr($tieBreak, 1);
+            $tbDesc = !$this->alterDirection;
+        }
+
+        if(str_starts_with($tieBreak, "#")){
+            $tieBreak = substr($tieBreak, 1);
+            $tbNumeric = true;
+        }
+
+        return [$tieBreak, $skipEmpties, $tbDesc, $tbNumeric];
+    }
+
     public function compare($itemA, $itemB) : int {
         $qa = $this->sortQualified($itemA);
         $qb = $this->sortQualified($itemB);
@@ -64,27 +87,9 @@ abstract class SortFactor implements Sorter {
         if($res != 0) return $res;
 
         foreach ($this->tieBreaks as $tieBreak){
-            $skipEmpties = false;
-            $tbDesc = false;
-            $tbNumeric = false;
-
-            if(str_starts_with($tieBreak, "+")){
-                $tieBreak = substr($tieBreak, 1);
-                $skipEmpties = true;
-            }
-
-            if(str_starts_with($tieBreak, "-")){
-                $tieBreak = substr($tieBreak, 1);
-                $tbDesc = true;
-            }
-
-            if(str_starts_with($tieBreak, "#")){
-                $tieBreak = substr($tieBreak, 1);
-                $tbNumeric = true;
-            }
-
-            $aValue = EntityUtils::getSimpleValue($itemA, $tieBreak);
-            $bValue = EntityUtils::getSimpleValue($itemB, $tieBreak);
+            [$factor, $skipEmpties, $tbDesc, $tbNumeric] = $this->_extractDetailsFromTiebreak($tieBreak);
+            $aValue = EntityUtils::getSimpleValue($itemA, $factor);
+            $bValue = EntityUtils::getSimpleValue($itemB, $factor);
 
             if($aValue != $bValue) {
                 if($skipEmpties) {
