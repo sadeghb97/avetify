@@ -13,8 +13,8 @@ abstract class DBLister extends AvtLister {
                                 public string $dbPrimaryKey = "pk",
                                 public bool $pkIsNumeric = true
     ) {
-        parent::__construct($key, $this->fetchAllItems());
         $this->conn = $conn;
+        parent::__construct($key, $this->fetchAllItems());
     }
 
     abstract public function fetchAllItems() : array;
