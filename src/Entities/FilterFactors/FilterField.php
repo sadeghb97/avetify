@@ -1,6 +1,7 @@
 <?php
 namespace Avetify\Entities\FilterFactors;
 
+use Avetify\DB\Filters\DBFilterInterface;
 use Avetify\Fields\BaseRecordField;
 use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
@@ -18,6 +19,14 @@ class FilterField extends FilterFactor implements IdentifiedElement {
         }
 
         return parent::isQualified($item, $param);
+    }
+
+    public function dbQualifyingFilter($param): DBFilterInterface | null {
+        if(method_exists($this->recordField, "dbQualifyingFilter")){
+            return $this->recordField->dbQualifyingFilter($param);
+        }
+
+        return parent::dbQualifyingFilter($param);
     }
 
     public function getElementIdentifier($item = null) {

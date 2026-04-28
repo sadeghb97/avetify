@@ -20,12 +20,13 @@ require_once "src/Interface/HTMLInterface.php";
 require_once "src/Interface/JSInterface.php";
 require_once "src/Interface/RecordFormTrait.php";
 
-require_once "src/DB/QueryField.php";
 require_once "src/DB/DBConnection.php";
-require_once "src/DB/DBFilterInterface.php";
-require_once "src/DB/DBFilter.php";
-require_once "src/DB/DBFilterCollection.php";
 require_once "src/DB/QueryBuilder.php";
+require_once "src/DB/QueryField.php";
+require_once "src/DB/Filters/DBFilterInterface.php";
+require_once "src/DB/Filters/DBFilter.php";
+require_once "src/DB/Filters/RawSetFilter.php";
+require_once "src/DB/Filters/DBFilterCollection.php";
 
 require_once "src/Api/APIHelper.php";
 require_once "src/Api/JsonApiResponder.php";

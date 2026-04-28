@@ -1,6 +1,8 @@
 <?php
 namespace Avetify\Table\Fields;
 
+use Avetify\DB\Filters\DBFilter;
+use Avetify\DB\Filters\DBFilterInterface;
 use Avetify\Entities\FilterFactors\Qualifier;
 use Avetify\Fields\BaseRecordField;
 use Avetify\Interface\HTMLInterface;
@@ -188,6 +190,10 @@ class TableField extends BaseRecordField implements Qualifier {
 
     public function isQualified($item, $param): bool {
         return !!$this->getValue($item);
+    }
+
+    public function dbQualifyingFilter($param): DBFilterInterface | null {
+        return new DBFilter($this->key, "=", $param, $this->isNumeric);
     }
 
     public function sortQualified($item) : bool {

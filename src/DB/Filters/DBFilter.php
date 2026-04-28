@@ -1,5 +1,5 @@
 <?php
-namespace Avetify\DB;
+namespace Avetify\DB\Filters;
 
 class DBFilter implements DBFilterInterface {
     public function __construct(public string $key, public string $operator,

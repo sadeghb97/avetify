@@ -1,6 +1,9 @@
 <?php
 namespace Avetify\DB;
 
+use Avetify\DB\Filters\DBFilter;
+use Avetify\DB\Filters\DBFilterCollection;
+use Avetify\DB\Filters\DBFilterInterface;
 use Avetify\Entities\AvtEntityItem;
 use Avetify\Interface\Pout;
 use Exception;

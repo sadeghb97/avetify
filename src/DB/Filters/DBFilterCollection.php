@@ -1,5 +1,5 @@
 <?php
-namespace Avetify\DB;
+namespace Avetify\DB\Filters;
 
 class DBFilterCollection implements DBFilterInterface {
     /** @var DBFilterInterface[] $filters */

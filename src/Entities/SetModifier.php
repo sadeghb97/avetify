@@ -2,9 +2,9 @@
 namespace Avetify\Entities;
 
 use Avetify\DB\DBConnection;
-use Avetify\DB\DBFilter;
-use Avetify\DB\DBFilterCollection;
-use Avetify\DB\DBFilterInterface;
+use Avetify\DB\Filters\DBFilter;
+use Avetify\DB\Filters\DBFilterCollection;
+use Avetify\DB\Filters\DBFilterInterface;
 use Avetify\Entities\BasicProperties\EntityManager;
 use Avetify\Entities\BasicProperties\Traits\EntityManagerTrait;
 use Avetify\Entities\FilterFactors\DiscreteFilterFactor;
@@ -32,7 +32,7 @@ abstract class SetModifier implements EntityManager {
     public string | null $className = null;
     public DBConnection | null $conn = null;
     public string $dbTableName = "";
-    public bool $dbMode = false;
+    public bool $adjustDBMode = false;
 
     public function __construct(public string $setKey){
         $this->paginationConfigs = $this->createPaginationConfigs();
@@ -171,7 +171,7 @@ abstract class SetModifier implements EntityManager {
     }
 
     public function adjustRecords(){
-        if($this->dbMode){
+        if($this->adjustDBMode){
             $this->currentRecords = $this->records;
             return;
         }
@@ -202,13 +202,17 @@ abstract class SetModifier implements EntityManager {
         return $this->conn->fetchTableSet($this->dbTableName, $filter, $fetchOrder, $limit, $offset);
     }
 
-    public function createDBFilter() : DBFilterInterface | null {
-        $filter = new DBFilterCollection();
-        $constFields = $this->getConstFields();
+    public function dbExtraFilters() : DBFilterInterface | null {
+        return null;
+    }
 
+    public function createDBFilter() : DBFilterInterface | null {
+        $filterCollection = new DBFilterCollection();
+
+        $constFields = $this->getConstFields();
         if(count($constFields) > 0){
             foreach ($constFields as $constField){
-                $filter->addFilter(new DBFilter($constField->key, "=", $constField->value, $constField->isNumeric));
+                $filterCollection->addFilter(new DBFilter($constField->key, "=", $constField->value, $constField->isNumeric));
             }
         }
 
@@ -216,12 +220,12 @@ abstract class SetModifier implements EntityManager {
             $sortFactor = $this->getSortFactor();
             if($sortFactor instanceof SortFactor && $sortFactor->skipEmpties){
                 $targetValue = $sortFactor->isNumeric ? 0 : "";
-                $filter->addFilter(new DBFilter($sortFactor->factorKey, "<>", $targetValue, $sortFactor->isNumeric));
+                $filterCollection->addFilter(new DBFilter($sortFactor->factorKey, "<>", $targetValue, $sortFactor->isNumeric));
             }
         }
 
         foreach ($this->finalFilterFactors() as $filterFactor){
-            if(!($filterFactor instanceof SortFactor))
+            if(!($filterFactor instanceof FilterFactor))
 
             $filterKey = null;
             if(method_exists($filterFactor, "getElementIdentifier")){
@@ -230,11 +234,15 @@ abstract class SetModifier implements EntityManager {
 
             if($filterKey && isset($_REQUEST[$filterKey])){
                 $filterValue = $_REQUEST[$filterKey];
-                $filter->addFilter(new DBFilter($filterKey, "=", $filterValue, $filterFactor->isNumeric));
+                $dbFilter = $filterFactor->dbQualifyingFilter($filterValue);
+                if($dbFilter) $filterCollection->addFilter($dbFilter);
             }
         }
 
-        return $filter;
+        $extraFilters = $this->dbExtraFilters();
+        if($extraFilters) $filterCollection->addFilter($extraFilters);
+
+        return $filterCollection;
     }
 
     public function createDBFetchOrder() : string {

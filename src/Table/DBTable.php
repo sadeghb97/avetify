@@ -3,15 +3,12 @@ namespace Avetify\Table;
 
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\DB\DBConnection;
-use Avetify\DB\DBFilter;
-use Avetify\DB\DBFilterCollection;
 use Avetify\DB\QueryBuilder;
 use Avetify\DB\QueryField;
 use Avetify\Entities\AvtEntityItem;
 use Avetify\Entities\EntityUtils;
 use Avetify\Interface\Pout;
 use Avetify\Modules\Printer;
-use Avetify\Table\Fields\ConstField;
 use Avetify\Table\Fields\TableField;
 
 abstract class DBTable extends AvtTable {
@@ -22,7 +19,7 @@ abstract class DBTable extends AvtTable {
 
         $this->conn = $conn;
         $this->dbTableName = $dbTableName;
-        $this->dbMode = true;
+        $this->adjustDBMode = true;
         parent::__construct($this->makeTableFields(), [], $key, true);
         $this->dbUpdateRecords();
     }
