@@ -35,6 +35,41 @@ class BaseRecordField {
         return $this;
     }
 
+    public function attachWebModifier(WebModifier $modifier) : self {
+        $this->baseModifier = WebModifier::mergeModifiers($this->baseModifier, $modifier);
+        return $this;
+    }
+
+    public function attachCssStyle(string $styleKey, string $styleValue) : self {
+        $this->baseModifier->pushStyle($styleKey, $styleValue);
+        return $this;
+    }
+
+    public function attachCssClass(string $className) : self {
+        $this->baseModifier->pushClass($className);
+        return $this;
+    }
+
+    public function attachHtmlModifier(string $modifierKey, string $modifierValue) : self {
+        $this->baseModifier->pushModifier($modifierKey, $modifierValue);
+        return $this;
+    }
+
+    public function detachCssStyle(string $styleKey) : self {
+        $this->baseModifier->popStyle($styleKey);
+        return $this;
+    }
+
+    public function detachCssClass(string $className) : self {
+        $this->baseModifier->popClass($className);
+        return $this;
+    }
+
+    public function detachHtmlModifier(string $modifierKey) : self {
+        $this->baseModifier->popModifier($modifierKey);
+        return $this;
+    }
+
     public function getFinalModifier(WebModifier | null $extraModifier) : WebModifier {
         return WebModifier::mergeModifiers($this->baseModifier, $extraModifier);
     }

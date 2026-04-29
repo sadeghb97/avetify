@@ -7,7 +7,6 @@ use Avetify\Entities\FilterFactors\Qualifier;
 use Avetify\Fields\BaseRecordField;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
-use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\EditableFields\EditableField;
 
 class TableField extends BaseRecordField implements Qualifier {
@@ -182,11 +181,6 @@ class TableField extends BaseRecordField implements Qualifier {
 
     public function setReadonly() : TableField {
         $this->isReadonly = true;
-        return $this;
-    }
-
-    public function attachModifier(WebModifier $modifier) : TableField {
-        $this->baseModifier = WebModifier::mergeModifiers($this->baseModifier, $modifier);
         return $this;
     }
 

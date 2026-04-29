@@ -27,12 +27,24 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
         parent::__construct($key, $title);
         $this->useNameIdentifier = true;
 
+        $this->baseModifier->pushStyle("font-size", "14pt");
+        $this->baseModifier->pushStyle("margin-top", "8px");
+        $this->baseModifier->pushStyle("margin-bottom", "8px");
+        $this->baseModifier->pushStyle("padding-left", "8px");
+        $this->baseModifier->pushStyle("padding-right", "8px");
+        $this->baseModifier->pushStyle("padding-top", "4px");
+        $this->baseModifier->pushStyle("padding-bottom", "4px");
+
         $this->postConstruct();
     }
 
     public function postConstruct(){}
 
     public function setRtl() : EntityField {
+        $this->baseModifier->popStyle("padding-top");
+        $this->baseModifier->popStyle("padding-bottom");
+        $this->baseModifier->pushStyle("direction", "rtl");
+        $this->baseModifier->pushStyle("font-family", "'IranSans', sans-serif");
         $this->rtl = true;
         return $this;
     }
@@ -98,48 +110,46 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
     }
 
     public function presentWritableField($item, ?WebModifier $webModifier = null) {
+        $finalModifier = $this->getFinalModifier($webModifier);
         $title = $this->title;
         $key = $this->key;
         $value = $this->getValue($item);
 
-        $classApplier = new Styler();
-        $classApplier->pushClass("empty");
-        if($this->numeric) $classApplier->pushClass("numeric-text");
+        $finalModifier->pushClass("empty");
+        if($this->numeric) $finalModifier->pushClass("numeric-text");
 
         echo '<input ';
         HTMLInterface::addAttribute("type","text");
         $this->placeElementIdAttributes();
         HTMLInterface::addAttribute("value", $value);
         HTMLInterface::addAttribute("placeholder", $title);
+        $finalModifier->htmlModifier->applyModifiers();
 
         Styler::classStartAttribute();
-        $classApplier->appendClasses();
+        $finalModifier->styler->appendClasses();
         Styler::closeAttribute();
 
         Styler::startAttribute();
-        Styler::addStyle("width", "80%");
-        Styler::addStyle("font-size", "14pt");
-        Styler::addStyle("margin-top", "8px");
-        Styler::addStyle("margin-bottom", "8px");
-        Styler::addStyle("padding-left", "8px");
-        Styler::addStyle("padding-right", "8px");
-        Styler::addStyle("padding-top", "4px");
-        Styler::addStyle("padding-bottom", "4px");
-        if($this->rtl) {
-            Styler::addFontFaceStyle("IranSans");
-            Styler::addStyle("direction", "rtl");
-        }
+        $finalModifier->styler->appendStyles();
         Styler::closeAttribute();
         HTMLInterface::closeSingleTag();
     }
 
     public function presentReadonlyField($item, ?WebModifier $webModifier = null) {
+        $finalModifier = $this->getFinalModifier($webModifier);
         $value = $this->getValue($item);
         if(strlen($value) > 0) {
             echo '<div ';
+            $finalModifier->htmlModifier->applyModifiers();
+
+            Styler::classStartAttribute();
+            $finalModifier->styler->appendClasses();
+            Styler::closeAttribute();
+
             Styler::startAttribute();
             Styler::addStyle("margin-top", "6px");
             Styler::addStyle("margin-bottom", "6px");
+            $finalModifier->styler->appendStyles();
             Styler::closeAttribute();
             HTMLInterface::closeTag();
             echo $this->title . ': ' . $value;
