@@ -2,6 +2,7 @@
 namespace Avetify\Fields;
 
 use Avetify\Entities\EntityUtils;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 
 class BaseRecordField {
@@ -29,7 +30,7 @@ class BaseRecordField {
     }
 
     public function presentValue($item, ?WebModifier $webModifier = null){
-        echo $this->getValue($item);
+        HTMLInterface::placeSpan($this->getValue($item), $webModifier);
     }
 
     public function removeBaseMargins(): self {
