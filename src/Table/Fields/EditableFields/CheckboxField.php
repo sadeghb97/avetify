@@ -1,8 +1,8 @@
 <?php
 namespace Avetify\Table\Fields\EditableFields;
 
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 
 class CheckboxField extends EditableField {

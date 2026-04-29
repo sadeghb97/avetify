@@ -3,8 +3,8 @@ namespace Avetify\Themes\Main;
 
 use Avetify\AvetifyManager;
 use Avetify\Components\AvtDialog;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Themes\Main\Navigations\NavigationBar;
 use Avetify\Themes\Main\Navigations\NavigationRenderer;
 

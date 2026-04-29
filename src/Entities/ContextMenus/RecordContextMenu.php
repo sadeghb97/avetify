@@ -1,9 +1,8 @@
 <?php
 namespace Avetify\Entities\ContextMenus;
 
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
-use Avetify\Interface\WebModifier;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 
 abstract class RecordContextMenu {
     public int $singleWidth = 115;

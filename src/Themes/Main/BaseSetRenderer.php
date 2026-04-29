@@ -6,7 +6,7 @@ use Avetify\Entities\SetModifier;
 use Avetify\Forms\AvtForm;
 use Avetify\Forms\Buttons\ClearButton;
 use Avetify\Forms\Buttons\FormButton;
-use Avetify\Interface\CSS;
+use Avetify\Interface\CSS\CSS;
 use Avetify\Interface\JSInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Routing\Routing;

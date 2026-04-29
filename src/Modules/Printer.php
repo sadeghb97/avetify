@@ -1,9 +1,8 @@
 <?php
 namespace Avetify\Modules;
 
-use Avetify\Interface\CSS;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\Platform;
 
 class Printer {

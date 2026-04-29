@@ -1,8 +1,8 @@
 <?php
 namespace Avetify\Components;
 
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 
 abstract class AvtDialog {
     public function __construct(public string $key,

@@ -3,8 +3,8 @@ namespace Avetify\GalRepo;
 
 use Avetify\AvetifyManager;
 use Avetify\Components\Buttons\AbsoluteButton;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Routing\Routing;
 use Avetify\Themes\Green\GreenListerRenderer;

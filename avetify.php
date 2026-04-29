@@ -3,9 +3,11 @@ require_once "src/AvetifyManager.php";
 require_once "src/Routing/Routing.php";
 
 require_once "src/Interface/Platform.php";
-require_once "src/Interface/CSS.php";
-require_once "src/Interface/Attrs.php";
-require_once "src/Interface/HTMLEvents.php";
+require_once "src/Interface/CSS/CSS.php";
+require_once "src/Interface/HTML/Attrs.php";
+require_once "src/Interface/HTML/HTMLEvents.php";
+require_once "src/Interface/HTML/HTMLModifier.php";
+require_once "src/Interface/HTML/HTMLInterface.php";
 require_once "src/Interface/Pout.php";
 require_once "src/Interface/Submittable.php";
 require_once "src/Interface/Placeable.php";
@@ -13,10 +15,8 @@ require_once "src/Interface/IdentifiedElement.php";
 require_once "src/Interface/IdentifiedElementTrait.php";
 require_once "src/Interface/AvtContainer.php";
 require_once "src/Interface/PageRenderer.php";
-require_once "src/Interface/Styler.php";
-require_once "src/Interface/HTMLModifier.php";
+require_once "src/Interface/CSS/Styler.php";
 require_once "src/Interface/WebModifier.php";
-require_once "src/Interface/HTMLInterface.php";
 require_once "src/Interface/JSInterface.php";
 require_once "src/Interface/RecordFormTrait.php";
 
@@ -64,6 +64,7 @@ require_once "src/Network/HeadersFetcher.php";
 require_once "src/Network/ProxyHeadersFetcher.php";
 
 require_once "src/Fields/BaseRecordField.php";
+require_once "src/Fields/FieldWrapperTrait.php";
 
 require_once "src/Entities/Models/EntityReceivedSort.php";
 require_once "src/Entities/Models/PaginationConfigs.php";

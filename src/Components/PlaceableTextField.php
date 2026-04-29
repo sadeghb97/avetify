@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Components;
 
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;

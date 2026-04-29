@@ -7,7 +7,7 @@ use Avetify\DB\Filters\DBFilterCollection;
 use Avetify\DB\Filters\DBFilterInterface;
 use Avetify\DB\Filters\RawSetFilter;
 use Avetify\Fields\JSDatalist;
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\EditableFields\EditableField;
 

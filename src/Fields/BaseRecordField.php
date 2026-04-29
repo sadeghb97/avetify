@@ -5,7 +5,11 @@ use Avetify\Entities\EntityUtils;
 use Avetify\Interface\WebModifier;
 
 class BaseRecordField {
-    public function __construct(public string $key, public string $title){}
+    public WebModifier | null $baseModifier = null;
+
+    public function __construct(public string $key, public string $title){
+        if(!$this->baseModifier) $this->baseModifier = WebModifier::createInstance();
+    }
 
     public int $maxFieldCharacters = 0;
 
@@ -21,5 +25,17 @@ class BaseRecordField {
 
     public function presentValue($item, ?WebModifier $webModifier = null){
         echo $this->getValue($item);
+    }
+
+    public function removeBaseMargins(): self {
+        $this->baseModifier->popStyle("margin-bottom");
+        $this->baseModifier->popStyle("margin-top");
+        $this->baseModifier->popStyle("margin-right");
+        $this->baseModifier->popStyle("margin-left");
+        return $this;
+    }
+
+    public function getFinalModifier(WebModifier | null $extraModifier) : WebModifier {
+        return WebModifier::mergeModifiers($this->baseModifier, $extraModifier);
     }
 }

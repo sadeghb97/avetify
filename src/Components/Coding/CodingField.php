@@ -2,12 +2,12 @@
 namespace Avetify\Components\Coding;
 
 use Avetify\Forms\FormUtils;
-use Avetify\Interface\CSS;
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\CSS\CSS;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
-use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
 class CodingField extends CodingBlocks implements Placeable, IdentifiedElement {

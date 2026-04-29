@@ -2,7 +2,7 @@
 namespace Avetify\Components\Containers;
 
 use Avetify\Interface\AvtContainer;
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 
 class GridDiv implements AvtContainer {

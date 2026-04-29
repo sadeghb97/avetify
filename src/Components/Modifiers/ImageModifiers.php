@@ -1,8 +1,8 @@
 <?php
 namespace Avetify\Components\Modifiers;
 
-use Avetify\Interface\HTMLModifier;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLModifier;
 use Avetify\Interface\WebModifier;
 
 class ImageModifiers {

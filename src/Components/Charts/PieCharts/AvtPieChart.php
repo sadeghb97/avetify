@@ -2,7 +2,7 @@
 namespace Avetify\Components\Charts\PieCharts;
 
 use Avetify\Components\Charts\AvtChartColors;
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\PageRenderer;
 use Avetify\Themes\Green\GreenTheme;
 use Avetify\Themes\Main\ThemesManager;

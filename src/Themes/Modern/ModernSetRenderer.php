@@ -3,9 +3,9 @@ namespace Avetify\Themes\Modern;
 
 use Avetify\Components\Containers\VertDiv;
 use Avetify\Entities\SetModifier;
-use Avetify\Interface\CSS;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\CSS;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Modules\Printer;
 use Avetify\Themes\Main\SetRenderer;
 use Avetify\Themes\Main\ThemesManager;

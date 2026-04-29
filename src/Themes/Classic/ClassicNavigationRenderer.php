@@ -3,8 +3,8 @@ namespace Avetify\Themes\Classic;
 
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Components\Containers\VertDiv;
-use Avetify\Interface\CSS;
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\CSS\CSS;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Themes\Main\Navigations\NavigationRenderer;
 use Avetify\Themes\Main\Navigations\NavigationSection;

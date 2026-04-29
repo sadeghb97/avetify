@@ -4,7 +4,7 @@ namespace Avetify\Entities\Fields;
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Entities\EntityField;
 use Avetify\Forms\FormUtils;
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 
 class EntityDisabledField extends EntityField {

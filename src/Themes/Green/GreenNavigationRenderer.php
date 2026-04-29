@@ -2,9 +2,9 @@
 namespace Avetify\Themes\Green;
 
 use Avetify\AvetifyManager;
-use Avetify\Interface\Attrs;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\Attrs;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Routing\Routing;
 use Avetify\Themes\Main\Navigations\NavigationLink;

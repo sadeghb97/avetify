@@ -4,13 +4,13 @@ namespace Avetify\Components\Selectors;
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Fields\JSDatalist;
 use Avetify\Forms\FormUtils;
-use Avetify\Interface\Attrs;
-use Avetify\Interface\CSS;
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\CSS\CSS;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\Attrs;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
-use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
 class SetSelector implements Placeable, IdentifiedElement {

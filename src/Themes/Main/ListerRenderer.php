@@ -3,10 +3,10 @@ namespace Avetify\Themes\Main;
 
 use Avetify\AvetifyManager;
 use Avetify\Components\Buttons\PrimaryButton;
-use Avetify\Interface\Attrs;
-use Avetify\Interface\CSS;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\CSS;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\Attrs;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Lister\AvtLister;
 use Avetify\Lister\ListerCategory;

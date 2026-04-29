@@ -3,8 +3,8 @@ namespace Avetify\Themes\Modern;
 
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Components\Containers\VertDiv;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Utils\NumberUtils;
 use Avetify\Utils\StringUtils;
 

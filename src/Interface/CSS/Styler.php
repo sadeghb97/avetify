@@ -1,5 +1,5 @@
 <?php
-namespace Avetify\Interface;
+namespace Avetify\Interface\CSS;
 
 class Styler {
     public array $styles = [];
@@ -8,12 +8,20 @@ class Styler {
     /**
      * @param ('color'|'background-color'|string) $styleKey
      */
-    public function pushStyle($styleKey, $styleValue){
+    public function pushStyle($styleKey, $styleValue) : void {
         $this->styles[$styleKey] = $styleValue;
     }
 
-    public function pushClass($className){
-        $this->classes[] = $className;
+    public function pushClass($className) : void {
+        $this->classes[$className] = true;
+    }
+
+    public function popStyle($styleKey) : void {
+        unset($this->styles[$styleKey]);
+    }
+
+    public function popClass($className) : void {
+        unset($this->classes[$className]);
     }
 
     public function pushFontFaceStyle(string $fontFace){
@@ -59,7 +67,7 @@ class Styler {
     }
 
     public function appendClasses(){
-        foreach ($this->classes as $className){
+        foreach ($this->classes as $className => $classValue){
             self::addClass($className);
         }
     }
@@ -81,5 +89,18 @@ class Styler {
     public static function imageSquare($size){
         self::addStyle("height", $size);
         self::addStyle("width", $size);
+    }
+
+    public function merge(Styler | null $secondStyler) : Styler {
+        $outModifier = clone $this;
+        if($secondStyler) {
+            foreach ($secondStyler->styles as $secPropertyKey => $secPropertyValue) {
+                $outModifier->styles[$secPropertyKey] = $secPropertyValue;
+            }
+            foreach ($secondStyler->classes as $secClassKey => $secClassValue) {
+                $outModifier->classes[$secClassKey] = $secClassValue;
+            }
+        }
+        return $outModifier;
     }
 }

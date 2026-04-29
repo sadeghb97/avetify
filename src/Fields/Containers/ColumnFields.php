@@ -6,13 +6,9 @@ use Avetify\Interface\WebModifier;
 
 class ColumnFields extends FieldsContainer {
     public function presentValue($item, ?WebModifier $webModifier = null) {
+        $finalModifier = $this->getFinalModifier($webModifier);
         $vertDiv = new VertDiv(4);
-        if(!$webModifier) $webModifier = WebModifier::createInstance();
-        $webModifier->pushStyle("margin-bottom", "12px");
-        $webModifier->pushStyle("margin-top", "12px");
-        $webModifier->pushStyle("margin-right", "8px");
-        $webModifier->pushStyle("margin-left", "8px");
-        $vertDiv->open($webModifier);
+        $vertDiv->open($finalModifier);
 
         for($i=0; count($this->childs) > $i; $i++){
             $this->childs[$i]->presentValue($item);

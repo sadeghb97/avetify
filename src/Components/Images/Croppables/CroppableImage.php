@@ -3,8 +3,8 @@ namespace Avetify\Components\Images\Croppables;
 
 use Avetify\Files\ImageUtils;
 use Avetify\Forms\FormUtils;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Routing\Routing;
 

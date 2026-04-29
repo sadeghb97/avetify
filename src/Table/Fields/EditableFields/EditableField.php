@@ -2,10 +2,10 @@
 namespace Avetify\Table\Fields\EditableFields;
 
 use Avetify\Entities\BasicProperties\EntityID;
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
-use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\TableField;
 

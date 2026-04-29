@@ -1,8 +1,11 @@
 <?php
-namespace Avetify\Interface;
+namespace Avetify\Interface\HTML;
 
  use Avetify\Components\Buttons\AbsoluteButton;
+ use Avetify\Interface\CSS\Styler;
+ use Avetify\Interface\Placeable;
  use Avetify\Interface\Platform;
+ use Avetify\Interface\WebModifier;
 
  class HTMLInterface {
      public static function addAttribute($attr, $value = null){

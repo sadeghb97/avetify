@@ -1,8 +1,8 @@
 <?php
 namespace Avetify\Table\Fields\FlagFields;
 
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\HTMLModifier;
+use Avetify\Interface\HTML\HTMLInterface;
+use Avetify\Interface\HTML\HTMLModifier;
 use Avetify\Interface\WebModifier;
 use Avetify\Repo\Countries\World;
 use Avetify\Table\Fields\TableField;

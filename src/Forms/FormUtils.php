@@ -4,8 +4,8 @@ namespace Avetify\Forms;
 use Avetify\Components\Buttons\JoshButton;
 use Avetify\Components\Images\IconButton;
 use Avetify\Forms\Buttons\AbsoluteFormButton;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 
 class FormUtils {

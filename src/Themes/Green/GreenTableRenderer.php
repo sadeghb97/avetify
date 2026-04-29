@@ -2,9 +2,9 @@
 namespace Avetify\Themes\Green;
 
 use Avetify\Entities\SetModifier;
-use Avetify\Interface\CSS;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\CSS;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Table\AvtTable;
 use Avetify\Table\Fields\EditableFields\RecordSelectorField;

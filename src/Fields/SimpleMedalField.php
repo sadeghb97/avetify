@@ -1,10 +1,6 @@
 <?php
 namespace Avetify\Fields;
 
-use Avetify\Components\Containers\NiceDiv;
-use Avetify\Fields\JSTextFields\JSInputField;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
 class SimpleMedalField extends APIMedalField {

@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Components\DialogFields;
 
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
 
 class IconDialogField extends DialogField {
     public string $imageHeight = "30px";

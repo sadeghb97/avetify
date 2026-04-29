@@ -2,9 +2,9 @@
 namespace Avetify\Components\Containers;
 
 use Avetify\Interface\AvtContainer;
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\Placeable;
-use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
 class NiceDiv implements AvtContainer {

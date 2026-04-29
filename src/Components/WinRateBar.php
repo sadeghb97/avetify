@@ -1,9 +1,9 @@
 <?php
 namespace Avetify\Components;
 
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\Placeable;
-use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
 class WinRateBar implements Placeable {

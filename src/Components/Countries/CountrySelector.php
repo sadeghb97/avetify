@@ -2,9 +2,8 @@
 namespace Avetify\Components\Countries;
 
 use Avetify\Components\Containers\NiceDiv;
-use Avetify\Fields\JSDatalist;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\HTMLModifier;
+use Avetify\Interface\HTML\HTMLInterface;
+use Avetify\Interface\HTML\HTMLModifier;
 use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;

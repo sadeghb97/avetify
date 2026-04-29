@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Components\Buttons;
 
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 
 class LinkAbsoluteButton extends AbsoluteButton {

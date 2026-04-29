@@ -1,11 +1,10 @@
 <?php
 namespace Avetify\Components\DialogFields;
 
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
-use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
 abstract class DialogField implements Placeable, IdentifiedElement {

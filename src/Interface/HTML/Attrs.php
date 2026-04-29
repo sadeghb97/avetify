@@ -1,5 +1,5 @@
 <?php
-namespace Avetify\Interface;
+namespace Avetify\Interface\HTML;
 
 class Attrs {
     // Core Attributes

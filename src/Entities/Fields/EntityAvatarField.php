@@ -8,8 +8,8 @@ use Avetify\Entities\AvtEntityItem;
 use Avetify\Entities\EntityField;
 use Avetify\Entities\EntityUtils;
 use Avetify\Files\ImageUtils;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Routing\Routing;
 

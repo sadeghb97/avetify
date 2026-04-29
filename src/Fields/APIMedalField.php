@@ -3,11 +3,11 @@ namespace Avetify\Fields;
 
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Fields\JSTextFields\JSInputField;
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
-use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
 class APIMedalField extends JSInputField implements Placeable, IdentifiedElement {

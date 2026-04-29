@@ -3,9 +3,9 @@ namespace Avetify\Forms;
 
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Forms\Buttons\FormButton;
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\Placeable;
-use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
 class AvtForm {

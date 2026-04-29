@@ -4,9 +4,8 @@ namespace Avetify\Renderers;
 use Avetify\AvetifyManager;
 use Avetify\Forms\Buttons\AbsoluteFormButton;
 use Avetify\Forms\FormUtils;
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\PageRenderer;
-use Avetify\Themes\Main\ThemesManager;
 use Avetify\Interface\Platform;
 
 abstract class TaskPageRenderer implements PageRenderer {

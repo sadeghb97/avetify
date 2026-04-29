@@ -2,8 +2,8 @@
 namespace Avetify\Entities\Fields;
 
 use Avetify\Entities\EntityField;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 
 class EntityBooleanField extends EntityField {

@@ -1,11 +1,11 @@
 <?php
 namespace Avetify\Themes\Classic;
 
-use Avetify\Interface\Attrs;
-use Avetify\Interface\CSS;
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\CSS\CSS;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\Attrs;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\Placeable;
-use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
 class ClassicLabel implements Placeable {

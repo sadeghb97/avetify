@@ -1,8 +1,8 @@
 <?php
 namespace Avetify\Forms\Buttons;
 
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 
 class AbsoluteFormButton extends FormButton {
     public function __construct(string $formIdentifier,

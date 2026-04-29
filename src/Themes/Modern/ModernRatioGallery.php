@@ -6,8 +6,8 @@ use Avetify\Components\Containers\VertDiv;
 use Avetify\Entities\BasicProperties\EntityImageRatio;
 use Avetify\Entities\ContextMenus\RecordContextMenu;
 use Avetify\Entities\SetModifier;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Themes\Main\SetRenderer;
 

@@ -2,10 +2,10 @@
 namespace Avetify\Entities;
 
 use Avetify\Fields\BaseRecordField;
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
-use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
 class EntityField extends BaseRecordField implements IdentifiedElement {

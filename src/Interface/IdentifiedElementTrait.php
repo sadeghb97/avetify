@@ -1,6 +1,8 @@
 <?php
 namespace Avetify\Interface;
 
+use Avetify\Interface\HTML\HTMLInterface;
+
 trait IdentifiedElementTrait {
     public bool $useIDIdentifier = true;
     public bool $useNameIdentifier = false;

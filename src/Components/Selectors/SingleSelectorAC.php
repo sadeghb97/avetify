@@ -3,8 +3,8 @@ namespace Avetify\Components\Selectors;
 
 use Avetify\Fields\JSDatalist;
 use Avetify\Fields\JSTextFields\JSACTextField;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 
 class SingleSelectorAC extends JSACTextField {

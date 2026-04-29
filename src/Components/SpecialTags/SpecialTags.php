@@ -5,8 +5,8 @@ use Avetify\Components\Containers\NiceDiv;
 use Avetify\Components\Containers\VertDiv;
 use Avetify\Components\JSField;
 use Avetify\Forms\FormUtils;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 
 class SpecialTags extends JSField {

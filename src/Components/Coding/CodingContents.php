@@ -2,10 +2,10 @@
 namespace Avetify\Components\Coding;
 
 use Avetify\Components\Containers\VertDiv;
-use Avetify\Interface\CSS;
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\CSS\CSS;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\Placeable;
-use Avetify\Interface\Styler;
 use Avetify\Interface\WebModifier;
 
 class CodingContents extends CodingBlocks implements Placeable {

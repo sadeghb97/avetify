@@ -2,7 +2,7 @@
 namespace Avetify\Entities\Fields;
 
 use Avetify\Entities\EntityField;
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 
 class EntityHiddenField extends EntityField {

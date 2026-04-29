@@ -1,11 +1,10 @@
 <?php
 namespace Avetify\Themes\Green;
 
-use Avetify\Interface\Attrs;
-use Avetify\Interface\CSS;
-use Avetify\Interface\HTMLInterface;
-use Avetify\Interface\Styler;
-use Avetify\Interface\WebModifier;
+use Avetify\Interface\CSS\CSS;
+use Avetify\Interface\CSS\Styler;
+use Avetify\Interface\HTML\Attrs;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Themes\Main\ListerRenderer;
 
 class GreenListerRenderer extends ListerRenderer {

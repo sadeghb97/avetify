@@ -2,7 +2,7 @@
 namespace Avetify\Fields;
 
 use Avetify\Components\Containers\NiceDiv;
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;

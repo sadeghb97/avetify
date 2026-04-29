@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Components\Images;
 
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\WebModifier;
 

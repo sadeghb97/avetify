@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Fields;
 
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 
 class JSDataSet extends JSDataElement {

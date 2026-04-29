@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Table\Fields\NumberFields;
 
-use Avetify\Interface\Styler;
+use Avetify\Interface\CSS\Styler;
 use Avetify\Table\Fields\TableSimpleField;
 
 class ColoredField extends TableSimpleField {

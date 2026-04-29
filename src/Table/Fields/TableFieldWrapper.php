@@ -2,10 +2,13 @@
 namespace Avetify\Table\Fields;
 
 use Avetify\Fields\BaseRecordField;
+use Avetify\Fields\FieldWrapperTrait;
 use Avetify\Interface\WebModifier;
 
 class TableFieldWrapper extends TableField {
-    public function __construct(public BaseRecordField $recordField) {
+    use FieldWrapperTrait;
+    public function __construct(BaseRecordField $recordField) {
+        $this->recordField = $recordField;
         parent::__construct($recordField->title, $recordField->key);
 
         if(property_exists($this->recordField, "useNameIdentifier")) {

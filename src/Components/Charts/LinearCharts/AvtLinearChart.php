@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Components\Charts\LinearCharts;
 
-use Avetify\Interface\HTMLInterface;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\PageRenderer;
 use Avetify\Themes\Green\GreenTheme;
 use Avetify\Themes\Main\ThemesManager;
