@@ -110,46 +110,46 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
     }
 
     public function presentWritableField($item, ?WebModifier $webModifier = null) {
-        $finalModifier = $this->getFinalModifier($webModifier);
         $title = $this->title;
         $key = $this->key;
         $value = $this->getValue($item);
+        $cloneModifier = clone $webModifier;
 
-        $finalModifier->pushClass("empty");
-        if($this->numeric) $finalModifier->pushClass("numeric-text");
+        $cloneModifier->pushClass("empty");
+        if($this->numeric) $cloneModifier->pushClass("numeric-text");
 
         echo '<input ';
         HTMLInterface::addAttribute("type","text");
         $this->placeElementIdAttributes();
         HTMLInterface::addAttribute("value", $value);
         HTMLInterface::addAttribute("placeholder", $title);
-        $finalModifier->htmlModifier->applyModifiers();
+        $cloneModifier->htmlModifier->applyModifiers();
 
         Styler::classStartAttribute();
-        $finalModifier->styler->appendClasses();
+        $cloneModifier->styler->appendClasses();
         Styler::closeAttribute();
 
         Styler::startAttribute();
-        $finalModifier->styler->appendStyles();
+        $cloneModifier->styler->appendStyles();
         Styler::closeAttribute();
         HTMLInterface::closeSingleTag();
     }
 
     public function presentReadonlyField($item, ?WebModifier $webModifier = null) {
-        $finalModifier = $this->getFinalModifier($webModifier);
+        $cloneModifier = clone $webModifier;
         $value = $this->getValue($item);
         if(strlen($value) > 0) {
             echo '<div ';
-            $finalModifier->htmlModifier->applyModifiers();
+            $cloneModifier->htmlModifier->applyModifiers();
 
             Styler::classStartAttribute();
-            $finalModifier->styler->appendClasses();
+            $cloneModifier->styler->appendClasses();
             Styler::closeAttribute();
 
             Styler::startAttribute();
             Styler::addStyle("margin-top", "6px");
             Styler::addStyle("margin-bottom", "6px");
-            $finalModifier->styler->appendStyles();
+            $cloneModifier->styler->appendStyles();
             Styler::closeAttribute();
             HTMLInterface::closeTag();
             echo $this->title . ': ' . $value;

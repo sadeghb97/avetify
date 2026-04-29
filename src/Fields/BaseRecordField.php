@@ -23,6 +23,11 @@ class BaseRecordField {
         return substr($foundValue, 0, $this->maxFieldCharacters) . " ...";
     }
 
+    public function placeField($item, ?WebModifier $webModifier = null) : void {
+        $finalModifier = WebModifier::mergeModifiers($this->baseModifier, $webModifier);
+        $this->presentValue($item, $finalModifier);
+    }
+
     public function presentValue($item, ?WebModifier $webModifier = null){
         echo $this->getValue($item);
     }

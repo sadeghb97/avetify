@@ -76,7 +76,7 @@ class TableField extends BaseRecordField implements Qualifier {
 
     public function renderRecord($item){
         $this->openNormalTD($item);
-        $this->presentValue($item);
+        $this->placeField($item);
         self::closeTD();
     }
 

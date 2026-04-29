@@ -117,7 +117,7 @@ class ModernixRenderer extends SetRenderer {
             foreach ($this->setModifier->fields as $field){
                 $vertDiv = new VertDiv(0);
                 $vertDiv->open();
-                $field->presentValue($item);
+                $field->placeField($item);
                 HTMLInterface::closeDiv();
             }
         }

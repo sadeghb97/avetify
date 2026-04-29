@@ -243,7 +243,7 @@ abstract class BaseSetRenderer {
 
         $filterFields = $this->setModifier->allFilterFields();
         foreach ($filterFields as $filterField){
-            $filterField->recordField->presentValue($filtersFormData);
+            $filterField->recordField->placeField($filtersFormData);
         }
         $niceDiv->separate();
         $this->filtersForm->placeTriggers(0);

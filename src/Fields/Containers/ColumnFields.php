@@ -6,12 +6,11 @@ use Avetify\Interface\WebModifier;
 
 class ColumnFields extends FieldsContainer {
     public function presentValue($item, ?WebModifier $webModifier = null) {
-        $finalModifier = $this->getFinalModifier($webModifier);
         $vertDiv = new VertDiv(4);
-        $vertDiv->open($finalModifier);
+        $vertDiv->open($webModifier);
 
         for($i=0; count($this->childs) > $i; $i++){
-            $this->childs[$i]->presentValue($item);
+            $this->childs[$i]->placeField($item);
             if(count($this->childs) > ($i + 1)) $vertDiv->separate();
         }
 

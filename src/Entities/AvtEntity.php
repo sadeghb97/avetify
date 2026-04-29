@@ -330,7 +330,7 @@ abstract class AvtEntity extends SetModifier {
         HTMLInterface::placeHiddenField($this->getFormTriggerElementId(), "");
 
         foreach ($this->dataFields() as $field){
-            $field->presentValue($curRecordObject);
+            $field->placeField($curRecordObject);
         }
 
         $this->formMainExtension($options);
