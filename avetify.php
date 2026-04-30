@@ -117,6 +117,7 @@ require_once "src/Entities/Fields/EntityHiddenField.php";
 require_once "src/Entities/Fields/EntityDisabledField.php";
 require_once "src/Entities/Fields/EntityBooleanField.php";
 require_once "src/Entities/Fields/EntityTextAreaField.php";
+require_once "src/Entities/Fields/EntityTextField.php";
 require_once "src/Entities/Fields/Containers/EntityFieldsContainer.php";
 require_once "src/Entities/Fields/Containers/EntityRowFields.php";
 require_once "src/Entities/Fields/Containers/EntityColumnFields.php";

@@ -1,7 +1,6 @@
 <?php
 namespace Avetify\Entities;
 
-use Avetify\AvetifyManager;
 use Avetify\DB\DBConnection;
 use Avetify\Entities\Fields\Containers\EntityFieldsContainer;
 use Avetify\Entities\Fields\EntityAvatarField;
@@ -9,14 +8,13 @@ use Avetify\Entities\Fields\EntityBooleanField;
 use Avetify\Fields\JSDatalist;
 use Avetify\Files\Filer;
 use Avetify\Files\ImageUtils;
-use Avetify\Forms\Buttons\AbsoluteFormButton;
-use Avetify\Forms\FormUtils;
+use Avetify\Forms\Buttons\DeleteFormButton;
+use Avetify\Forms\Buttons\PrimaryFormButton;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\JSInterface;
 use Avetify\Interface\Pout;
 use Avetify\Interface\RecordFormTrait;
-use Avetify\Interface\WebModifier;
 use Avetify\Modules\Printer;
 use Avetify\Network\NetworkFetcher;
 use Avetify\Routing\Routing;
@@ -346,16 +344,12 @@ abstract class AvtEntity extends SetModifier {
         HTMLInterface::closeTag();
 
         if($this->isPatchRecordEnabled()) {
-            $submitModifier = WebModifier::createInstance();
-            $submitModifier->htmlModifier->pushModifier("name", "entity_form");
-            FormUtils::placeSubmitButton("Submit", "", 8, $submitModifier);
+            $primaryFormButton = new PrimaryFormButton($this->getFormId(), $this->getPatchTriggerKey(), $this->getFormTriggerElementId());
+            $primaryFormButton->place();
         }
 
         if($record && $this->deletable){
-            $deleteButton = new AbsoluteFormButton($this->getFormId(),
-                $this->getDeleteTriggerKey(), ["right" => "20px", "bottom" => "20px"],
-                AvetifyManager::imageUrl("remove.svg"),
-                $this->getFormTriggerElementId());
+            $deleteButton = new DeleteFormButton($this->getFormId(), $this->getDeleteTriggerKey(), $this->getFormTriggerElementId());
             $deleteButton->confirmMessage = "Are you sure to delete this "
                 . strtolower($this->entityName) . "?";
             $deleteButton->place();
@@ -367,119 +361,118 @@ abstract class AvtEntity extends SetModifier {
     }
 
     public function handleForm($options = null){
-        $justNewRecordInserted = false;
         $newRecordUrl = "";
-
-        if(isset($_POST['entity_form'])){
-            $data = $_POST;
-            $entityPk = isset($data['entity_pk']) ? $data['entity_pk'] : null;
-            $currentRecord = $entityPk ? $this->getRecord($entityPk) : null;
-            $curRecordObject = $this->getRecordObject($currentRecord);
-
-            $avatarFields = [];
-            foreach ($this->dataFields() as $field){
-                if($field instanceof EntityBooleanField && $field->writable && !isset($data[$field->key])){
-                    $data[$field->key] = 0;
-                }
-                else if($field->autoTimeCreate){
-                    if(!$entityPk) $data[$field->key] = time();
-                }
-                else if($field->autoTimeUpdate){
-                    $data[$field->key] = time();
-                }
-                else if($field instanceof EntityAvatarField){
-                    $avatarFields[] = $field;
-                }
-
-                if($field->numeric && empty($data[$field->key])) $data[$field->key] = 0;
-            }
-
-            if($currentRecord){
-                $this->adjustUpdateData($data, $currentRecord, $options);
-                $this->updateRecord($entityPk, $data);
-            }
-            else {
-                $this->adjustCreateData($data, $options);
-                $currentRecord = $this->insertRecord($data);
-                if ($currentRecord) {
-                    $entityPk = EntityUtils::getSimpleValue($currentRecord, $this->getSuperKey());
-                    echo "Registered Successfully (";
-                    $this->printEntityLinkedName($currentRecord);
-                    echo ')' . Pout::br();
-
-                    if($this->redirectOnInsert) {
-                        $newRecordUrl = Routing::addParamToCurrentLink($this->urlParamEntityKey, $entityPk);
-                        $justNewRecordInserted = true;
-                    }
-                }
-            }
-
-            if($entityPk && count($avatarFields) > 0){
-                foreach ($avatarFields as $af){
-                    /** @var EntityAvatarField $avatarField */
-                    $avatarField = $af;
-
-                    $up = false;
-                    $targetFilename = $avatarField->noExtServerSrc($currentRecord);
-                    if(!empty($_FILES[$af->key]['name'])){
-                        $imageDetails = $_FILES[$af->key];
-                        $tmpFilename = $imageDetails['tmp_name'];
-                        $orgName = $imageDetails['name'];
-                        $orgExtension = Filer::getFileExtension($orgName);
-                        $targetFilename .= ('.' . $orgExtension);
-                        move_uploaded_file($tmpFilename, $targetFilename);
-                        $up = true;
-                    }
-                    else if(!empty($data[$af->key])){
-                        $avatarSrc = $data[$af->key];
-                        $orgExtension = Filer::getFileExtension($avatarSrc);
-                        if($orgExtension) $targetFilename .= ('.' . $orgExtension);
-                        $this->getNetworkFetcher()->downloadFile($avatarSrc, $targetFilename);
-                        $up = true;
-                    }
-
-                    if($up){
-                        $extensionRequired = ($orgExtension && $orgExtension != $af->targetExt);
-                        $convertRequired = $extensionRequired;
-                        if(!$convertRequired && $af->maxImageSize){
-                            $curMaxSize = ImageUtils::getMaxDimSize($targetFilename);
-                            if($curMaxSize > $af->maxImageSize) $convertRequired = true;
-                        }
-
-                        $finalWD = $avatarField->manualCrop ? 0 : $af->forcedWidthDimension;
-                        $finalHD = $avatarField->manualCrop ? 0 : $af->forcedHeightDimension;
-
-                        if(!$convertRequired && $finalWD > 0 && $finalHD > 0){
-                            $curDiff = ImageUtils::getRatioDiffWithDims($targetFilename,
-                                $af->forcedWidthDimension, $af->forcedHeightDimension);
-                            if($curDiff > 0.01) $convertRequired = true;
-                        }
-
-
-                        if($convertRequired) {
-                            ImageUtils::magickConvert($targetFilename,
-                                $extensionRequired ? $af->targetExt : null,
-                                $af->maxImageSize, $finalWD, $finalHD);
-                        }
-                    }
-                    else if($curRecordObject) {
-                        $crImage = $avatarField->getCroppingImage($curRecordObject);
-                        if($crImage) $crImage->checkSubmit();
-                    }
-                }
-            }
-
-            $this->manualHandleForm();
-        }
-
-        if($justNewRecordInserted){
-            JSInterface::redirect($newRecordUrl, 500);
-            die;
-        }
 
         if(!empty($_POST[$this->getFormTriggerElementId()])){
             $trigger = $_POST[$this->getFormTriggerElementId()];
-            if($trigger == $this->getDeleteTriggerKey() && $this->deletable){
+            if($this->isPatchRecordEnabled() && $trigger == $this->getPatchTriggerKey()){
+                $justNewRecordInserted = false;
+                $data = $_POST;
+                $entityPk = $data['entity_pk'] ?? null;
+                $currentRecord = $entityPk ? $this->getRecord($entityPk) : null;
+                $curRecordObject = $this->getRecordObject($currentRecord);
+
+                $avatarFields = [];
+                foreach ($this->dataFields() as $field){
+                    if($field instanceof EntityBooleanField && $field->writable && !isset($data[$field->key])){
+                        $data[$field->key] = 0;
+                    }
+                    else if($field->autoTimeCreate){
+                        if(!$entityPk) $data[$field->key] = time();
+                    }
+                    else if($field->autoTimeUpdate){
+                        $data[$field->key] = time();
+                    }
+                    else if($field instanceof EntityAvatarField){
+                        $avatarFields[] = $field;
+                    }
+
+                    if($field->numeric && empty($data[$field->key])) $data[$field->key] = 0;
+                }
+
+                if($currentRecord){
+                    $this->adjustUpdateData($data, $currentRecord, $options);
+                    $this->updateRecord($entityPk, $data);
+                }
+                else {
+                    $this->adjustCreateData($data, $options);
+                    $currentRecord = $this->insertRecord($data);
+                    if ($currentRecord) {
+                        $entityPk = EntityUtils::getSimpleValue($currentRecord, $this->getSuperKey());
+                        echo "Registered Successfully (";
+                        $this->printEntityLinkedName($currentRecord);
+                        echo ')' . Pout::br();
+
+                        if($this->redirectOnInsert) {
+                            $newRecordUrl = Routing::addParamToCurrentLink($this->urlParamEntityKey, $entityPk);
+                            $justNewRecordInserted = true;
+                        }
+                    }
+                }
+
+                if($entityPk && count($avatarFields) > 0){
+                    foreach ($avatarFields as $af){
+                        /** @var EntityAvatarField $avatarField */
+                        $avatarField = $af;
+
+                        $up = false;
+                        $targetFilename = $avatarField->noExtServerSrc($currentRecord);
+                        if(!empty($_FILES[$af->key]['name'])){
+                            $imageDetails = $_FILES[$af->key];
+                            $tmpFilename = $imageDetails['tmp_name'];
+                            $orgName = $imageDetails['name'];
+                            $orgExtension = Filer::getFileExtension($orgName);
+                            $targetFilename .= ('.' . $orgExtension);
+                            move_uploaded_file($tmpFilename, $targetFilename);
+                            $up = true;
+                        }
+                        else if(!empty($data[$af->key])){
+                            $avatarSrc = $data[$af->key];
+                            $orgExtension = Filer::getFileExtension($avatarSrc);
+                            if($orgExtension) $targetFilename .= ('.' . $orgExtension);
+                            $this->getNetworkFetcher()->downloadFile($avatarSrc, $targetFilename);
+                            $up = true;
+                        }
+
+                        if($up){
+                            $extensionRequired = ($orgExtension && $orgExtension != $af->targetExt);
+                            $convertRequired = $extensionRequired;
+                            if(!$convertRequired && $af->maxImageSize){
+                                $curMaxSize = ImageUtils::getMaxDimSize($targetFilename);
+                                if($curMaxSize > $af->maxImageSize) $convertRequired = true;
+                            }
+
+                            $finalWD = $avatarField->manualCrop ? 0 : $af->forcedWidthDimension;
+                            $finalHD = $avatarField->manualCrop ? 0 : $af->forcedHeightDimension;
+
+                            if(!$convertRequired && $finalWD > 0 && $finalHD > 0){
+                                $curDiff = ImageUtils::getRatioDiffWithDims($targetFilename,
+                                    $af->forcedWidthDimension, $af->forcedHeightDimension);
+                                if($curDiff > 0.01) $convertRequired = true;
+                            }
+
+
+                            if($convertRequired) {
+                                ImageUtils::magickConvert($targetFilename,
+                                    $extensionRequired ? $af->targetExt : null,
+                                    $af->maxImageSize, $finalWD, $finalHD);
+                            }
+                        }
+                        else if($curRecordObject) {
+                            $crImage = $avatarField->getCroppingImage($curRecordObject);
+                            if($crImage) $crImage->checkSubmit();
+                        }
+                    }
+                }
+
+                $this->manualHandleForm();
+
+                if($justNewRecordInserted){
+                    JSInterface::redirect($newRecordUrl, 500);
+                    die;
+                }
+            }
+            else if($this->deletable && $trigger == $this->getDeleteTriggerKey()){
                 $currentRecord = $this->fastCurrentRecord();
 
                 if($currentRecord){
@@ -591,6 +584,10 @@ abstract class AvtEntity extends SetModifier {
 
     public function getDeleteTriggerKey() : string {
         return "delete_entity";
+    }
+
+    public function getPatchTriggerKey() : string {
+        return "patch_entity";
     }
 
     abstract public function getSuperKey();

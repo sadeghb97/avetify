@@ -3,6 +3,7 @@ namespace Avetify\Table\Fields;
 
 use Avetify\Fields\BaseRecordField;
 use Avetify\Fields\FieldWrapperTrait;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 
 class TableFieldWrapper extends TableField {
@@ -17,6 +18,10 @@ class TableFieldWrapper extends TableField {
     }
 
     public function presentValue($item, ?WebModifier $webModifier = null) {
-        $this->recordField->presentValue($item, $webModifier);
+        echo '<div ';
+        $webModifier?->apply();
+        HTMLInterface::closeTag();
+        $this->recordField->placeField($item);
+        HTMLInterface::closeDiv();
     }
 }

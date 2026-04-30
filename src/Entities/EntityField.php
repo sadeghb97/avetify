@@ -30,10 +30,11 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
         $this->baseModifier->pushStyle("font-size", "14pt");
         $this->baseModifier->pushStyle("margin-top", "8px");
         $this->baseModifier->pushStyle("margin-bottom", "8px");
-        $this->baseModifier->pushStyle("padding-left", "8px");
-        $this->baseModifier->pushStyle("padding-right", "8px");
-        $this->baseModifier->pushStyle("padding-top", "4px");
-        $this->baseModifier->pushStyle("padding-bottom", "4px");
+        $this->baseModifier->pushStyle("margin-left", "4px");
+        $this->baseModifier->pushStyle("margin-right", "4px");
+        $this->baseModifier->pushStyle("padding-left", "4px");
+        $this->baseModifier->pushStyle("padding-right", "4px");
+        $this->baseModifier->pushStyle("width", "98%");
 
         $this->postConstruct();
     }
@@ -45,6 +46,12 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
         $this->baseModifier->popStyle("padding-bottom");
         $this->baseModifier->pushStyle("direction", "rtl");
         $this->baseModifier->pushStyle("font-family", "'IranSans', sans-serif");
+        $this->rtl = true;
+        return $this;
+    }
+
+    public function setInline() : EntityField {
+        $this->baseModifier->popStyle("width");
         $this->rtl = true;
         return $this;
     }
@@ -113,26 +120,34 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
         $title = $this->title;
         $key = $this->key;
         $value = $this->getValue($item);
-        $cloneModifier = clone $webModifier;
 
-        $cloneModifier->pushClass("empty");
-        if($this->numeric) $cloneModifier->pushClass("numeric-text");
+        echo '<div ';
+        $webModifier?->apply();
+        HTMLInterface::closeTag();
+
+        $inputModifier = WebModifier::createInstance();
+        $inputModifier->pushClass("empty");
+        if($this->numeric) $inputModifier->pushClass("numeric-text");
 
         echo '<input ';
         HTMLInterface::addAttribute("type","text");
         $this->placeElementIdAttributes();
         HTMLInterface::addAttribute("value", $value);
         HTMLInterface::addAttribute("placeholder", $title);
-        $cloneModifier->htmlModifier->applyModifiers();
+        $inputModifier->htmlModifier->applyModifiers();
 
         Styler::classStartAttribute();
-        $cloneModifier->styler->appendClasses();
+        $inputModifier->styler->appendClasses();
         Styler::closeAttribute();
 
         Styler::startAttribute();
-        $cloneModifier->styler->appendStyles();
+        Styler::addStyle("width", "100%");
+        Styler::addStyle("height", "100%");
+        $inputModifier->styler->appendStyles();
         Styler::closeAttribute();
         HTMLInterface::closeSingleTag();
+
+        HTMLInterface::closeDiv();
     }
 
     public function presentReadonlyField($item, ?WebModifier $webModifier = null) {
@@ -147,8 +162,6 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
             Styler::closeAttribute();
 
             Styler::startAttribute();
-            Styler::addStyle("margin-top", "6px");
-            Styler::addStyle("margin-bottom", "6px");
             $cloneModifier->styler->appendStyles();
             Styler::closeAttribute();
             HTMLInterface::closeTag();

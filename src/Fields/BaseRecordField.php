@@ -51,6 +51,16 @@ class BaseRecordField {
         return $this;
     }
 
+    public function attachCssWidth(string $styleValue) : static {
+        $this->baseModifier->pushStyle("width", $styleValue);
+        return $this;
+    }
+
+    public function attachCssHeight(string $styleValue) : static {
+        $this->baseModifier->pushStyle("height", $styleValue);
+        return $this;
+    }
+
     public function attachCssClass(string $className) : static {
         $this->baseModifier->pushClass($className);
         return $this;
