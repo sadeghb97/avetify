@@ -4,6 +4,7 @@ namespace Avetify\Entities\Fields;
 use Avetify\Entities\EntityField;
 use Avetify\Fields\BaseRecordField;
 use Avetify\Fields\FieldWrapperTrait;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 
 class EntityFieldWrapper extends EntityField {
@@ -18,6 +19,10 @@ class EntityFieldWrapper extends EntityField {
     }
 
     public function presentValue($item, ?WebModifier $webModifier = null) {
-        $this->recordField->presentValue($item, $webModifier);
+        echo '<div ';
+        $webModifier?->apply();
+        HTMLInterface::closeTag();
+        $this->recordField->placeField($item);
+        HTMLInterface::closeDiv();
     }
 }

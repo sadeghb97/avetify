@@ -232,3 +232,55 @@ function updateSingleSelector(acField, selectorKey, cData, selectedRecord){
         if (disableAutoSubmit) acField.blur()
     }
 }
+
+function rawSelectorUpdateHidden(boxId, hiddenId) {
+    const box = document.getElementById(boxId);
+    const hidden = document.getElementById(hiddenId);
+
+    const values = Array.from(box.querySelectorAll('.raw-selector-chip'))
+        .map(el => el.dataset.value);
+
+    hidden.value = values.join(',');
+}
+
+function rawSelectorAdd(box, input, hiddenId, text) {
+    if (!text.trim()) return;
+
+    const chip = document.createElement('span');
+    chip.className = 'raw-selector-chip';
+    chip.dataset.value = text;
+    chip.innerHTML = text + '<button type="button">×</button>';
+
+    chip.querySelector('button').onclick = () => {
+        chip.remove();
+        rawSelectorUpdateHidden(box.id, hiddenId);
+    };
+
+    box.insertBefore(chip, input);
+    rawSelectorUpdateHidden(box.id, hiddenId);
+}
+
+function rawSelectorInit(boxId, inputId, hiddenId, rawString) {
+    const box = document.getElementById(boxId);
+    const input = document.getElementById(inputId);
+
+    function load(raw) {
+        if (!raw) return;
+        raw.split(',').forEach(v => {
+            rawSelectorAdd(box, input, hiddenId, v);
+        });
+    }
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            rawSelectorAdd(box, input, hiddenId, input.value);
+            input.value = '';
+        }
+    });
+
+    box.addEventListener('click', () => input.focus());
+
+    load(rawString);
+    rawSelectorUpdateHidden(boxId, hiddenId);
+}

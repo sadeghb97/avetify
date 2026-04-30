@@ -3,15 +3,11 @@ namespace Avetify\Table\Fields\EditableFields\SelectFields;
 
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Components\Selectors\SetSelector;
-use Avetify\DB\Filters\DBFilterCollection;
-use Avetify\DB\Filters\DBFilterInterface;
-use Avetify\DB\Filters\RawSetFilter;
 use Avetify\Fields\JSDatalist;
 use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
-use Avetify\Table\Fields\EditableFields\EditableField;
 
-class SetSelectField extends EditableField {
+class SetSelectField extends BaseSetSelectField {
     public SetSelector $setSelector;
     public int $selectorWidth = 0;
     public bool $tinyAvatars = false;
@@ -58,35 +54,4 @@ class SetSelectField extends EditableField {
     }
 
     public function preLoad() {}
-
-    public function isQualified($item, $param): bool {
-        $setValue = $this->getValue($item);
-        if(!$setValue) return false;
-
-        $filterValue = $param;
-        if(!$filterValue) return true;
-
-        $existsList = explode(",", $setValue);
-        $filterList = explode(",", $filterValue);
-
-        $existsSet = [];
-        foreach ($existsList as $i) $existsSet[$i] = true;
-
-        foreach ($filterList as $filterItem){
-            if(empty($existsSet[$filterItem])) return false;
-        }
-        return true;
-    }
-
-    public function dbQualifyingFilter($param): DBFilterInterface | null {
-        if(!$param) return null;
-        $targetList = explode(",", $param);
-        $filterCollection = new DBFilterCollection();
-        foreach ($targetList as $target){
-            $filterCollection->addFilter(
-                new RawSetFilter($this->key, $target, $this->isNumeric)
-            );
-        }
-        return $filterCollection;
-    }
 }

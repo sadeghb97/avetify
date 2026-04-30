@@ -21,7 +21,10 @@ class WebModifier {
 
     public function apply() : void {
         if($this->htmlModifier != null) $this->htmlModifier->applyModifiers();
-        if($this->styler != null) $this->styler->applyStyles();
+        if($this->styler != null) {
+            $this->styler->applyClasses();
+            $this->styler->applyStyles();
+        }
     }
 
     public function pushStyle(string $styleKey, string $styleValue) : void {

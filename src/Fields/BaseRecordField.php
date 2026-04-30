@@ -33,7 +33,7 @@ class BaseRecordField {
         HTMLInterface::placeSpan($this->getValue($item), $webModifier);
     }
 
-    public function removeBaseMargins(): self {
+    public function removeBaseMargins(): static {
         $this->baseModifier->popStyle("margin-bottom");
         $this->baseModifier->popStyle("margin-top");
         $this->baseModifier->popStyle("margin-right");
@@ -41,37 +41,37 @@ class BaseRecordField {
         return $this;
     }
 
-    public function attachWebModifier(WebModifier $modifier) : self {
+    public function attachWebModifier(WebModifier $modifier) : static {
         $this->baseModifier = WebModifier::mergeModifiers($this->baseModifier, $modifier);
         return $this;
     }
 
-    public function attachCssStyle(string $styleKey, string $styleValue) : self {
+    public function attachCssStyle(string $styleKey, string $styleValue) : static {
         $this->baseModifier->pushStyle($styleKey, $styleValue);
         return $this;
     }
 
-    public function attachCssClass(string $className) : self {
+    public function attachCssClass(string $className) : static {
         $this->baseModifier->pushClass($className);
         return $this;
     }
 
-    public function attachHtmlModifier(string $modifierKey, string $modifierValue) : self {
+    public function attachHtmlModifier(string $modifierKey, string $modifierValue) : static {
         $this->baseModifier->pushModifier($modifierKey, $modifierValue);
         return $this;
     }
 
-    public function detachCssStyle(string $styleKey) : self {
+    public function detachCssStyle(string $styleKey) : static {
         $this->baseModifier->popStyle($styleKey);
         return $this;
     }
 
-    public function detachCssClass(string $className) : self {
+    public function detachCssClass(string $className) : static {
         $this->baseModifier->popClass($className);
         return $this;
     }
 
-    public function detachHtmlModifier(string $modifierKey) : self {
+    public function detachHtmlModifier(string $modifierKey) : static {
         $this->baseModifier->popModifier($modifierKey);
         return $this;
     }
