@@ -2,10 +2,13 @@
 namespace Avetify\Table\Fields\EditableFields;
 
 use Avetify\Components\Links\ModernLinkField;
+use Avetify\Fields\StructuredRecordValueField;
 use Avetify\Interface\Bootstrap\PlatformIcons;
 use Avetify\Interface\WebModifier;
 
 class EditableLinkField extends EditableField {
+    use StructuredRecordValueField;
+
     public ModernLinkField $modernLinkField;
     public string $icon = PlatformIcons::GLOBE;
     public WebModifier | null $labelModifier = null;
@@ -15,6 +18,7 @@ class EditableLinkField extends EditableField {
         $this->modernLinkField = new ModernLinkField($this->title, $this->getElementIdentifier($item), $value);
         $this->modernLinkField->icon = $this->icon;
         $this->modernLinkField->labelModifier = $this->labelModifier;
+        $this->modernLinkField->setStructure($this->structure);
         $this->modernLinkField->place($webModifier);
     }
 

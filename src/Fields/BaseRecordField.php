@@ -6,6 +6,7 @@ use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 
 class BaseRecordField {
+    const DYNAMIC_IDENTIFIER = "*$*";
     public WebModifier | null $baseModifier = null;
 
     public function __construct(public string $key, public string $title){

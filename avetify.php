@@ -65,6 +65,7 @@ require_once "src/Network/HeadersFetcher.php";
 require_once "src/Network/ProxyHeadersFetcher.php";
 
 require_once "src/Fields/BaseRecordField.php";
+require_once "src/Fields/StructuredRecordValueField.php";
 require_once "src/Fields/FieldWrapperTrait.php";
 
 require_once "src/Entities/Models/EntityReceivedSort.php";

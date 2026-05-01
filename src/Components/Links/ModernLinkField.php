@@ -1,6 +1,7 @@
 <?php
 namespace Avetify\Components\Links;
 
+use Avetify\Fields\StructuredRecordValueField;
 use Avetify\Interface\Bootstrap\PlatformIcons;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
@@ -11,6 +12,7 @@ use Avetify\Interface\WebModifier;
 
 class ModernLinkField implements Placeable, IdentifiedElement {
     use IdentifiedElementTrait;
+    use StructuredRecordValueField;
 
     public string $icon = PlatformIcons::GLOBE;
     public WebModifier | null $labelModifier = null;
@@ -54,23 +56,30 @@ class ModernLinkField implements Placeable, IdentifiedElement {
 
         HTMLInterface::closeDiv();
 
-        echo '<a ';
-        Styler::classStartAttribute();
-        Styler::addClass("link-icon");
-        Styler::closeAttribute();
-        HTMLInterface::addAttribute("href", $this->initValue);
-        HTMLInterface::addAttribute("target", "_blank");
-        HTMLInterface::closeTag();
+        if($this->initValue) {
+            $finalDerivedLink = $this->getDerivedDirectValue($this->initValue);
+            echo '<a ';
+            Styler::classStartAttribute();
+            Styler::addClass("link-icon");
+            Styler::closeAttribute();
+            HTMLInterface::addAttribute("href", $finalDerivedLink);
+            HTMLInterface::addAttribute("target", "_blank");
+            HTMLInterface::closeTag();
+        }
 
         echo '<i ';
         Styler::classStartAttribute();
+        if(!$this->initValue) Styler::addClass("link-icon");
         Styler::addClass("bi");
         Styler::addClass($this->icon);
         Styler::closeAttribute();
         HTMLInterface::closeTag();
         echo '</i>';
 
-        echo '</a>';
+        if($this->initValue) {
+            echo '</a>';
+        }
+
 
         HTMLInterface::closeDiv();
     }
