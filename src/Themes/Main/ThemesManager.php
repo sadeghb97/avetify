@@ -178,6 +178,7 @@ class ThemesManager {
 
     public static function importBootstrapCSS(){
         self::importStyle(AvetifyManager::assetUrl("components/bootstrap/bootstrap.min.css"));
+        self::importStyle(AvetifyManager::assetUrl("components/bootstrap/bootstrap-icons.min.css"));
     }
 
     public static function importBootstrapJS(){

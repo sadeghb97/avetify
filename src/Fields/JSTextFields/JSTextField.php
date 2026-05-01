@@ -7,6 +7,7 @@ use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\Placeable;
+use Avetify\Interface\Pout;
 use Avetify\Interface\WebModifier;
 
 abstract class JSTextField extends JSInputField implements Placeable, IdentifiedElement {
@@ -14,6 +15,7 @@ abstract class JSTextField extends JSInputField implements Placeable, Identified
 
     public string $listIdentifier = "";
     public bool $disableSubmitOnEnter = true;
+    public string $inputWidth = "";
 
     public function __construct(public string $fieldKey, public string $childKey,
                                 public string $initValue){
@@ -68,6 +70,7 @@ abstract class JSTextField extends JSInputField implements Placeable, Identified
         HTMLInterface::appendClasses($webModifier);
         Styler::closeAttribute();
         Styler::startAttribute();
+        if($this->inputWidth) Styler::addStyle("width", $this->inputWidth);
         HTMLInterface::appendStyles($webModifier);
         Styler::closeAttribute();
         HTMLInterface::closeSingleTag();

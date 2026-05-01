@@ -45,6 +45,7 @@ class EditableField extends TableField implements IdentifiedElement {
 
     function appendMainStyles($item){
         Styler::addStyle("font-family", "inherit");
+        if($this->rtl) Styler::addStyle("direction", "rtl");
     }
 
     public function presentValue($item, ?WebModifier $webModifier = null){

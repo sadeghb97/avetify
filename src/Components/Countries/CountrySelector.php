@@ -13,6 +13,8 @@ use Avetify\Repo\Countries\World;
 class CountrySelector implements Placeable, IdentifiedElement {
     use IdentifiedElementTrait;
 
+    public string $inputWidth = "175px";
+
     public function __construct(public string $mainElementId,
                                 public CountriesACTextFactory $countriesACFactory,
                                 public string $label,
@@ -39,6 +41,7 @@ class CountrySelector implements Placeable, IdentifiedElement {
 
         $acTextField = $this->countriesACFactory->create();
         $acTextField->label = $this->label;
+        $acTextField->inputWidth = $this->inputWidth;
         $acTextField->place();
         $div->separate();
 
