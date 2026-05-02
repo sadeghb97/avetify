@@ -121,6 +121,18 @@ abstract class DBConnection extends mysqli {
         return $row[$property];
     }
 
+    /** @return string[] */
+    public function fetchColumn(string $table, string $column, bool $isDistinct = false) : array {
+        $sql = "SELECT " . ($isDistinct ? "DISTINCT " : "");
+        $sql .= "$column FROM $table";
+        $set = $this->fetchSet($sql);
+        $columnItems = [];
+        foreach ($set as $item){
+            $columnItems[] = $item[$column];
+        }
+        return $columnItems;
+    }
+
     private function fetchTableQueryWithFilter(string $tableName, DBFilterInterface $filter = null) : string {
         $filterQuery = $filter?->toRawQuery();
         return "SELECT * FROM $tableName " . ($filterQuery ? ("WHERE " . $filterQuery . " ") : "");
