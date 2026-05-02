@@ -68,7 +68,7 @@ abstract class AvtEntity extends SetModifier {
     }
 
     public function insertDataExpression(array $data) : string {
-        $fields = $this->dataFields();
+        $fields = $this->getPureFields();
         $keyExp = "";
         $valueExp = "";
 
@@ -77,7 +77,7 @@ abstract class AvtEntity extends SetModifier {
             $field = $this->getNormalField($fields, $key);
             if(!$field || $field->protected) continue;
             $count++;
-            $finalValue = $field->numeric ? $value : $this->conn->real_escape_string($value);
+            $finalValue = $field->numeric ? ($value ?: 0) : $this->conn->real_escape_string($value);
 
             if($keyExp){
                 $keyExp .= ", ";
@@ -109,7 +109,7 @@ abstract class AvtEntity extends SetModifier {
     }
 
     public function updateDataExpression($pk, array $data) : string {
-        $fields = $this->dataFields();
+        $fields = $this->getPureFields();
         $exp = "";
 
         $count = 0;
@@ -244,7 +244,7 @@ abstract class AvtEntity extends SetModifier {
 
     public function checkData($data, $createMode) : bool {
         $isOk = true;
-        foreach ($this->dataFields() as $field){
+        foreach ($this->getPureFields() as $field){
             if($field->required){
                 if($createMode && empty($data[$field->key])) {
                     echo $field->key . ' Missed!<br>';
@@ -373,7 +373,7 @@ abstract class AvtEntity extends SetModifier {
                 $curRecordObject = $this->getRecordObject($currentRecord);
 
                 $avatarFields = [];
-                foreach ($this->dataFields() as $field){
+                foreach ($this->getPureFields() as $field){
                     if($field instanceof EntityBooleanField && $field->writable && !isset($data[$field->key])){
                         $data[$field->key] = 0;
                     }
@@ -599,4 +599,21 @@ abstract class AvtEntity extends SetModifier {
 
     /** @return EntityField[] */
     abstract public function dataFields() : array;
+
+    /** @return EntityField[] */
+    public function getPureFields() : array {
+        $pureFields = [];
+        $rawFields = $this->dataFields();
+        foreach ($rawFields as $field){
+            if($field instanceof EntityFieldsContainer){
+                if(property_exists($field->recordField, "childs")) {
+                    foreach ($field->recordField->childs as $pField) {
+                        $pureFields[] = $pField;
+                    }
+                }
+            }
+            else $pureFields[] = $field;
+        }
+        return $pureFields;
+    }
 }
