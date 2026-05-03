@@ -243,6 +243,36 @@ input.numeric-text {
 .link-field {
     position: relative;
     display: inline-block;
+    /* متن تایپ‌شده داخل اینپوت — اندازه و رنگ را اینجا عوض کنید */
+    --link-field-input-font-size: 0.75rem;
+    --link-field-input-color: var(--bs-body-color, #212529);
+    /* برچسب شناور (جایگزین placeholder) — فقط باید از متن ورودی متمایز باشد؛ رنگ را بعداً تنظیم کنید */
+    --link-field-label-color: #5f7c8e;
+}
+
+.link-field .form-floating > .form-control.link-field-input {
+    font-size: var(--link-field-input-font-size);
+    color: var(--link-field-input-color);
+}
+
+/* یکسان نگه داشتن اندازه و رنگ برچسب در حالت وسط و حالت شناور (بدون scale اضافهٔ بوت‌استرپ).
+   main.css قبل از bootstrap لود می‌شود؛ رنگ برچسب شناور بوت‌استرپ اختصاصیت بالاتر از یک خط دارد،
+   پس رنگ را با !important به همان متغیر می‌چسبانیم تا در هر دو حالت یکی بماند. */
+.link-field .form-floating > label {
+    font-size: 0.85rem;
+    line-height: 1.25;
+    color: var(--link-field-label-color) !important;
+}
+
+.link-field .form-floating > .form-control.link-field-input:not(:-moz-placeholder-shown) ~ label,
+.link-field .form-floating > .form-control.link-field-input:focus ~ label,
+.link-field .form-floating > .form-control.link-field-input:not(:placeholder-shown) ~ label,
+.link-field .form-floating > .form-control.link-field-input:-webkit-autofill ~ label {
+    transform: translateY(-0.5rem) translateX(0.15rem);
+}
+
+.link-field .form-floating > .form-control.link-field-input:disabled ~ label {
+    color: var(--link-field-label-disabled-color, #6c757d) !important;
 }
 
 .link-field-input {
