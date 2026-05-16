@@ -29,7 +29,6 @@ abstract class AvtEntity extends SetModifier {
     public bool $redirectOnInsert = true;
     public bool $deletable = true;
     public string $entityName = "Record";
-    public string $entityModel = "";
     public string $urlParamEntityKey = "pk";
 
     public function __construct($dbConnection, string $key = "sbn"){
@@ -95,11 +94,13 @@ abstract class AvtEntity extends SetModifier {
         }
         if(!$count) return "";
 
-        foreach ($this->entityWhereFields() as $key => $value) {
+        foreach ($this->getConstFields() as $constField) {
             $keyExp .= ", ";
-            $keyExp .= $key;
+            $keyExp .= $constField->key;
             $valueExp .= ", ";
-            $valueExp .= $value;
+            if(!$constField->isNumeric) $valueExp .= '"';
+            $valueExp .= $constField->value;
+            if(!$constField->isNumeric) $valueExp .= '"';
         }
 
         $keyExp .= ')';
@@ -134,17 +135,19 @@ abstract class AvtEntity extends SetModifier {
     }
 
     public function whereExpression($pk = null) : string {
-        $fields = $this->entityWhereFields();
+        $fields = $this->getConstFields();
         if(count($fields) <= 0 && !$pk) return "";
 
         $exp = "";
-        foreach ($fields as $key => $value) {
+        foreach ($fields as $constField) {
             if($exp) $exp .= " AND ";
             else $exp .= " ";
 
-            $exp .= $key;
+            $exp .= $constField->key;
             $exp .= '=';
-            $exp .= $value;
+            if(!$constField->isNumeric) $exp .= '"';
+            $exp .= $constField->value;
+            if(!$constField->isNumeric) $exp .= '"';
         }
 
         if($pk) {
@@ -499,7 +502,7 @@ abstract class AvtEntity extends SetModifier {
     }
 
     public function createEntityItem(array $record) : AvtEntityItem | array {
-        if($this->entityModel) return AvtEntityItem::createInstance($this->entityModel, $record);
+        if($this->className) return AvtEntityItem::createInstance($this->className, $record);
         return $record;
     }
 
@@ -592,10 +595,6 @@ abstract class AvtEntity extends SetModifier {
 
     abstract public function getSuperKey();
     abstract public function getTableName();
-
-    public function entityWhereFields() : array {
-        return [];
-    }
 
     /** @return EntityField[] */
     abstract public function dataFields() : array;
