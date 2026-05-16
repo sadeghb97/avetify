@@ -11,7 +11,7 @@ use Avetify\Interface\WebModifier;
 class CodingContents extends CodingBlocks implements Placeable {
     public function place(WebModifier $webModifier = null) {
         $vertDiv = new VertDiv(8);
-        $vertDiv->open();
+        $vertDiv->open($webModifier);
 
         foreach ($this->blocks as $block){
             $wrapper = strtolower($block->wrapper);

@@ -5,9 +5,9 @@ use Avetify\Models\DataModel;
 
 class CodingContentBlock extends DataModel {
     public string $id = "";
-    public string $wrapper = "ltr";
+    public string $wrapper = "";
     public string $contents = "";
-    public string $dir = "";
+    public string $dir = "ltr";
     public string $textAlign = "";
 
     public function __construct($data){
