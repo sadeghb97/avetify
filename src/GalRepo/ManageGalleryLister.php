@@ -77,8 +77,12 @@ class ManageGalleryLister extends AvtLister {
         return false;
     }
 
+    public function getGalleryListerName(): string {
+        return "Album";
+    }
+
     public function getPageTitle(): string {
-        return "Manage Gallery";
+        return $this->getGalleryListerName() . " - " . $this->galleryRepo->galleryName;
     }
 
     public function getPermanentCategoriesCount(): int | null{

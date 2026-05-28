@@ -16,6 +16,7 @@ class GalleryRepo {
     public string $path;
     public string $relativePath = "";
     public string $parentRelativePath = "";
+    public string $galleryName = "";
 
     /** @var GalleryRepo[] $subRepos */
     public array $subRepos = [];
@@ -32,6 +33,7 @@ class GalleryRepo {
         $this->relativePath = $relativePath;
         $this->parentRelativePath = Filer::getParentFilename($relativePath);
         $this->path = Routing::serverRootPath($relativePath);
+        $this->galleryName = Filer::getPureFilename($this->path);
         $this->loadRecords();
     }
 
