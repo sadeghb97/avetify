@@ -108,4 +108,14 @@ class EntityUtils {
             else return $multiplier * 1;
         });
     }
+
+    public static function mappifyList(array $list, string $key, bool $removeCase = false): array {
+        $map = [];
+        foreach ($list as $item) {
+            $pkValue = EntityUtils::getSimpleValue($item, $key);
+            if($removeCase) $pkValue = strtolower($pkValue);
+            $map[$pkValue] = $item;
+        }
+        return $map;
+    }
 }
