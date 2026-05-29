@@ -8,8 +8,16 @@ use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\WebModifier;
+use Avetify\Themes\Main\ColorScheme;
 
 class CodingContents extends CodingBlocks implements Placeable {
+    public function __construct(
+        string $contents,
+        public ColorScheme $colorScheme = ColorScheme::Light,
+    ) {
+        parent::__construct($contents);
+    }
+
     public function place(WebModifier $webModifier = null) {
         $vertDiv = new VertDiv(8);
         $vertDiv->open($webModifier);
@@ -23,7 +31,7 @@ class CodingContents extends CodingBlocks implements Placeable {
 
             if ($wrapper === "markdown") {
                 $markdown = self::extractMarkdownFromEditorHtml($blockContents);
-                (new MarkdownBox($markdown))->place();
+                (new MarkdownBox($markdown, $this->colorScheme))->place();
             }
             else if(!$isPlain) {
                 echo '<pre><code ';

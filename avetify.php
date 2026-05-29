@@ -248,6 +248,7 @@ require_once "src/Table/Fields/Containers/TableColumnFields.php";
 require_once "src/Crawling/Scrapper.php";
 require_once "src/Crawling/RawDocumentLoader.php";
 
+require_once "src/Themes/Main/ColorScheme.php";
 require_once "src/Themes/Main/ThemesManager.php";
 require_once "src/Themes/Main/BaseSetRenderer.php";
 require_once "src/Themes/Main/SetRenderer.php";

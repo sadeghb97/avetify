@@ -4,7 +4,7 @@
 
 | | |
 |---|---|
-| **PHP** | `>= 8.0` |
+| **PHP** | `>= 8.2` |
 | **License** | MIT |
 | **Version** | `0.1.0` (build `1`) |
 | **Package** | [`sadeghb97/avetify`](https://github.com/sadeghb97/avetify) |
@@ -55,7 +55,7 @@ Avetify is intentionally small and explicit:
 
 ### Runtime
 
-- PHP **8.0+**
+- PHP **8.2+**
 - MySQL or MariaDB
 - A web server (Apache/Nginx) or PHP CLI for scripts
 

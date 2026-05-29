@@ -4,23 +4,17 @@ namespace Avetify\Components\Markdown;
 use Avetify\Components\Containers\VertDiv;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\WebModifier;
+use Avetify\Themes\Main\ColorScheme;
 use Avetify\Themes\Main\ThemesManager;
 
 class MarkdownBox implements Placeable {
-    public const CODE_THEME_LIGHT = 'light';
-    public const CODE_THEME_DARK = 'dark';
-
     private static bool $cssEmitted = false;
 
     public function __construct(
         public string $markdownContents,
-        public string $codeTheme = self::CODE_THEME_LIGHT,
+        public ColorScheme $colorScheme = ColorScheme::Light,
         public bool $emitCss = false,
-    ) {
-        if (!in_array($this->codeTheme, [self::CODE_THEME_LIGHT, self::CODE_THEME_DARK], true)) {
-            $this->codeTheme = self::CODE_THEME_LIGHT;
-        }
-    }
+    ) {}
 
     public static function importStyles(): void
     {
@@ -45,7 +39,7 @@ class MarkdownBox implements Placeable {
         $vertDiv = new VertDiv(8);
         $vertDiv->open($webModifier);
 
-        $themeClass = 'markdown-theme-' . $this->codeTheme;
+        $themeClass = 'markdown-theme-' . $this->colorScheme->value;
         echo '<article class="markdown-body ' . $themeClass . '">';
         echo self::toHtml($this->markdownContents);
         echo '</article>';
