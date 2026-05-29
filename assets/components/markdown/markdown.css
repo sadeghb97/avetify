@@ -88,6 +88,15 @@
     opacity: 1;
 }
 
+.markdown-body ul,
+.markdown-body ol {
+    padding-left: 2em;
+}
+
+.markdown-body li + li {
+    margin-top: 0.25em;
+}
+
 .markdown-body p,
 .markdown-body blockquote,
 .markdown-body ul,
@@ -199,10 +208,19 @@
 .markdown-body hr {
     box-sizing: content-box;
     overflow: hidden;
-    background: transparent;
-    border-bottom: 1px solid #d1d9e0;
     height: 0.25em;
     padding: 0;
     margin: 24px 0;
+    background-color: #d1d9e0;
     border: 0;
+}
+
+.markdown-body hr::before,
+.markdown-body hr::after {
+    display: table;
+    content: "";
+}
+
+.markdown-body hr::after {
+    clear: both;
 }

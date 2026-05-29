@@ -157,6 +157,18 @@ class MarkdownBox implements Placeable {
             return self::renderTableBlock($block);
         }
 
+        if (preg_match('/^(-{3,}|\*{3,}|_{3,})\s*$/', $trimmed)) {
+            return "<hr>\n";
+        }
+
+        if (self::isUnorderedListBlock($block)) {
+            return self::renderListBlock($block, 'ul');
+        }
+
+        if (self::isOrderedListBlock($block)) {
+            return self::renderListBlock($block, 'ol');
+        }
+
         if (preg_match('/^(#{1,6})\s+(.+)$/', $trimmed, $m)) {
             $level = strlen($m[1]);
             $content = self::renderInline($m[2]);
@@ -200,7 +212,64 @@ class MarkdownBox implements Placeable {
         if (count($lines) < 2) {
             return false;
         }
-        return str_contains($lines[0], '|') && preg_match('/^\|?\s*:?-{3,}/', $lines[1]) === 1;
+        return str_contains($lines[0], '|') && self::isTableSeparatorLine($lines[1]);
+    }
+
+    private static function isTableSeparatorLine(string $line): bool
+    {
+        $line = trim($line);
+        if (!str_contains($line, '|') || !str_contains($line, '-')) {
+            return false;
+        }
+        return preg_match('/^\|?(\s*:?-+:?\s*\|)+\s*\|?\s*$/', $line) === 1;
+    }
+
+    private static function isUnorderedListBlock(string $block): bool
+    {
+        $lines = explode("\n", trim($block));
+        $hasContent = false;
+        foreach ($lines as $line) {
+            if (trim($line) === '') {
+                continue;
+            }
+            $hasContent = true;
+            if (!preg_match('/^[-*+]\s+/', $line)) {
+                return false;
+            }
+        }
+        return $hasContent;
+    }
+
+    private static function isOrderedListBlock(string $block): bool
+    {
+        $lines = explode("\n", trim($block));
+        $hasContent = false;
+        foreach ($lines as $line) {
+            if (trim($line) === '') {
+                continue;
+            }
+            $hasContent = true;
+            if (!preg_match('/^\d+\.\s+/', $line)) {
+                return false;
+            }
+        }
+        return $hasContent;
+    }
+
+    private static function renderListBlock(string $block, string $tag): string
+    {
+        $html = "<{$tag}>\n";
+        foreach (explode("\n", trim($block)) as $line) {
+            if (trim($line) === '') {
+                continue;
+            }
+            $content = $tag === 'ol'
+                ? (preg_replace('/^\d+\.\s+/', '', $line) ?? $line)
+                : (preg_replace('/^[-*+]\s+/', '', $line) ?? $line);
+            $html .= '<li>' . self::renderInline(trim($content)) . "</li>\n";
+        }
+        $html .= "</{$tag}>\n";
+        return $html;
     }
 
     private static function renderTableBlock(string $block): string
@@ -235,7 +304,13 @@ class MarkdownBox implements Placeable {
     /** @return list<string> */
     private static function parseTableRow(string $line): array
     {
-        $line = trim($line, " \t|");
+        $line = trim($line);
+        if (str_starts_with($line, '|')) {
+            $line = substr($line, 1);
+        }
+        if (str_ends_with($line, '|')) {
+            $line = substr($line, 0, -1);
+        }
         $parts = explode('|', $line);
         return array_map(static fn(string $c): string => trim($c), $parts);
     }
