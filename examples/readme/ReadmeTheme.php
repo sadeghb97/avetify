@@ -1,7 +1,7 @@
 <?php
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Modern\ModernTheme;
 
-class ReadmeTheme extends ThemesManager {
+class ReadmeTheme extends ModernTheme {
     public function __construct() {
         parent::__construct();
         $this->includesMarkdownTools = true;
