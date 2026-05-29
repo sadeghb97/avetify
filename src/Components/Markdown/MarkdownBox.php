@@ -37,6 +37,8 @@ class MarkdownBox implements Placeable {
         }
 
         $vertDiv = new VertDiv(8);
+        $vertDiv->addStyle('margin-top', '8px');
+        $vertDiv->addStyle('margin-bottom', '8px');
         $vertDiv->open($webModifier);
 
         $themeClass = 'markdown-theme-' . $this->colorScheme->value;
