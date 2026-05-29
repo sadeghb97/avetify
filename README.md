@@ -2,8 +2,6 @@
 
 **Avetify** is a lightweight PHP framework for building data-driven admin panels and internal tools. It uses plain PHP (no full-stack MVC stack), renders HTML directly, and centers on three building blocks—**entities** (record forms), **tables** (editable grids), and **listers** (sortable collections)—backed by MySQL via `mysqli`.
 
-The framework powers several production apps, including [Matchstick](https://github.com/sadeghb97/matchstick) (notably its **transfers** module), **skills**, and **puzzlinho** (Composer integration).
-
 | | |
 |---|---|
 | **PHP** | `>= 8.0` |
@@ -25,8 +23,8 @@ The framework powers several production apps, including [Matchstick](https://git
 - [Themes and assets](#themes-and-assets)
 - [Extending the framework](#extending-the-framework)
 - [Additional modules](#additional-modules)
-- [Real-world usage](#real-world-usage)
 - [Scaffolding scripts](#scaffolding-scripts)
+- [Examples](#examples)
 - [License](#license)
 
 ---
@@ -35,7 +33,7 @@ The framework powers several production apps, including [Matchstick](https://git
 
 Avetify is intentionally small and explicit:
 
-- **No magic router** — each screen is a PHP entry file (e.g. `footballers.php`, `avetify.php`).
+- **No magic router** — each screen is a PHP entry file (e.g. `records.php`, `item.php`).
 - **Server-rendered UI** — pages are built with PHP classes that echo HTML through `HTMLInterface` and theme renderers.
 - **MySQL-first** — `DBConnection` extends `mysqli` with helpers; `QueryBuilder` and filter collections compose SQL.
 - **Composable UI** — tables, entity forms, and listers share sorting, filtering, and pagination via `SetModifier`.
@@ -65,11 +63,11 @@ Avetify is intentionally small and explicit:
 
 ## Installation
 
-Avetify supports two integration styles used in real projects.
+Avetify supports two integration styles.
 
 ### Option A — Git clone (sibling directory)
 
-Used by **matchstick** and **skills**: clone the framework next to your app and load the monolithic bootstrap.
+Clone the framework next to your app and load the monolithic bootstrap:
 
 ```bash
 cd /path/to/htdocs/your-project
@@ -85,8 +83,6 @@ Or use the helper script from the framework repo:
 ```
 
 ### Option B — Composer
-
-Used by **puzzlinho**:
 
 ```bash
 composer require sadeghb97/avetify:dev-main
@@ -118,8 +114,8 @@ your-project/
 │   ├── models/           # DataModel subclasses
 │   ├── fields/           # custom table/entity fields
 │   └── theme/            # ThemesManager subclass, navigation
-├── footballers.php       # example page: table view
-├── footballer.php        # example page: entity form
+├── records.php           # example page: table view
+├── item.php              # example page: entity form
 └── .avtfiles/            # runtime uploads/backups (created by Routing)
 ```
 
@@ -155,10 +151,10 @@ use Avetify\AvetifyManager;
 
 // $basePath: project root on disk
 // $publicPath: web-accessible root (often same as base)
-// $publicUrl: URL prefix for the app, e.g. "/transfers"
+// $publicUrl: URL prefix for the app, e.g. "/my-admin"
 // $assetUrl: URL prefix for framework assets, e.g. "/avetify/assets"
 
-AvetifyManager::init(__DIR__, __DIR__, '/your-app', '/avetify/assets');
+AvetifyManager::init(__DIR__, __DIR__, '/my-admin', '/avetify/assets');
 ```
 
 ### Option A — full bootstrap
@@ -168,9 +164,9 @@ require_once __DIR__ . '/../avetify/avetify.php';
 
 use Avetify\AvetifyManager;
 
-AvetifyManager::init(__DIR__, __DIR__, '/skills', '/avetify/assets');
+AvetifyManager::init(__DIR__, __DIR__, '/my-admin', '/avetify/assets');
 
-require_once __DIR__ . '/SkillsConnection.php';
+require_once __DIR__ . '/YourConnection.php';
 // … require entities, tables, themes, etc.
 ```
 
@@ -183,7 +179,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Avetify\AvetifyManager;
 
-AvetifyManager::init(dirname(__DIR__), dirname(__DIR__), '/puzzlinho', '/avetify/assets');
+AvetifyManager::init(dirname(__DIR__), dirname(__DIR__), '/my-admin', '/avetify/assets');
 ```
 
 Use `use Avetify\…` imports for framework types. Ensure `/avetify/assets` is mapped in your web server to the framework `assets/` directory (clone path or `vendor/sadeghb97/avetify/assets`).
@@ -204,6 +200,8 @@ class YourConnection extends DBConnection {
 ```
 
 `DBConnection` provides `fetchRow`, `fetchSet`, `fetchMap`, `fetchAvtSet`, filter-aware queries, and a singleton via `getInstance()`.
+
+You can add domain-specific query methods on your connection subclass (filtered lists, joins, aggregates) and call them from `fetchDBRecords()` or entity loaders.
 
 ---
 
@@ -227,11 +225,11 @@ Typical subclass responsibilities:
 | Method | Role |
 |--------|------|
 | `makeTableFields()` | Column definitions (`EditableField`, `ExtendedAvatarField`, custom fields, …) |
-| `fetchDBRecords()` | Rows to display (often via connection helpers) |
+| `fetchDBRecords()` | Rows to display (from the DB table or custom SQL on your connection) |
 | `getItemLink()` | Link from a row to a detail page |
 | `getTableRenderer()` | Optional theme override |
 
-**Example (Matchstick transfers):** `FootballersTable` extends `DBTable`, defines avatar/name/club columns, and loads footballers through `TransfersConnection::getFootballers()` with optional `club` / `country` / `mode` query params.
+Override `fetchDBRecords()` when you need joins, aggregates, or query-string filters (e.g. `?category=…`). Keep filtering logic in your connection or table class, not in the framework core.
 
 ### Entities (`AvtEntity`)
 
@@ -246,17 +244,17 @@ Typical subclass responsibilities:
 | `getTheme()` | `ThemesManager` for layout and assets |
 | `renderEntityPage()` | Renders the full entity UI |
 
-**Example:** `footballer.php` instantiates `FootballerEntity` and calls `renderEntityPage()`.
+A detail page is usually a thin entry script: bootstrap, `new YourEntity($conn)`, then `renderEntityPage()`.
 
 ### Listers (`DBLister`)
 
 Ordered, often drag-aware lists backed by the database—used for priorities, categories, and gallery ordering.
 
-**Example (skills):** `SkillsLister` loads skills ordered by `priority` and renders through a custom `SkillsTheme`.
+Subclass `DBLister`, implement category/sort mapping methods, and return items from `fetchAllItems()`. Attach a custom theme when you need extra JS (e.g. coding or markdown tools).
 
 ### Models (`DataModel`)
 
-Typed row objects with hydration from associative arrays (`Footballer`, `Club`, `Skill`, …), usually created via `AvtEntityItem::mapArray()`.
+Typed row objects with hydration from associative arrays, usually created via `AvtEntityItem::mapArray(YourModel::class, $rows)`.
 
 ### Routing
 
@@ -329,7 +327,7 @@ Static assets are served from `AvetifyManager::assetUrl()`. Configure your web s
 
 Host applications routinely add:
 
-1. **Custom table fields** — extend `TableField` / `EditableField` (e.g. `FootballerClubsField`, `PostField` in transfers).
+1. **Custom table fields** — extend `TableField` / `EditableField` for domain-specific cells (relations, flags, computed columns).
 2. **Custom entity fields** — wrap selectors, flags, or JS datasets.
 3. **Connection methods** — complex SQL and domain queries on `DBConnection` subclasses.
 4. **Themes & navigation** — branding, menus, and page-specific JS.
@@ -352,33 +350,8 @@ Keep framework code untouched; domain code stays in the app’s `lib/` directory
 | **Network** | `NetworkFetcher`, proxy-aware fetchers |
 | **Files** | `Filer`, `ImageUtils`, `RecycleCan`, FFmpeg helpers |
 | **Modules/Cli** | Colored terminal output for scripts |
-| **Repo/Countries** | World country datalist (used heavily in transfers) |
+| **Repo/Countries** | World country datalist and selectors |
 | **Externals** | JDF (Jalali dates), Gumlet image resize |
-
----
-
-## Real-world usage
-
-### Matchstick — `transfers/`
-
-- Bootstrap: `mainlib.php` → `avetify/avetify.php` + `AvetifyManager::init(…, "/matchstick", …)`.
-- `TransfersConnection` — footballers, clubs, nations, transfer joins.
-- Pages: `footballers.php`, `footballer.php`, `clubs.php`, `nation.php`, …
-- Custom fields for clubs, flags, hints, avatars; scrapers under `scrap/`.
-- Theme: `TransfersTheme` + `TransfersNavigation`.
-
-### Skills
-
-- Standalone app under `/skills` with `lib/lib.php` requiring sibling `avetify`.
-- Entities: `SkillEntity`, `SectionEntity`, `TipEntity`.
-- Listers for ordered skills/tips/sections; coding-aware theme (`SKCodingContents`).
-
-### Puzzlinho
-
-- `composer require sadeghb97/avetify:dev-main`.
-- `lib/init_avt.php` — Composer autoload + `AvetifyManager::init`.
-- Analytics-style `DBTable` subclasses (`StatusTable`, `RegStatsTable`, …) with bridged field definitions.
-- Shared `MatchstickTheme`; charts and Shamsi date utilities in page scripts.
 
 ---
 

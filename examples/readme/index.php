@@ -6,7 +6,7 @@ require_once __DIR__ . '/ReadmeTheme.php';
 
 use Avetify\Components\Markdown\MarkdownBox;
 
-const README_PATH = __DIR__ . '/README.md';
+const README_PATH = __DIR__ . '/../../README.md';
 $markdown = file_get_contents(README_PATH);
 $title = MarkdownBox::extractTitle($markdown);
 

@@ -1,7 +1,8 @@
 <?php
-use Avetify\Themes\Main\ThemesManager;
 
-class IndexTheme extends ThemesManager {
+use Avetify\Themes\Green\GreenTheme;
+
+class IndexTheme extends GreenTheme {
     public function __construct()
     {
         parent::__construct();
