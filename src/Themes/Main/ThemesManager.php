@@ -15,6 +15,7 @@ class ThemesManager {
     public bool $includesCropperTools = false;
     public bool $includesCodingFieldTools = false;
     public bool $includesHighlightCodesTools = false;
+    public bool $includesMarkdownTools = false;
     public bool $includesChartTools = false;
     public bool $includesBootstrap = false;
     public bool $includesFontAwesome = false;
@@ -32,6 +33,42 @@ class ThemesManager {
 
     public function postConstruct(){}
 
+    public function openPage($title){
+        $this->placeHeader($title);
+        $this->openBody();
+        $this->loadHeaderElements();
+    }
+
+    public function openBody(){
+        echo '<body ';
+        Styler::startAttribute();
+        $this->appendBodyStyles();
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
+    }
+
+    public static function closeBody(){
+        echo '</body>';
+        echo '</html>';
+    }
+
+    public function openHead() {
+        echo '<html ';
+        HTMLInterface::addAttribute("lang", $this->lang);
+        HTMLInterface::closeTag();
+        echo '<head>';
+    }
+
+    public static function closeHead(){
+        echo '</head>';
+    }
+
+    public static function setHeaderTitle($title){
+        echo '<title>';
+        echo $title;
+        echo '</title>';
+    }
+
     public function placeHeader($title) {
         $this->openHead();
         self::setHeaderTitle($title);
@@ -45,6 +82,12 @@ class ThemesManager {
     }
 
     public function moreHeaderTags(){}
+
+    public function render(string $title, callable $content): void {
+        $this->openPage($title);
+        $content();
+        self::closeBody();
+    }
 
     public function generalHeaderTags(){
         $this->loadFavicon();
@@ -60,6 +103,7 @@ class ThemesManager {
         if($this->includesCropperTools) self::importCropperTools();
         if($this->includesCodingFieldTools) self::importCodingFieldTools();
         if($this->includesHighlightCodesTools) self::importHighlightCodeTools();
+        if($this->includesMarkdownTools) self::importMarkdownTools();
         if($this->includesChartTools) self::importChartTools();
         if($this->includesBootstrap) self::importBootstrap();
         if($this->includesFontAwesome) self::importFontAwesome();
@@ -160,6 +204,10 @@ class ThemesManager {
         self::importStyle(AvetifyManager::assetUrl("components/standings/standings.css"));
     }
 
+    public static function importMarkdownTools(){
+        self::importStyle(AvetifyManager::assetUrl("components/markdown/markdown.css"));
+    }
+
     public static function importMainJSInterface(){
         self::importJS(AvetifyManager::assetUrl("themes/main/js/interface.js"));
     }
@@ -224,40 +272,4 @@ class ThemesManager {
     }
 
     public function appendBodyStyles(){}
-
-    public function openPage($title){
-        $this->placeHeader($title);
-        $this->openBody();
-        $this->loadHeaderElements();
-    }
-
-    public function openBody(){
-        echo '<body ';
-        Styler::startAttribute();
-        $this->appendBodyStyles();
-        Styler::closeAttribute();
-        HTMLInterface::closeTag();
-    }
-
-    public static function closeBody(){
-        echo '</body>';
-        echo '</html>';
-    }
-
-    public function openHead() {
-        echo '<html ';
-        HTMLInterface::addAttribute("lang", $this->lang);
-        HTMLInterface::closeTag();
-        echo '<head>';
-    }
-
-    public static function closeHead(){
-        echo '</head>';
-    }
-
-    public static function setHeaderTitle($title){
-        echo '<title>';
-        echo $title;
-        echo '</title>';
-    }
 }

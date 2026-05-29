@@ -172,6 +172,7 @@ require_once "src/Components/Coding/CodingContents.php";
 require_once "src/Components/Coding/CodingWrappersDatalist.php";
 require_once "src/Components/Coding/CodingField.php";
 require_once "src/Components/Coding/CodeBox.php";
+require_once "src/Components/Markdown/MarkdownBox.php";
 require_once "src/Components/Images/PlaceableImage.php";
 require_once "src/Components/Images/IconButton.php";
 require_once "src/Components/Images/Croppables/CroppableImage.php";
