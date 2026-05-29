@@ -2,6 +2,7 @@
 namespace Avetify\Components\Coding;
 
 use Avetify\Components\Containers\VertDiv;
+use Avetify\Components\Markdown\MarkdownBox;
 use Avetify\Interface\CSS\CSS;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
@@ -20,7 +21,11 @@ class CodingContents extends CodingBlocks implements Placeable {
             $dir = $block->dir;
             $textAlign = $block->textAlign;
 
-            if(!$isPlain) {
+            if ($wrapper === "markdown") {
+                $markdown = self::extractMarkdownFromEditorHtml($blockContents);
+                (new MarkdownBox($markdown))->place();
+            }
+            else if(!$isPlain) {
                 echo '<pre><code ';
                 Styler::classStartAttribute();
                 Styler::addClass("language-" . $wrapper);
@@ -42,5 +47,14 @@ class CodingContents extends CodingBlocks implements Placeable {
         }
 
         $vertDiv->close();
+    }
+
+    private static function extractMarkdownFromEditorHtml(string $html): string
+    {
+        $text = preg_replace('#<p[^>]*>(.*?)</p>#is', "$1\n", $html) ?? $html;
+        $text = preg_replace('#<br\s*/?>#i', "\n", $text) ?? $text;
+        $text = html_entity_decode(strip_tags($text), ENT_QUOTES, 'UTF-8');
+
+        return trim($text);
     }
 }

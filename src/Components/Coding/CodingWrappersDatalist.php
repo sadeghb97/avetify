@@ -26,6 +26,7 @@ class CodingWrappersDatalist extends JSDatalist {
             ["slug" => "javascript", "title" => "JavaScript"],
             ["slug" => "json", "title" => "JSON"],
             ["slug" => "kotlin", "title" => "Kotlin"],
+            ["slug" => "markdown", "title" => "Markdown"],
             ["slug" => "php", "title" => "PHP"],
             ["slug" => "php-template", "title" => "PHP-Template"],
             ["slug" => "python", "title" => "Python"],

@@ -11,5 +11,5 @@ $markdown = file_get_contents(README_PATH);
 $title = MarkdownBox::extractTitle($markdown);
 
 (new ReadmeTheme())->render($title, function () use ($markdown) {
-    (new MarkdownBox($markdown, emitCss: false))->place();
+    (new MarkdownBox($markdown, MarkdownBox::CODE_THEME_LIGHT))->place();
 });

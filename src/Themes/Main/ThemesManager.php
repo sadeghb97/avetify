@@ -102,12 +102,13 @@ class ThemesManager {
         if($this->includesListerTools) self::importListerTools();
         if($this->includesCropperTools) self::importCropperTools();
         if($this->includesCodingFieldTools) self::importCodingFieldTools();
-        if($this->includesHighlightCodesTools) self::importHighlightCodeTools();
-        if($this->includesMarkdownTools) self::importMarkdownTools();
         if($this->includesChartTools) self::importChartTools();
         if($this->includesBootstrap) self::importBootstrap();
         if($this->includesFontAwesome) self::importFontAwesome();
         if($this->includesStatsStyles) self::importStatStyles();
+
+        if($this->includesMarkdownTools || $this->includesHighlightCodesTools) self::importHighlightCodeTools();
+        if($this->includesMarkdownTools) self::importMarkdownTools();
 
         if($this->navigationRenderer){
             $this->navigationRenderer->headImports();
