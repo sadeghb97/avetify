@@ -1,11 +1,15 @@
 <?php
 namespace Avetify\Fields;
 
+use Avetify\Entities\AvtEntityItem;
 use Avetify\Entities\EntityUtils;
 use Avetify\Interface\HTML\HTMLInterface;
+use Avetify\Interface\IdentifiedElement;
+use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\WebModifier;
 
-class BaseRecordField {
+class BaseRecordField implements IdentifiedElement {
+    use IdentifiedElementTrait;
     const DYNAMIC_IDENTIFIER = "*$*";
     public WebModifier | null $baseModifier = null;
 
@@ -23,6 +27,18 @@ class BaseRecordField {
         $foundValue = EntityUtils::getSimpleValue($item, $finalKeys);
         if($this->maxFieldCharacters <= 0 || $this->maxFieldCharacters >= strlen($foundValue)) return $foundValue;
         return substr($foundValue, 0, $this->maxFieldCharacters) . " ...";
+    }
+
+    public function getElementIdentifier($item = null) {
+        $id = $this->key;
+        if($item instanceof AvtEntityItem){
+            $itemId = $item->getItemId();
+            if($itemId) {
+                $id .= "_";
+                $id .= $itemId;
+            }
+        }
+        return $id;
     }
 
     public function placeField($item, ?WebModifier $webModifier = null) : void {

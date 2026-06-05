@@ -68,6 +68,24 @@ abstract class SetModifier implements EntityManager {
         return $filterFields;
     }
 
+    /** @return DiscreteFilterFactor[] */
+    public function allAutoDiscreteFactors() : array {
+        return self::extractAutoFilterFields($this->allDiscreteFactors());
+    }
+
+    /** @return FilterField[] */
+    public function allAutoFilterFields() : array {
+        return self::extractAutoFilterFields($this->allFilterFields());
+    }
+
+    private static function extractAutoFilterFields(array $filters) : array {
+        $autoFilters = [];
+        foreach ($filters as $filter){
+            if(!$filter->useManualInterface) $autoFilters[] = $filter;
+        }
+        return $autoFilters;
+    }
+
     public function getSortKey() : string {
         return $this->setKey . "_sort";
     }
@@ -187,19 +205,24 @@ abstract class SetModifier implements EntityManager {
     public function fetchDBRecords() : array {
         $filter = $this->createDBFilter();
         $fetchOrder = $this->createDBFetchOrder();
+        $dbs = $this->dbSource();
 
         $limit = 0;
         $offset = 0;
         if($this->paginationConfigs){
-            $this->paginationConfigs->recordsCount = $this->conn->fetchTableSize($this->dbTableName, $filter);
+            $this->paginationConfigs->recordsCount = $this->conn->fetchTableSize($dbs, $filter);
             $limit = $this->paginationConfigs->pageSize;
             $offset = $this->currentRecordsFirstRowIndex();
         }
 
         if($this->className){
-            return $this->conn->fetchTable($this->className, $this->dbTableName, $filter, $fetchOrder, $limit, $offset);
+            return $this->conn->fetchTable($this->className, $dbs, $filter, $fetchOrder, $limit, $offset);
         }
-        return $this->conn->fetchTableSet($this->dbTableName, $filter, $fetchOrder, $limit, $offset);
+        return $this->conn->fetchTableSet($dbs, $filter, $fetchOrder, $limit, $offset);
+    }
+
+    public function dbSource() : string {
+        return $this->dbTableName;
     }
 
     public function dbExtraFilters() : DBFilterInterface | null {

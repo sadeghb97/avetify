@@ -5,6 +5,8 @@ use Avetify\DB\Filters\DBFilterInterface;
 use Avetify\Fields\BaseRecordField;
 
 class FilterFactor extends BaseRecordField implements Qualifier {
+    public bool $useManualInterface = false;
+
     public function isQualified($item, $param): bool {
         return !!$this->getValue($item);
     }

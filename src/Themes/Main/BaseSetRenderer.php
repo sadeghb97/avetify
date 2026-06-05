@@ -87,9 +87,7 @@ abstract class BaseSetRenderer {
                 $this->initFiltersForm();
                 $this->renderFilterFields($this->makeFiltersFormData());
             }
-
-            $allDiscreteFilters = $this->setModifier->allDiscreteFactors();
-            if(count($allDiscreteFilters) > 0) $this->renderFilterLabels();
+            $this->renderFilterLabels();
 
             if($this->setModifier->paginationConfigs && !$this->setModifier->paginationConfigs->paginationOnBottom){
                 $this->placePagination();
@@ -194,7 +192,8 @@ abstract class BaseSetRenderer {
     }
 
     public function renderFilterLabels(){
-        $allFilters = $this->setModifier->allDiscreteFactors();
+        $allFilters = $this->setModifier->allAutoDiscreteFactors();
+        if(count($allFilters) == 0) return;
 
         foreach ($allFilters as $filter){
             if(count($filter->discreteFilters) <= 0) return;
@@ -241,7 +240,7 @@ abstract class BaseSetRenderer {
         $filtersModifier->pushStyle("margin-bottom", "8px");
         $niceDiv->open($filtersModifier);
 
-        $filterFields = $this->setModifier->allFilterFields();
+        $filterFields = $this->setModifier->allAutoFilterFields();
         foreach ($filterFields as $filterField){
             $filterField->recordField->placeField($filtersFormData);
         }

@@ -133,13 +133,17 @@ abstract class DBConnection extends mysqli {
         return $columnItems;
     }
 
-    private function fetchTableQueryWithFilter(string $tableName, DBFilterInterface $filter = null) : string {
+    private function fetchTableQueryWithFilter(string $source, DBFilterInterface $filter = null): string {
+        $source = trim($source);
+        if (stripos($source, 'select') === 0) {
+            $source = "($source) t";
+        }
         $filterQuery = $filter?->toRawQuery();
-        return "SELECT * FROM $tableName " . ($filterQuery ? ("WHERE " . $filterQuery . " ") : "");
+        return "SELECT * FROM $source " . ($filterQuery ? "WHERE $filterQuery " : "");
     }
 
-    public function fetchTableSize(string $tableName, DBFilterInterface $filter = null) : int {
-        $tableSql = $this->fetchTableQueryWithFilter($tableName, $filter);
+    public function fetchTableSize(string $source, DBFilterInterface $filter = null) : int {
+        $tableSql = $this->fetchTableQueryWithFilter($source, $filter);
         $countSql = "SELECT COUNT(*) as count FROM ($tableSql) as t";
         $row = $this->fetchRow($countSql);
         return $row['count'] ?? 0;
@@ -148,9 +152,9 @@ abstract class DBConnection extends mysqli {
     /** @param DBFilterInterface $filter
      * @return array
      */
-    public function fetchTableSet(string $tableName, DBFilterInterface $filter = null,
+    public function fetchTableSet(string $source, DBFilterInterface $filter = null,
                                   string $orderBy = "", int $limit = 0, int $offset = 0) : array {
-        $sql = $this->fetchTableQueryWithFilter($tableName, $filter);
+        $sql = $this->fetchTableQueryWithFilter($source, $filter);
         if($orderBy) $sql .= (" ORDER BY " . $orderBy);
         if($limit > 0){
             $sql .= " LIMIT $limit";
@@ -162,9 +166,9 @@ abstract class DBConnection extends mysqli {
     /** @param DBFilterInterface $filter
      * @return AvtEntityItem[]
      */
-    public function fetchTable(string $className, string $tableName, DBFilterInterface $filter = null,
+    public function fetchTable(string $className, string $source, DBFilterInterface $filter = null,
                                string $orderBy = "", int $limit = 0, int $offset = 0) : array {
-        $set = $this->fetchTableSet($tableName, $filter, $orderBy, $limit, $offset);
+        $set = $this->fetchTableSet($source, $filter, $orderBy, $limit, $offset);
         $out = [];
         foreach ($set as $result){
             $out[] = AvtEntityItem::createInstance($className, $result);
