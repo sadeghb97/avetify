@@ -27,6 +27,7 @@ require_once "src/DB/QueryField.php";
 require_once "src/DB/Filters/DBFilterInterface.php";
 require_once "src/DB/Filters/DBFilter.php";
 require_once "src/DB/Filters/RawSetFilter.php";
+require_once "src/DB/Filters/DBExistsFilter.php";
 require_once "src/DB/Filters/DBFilterCollection.php";
 
 require_once "src/Api/APIHelper.php";
