@@ -17,7 +17,6 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
     public bool $protected = false; // no patch on insert or create queries
     public bool $printable = true; // print in forms
     public bool $required = false; // must have value in add and edit forms
-    public bool $numeric = false;
     public bool $special = false; //ignore it on auto insert and update queries
     public bool $autoTimeCreate = false; //na special na writable
     public bool $autoTimeUpdate = false; //na special na writable
@@ -88,7 +87,12 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
     }
 
     public function setNumeric() : EntityField {
-        $this->numeric = true;
+        $this->isNumeric = true;
+        return $this;
+    }
+
+    public function setNullOnEmpty() : EntityField {
+        $this->nullOnEmpty = true;
         return $this;
     }
 
@@ -104,6 +108,11 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
 
     public function setAutoTimeUpdate() : EntityField {
         $this->autoTimeUpdate = true;
+        return $this;
+    }
+
+    public function appendDBValueMapper($orgValue, $mappedValue) : EntityField {
+        $this->dbValueMappers[$orgValue] = $mappedValue;
         return $this;
     }
 
@@ -127,7 +136,7 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
 
         $inputModifier = WebModifier::createInstance();
         $inputModifier->pushClass("empty");
-        if($this->numeric) $inputModifier->pushClass("numeric-text");
+        if($this->isNumeric) $inputModifier->pushClass("numeric-text");
 
         echo '<input ';
         HTMLInterface::addAttribute("type","text");

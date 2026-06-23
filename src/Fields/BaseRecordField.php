@@ -1,6 +1,7 @@
 <?php
 namespace Avetify\Fields;
 
+use Avetify\DB\DBConnection;
 use Avetify\Entities\AvtEntityItem;
 use Avetify\Entities\EntityUtils;
 use Avetify\Interface\HTML\HTMLInterface;
@@ -12,6 +13,11 @@ class BaseRecordField implements IdentifiedElement {
     use IdentifiedElementTrait;
     const DYNAMIC_IDENTIFIER = "*$*";
     public WebModifier | null $baseModifier = null;
+
+    public bool $isNumeric = false;
+    public bool $nullOnEmpty = false;
+
+    public array $dbValueMappers = [];
 
     public function __construct(public string $key, public string $title){
         if(!$this->baseModifier) $this->baseModifier = WebModifier::createInstance();
@@ -39,6 +45,15 @@ class BaseRecordField implements IdentifiedElement {
             }
         }
         return $id;
+    }
+
+    public function adjustDBValue(DBConnection $conn, string $value) : string | null {
+        if(isset($this->dbValueMappers[$value])) return $this->dbValueMappers[$value];
+        if($this->nullOnEmpty && !$value) return null;
+        if($this->isNumeric && !$value) return "0";
+
+        if(!$this->isNumeric) return $conn->real_escape_string($value);
+        return $value;
     }
 
     public function placeField($item, ?WebModifier $webModifier = null) : void {

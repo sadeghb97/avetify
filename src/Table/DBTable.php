@@ -61,9 +61,10 @@ abstract class DBTable extends AvtTable {
                     if(!$oldValue) $oldValue = 0;
                     if(!$fv) $qr = $fv !== $oldValue;
                     else $qr = $fv != $oldValue;
-                    if(!$fv) $fv = "0";
                 }
-                $queryBuilder->addField($fv, $isNumericField, $fk);
+
+                $queryValue = $fieldDetails->adjustDBValue($this->conn, $fv);
+                $queryBuilder->addField($queryValue, $isNumericField, $fk);
                 if($qr) $queryRequired = true;
             }
 
@@ -127,13 +128,14 @@ abstract class DBTable extends AvtTable {
             $titlePrinter = new Printer(fontWeight: "bold", color: "#1e8449");
             $messagePrinter = new Printer();
 
-            foreach ($creatingFields as $key => $value){
+            foreach ($creatingFields as $key => $val){
                 $fieldDetails = $fieldsMap[$key];
                 $crField = $fieldDetails->onCreateField;
                 if(!$crField || $crField->isReadonly || !$crField->isEditable()) continue;
 
                 $isNumericField = $fieldDetails && $fieldDetails->isNumeric;
-                $queryBuilder->addField($value, $isNumericField, $key);
+                $queryValue = $fieldDetails->adjustDBValue($this->conn, $val);
+                $queryBuilder->addField($queryValue, $isNumericField, $key);
             }
 
             if($this->enableAutoPatchCreatedAt){

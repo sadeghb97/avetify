@@ -38,10 +38,7 @@ class QueryBuilder {
         foreach ($this->fields as $field){
             if($isFirst) $isFirst = false;
             else $sql .= ", ";
-            if(!$field->isNumeric) $sql .= "'";
-            if($field->isNumeric) $sql .= ($field->value ? $field->value : 0);
-            else $sql .= ($field->value ? $this->conn->real_escape_string($field->value) : "");
-            if(!$field->isNumeric) $sql .= "'";
+            $sql .= $this->generateDBValueStatement($field);
         }
         $sql .= ")";
 
@@ -57,10 +54,7 @@ class QueryBuilder {
             else $sql .= ", ";
             $sql .= $field->key;
             $sql .= "=";
-            if(!$field->isNumeric) $sql .= "'";
-            if($field->isNumeric) $sql .= ($field->value ? $field->value : 0);
-            else $sql .= ($field->value ? $this->conn->real_escape_string($field->value) : "");
-            if(!$field->isNumeric) $sql .= "'";
+            $sql .= $this->generateDBValueStatement($field);
             $sql .= " ";
         }
         $sql .= $this->createPrimaryWhere($primaryField);
@@ -76,11 +70,22 @@ class QueryBuilder {
     public function createPrimaryWhere(QueryField $primaryField) : string {
         $sql = "WHERE ";
         $sql .= ($primaryField->key . "=");
-        if(!$primaryField->isNumeric) $sql .= "'";
-        if($primaryField->isNumeric) $sql .= ($primaryField->value ? $primaryField->value : 0);
-        else $sql .= ($primaryField->value ? $this->conn->real_escape_string($primaryField->value) : "");
-        if(!$primaryField->isNumeric) $sql .= "'";
+        $sql .= $this->generateDBValueStatement($primaryField);
         $sql .= " ";
         return $sql;
+    }
+
+    public function generateDBValueStatement(QueryField $field) : string {
+        $nullValue = $field->value === null;
+        $needQuote = !$field->isNumeric && !$nullValue;
+        $emptyValue = $nullValue ? "NULL" : ($field->isNumeric ? 0 : "");
+
+        $out = "";
+        if($needQuote) $out .= "'";
+        if($field->isNumeric) $out .= ($field->value ?: $emptyValue);
+        else $out .= ($field->value ? $this->conn->real_escape_string($field->value) : $emptyValue);
+        if($needQuote) $out .= "'";
+
+        return $out;
     }
 }

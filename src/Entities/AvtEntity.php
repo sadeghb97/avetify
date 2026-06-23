@@ -76,7 +76,7 @@ abstract class AvtEntity extends SetModifier {
             $field = $this->getNormalField($fields, $key);
             if(!$field || $field->protected) continue;
             $count++;
-            $finalValue = $field->numeric ? ($value ?: 0) : $this->conn->real_escape_string($value);
+            $finalValue = $field->adjustDBValue($this->conn, $value);
 
             if($keyExp){
                 $keyExp .= ", ";
@@ -87,10 +87,11 @@ abstract class AvtEntity extends SetModifier {
                 $valueExp = "(";
             }
 
-            if(!$field->numeric) $valueExp .= '"';
             $keyExp .= $key;
-            $valueExp .= $finalValue;
-            if(!$field->numeric) $valueExp .= '"';
+            if(!$field->isNumeric && $finalValue !== null) $valueExp .= '"';
+            if($finalValue === null) $valueExp .= "NULL";
+            else $valueExp .= $finalValue;
+            if(!$field->isNumeric && $finalValue !== null) $valueExp .= '"';
         }
         if(!$count) return "";
 
@@ -117,15 +118,16 @@ abstract class AvtEntity extends SetModifier {
         foreach ($data as $key => $value){
             $field = $this->getNormalField($fields, $key);
             if(!$field || $field->protected) continue;
-            $finalValue = $field->numeric ? $value : $this->conn->real_escape_string($value);
+            $finalValue = $field->adjustDBValue($this->conn, $value);
 
             $count++;
             if($exp) $exp .= ', ';
             $exp .= $key;
             $exp .= '=';
-            if(!$field->numeric) $exp .= '"';
-            $exp .= $finalValue;
-            if(!$field->numeric) $exp .= '"';
+            if(!$field->isNumeric && $finalValue !== null) $exp .= '"';
+            if($finalValue === null) $exp .= "NULL";
+            else $exp .= $finalValue;
+            if(!$field->isNumeric && $finalValue !== null) $exp .= '"';
         }
         if(!$count) return "";
         $whereExp = $this->whereExpression($pk);
@@ -390,7 +392,7 @@ abstract class AvtEntity extends SetModifier {
                         $avatarFields[] = $field;
                     }
 
-                    if($field->numeric && empty($data[$field->key])) $data[$field->key] = 0;
+                    if($field->isNumeric && empty($data[$field->key])) $data[$field->key] = 0;
                 }
 
                 if($currentRecord){

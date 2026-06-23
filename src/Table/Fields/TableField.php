@@ -10,7 +10,6 @@ use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Table\Fields\EditableFields\EditableField;
 
 class TableField extends BaseRecordField implements Qualifier {
-    public bool $isNumeric = false;
     public bool $rtl = false;
     public bool $isCentered = true;
     public bool $isUnbreakable = false;
@@ -82,6 +81,11 @@ class TableField extends BaseRecordField implements Qualifier {
 
     public function setNumeric() : TableField {
         $this->isNumeric = true;
+        return $this;
+    }
+
+    public function setNullOnEmpty() : TableField {
+        $this->nullOnEmpty = true;
         return $this;
     }
 
@@ -172,6 +176,11 @@ class TableField extends BaseRecordField implements Qualifier {
 
     public function bold() : TableField {
        return $this->setFontWeight("bold");
+    }
+
+    public function appendDBValueMapper($orgValue, $mappedValue) : TableField {
+        $this->dbValueMappers[$orgValue] = $mappedValue;
+        return $this;
     }
 
     public function setMaxFieldCharacters(int $maxFieldCharacters) : TableField {
