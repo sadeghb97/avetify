@@ -557,7 +557,7 @@ abstract class AvtEntity extends SetModifier {
     }
 
     public function openEntityPage(){
-        $record = $this->getCurrentRecord();
+        $record = $this->getCurrentRecordObject();
         $title = $record ? $this->getPageTitle($record) : ("Add " . $this->entityName);
 
         $theme = $this->getTheme();
