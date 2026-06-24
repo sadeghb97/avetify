@@ -8,7 +8,7 @@ class NetworkFetcher {
         return $this->curlGetContents($url);
     }
 
-    function curlGetContents($url, $proxy = null) {
+    protected function curlGetContents($url, $proxy = null) : string | bool {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
