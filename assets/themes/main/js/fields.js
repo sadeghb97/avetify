@@ -131,7 +131,7 @@ function onSelectCountry(field, recordKey, cData, selectedCountry){
 function updateSelectorSet(selectorKey, records, map, sData){
     const selectedSetVarName = selectorKey + "_selected"
     window[selectedSetVarName].forEach((recordId) => {
-        const record = records[map[recordId]]
+        const record = records[map[recordId.toLowerCase()]]
         if(record) addRecordToSelector(null, selectorKey, sData, record)
     })
 }

@@ -14,7 +14,7 @@ class World {
         self::$detailsMap = $worldCountries->countriesMapClone();
         $countriesArray = [];
         foreach (self::$detailsMap as $item){
-            $countriesArray[] = $item;
+            $countriesArray[] = new AvtCountry($item);
         }
 
         self::$countriesDatalist = new CountriesDatalist($countriesArray);

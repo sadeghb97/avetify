@@ -240,6 +240,7 @@ require_once "src/Table/Fields/TextFields/TitleCaseField.php";
 
 require_once "src/Table/Fields/FlagFields/FlagField.php";
 require_once "src/Table/Fields/FlagFields/VisualSelectCountryField.php";
+require_once "src/Table/Fields/FlagFields/CountrySetField.php";
 
 require_once "src/Table/Fields/ApiFields/ApiIconField.php";
 
@@ -316,6 +317,7 @@ require_once "src/Forms/Buttons/DeleteFormButton.php";
 require_once "src/Renderers/AvetifyRenderer.php";
 require_once "src/Renderers/TaskPageRenderer.php";
 
+require_once "src/Repo/Countries/AvtCountry.php";
 require_once "src/Repo/Countries/WorldCountries.php";
 require_once "src/Repo/Countries/World.php";
 require_once "src/Repo/Countries/CountriesTable.php";
