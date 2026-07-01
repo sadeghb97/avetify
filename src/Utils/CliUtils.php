@@ -2,7 +2,7 @@
 namespace Avetify\Utils;
 
 use Avetify\Interface\Platform;
-use http\Exception\RuntimeException;
+use RuntimeException;
 
 class CliUtils {
     /** @deprecated Use isCli() in Platform class in Interface package instead. */

@@ -58,6 +58,23 @@ class Scrapper {
         }
     }
 
+    public function pursueSingleElement(string $elementName, string $filterAttrName, string $filterAttrValue) : Scrapper | null {
+        $start = "<$elementName";
+        $end = ">";
+
+        $this->find($start, $end);
+        $innerScrapper = $this->pushClone();
+        $innerScrapper->find($filterAttrName . '="', '"');
+        while ($this->found && !$innerScrapper->contains($filterAttrValue)){
+            $this->find($start, $end);
+            $innerScrapper = $this->pushClone();
+            $innerScrapper->find($filterAttrName . '="', '"');
+        }
+
+        if($innerScrapper->contains($filterAttrValue)) return $this->pushClone();
+        return null;
+    }
+
     //safe
     public function remains() : string {
         if(strlen($this->contents) > $this->cursor) {
@@ -163,6 +180,15 @@ class Scrapper {
         }
 
         return $this;
+    }
+
+    public function reset() : void {
+        $this->cursor = 0;
+        $this->found = false;
+        $this->altCursor = 0;
+        $this->altFound = false;
+        $this->message = "";
+        $this->scrapped = "";
     }
 }
 
