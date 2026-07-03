@@ -19,6 +19,11 @@ class ModernGallery extends ModernSetRenderer {
 
     public function getCardOptions($item) : array {
         $options = [];
+        $nationsRaw = $this->getNationsRaw($item);
+        if($nationsRaw){
+            $options['nations'] = $nationsRaw;
+        }
+
         if($this->contextMenu != null){
             $options['context_menu'] = $this->contextMenu;
             $options['context_menu_on_click'] = $this->openMenuOnNormalClick;
@@ -63,6 +68,10 @@ class ModernGallery extends ModernSetRenderer {
         }
 
         return $options;
+    }
+
+    public function getNationsRaw($record) : string {
+        return "";
     }
 
     /** @return ModernGallery[] */

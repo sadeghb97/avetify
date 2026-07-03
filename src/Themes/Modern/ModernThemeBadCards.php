@@ -5,6 +5,7 @@ use Avetify\Components\Containers\NiceDiv;
 use Avetify\Components\Containers\VertDiv;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
+use Avetify\Table\Fields\FlagFields\FlagField;
 use Avetify\Utils\NumberUtils;
 use Avetify\Utils\StringUtils;
 
@@ -41,6 +42,7 @@ class ModernThemeBadCards {
         }
 
         echo '<div class="card__body">';
+
         if(isset($options['magham'])){
             echo '<div style="margin-top: -6px; font-weight: bold; font-size: 14px; color: firebrick">';
             echo $options['magham'];
@@ -95,6 +97,21 @@ class ModernThemeBadCards {
 
         if($description && !$descPrinted) {
             self::printCardPureTitle($description, $smallerTitle);
+        }
+
+        if(!empty($options['nations'])){
+            echo '<div ';
+            Styler::startAttribute();
+            Styler::addStyle("margin-bottom", "4px");
+            Styler::closeAttribute();
+            HTMLInterface::closeTag();
+            $nations = $options['nations'];
+            $simObject = [
+                "nations" => $nations
+            ];
+            $flagField = new FlagField("Flags", "nations");
+            $flagField->placeField($simObject);
+            HTMLInterface::closeDiv();
         }
 
         if(!empty($options['placeables'])){
