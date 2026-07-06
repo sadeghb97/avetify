@@ -30,7 +30,7 @@ class ClassicNavigationRenderer extends NavigationRenderer {
         $vertDiv->close();
     }
 
-    public function placeSection(NavigationSection $section, WebModifier $webModifier = null) {
+    public function placeSection(NavigationSection $section, ?WebModifier $webModifier = null) {
         $niceDiv = new NiceDiv(0);
         $niceDiv->open($webModifier);
 

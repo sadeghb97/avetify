@@ -39,7 +39,7 @@ class URLBuilder {
         return $urlBuilder;
     }
 
-    public function buildUrl(string $newBaseUrl = null, array $moreParams = []) : string {
+    public function buildUrl(?string $newBaseUrl = null, array $moreParams = []) : string {
         if($newBaseUrl){
             $nbuParams = Routing::getUrlParams($newBaseUrl);
             $nbuPure = Routing::getUrlPureLink($newBaseUrl);

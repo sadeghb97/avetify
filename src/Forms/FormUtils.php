@@ -15,8 +15,8 @@ class FormUtils {
         string $hiddenRawElementId,
         string $allJSFieldsRaw,
         bool $isEditable = true,
-        string $hiddenSelectorElementId = null,
-        array $selectFields = null
+        ?string $hiddenSelectorElementId = null,
+        ?array $selectFields = null
     ){
         ?>
             <script>
@@ -74,7 +74,7 @@ class FormUtils {
     }
 
     public static function placeSubmitButton(string $title, string $buttonStyle = "",
-                                             int $marginTop = 12, WebModifier $webModifier = null){
+                                             int $marginTop = 12, ?WebModifier $webModifier = null){
         $joshButton = new JoshButton($title, "", $buttonStyle, "submit");
         HTMLInterface::placeVerticalDivider($marginTop);
         $joshButton->place($webModifier);

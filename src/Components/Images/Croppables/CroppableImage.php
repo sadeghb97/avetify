@@ -63,7 +63,7 @@ class CroppableImage {
         FormUtils::placeHiddenField($this->id . '_enabled', 0);
     }
 
-    public function presentFromWidth(int $size, WebModifier $modifier = null){
+    public function presentFromWidth(int $size, ?WebModifier $modifier = null){
         echo '<div ';
         Styler::startAttribute();
         Styler::addStyle("width", $size . "px");
@@ -75,7 +75,7 @@ class CroppableImage {
         HTMLInterface::closeDiv();
     }
 
-    public function presentFromHeight(int $size, WebModifier $modifier = null){
+    public function presentFromHeight(int $size, ?WebModifier $modifier = null){
         $widthSize = $size * $this->originalRatio;
         echo '<div ';
         Styler::startAttribute();

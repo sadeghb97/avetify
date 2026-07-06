@@ -36,7 +36,7 @@ class GreenTableRenderer extends SetRenderer {
         $this->closeRecord(null, 0);
     }
 
-    public function openCollection(WebModifier $webModifier = null){
+    public function openCollection(?WebModifier $webModifier = null){
         /** @var AvtTable $sbTable */
         $sbTable = $this->setModifier;
 

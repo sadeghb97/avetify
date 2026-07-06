@@ -34,7 +34,7 @@ class NiceDiv implements AvtContainer {
         $this->htmlModifiers[$key] = $value;
     }
 
-    public function baseOpen(WebModifier $webModifier = null){
+    public function baseOpen(?WebModifier $webModifier = null){
         if($webModifier == null) $webModifier = WebModifier::createInstance();
         if($webModifier->styler == null) $webModifier->styler = new Styler();
 
@@ -62,7 +62,7 @@ class NiceDiv implements AvtContainer {
         Styler::closeAttribute();
     }
 
-    public function open(WebModifier $webModifier = null){
+    public function open(?WebModifier $webModifier = null){
         $this->baseOpen($webModifier);
         echo ' >';
     }
@@ -71,7 +71,7 @@ class NiceDiv implements AvtContainer {
         echo '</div>';
     }
 
-    public function separate(WebModifier $webModifier = null){
+    public function separate(?WebModifier $webModifier = null){
         if($this->sepSize > 0) $this->separateWith("width");
     }
 

@@ -27,13 +27,13 @@ class GridDiv implements AvtContainer {
         }
     }
 
-    public function open(WebModifier $webModifier = null) {
+    public function open(?WebModifier $webModifier = null) {
         $this->mainDiv->open();
         $this->innerDiv->open();
         if($this->itemDiv) $this->itemDiv->open();
     }
 
-    public function separate(WebModifier $webModifier = null){
+    public function separate(?WebModifier $webModifier = null){
         $this->counter++;
         if(($this->counter % $this->cols) == 0){
             if($this->itemDiv) $this->itemDiv->close();
@@ -51,7 +51,7 @@ class GridDiv implements AvtContainer {
         }
     }
 
-    public function close(WebModifier $webModifier = null){
+    public function close(?WebModifier $webModifier = null){
         if($this->itemDiv) HTMLInterface::closeDiv();
         HTMLInterface::closeDiv();
         HTMLInterface::closeDiv();

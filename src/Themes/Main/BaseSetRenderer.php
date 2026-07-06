@@ -51,7 +51,7 @@ abstract class BaseSetRenderer {
 
     public function renderFooter(){}
 
-    public function openCollection(WebModifier $webModifier = null){}
+    public function openCollection(?WebModifier $webModifier = null){}
     public function closeCollection(?WebModifier $webModifier = null){}
     public function openRecord($record, int $index){}
     public function closeRecord($record, int $index){}
