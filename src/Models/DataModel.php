@@ -16,7 +16,6 @@ class DataModel {
             }
 
             $refProp = new ReflectionProperty($this, $key);
-            $refProp->setAccessible(true);
 
             $type = $refProp->getType();
 
