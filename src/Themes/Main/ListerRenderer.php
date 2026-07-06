@@ -68,11 +68,11 @@ abstract class ListerRenderer extends BaseSetRenderer {
         $this->closePage();
     }
 
-    public function openCollection(WebModifier $webModifier = null) {
+    public function openCollection(?WebModifier $webModifier = null) {
         echo '<form method="post" id="lister_form" name="lister_form">';
     }
 
-    public function closeCollection(WebModifier $webModifier = null) {
+    public function closeCollection(?WebModifier $webModifier = null) {
         echo '</div>';
     }
 

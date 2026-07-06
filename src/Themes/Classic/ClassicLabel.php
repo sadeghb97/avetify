@@ -13,7 +13,7 @@ class ClassicLabel implements Placeable {
                                 public string $backgroundColor='black',
                                 public string $color='Cyan'){}
 
-    public function place(WebModifier $webModifier = null) {
+    public function place(?WebModifier $webModifier = null) {
         echo '<a ';
         Styler::startAttribute();
         Styler::addStyle(CSS::textDecoration, "none");

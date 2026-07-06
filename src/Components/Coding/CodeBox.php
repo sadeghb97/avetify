@@ -11,7 +11,7 @@ use Avetify\Interface\WebModifier;
 class CodeBox implements Placeable {
     public function __construct(public string $wrapper, public string $codeContents) {}
 
-    public function place(WebModifier $webModifier = null): void {
+    public function place(?WebModifier $webModifier = null): void {
         $vertDiv = new VertDiv(8);
         $vertDiv->open($webModifier);
         $wrapper = strtolower($this->wrapper);

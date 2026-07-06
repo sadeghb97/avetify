@@ -16,7 +16,7 @@ class PaginationRenderer {
         return $urlBuilder->buildUrl();
     }
 
-    public function place(WebModifier | null $webModifier = null) : void {
+    public function place(?WebModifier $webModifier = null) : void {
         if(!$this->configs) return;
         $curPage = $this->configs->getCurrentPage();
         $lastPage = $this->configs->getLatestPage();

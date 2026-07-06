@@ -11,7 +11,7 @@ class LinkAbsoluteButton extends AbsoluteButton {
         parent::__construct($imageSrc, $positionStyles, "");
     }
 
-    public function place(WebModifier $webModifier = null) {
+    public function place(?WebModifier $webModifier = null) {
         echo '<a ';
         HTMLInterface::addAttribute("href", $this->link);
         if($this->isBlank) HTMLInterface::addAttribute("target", "_blank");

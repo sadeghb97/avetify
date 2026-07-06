@@ -10,7 +10,7 @@ use Avetify\Themes\Main\Navigations\NavigationRenderer;
 use Avetify\Themes\Main\Navigations\NavigationSection;
 
 class ClassicNavigationRenderer extends NavigationRenderer {
-    public function place(WebModifier $webModifier = null) {
+    public function place(?WebModifier $webModifier = null) {
         $margin = $this->navigation->getDetail("margin");
         if(!$margin) $margin = 16;
 

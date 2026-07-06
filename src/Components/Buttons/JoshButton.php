@@ -21,7 +21,7 @@ class JoshButton implements Placeable, IdentifiedElement {
 
     public const WARNING_STYLE = "warning";
 
-    public function place(WebModifier $webModifier = null) : void {
+    public function place(?WebModifier $webModifier = null) : void {
         $buttonStyle = "pushable";
         if($this->buttonStyle == "warning") $buttonStyle .= (' ' . $this->buttonStyle);
 

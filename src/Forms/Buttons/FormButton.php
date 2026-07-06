@@ -57,7 +57,7 @@ class FormButton implements Placeable {
         echo '</button>';
     }
 
-    public function place(WebModifier $webModifier = null) {
+    public function place(?WebModifier $webModifier = null) {
         $this->renderButton();
         $this->initButtonJsActions();
     }

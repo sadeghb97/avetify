@@ -5,7 +5,7 @@ use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 
 class JSDataSet extends JSDataElement {
-    public function place(WebModifier $webModifier = null){
+    public function place(?WebModifier $webModifier = null){
         echo '<template ';
         HTMLInterface::addAttribute("id", $this->dataSetKey);
         HTMLInterface::closeTag();

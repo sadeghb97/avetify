@@ -137,7 +137,7 @@ abstract class DBConnection extends mysqli {
         return $columnItems;
     }
 
-    private function fetchTableQueryWithFilter(string $source, DBFilterInterface $filter = null): string {
+    private function fetchTableQueryWithFilter(string $source, ?DBFilterInterface $filter = null): string {
         $source = trim($source);
         if (stripos($source, 'select') === 0) {
             $source = "($source) t";
@@ -146,7 +146,7 @@ abstract class DBConnection extends mysqli {
         return "SELECT * FROM $source " . ($filterQuery ? "WHERE $filterQuery " : "");
     }
 
-    public function fetchTableSize(string $source, DBFilterInterface $filter = null) : int {
+    public function fetchTableSize(string $source, ?DBFilterInterface $filter = null) : int {
         $tableSql = $this->fetchTableQueryWithFilter($source, $filter);
         $countSql = "SELECT COUNT(*) as count FROM ($tableSql) as t";
         $row = $this->fetchRow($countSql);
@@ -156,7 +156,7 @@ abstract class DBConnection extends mysqli {
     /** @param DBFilterInterface $filter
      * @return array
      */
-    public function fetchTableSet(string $source, DBFilterInterface $filter = null,
+    public function fetchTableSet(string $source, ?DBFilterInterface $filter = null,
                                   string $orderBy = "", int $limit = 0, int $offset = 0) : array {
         $sql = $this->fetchTableQueryWithFilter($source, $filter);
         if($orderBy) $sql .= (" ORDER BY " . $orderBy);
@@ -170,7 +170,7 @@ abstract class DBConnection extends mysqli {
     /** @param DBFilterInterface $filter
      * @return AvtEntityItem[]
      */
-    public function fetchTable(string $className, string $source, DBFilterInterface $filter = null,
+    public function fetchTable(string $className, string $source, ?DBFilterInterface $filter = null,
                                string $orderBy = "", int $limit = 0, int $offset = 0) : array {
         $set = $this->fetchTableSet($source, $filter, $orderBy, $limit, $offset);
         $out = [];

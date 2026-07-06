@@ -9,7 +9,7 @@ use Avetify\Interface\WebModifier;
 class IconButton implements Placeable {
     public function __construct(public string $src, public int $size, public string $onClickRaw = ""){}
 
-    public function place(WebModifier $webModifier = null){
+    public function place(?WebModifier $webModifier = null){
         if($webModifier == null) $webModifier = WebModifier::createInstance();
         $webModifier->styler->pushStyle("cursor", "pointer");
         $webModifier->styler->pushStyle("width", $this->size . "px");

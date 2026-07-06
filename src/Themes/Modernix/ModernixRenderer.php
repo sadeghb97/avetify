@@ -165,7 +165,7 @@ class ModernixRenderer extends SetRenderer {
         return new GreenTheme();
     }
 
-    public function openCollection(WebModifier $webModifier = null) {
+    public function openCollection(?WebModifier $webModifier = null) {
         $niceDiv = new VertDiv(0);
         $niceDiv->addStyle("margin-top", "16px");
         $niceDiv->open();
@@ -182,7 +182,7 @@ class ModernixRenderer extends SetRenderer {
         HTMLInterface::closeTag();
     }
 
-    public function closeCollection(WebModifier $webModifier = null) {
+    public function closeCollection(?WebModifier $webModifier = null) {
         echo '</div>';
     }
 }

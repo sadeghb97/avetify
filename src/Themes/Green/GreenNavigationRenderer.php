@@ -14,7 +14,7 @@ use Avetify\Themes\Main\ThemesManager;
 class GreenNavigationRenderer extends NavigationRenderer {
     public bool $autoActiveDetect = true;
 
-    public function place(WebModifier $webModifier = null) {
+    public function place(?WebModifier $webModifier = null) {
         if(count($this->navigation->sections) == 0) return;
         $this->openNavbar();
         $this->navigations();

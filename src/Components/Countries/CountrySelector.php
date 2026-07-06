@@ -23,7 +23,7 @@ class CountrySelector implements Placeable, IdentifiedElement {
     }
 
 
-    public function place(WebModifier $webModifier = null) {
+    public function place(?WebModifier $webModifier = null) {
         $countryDetails = World::getCountry($this->initCountryCode);
         $countryFlag = World::getCountryFlag($this->initCountryCode);
         $countryName = $countryDetails ? $countryDetails['short_name'] : "";

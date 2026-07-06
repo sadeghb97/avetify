@@ -26,7 +26,7 @@ class CodingField extends CodingBlocks implements Placeable, IdentifiedElement {
         }
     }
 
-    public function place(WebModifier $webModifier = null) {
+    public function place(?WebModifier $webModifier = null) {
         CodingWrappersDatalist::placeDatalist();
         echo '<div ';
         Styler::startAttribute();

@@ -17,7 +17,7 @@ class WinRateBar implements Placeable {
         $this->padding = (int)($this->height / 4);
     }
 
-    public function place(WebModifier $webModifier = null) {
+    public function place(?WebModifier $webModifier = null) {
         echo '<div ';
         Styler::startAttribute();
         Styler::addStyle("width", "100%");

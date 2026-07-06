@@ -74,7 +74,7 @@ class GreenTableRenderer extends SetRenderer {
         if($sbTable->enableCreatingRow && $sbTable->creatingRowOnTop) $this->renderCreatingElements();
     }
 
-    public function closeCollection(WebModifier $webModifier = null){
+    public function closeCollection(?WebModifier $webModifier = null){
         /** @var AvtTable $sbTable */
         $sbTable = $this->setModifier;
 

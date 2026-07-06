@@ -29,7 +29,7 @@ class MarkdownBox implements Placeable {
         return 'README';
     }
 
-    public function place(WebModifier $webModifier = null): void
+    public function place(?WebModifier $webModifier = null): void
     {
         if ($this->emitCss && !self::$cssEmitted) {
             self::importStyles();

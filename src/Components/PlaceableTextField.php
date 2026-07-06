@@ -18,7 +18,7 @@ class PlaceableTextField implements Placeable, IdentifiedElement {
         return $this->fieldId;
     }
 
-    public function place(WebModifier $webModifier = null) {
+    public function place(?WebModifier $webModifier = null) {
         echo '<input ';
         HTMLInterface::addAttribute("type", "text");
         HTMLInterface::addAttribute("value", $this->value);

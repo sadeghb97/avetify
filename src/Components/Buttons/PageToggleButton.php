@@ -29,7 +29,7 @@ class PageToggleButton implements Placeable {
         return $urlBuilder->buildUrl($this->nextPage);
     }
 
-    public function place(WebModifier $webModifier = null) {
+    public function place(?WebModifier $webModifier = null) {
         $button = new LinkAbsoluteButton(AvetifyManager::imageUrl("view_alt.svg"),
             $this->positionStyles, $this->buildNextPageUrl());
         $button->isBlank = false;

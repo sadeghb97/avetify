@@ -2,5 +2,5 @@
 namespace Avetify\Interface;
 
 interface Placeable {
-    public function place(WebModifier $webModifier = null);
+    public function place(?WebModifier $webModifier = null);
 }

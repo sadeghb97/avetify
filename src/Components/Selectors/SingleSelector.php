@@ -22,7 +22,7 @@ class SingleSelector implements Placeable, IdentifiedElement {
         $this->initValue = trim($this->initValue);
     }
 
-    public function place(WebModifier $webModifier = null) {
+    public function place(?WebModifier $webModifier = null) {
         $record = ($this->initValue) ? $this->dlInfo->getRecordById($this->initValue) : null;
         $avatar = $record ? $this->dlInfo->getItemImage($record) : "";
 

@@ -17,7 +17,7 @@ class JSDynamicSelect implements Placeable, IdentifiedElement {
     }
 
 
-    public function place(WebModifier $webModifier = null) {
+    public function place(?WebModifier $webModifier = null) {
         $div = new NiceDiv(8);
         $div->open($webModifier);
 

@@ -18,7 +18,7 @@ class CodingContents extends CodingBlocks implements Placeable {
         parent::__construct($contents);
     }
 
-    public function place(WebModifier $webModifier = null) {
+    public function place(?WebModifier $webModifier = null) {
         $vertDiv = new VertDiv(8);
         $vertDiv->open($webModifier);
 

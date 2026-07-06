@@ -27,7 +27,7 @@ class SetSelector implements Placeable, IdentifiedElement {
         $this->initValue = trim($this->initValue);
     }
 
-    public function place(WebModifier $webModifier = null) {
+    public function place(?WebModifier $webModifier = null) {
         echo '<div ';
         Styler::classStartAttribute();
         Styler::addClass("selbox");

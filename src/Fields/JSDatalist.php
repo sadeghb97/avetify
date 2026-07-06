@@ -32,7 +32,7 @@ class JSDatalist extends JSDataElement {
         return $this->dataSetKey . "_" . "map_name";
     }
 
-    public function place(WebModifier $webModifier = null) {
+    public function place(?WebModifier $webModifier = null) {
         $plcRecords = [];
         $plcNamesMap = [];
         $plcIdsMap = [];

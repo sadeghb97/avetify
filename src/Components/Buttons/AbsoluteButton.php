@@ -12,7 +12,7 @@ class AbsoluteButton implements Placeable {
                                 public string $rawOnclick = ""){}
 
 
-    public function place(WebModifier $webModifier = null) {
+    public function place(?WebModifier $webModifier = null) {
         echo '<div ';
         Styler::classStartAttribute();
         HTMLInterface::appendClasses($webModifier);

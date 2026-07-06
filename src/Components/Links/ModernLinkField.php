@@ -21,7 +21,7 @@ class ModernLinkField implements Placeable, IdentifiedElement {
         $this->initValue = trim($this->initValue);
     }
 
-    public function place(WebModifier $webModifier = null) {
+    public function place(?WebModifier $webModifier = null) {
         echo '<div ';
         $webModifier?->htmlModifier->applyModifiers();
         Styler::classStartAttribute();

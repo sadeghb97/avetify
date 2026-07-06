@@ -32,7 +32,7 @@ abstract class DialogField implements Placeable, IdentifiedElement {
         <?php
     }
 
-    public function place(WebModifier $webModifier = null){
+    public function place(?WebModifier $webModifier = null){
         echo '<div id="' . $this->getBoxId() . '" ';
         Styler::startAttribute();
         $this->boxStyles();
