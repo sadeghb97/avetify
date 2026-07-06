@@ -115,10 +115,11 @@ abstract class DBTable extends AvtTable {
         $isEnoughToInsert = true;
         foreach ($this->fields as $field){
             if($field->onCreateField != null && $field->onCreateField->requiredOnCreate){
-               if(empty($creatingFields[$field->onCreateField->key])) {
-                   $isEnoughToInsert = false;
-                   break;
-               }
+                $cfValue = $field->onCreateField->adjustDBValue($this->conn, $creatingFields[$field->onCreateField->key] ?? "");
+                if(!$cfValue) {
+                    $isEnoughToInsert = false;
+                    break;
+                }
             }
         }
 
