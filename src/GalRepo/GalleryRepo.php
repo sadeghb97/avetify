@@ -7,8 +7,6 @@ use Avetify\Modules\Printer;
 use Avetify\Routing\Routing;
 
 class GalleryRepo {
-    private static array $extensions = ["jpg", "jpeg", "png", "webp", "avif", "gif"];
-
     public array $originalVirtualGalsMap = [];
     public array $originalRecordsConfMap = [];
 
@@ -116,7 +114,7 @@ class GalleryRepo {
 
     public function getImageFiles(): array {
         $files = [];
-        foreach (self::$extensions as $ext) {
+        foreach (Filer::IMAGE_EXTENSIONS as $ext) {
             $files = array_merge($files, glob($this->path . "*.$ext"));
         }
 

@@ -4,6 +4,8 @@ namespace Avetify\Files;
 use InvalidArgumentException;
 
 class Filer {
+    const IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "webp", "avif", "gif"];
+
     public static function deleteDirectory($dir) : bool {
         if (!is_dir($dir)) {
             return false;
@@ -93,6 +95,11 @@ class Filer {
 
     public static function subFiles(string $path): array {
         return self::dirSubFiles($path, "files");
+    }
+
+    public static function isImageExtension(string $filePath) : bool {
+        $ext = self::getFileExtension($filePath);
+        return in_array($ext, self::IMAGE_EXTENSIONS);
     }
 
     public static function subDirs(string $path): array {
