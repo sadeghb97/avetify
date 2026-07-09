@@ -34,4 +34,19 @@ trait IdentifiedElementTrait {
     }
 
     abstract public function getElementIdentifier($item = null);
+
+    public function onlyNameIdentifier(){
+        $this->useNameIdentifier = true;
+        $this->useIDIdentifier = false;
+    }
+
+    public function onlyIDIdentifier(){
+        $this->useNameIdentifier = false;
+        $this->useIDIdentifier = true;
+    }
+
+    public function bothIdentifier(){
+        $this->useNameIdentifier = true;
+        $this->useIDIdentifier = true;
+    }
 }

@@ -3,8 +3,6 @@ namespace Avetify\Table\Fields;
 
 use Avetify\Fields\BaseRecordField;
 use Avetify\Fields\FieldWrapperTrait;
-use Avetify\Interface\HTML\HTMLInterface;
-use Avetify\Interface\WebModifier;
 
 class TableFieldWrapper extends TableField {
     use FieldWrapperTrait;
@@ -15,13 +13,5 @@ class TableFieldWrapper extends TableField {
         if(property_exists($this->recordField, "useNameIdentifier")) {
             $this->recordField->useNameIdentifier = false;
         }
-    }
-
-    public function presentValue($item, ?WebModifier $webModifier = null) {
-        echo '<div ';
-        $webModifier?->apply();
-        HTMLInterface::closeTag();
-        $this->recordField->placeField($item);
-        HTMLInterface::closeDiv();
     }
 }

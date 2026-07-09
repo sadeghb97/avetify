@@ -1,12 +1,9 @@
 <?php
 namespace Avetify\Fields;
 
-use Avetify\Entities\AvtEntityItem;
-use Avetify\Entities\BasicProperties\EntityID;
-use Avetify\Entities\BasicProperties\EntityImage;
-use Avetify\Entities\BasicProperties\EntityTitle;
-use Avetify\Entities\EntityUtils;
-use Avetify\Interface\Placeable;
+use Avetify\DB\DBConnection;
+use Avetify\Interface\HTML\HTMLInterface;
+use Avetify\Interface\WebModifier;
 
 /**
  * @method self modifyRecordRemoveBaseMargins()
@@ -28,5 +25,18 @@ trait FieldWrapperTrait {
             }
         }
         throw new BadMethodCallException();
+    }
+
+    public function presentValue($item, ?WebModifier $webModifier = null) {
+        echo '<div ';
+        $webModifier?->apply();
+        HTMLInterface::closeTag();
+        $this->recordField->placeField($item);
+        HTMLInterface::closeDiv();
+    }
+
+    public function adjustDBValue(DBConnection $conn, string $value): string|null {
+        $value = parent::adjustDBValue($conn, $value);
+        return $this->recordField->adjustDBValue($conn, $value);
     }
 }

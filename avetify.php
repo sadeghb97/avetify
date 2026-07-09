@@ -196,6 +196,12 @@ require_once "src/Lister/AvtLister.php";
 require_once "src/Lister/ListerCategory.php";
 require_once "src/Lister/DBLister.php";
 
+require_once "src/Searchers/models/EntitySearchItemView.php";
+require_once "src/Searchers/models/EntitySearchType.php";
+require_once "src/Searchers/utils/EntitySearcherUtils.php";
+require_once "src/Searchers/utils/ListerLabelUtils.php";
+require_once "src/Searchers/EntitySearcher.php";
+
 require_once "src/Table/AvtTable.php";
 require_once "src/Table/DBTable.php";
 require_once "src/Table/JSONTable.php";
@@ -256,6 +262,7 @@ require_once "src/Themes/Main/ThemesManager.php";
 require_once "src/Themes/Main/BaseSetRenderer.php";
 require_once "src/Themes/Main/SetRenderer.php";
 require_once "src/Themes/Main/ListerRenderer.php";
+require_once "src/Themes/Main/EntitySearcherRenderer.php";
 require_once "src/Themes/Main/Pagination/PaginationRenderer.php";
 require_once "src/Themes/Main/Navigations/NavigationLink.php";
 require_once "src/Themes/Main/Navigations/NavigationSection.php";
@@ -267,6 +274,7 @@ require_once "src/Themes/Classic/ClassicLabel.php";
 require_once "src/Themes/Green/GreenTheme.php";
 require_once "src/Themes/Green/GreenTableRenderer.php";
 require_once "src/Themes/Green/GreenListerRenderer.php";
+require_once "src/Themes/Green/GreenEntitySearcherRenderer.php";
 require_once "src/Themes/Green/GreenNavigationRenderer.php";
 require_once "src/Themes/Green/GreenPaginationRenderer.php";
 require_once "src/Themes/Modern/ModernGalleryMedal.php";

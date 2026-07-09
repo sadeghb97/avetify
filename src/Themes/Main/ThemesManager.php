@@ -12,6 +12,7 @@ class ThemesManager {
     public string $lang = "en";
     public bool $noNavigationMenu = false;
     public bool $includesListerTools = false;
+    public bool $includesEntitySearcherTools = false;
     public bool $includesCropperTools = false;
     public bool $includesCodingFieldTools = false;
     public bool $includesHighlightCodesTools = false;
@@ -100,6 +101,7 @@ class ThemesManager {
         $this->importContextMenuStyles();
         $this->importGalleryGrids();
         if($this->includesListerTools) self::importListerTools();
+        if($this->includesEntitySearcherTools) self::importEntitySearcherTools();
         if($this->includesCropperTools) self::importCropperTools();
         if($this->includesCodingFieldTools) self::importCodingFieldTools();
         if($this->includesChartTools) self::importChartTools();
@@ -171,6 +173,10 @@ class ThemesManager {
         self::importListerStyles();
         self::importSortableJS();
         self::importJS(AvetifyManager::assetUrl("components/lister/lister.js"));
+    }
+
+    public static function importEntitySearcherTools(){
+        self::importStyle(AvetifyManager::assetUrl("components/entity-searcher/entity-searcher.css"));
     }
 
     public static function importChartTools(){

@@ -16,6 +16,8 @@ class EditableLinkField extends EditableField {
     public function presentValue($item, ?WebModifier $webModifier = null){
         $value = $this->getValue($item);
         $this->modernLinkField = new ModernLinkField($this->title, $this->getElementIdentifier($item), $value);
+        $this->modernLinkField->useNameIdentifier = $this->useNameIdentifier;
+        $this->modernLinkField->useIDIdentifier = $this->useIDIdentifier;
         $this->modernLinkField->icon = $this->icon;
         $this->modernLinkField->labelModifier = $this->labelModifier;
         $this->modernLinkField->setStructure($this->structure);

@@ -76,22 +76,6 @@ class EditableField extends TableField implements IdentifiedElement {
         HTMLInterface::closeSingleTag();
     }
 
-    public function onlyNameIdentifier(){
-        $this->useNameIdentifier = true;
-        $this->useIDIdentifier = false;
-    }
-
-    public function onlyIDIdentifier(){
-        $this->useIDIdentifier = true;
-        $this->useNameIdentifier = false;
-
-    }
-
-    public function bothIdentifier(){
-        $this->useIDIdentifier = true;
-        $this->useNameIdentifier = true;
-    }
-
     public function preLoad(){}
 }
 

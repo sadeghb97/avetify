@@ -606,15 +606,19 @@ abstract class AvtEntity extends SetModifier {
         $pureFields = [];
         $rawFields = $this->dataFields();
         foreach ($rawFields as $field){
-            if($field instanceof EntityFieldsContainer){
-                if(property_exists($field->recordField, "childs")) {
-                    foreach ($field->recordField->childs as $pField) {
-                        $pureFields[] = $pField;
-                    }
-                }
-            }
-            else $pureFields[] = $field;
+            $this->_extractPureFields($pureFields, $field);
         }
         return $pureFields;
+    }
+
+    private function _extractPureFields(array &$curFields, $field) : void {
+        if($field instanceof EntityFieldsContainer){
+            if(property_exists($field->recordField, "childs")) {
+                foreach ($field->recordField->childs as $pField) {
+                    $this->_extractPureFields($curFields, $pField);
+                }
+            }
+        }
+        else $curFields[] = $field;
     }
 }
