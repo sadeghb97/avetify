@@ -12,16 +12,21 @@ abstract class TaskPageRenderer implements PageRenderer {
     public string $formId = "form_task";
     public string $triggerIdentifier = "trigger_task";
 
-    public function renderPage(?string $title = "Heavy Task") {
+    public function openPage(?string $title = "Heavy Task") : void {
         if(!Platform::isCli()) {
             $theme = $this->getTheme();
             $theme->placeHeader($title);
             $theme->loadHeaderElements();
         }
+    }
+
+    public function renderPage(?string $title = "Heavy Task") : void {
+        $this->openPage($title);
         $this->renderBody();
     }
 
-    public function renderBody() {
+    public function renderBody() : void {
+        $this->preTask();
         if(!Platform::isCli()) {
             if (!empty($_POST['task']) && $_POST['task'] == $this->triggerIdentifier) {
                 HTMLInterface::placeVerticalDivider(16);
@@ -35,12 +40,16 @@ abstract class TaskPageRenderer implements PageRenderer {
             $primaryButton->place();
             FormUtils::closeForm();
         }
-        else $this->doTask();
+        else {
+            $this->doTask();
+        }
     }
 
     public function getTriggerImage(): string {
         return AvetifyManager::imageUrl("send.svg");
     }
+
+    public function preTask() : void {}
 
     abstract public function doTask();
 }

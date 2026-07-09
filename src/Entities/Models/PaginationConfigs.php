@@ -4,13 +4,15 @@ namespace Avetify\Entities\Models;
 class PaginationConfigs {
     public int $recordsCount = 0;
     public bool $paginationOnBottom = false;
+    public bool $firstPageDefault = false;
 
     public function __construct(public string $namespace, public int $pageSize) {}
 
     public function getCurrentPage() : int {
-        $receivedPage = intval($_GET[$this->getPageKey()] ?? 1) ?? 1;
-        if($receivedPage < 1) $receivedPage = 1;
         $lastPage = $this->getLatestPage();
+        $defaultPage = $this->firstPageDefault ? 1 : $lastPage;
+        $receivedPage = intval($_GET[$this->getPageKey()] ?? $defaultPage) ?? $defaultPage;
+        if($receivedPage < 1) $receivedPage = 1;
         return min($receivedPage, $lastPage);
     }
 

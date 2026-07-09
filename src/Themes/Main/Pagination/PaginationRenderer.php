@@ -46,8 +46,8 @@ class PaginationRenderer {
     public function placePageItem(int $targetPage, WebModifier | null $webModifier = null) : void {
         $curPage = $this->configs->getCurrentPage();
         $isActive = $targetPage == $curPage;
-        $finalBg = $isActive ? $this->activePageBG : $this->pageBG;
-        $finalColor = $isActive ? $this->activePageColor : $this->pageColor;
+        $finalBg = $isActive ? "Cyan" : "#c2c3c4";
+        $finalColor = "Black";
 
         $label = new ClassicLabel($targetPage, $this->getTargetPageLink($targetPage), $finalBg, $finalColor);
         $label->place();
