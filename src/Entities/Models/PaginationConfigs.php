@@ -4,7 +4,7 @@ namespace Avetify\Entities\Models;
 class PaginationConfigs {
     public int $recordsCount = 0;
     public bool $paginationOnBottom = false;
-    public bool $firstPageDefault = false;
+    public bool $firstPageDefault = true;
 
     public function __construct(public string $namespace, public int $pageSize) {}
 
