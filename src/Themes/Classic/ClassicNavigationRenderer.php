@@ -34,8 +34,8 @@ class ClassicNavigationRenderer extends NavigationRenderer {
         $niceDiv = new NiceDiv(0);
         $niceDiv->open($webModifier);
 
-        $color = $section->getDetail("color");
-        if(!$color) $color = "Black";
+        $color = $section->getDetail("color") ?? "Black";
+        $activeColor = $section->getDetail("active_color") ?? $color;
 
         foreach ($section->menuLinks as $linkIndex => $link){
             if($linkIndex > 0) $this->printSplitter($color);
@@ -43,7 +43,7 @@ class ClassicNavigationRenderer extends NavigationRenderer {
             $linkModifier = WebModifier::createInstance();
             $linkModifier->styler->pushStyle(CSS::textDecoration, "none");
             $linkModifier->styler->pushStyle(CSS::fontWeight, "bold");
-            $linkModifier->styler->pushStyle(CSS::color, $color);
+            $linkModifier->styler->pushStyle(CSS::color, $link->isActive ? $activeColor : $color);
             HTMLInterface::placeLink($link->link, $link->title, $linkModifier);
         }
         $niceDiv->close();

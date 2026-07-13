@@ -1,6 +1,7 @@
 <?php
 namespace Avetify\Crawling;
 
+use Avetify\Interface\Pout;
 use Exception;
 
 class Scrapper {
@@ -62,17 +63,22 @@ class Scrapper {
         $start = "<$elementName";
         $end = ">";
 
-        $this->find($start, $end);
-        $innerScrapper = $this->pushClone();
-        $innerScrapper->find($filterAttrName . '="', '"');
-        while ($this->found && !$innerScrapper->contains($filterAttrValue)){
-            $this->find($start, $end);
-            $innerScrapper = $this->pushClone();
-            $innerScrapper->find($filterAttrName . '="', '"');
-        }
+        $curs = $this->cursor;
+        while (true){
+            $sResult = $this->safeFind($start, $end, $curs);
+            if(!$this->altFound) return null;
+            $curs = $this->altCursor;
 
-        if($innerScrapper->contains($filterAttrValue)) return $this->pushClone();
-        return null;
+            $innerScrapper = new Scrapper($sResult);
+            $innerScrapper->find($filterAttrName . '="', '"');
+            if(!$innerScrapper->found) continue;
+
+            $wholeAttrValue = $innerScrapper->trs();
+            if(str_contains($wholeAttrValue, $filterAttrValue)){
+                $this->cursor = $curs;
+                return new Scrapper($sResult);
+            }
+        }
     }
 
     //safe
