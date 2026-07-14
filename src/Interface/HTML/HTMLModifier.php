@@ -27,4 +27,8 @@ class HTMLModifier {
         }
         return $outModifier;
     }
+
+    public function copiableModifier() : void {
+        $this->modifiers["onclick"] = "avtCopyElementText(this);";
+    }
 }

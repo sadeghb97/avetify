@@ -89,6 +89,24 @@ function findClosestChildrenByTag(parent, tagName) {
     return null;
 }
 
+async function avtCopyElementText(element) {
+  const text = element.innerText.trim();
+
+  if (!text) return;
+
+  try {
+    await navigator.clipboard.writeText(text);
+
+    element.classList.add("copy-flash");
+    setTimeout(() => {
+      element.classList.remove("copy-flash");
+    }, 240);
+
+  } catch (err) {
+    console.error("Copy failed:", err);
+  }
+}
+
 document.addEventListener('keydown', function (e) {
     const target = e.target;
     if (target.classList.contains('numeric-text')) {

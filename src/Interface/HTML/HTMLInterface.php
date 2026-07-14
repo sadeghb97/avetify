@@ -16,6 +16,10 @@ namespace Avetify\Interface\HTML;
          echo ' ';
      }
 
+     public static function copiableAttribute() : void {
+         self::addAttribute("onclick", "avtCopyElementText(this);");
+     }
+
      public static function closeTag(){
          echo ' >';
      }

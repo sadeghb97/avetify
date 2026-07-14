@@ -76,4 +76,8 @@ class WebModifier {
         $outModifier = $firstModifier ? clone $firstModifier : WebModifier::createInstance();
         return $outModifier->merge($secondModifier);
     }
+
+    public function copiableModifier() : void {
+        $this->htmlModifier->copiableModifier();
+    }
 }
