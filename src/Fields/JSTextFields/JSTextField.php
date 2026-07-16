@@ -71,6 +71,7 @@ abstract class JSTextField extends JSInputField implements Placeable, Identified
         Styler::closeAttribute();
         Styler::startAttribute();
         if($this->inputWidth) Styler::addStyle("width", $this->inputWidth);
+        else Styler::addStyle("width", "90%");
         HTMLInterface::appendStyles($webModifier);
         Styler::closeAttribute();
         HTMLInterface::closeSingleTag();

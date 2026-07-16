@@ -79,4 +79,9 @@ class RawDocumentLoader {
         $rawContentsObject = json_encode($contentsObject);
         file_put_contents($this->filename, $rawContentsObject);
     }
+
+    public function purgeFile() : bool {
+        if(file_exists($this->filename)) return unlink($this->filename);
+        return false;
+    }
 }

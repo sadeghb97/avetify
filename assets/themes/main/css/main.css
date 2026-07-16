@@ -41,7 +41,9 @@ input.numeric-text {
 .selbox-title{
     font-weight: bold;
     border-radius: 6px;
-    margin: 3px;
+    margin-left: 3px;
+    margin-right: 3px;
+    font-size: 1rem;
 }
 
 .avt-dialog-overlay {
