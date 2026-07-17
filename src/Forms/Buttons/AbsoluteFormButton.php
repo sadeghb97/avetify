@@ -3,6 +3,7 @@ namespace Avetify\Forms\Buttons;
 
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
+use Avetify\Themes\Main\AvtClasses;
 
 class AbsoluteFormButton extends FormButton {
     public function __construct(string $formIdentifier,
@@ -15,6 +16,9 @@ class AbsoluteFormButton extends FormButton {
 
     public function renderButton(){
         echo '<div ';
+        Styler::classStartAttribute();
+        Styler::addClass(AvtClasses::ImgIconButton);
+        Styler::closeAttribute();
         Styler::startAttribute();
         Styler::addStyle("position", "fixed");
         Styler::addStyle("cursor", "pointer");
