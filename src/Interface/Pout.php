@@ -45,6 +45,7 @@ class Pout {
         Styler::addStyle(CSS::marginBottom, "20px");
         Styler::addStyle(CSS::textAlign, "left");
         Styler::addStyle(CSS::backgroundColor, "#dee9e7");
+        Styler::addStyle(CSS::color, "Black");
         Styler::closeAttribute();
         HTMLInterface::closeTag();
         echo '##' . $name . '<br><pre>';

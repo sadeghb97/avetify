@@ -302,3 +302,19 @@ input.numeric-text {
     background-color: rgba(80, 200, 120, .2);
     opacity: .7;
 }
+
+.date-label {
+    font-size: 14px;
+}
+
+.date-input {
+    padding: 7px 8px;
+    font-size: 14px;
+    width: 230px;
+}
+
+.date-out {
+    margin-top: 6px;
+    font-family: monospace;
+    color: #222;
+}
