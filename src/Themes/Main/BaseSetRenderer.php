@@ -88,10 +88,10 @@ abstract class BaseSetRenderer {
                 $this->renderFilterFields($this->makeFiltersFormData());
             }
             $this->renderFilterLabels();
+        }
 
-            if($this->setModifier->paginationConfigs && !$this->setModifier->paginationConfigs->paginationOnBottom){
-                $this->placePagination();
-            }
+        if($this->setModifier->paginationConfigs && !$this->setModifier->paginationConfigs->paginationOnBottom){
+            $this->placePagination();
         }
 
         $this->prepareContainerModifier();
