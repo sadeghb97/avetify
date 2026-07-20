@@ -155,6 +155,13 @@ class Scrapper {
         }
     }
 
+    public function multipleFind(array $startTokens, $endToken) : void {
+        foreach ($startTokens as $startToken){
+            $this->find($startToken, $endToken);
+            if($this->found) return;
+        }
+    }
+
     public function trs() : string {
         return trim($this->scrapped);
     }

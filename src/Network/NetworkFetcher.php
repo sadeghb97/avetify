@@ -3,6 +3,8 @@ namespace Avetify\Network;
 
 class NetworkFetcher {
     public int $lastStatusCode = 0;
+    public int $redirectCount = 0;
+    public string $finalUrl = "";
 
     public function fetch($url) : string {
         return $this->curlGetContents($url);
@@ -21,6 +23,8 @@ class NetworkFetcher {
 
         $fileContent = curl_exec($ch);
         $this->lastStatusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $this->redirectCount = curl_getinfo($ch, CURLINFO_REDIRECT_COUNT);
+        $this->finalUrl = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
         curl_close($ch);
 
         if ($this->lastStatusCode >= 200 && $this->lastStatusCode < 300 && $fileContent !== false) {
