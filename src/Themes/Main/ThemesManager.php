@@ -19,6 +19,8 @@ class ThemesManager {
     public bool $includesMarkdownTools = false;
     public bool $includesChartTools = false;
     public bool $includesBootstrap = false;
+    public bool $includesJQuery = false;
+    public bool $includesJalaliDateTimeUtils = false;
     public bool $includesFontAwesome = false;
     public bool $includesStatsStyles = false;
     public ?NavigationRenderer $navigationRenderer = null;
@@ -100,17 +102,19 @@ class ThemesManager {
         $this->importGeneralFonts();
         $this->importContextMenuStyles();
         $this->importGalleryGrids();
+        if($this->includesBootstrap) self::importBootstrap();
+        if($this->includesJQuery) self::importJQuery();
         if($this->includesListerTools) self::importListerTools();
         if($this->includesEntitySearcherTools) self::importEntitySearcherTools();
         if($this->includesCropperTools) self::importCropperTools();
         if($this->includesCodingFieldTools) self::importCodingFieldTools();
         if($this->includesChartTools) self::importChartTools();
-        if($this->includesBootstrap) self::importBootstrap();
         if($this->includesFontAwesome) self::importFontAwesome();
         if($this->includesStatsStyles) self::importStatStyles();
 
         if($this->includesMarkdownTools || $this->includesHighlightCodesTools) self::importHighlightCodeTools();
         if($this->includesMarkdownTools) self::importMarkdownTools();
+        if($this->includesJalaliDateTimeUtils) self::importJalaliDateTimeUtils();
 
         if($this->navigationRenderer){
             $this->navigationRenderer->headImports();
@@ -243,6 +247,25 @@ class ThemesManager {
     public static function importBootstrap(){
         self::importBootstrapCSS();
         self::importBootstrapJS();
+    }
+
+    public static function importJQuery() : void {
+        self::importJS(AvetifyManager::assetUrl("components/jquery/jquery.min.js"));
+    }
+
+    public static function importJalaliDateTimeCSSUtils() : void {
+        self::importStyle(AvetifyManager::assetUrl("components/time/jalali-time/persian-datepicker.css"));
+    }
+
+    public static function importJalaliDateTimeJSUtils() : void {
+        self::importJS(AvetifyManager::assetUrl("components/time/jalali-time/persian-date.js"));
+        self::importJS(AvetifyManager::assetUrl("components/time/jalali-time/persian-datepicker.js"));
+        self::importJS(AvetifyManager::assetUrl("components/time/jalali-time/jalali-time.js"));
+    }
+
+    public static function importJalaliDateTimeUtils() : void {
+        self::importJalaliDateTimeCSSUtils();
+        self::importJalaliDateTimeJSUtils();
     }
 
     public static function importFontAwesome(){
