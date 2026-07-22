@@ -11,11 +11,9 @@ use Avetify\Interface\WebModifier;
 class EntityField extends BaseRecordField implements IdentifiedElement {
     use IdentifiedElementTrait;
 
-    public bool $hidden = false;
     public bool $rtl = false;
-    public bool $writable = false; // add field to edit and add forms
+    public bool $writable = false; // add field to edit and add forms -> writable or readable form presented base of this field
     public bool $protected = false; // no patch on insert or create queries
-    public bool $printable = true; // print in forms
     public bool $required = false; // must have value in add and edit forms
     public bool $special = false; //ignore it on auto insert and update queries
     public bool $autoTimeCreate = false; //na special na writable
@@ -56,7 +54,7 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
     }
 
     public function setHidden() : EntityField {
-        $this->hidden = true;
+        $this->baseModifier->pushStyle("display", "none");
         return $this;
     }
 
@@ -68,11 +66,6 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
 
     public function setProtected() : EntityField {
         $this->protected = true;
-        return $this;
-    }
-
-    public function notPrintable() : EntityField {
-        $this->printable = false;
         return $this;
     }
 
@@ -120,7 +113,7 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
         if($this->writable){
             $this->presentWritableField($item, $webModifier);
         }
-        else if($this->printable){
+        else {
             $this->presentReadonlyField($item, $webModifier);
         }
     }
