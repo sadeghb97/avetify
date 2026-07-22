@@ -54,10 +54,10 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
     }
 
     public function setHidden() : EntityField {
+        $this->hidden = true;
         $this->baseModifier->pushStyle("display", "none");
         return $this;
     }
-
 
     public function setWritable() : EntityField {
         $this->writable = true;

@@ -16,6 +16,7 @@ class BaseRecordField implements IdentifiedElement {
 
     public bool $isNumeric = false;
     public bool $nullOnEmpty = false;
+    public bool $hidden = false;
 
     public array $dbValueMappers = [];
 
