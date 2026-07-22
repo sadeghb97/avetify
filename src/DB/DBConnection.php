@@ -197,7 +197,7 @@ abstract class DBConnection extends mysqli {
         return AvtEntityItem::createInstance($className, $recordAr);
     }
 
-    public function getRawListExistFilter(string $key, string $value, string $separator = ",") : DBFilterCollection {
+    public static function createRawListExistFilter(string $key, string $value, string $separator = ",") : DBFilterCollection {
         $filterCollection = new DBFilterCollection(DBFilterCollection::OR_MODE);
         $filterCollection->addFilter(new DBFilter($key, "=", $value));
         $filterCollection->addFilter(new DBFilter($key, "LIKE", "{$value}{$separator}%"));
@@ -206,7 +206,8 @@ abstract class DBConnection extends mysqli {
         return $filterCollection;
     }
 
-    public function getRawListExistFilterBySql(string $key, string $value, string $separator = ",") : DBFilterCollection {
+    // tafavot: inja value mitune reshte kham nabashe balke code sql bashe
+    public static function createRawListExistFilterBySql(string $key, string $value, string $separator = ",") : DBFilterCollection {
         $filterCollection = new DBFilterCollection(DBFilterCollection::OR_MODE);
         $filterCollection->addFilter(new DBFilter($key, "=", $value, true));
         $filterCollection->addFilter(new DBFilter($key, "LIKE", "CONCAT({$value}, '{$separator}%')", true));
