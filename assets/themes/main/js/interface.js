@@ -69,6 +69,15 @@ function addParamToCurrentLink(paramKey, paramValue) {
     return addParamToLink(window.location.href, paramKey, paramValue)
 }
 
+function getUrlParam(url, paramName) {
+  const value = new URL(url).searchParams.get(paramName);
+  return value === null ? false : value;
+}
+
+function getParamFromCurrentUrl(paramName) {
+  return getUrlParam(window.location.href, paramName);
+}
+
 function findClosestChildrenByTag(parent, tagName) {
     if (!(parent instanceof Element)) return null;
     tagName = tagName.toUpperCase();

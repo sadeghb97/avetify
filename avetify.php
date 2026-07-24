@@ -145,6 +145,8 @@ require_once "src/Fields/APISpanField.php";
 require_once "src/Fields/Containers/FieldsContainer.php";
 require_once "src/Fields/Containers/RowFields.php";
 require_once "src/Fields/Containers/ColumnFields.php";
+require_once "src/Fields/DateFields/GregorianDatePicker.php";
+require_once "src/Fields/DateFields/JalaliDatePicker.php";
 
 require_once "src/Components/PlaceableTextField.php";
 require_once "src/Components/JSField.php";

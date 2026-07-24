@@ -1,0 +1,43 @@
+body { font-family: sans-serif; padding: 20px; }
+
+.avt-timepicker label { display: block; margin-top: 15px; }
+.avt-timepicker__row { margin-bottom: 18px; }
+.avt-timepicker__field-row { display: inline-flex; align-items: center; gap: 6px; }
+
+.avt-timepicker__input {
+    box-sizing: border-box;
+    padding: 6px 8px;
+    font-size: 14px;
+    width: 220px;
+    height: 36px;
+    line-height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.avt-timepicker__output { margin-top: 6px; font-family: monospace; color: #222; }
+
+.avt-timepicker__clear-button {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #333;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+}
+.avt-timepicker__clear-button:hover { background: #f5f5f5; }
+
+.avt-timepicker__jalali-input {
+    font-family: system-ui, sans-serif;
+    direction: ltr;
+    unicode-bidi: plaintext;
+}

@@ -20,6 +20,7 @@ class ThemesManager {
     public bool $includesChartTools = false;
     public bool $includesBootstrap = false;
     public bool $includesJQuery = false;
+    public bool $includesCommonDateTimeUtils = false;
     public bool $includesJalaliDateTimeUtils = false;
     public bool $includesFontAwesome = false;
     public bool $includesStatsStyles = false;
@@ -114,6 +115,7 @@ class ThemesManager {
 
         if($this->includesMarkdownTools || $this->includesHighlightCodesTools) self::importHighlightCodeTools();
         if($this->includesMarkdownTools) self::importMarkdownTools();
+        if($this->includesCommonDateTimeUtils) self::importCommonDateTimeUtils();
         if($this->includesJalaliDateTimeUtils) self::importJalaliDateTimeUtils();
 
         if($this->navigationRenderer){
@@ -251,6 +253,19 @@ class ThemesManager {
 
     public static function importJQuery() : void {
         self::importJS(AvetifyManager::assetUrl("components/jquery/jquery.min.js"));
+    }
+
+    public static function importCommonDateTimeCSSUtils() : void {
+        self::importStyle(AvetifyManager::assetUrl("components/time/general-time/common.css"));
+    }
+
+    public static function importCommonDateTimeJSUtils() : void {
+        self::importJS(AvetifyManager::assetUrl("components/time/general-time/common.js"));
+    }
+
+    public static function importCommonDateTimeUtils() : void {
+        self::importCommonDateTimeCSSUtils();
+        self::importCommonDateTimeJSUtils();
     }
 
     public static function importJalaliDateTimeCSSUtils() : void {
