@@ -30,9 +30,15 @@ class PageToggleButton implements Placeable {
     }
 
     public function place(?WebModifier $webModifier = null) {
+        if(!$this->isToggleActive()) return;
+
         $button = new LinkAbsoluteButton(AvetifyManager::imageUrl("view_alt.svg"),
             $this->positionStyles, $this->buildNextPageUrl());
         $button->isBlank = false;
         $button->place($webModifier);
+    }
+
+    public function isToggleActive() : bool {
+        return true;
     }
 }
