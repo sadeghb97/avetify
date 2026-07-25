@@ -6,6 +6,7 @@ use Avetify\Entities\Fields\Containers\EntityFieldsContainer;
 use Avetify\Entities\Fields\EntityAvatarField;
 use Avetify\Entities\Fields\EntityBooleanField;
 use Avetify\Entities\Fields\EntityFieldWrapper;
+use Avetify\Fields\BaseRecordField;
 use Avetify\Fields\JSDatalist;
 use Avetify\Files\Filer;
 use Avetify\Files\ImageUtils;
@@ -68,7 +69,7 @@ abstract class AvtEntity extends SetModifier {
     }
 
     public function insertDataExpression(array $data) : string {
-        $fields = $this->getPureFields();
+        $fields = $this->getAllEntityFields();
         $keyExp = "";
         $valueExp = "";
 
@@ -112,7 +113,7 @@ abstract class AvtEntity extends SetModifier {
     }
 
     public function updateDataExpression($pk, array $data) : string {
-        $fields = $this->getPureFields();
+        $fields = $this->getAllEntityFields();
         $exp = "";
 
         $count = 0;
@@ -250,7 +251,7 @@ abstract class AvtEntity extends SetModifier {
 
     public function checkData($data, $createMode) : bool {
         $isOk = true;
-        foreach ($this->getPureFields() as $field){
+        foreach ($this->getAllEntityFields() as $field){
             if($field->required){
                 if($createMode && empty($data[$field->key])) {
                     echo $field->key . ' Missed!<br>';
@@ -379,7 +380,7 @@ abstract class AvtEntity extends SetModifier {
                 $curRecordObject = $this->getRecordObject($currentRecord);
 
                 $avatarFields = [];
-                foreach ($this->getPureFields() as $field){
+                foreach ($this->getAllEntityFields() as $field){
                     if($field instanceof EntityBooleanField && $field->writable && !isset($data[$field->key])){
                         $data[$field->key] = 0;
                     }
@@ -613,7 +614,7 @@ abstract class AvtEntity extends SetModifier {
     /** @return EntityField[] */
     abstract public function dataFields() : array;
 
-    /** @return EntityField[] */
+    /** @return BaseRecordField[] */
     public function getPureFields() : array {
         $pureFields = [];
         $rawFields = $this->dataFields();
@@ -631,6 +632,27 @@ abstract class AvtEntity extends SetModifier {
                 }
             }
             else $this->_extractPureFields($curFields, $field->recordField);
+        }
+        else $curFields[] = $field;
+    }
+
+    /** @return EntityField[] */
+    public function getAllEntityFields() : array {
+        $entityFields = [];
+        $rawFields = $this->dataFields();
+        foreach ($rawFields as $field){
+            $this->_extractEntityFields($entityFields, $field);
+        }
+        return $entityFields;
+    }
+
+    private function _extractEntityFields(array &$curFields, $field) : void {
+        if($field instanceof EntityFieldsContainer){
+            if(property_exists($field->recordField, "childs")) {
+                foreach ($field->recordField->childs as $pField) {
+                    $this->_extractEntityFields($curFields, $pField);
+                }
+            }
         }
         else $curFields[] = $field;
     }

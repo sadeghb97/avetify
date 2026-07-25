@@ -6,7 +6,9 @@ use Avetify\Entities\FilterFactors\FilterField;
 use Avetify\Entities\Models\PaginationConfigs;
 use Avetify\Entities\SetModifier;
 use Avetify\Entities\Sorters\SortFactor;
+use Avetify\Fields\BaseRecordField;
 use Avetify\Interface\RecordFormTrait;
+use Avetify\Table\Fields\Containers\TableFieldsContainer;
 use Avetify\Table\Fields\EditableFields\CheckboxField;
 use Avetify\Table\Fields\EditableFields\EditableField;
 use Avetify\Table\Fields\TableField;
@@ -50,7 +52,7 @@ class AvtTable extends SetModifier {
     public function setFields(array $fields){
         $this->fields = $fields;
 
-        foreach ($this->getPureFields() as $field){
+        foreach ($this->getAllTableFields() as $field){
             if($field->isEditable()){
                 if($field instanceof EditableField) $field->namespace = $this->setKey;
                 $field->idGetter = $this;
@@ -63,7 +65,7 @@ class AvtTable extends SetModifier {
         }
     }
 
-    /** @return TableField[] */
+    /** @return BaseRecordField[] */
     public function getPureFields() : array {
         $pureFields = [];
         $rawFields = $this->fields;
@@ -85,11 +87,32 @@ class AvtTable extends SetModifier {
         else $curFields[] = $field;
     }
 
+    /** @return TableField[] */
+    public function getAllTableFields() : array {
+        $tableFields = [];
+        $rawFields = $this->fields;
+        foreach ($rawFields as $field){
+            $this->_extractTableFields($tableFields, $field);
+        }
+        return $tableFields;
+    }
+
+    private function _extractTableFields(array &$curFields, $field) : void {
+        if($field instanceof TableFieldsContainer){
+            if(property_exists($field->recordField, "childs")) {
+                foreach ($field->recordField->childs as $pField) {
+                    $this->_extractTableFields($curFields, $pField);
+                }
+            }
+        }
+        else $curFields[] = $field;
+    }
+
     /** @return SortFactor[] An array of MyClass instances */
     public function getDefaultSortFactors() : array {
         if($this->_defaultSortFactors !== null) return $this->_defaultSortFactors;
         $this->_defaultSortFactors = [];
-        foreach ($this->getPureFields() as $field){
+        foreach ($this->getAllTableFields() as $field){
             if($field->isSortable){
                 $this->_defaultSortFactors[] = new TableSortField($field);
             }
@@ -111,7 +134,7 @@ class AvtTable extends SetModifier {
     public function getDefaultFilterFactors() : array {
         if($this->_defaultFilterFactors !== null) return $this->_defaultFilterFactors;
         $this->_defaultFilterFactors = [];
-        foreach ($this->getPureFields() as $field){
+        foreach ($this->getAllTableFields() as $field){
             if($field->isFilterable){
                 $clonedField = clone $field;
                 $clonedField->isReadonly = false;
@@ -184,12 +207,12 @@ class AvtTable extends SetModifier {
         else if (isset($_POST[$tableRenderer->getFormFieldsName()])) {
             if($this->enableCreatingRow) {
                 $creatingFields = [];
-                foreach ($this->getPureFields() as $field) {
+                foreach ($this->getAllTableFields() as $field) {
                     if ($field->onCreateField != null) {
                         $crFieldKey = $field->onCreateField->getElementIdentifier(null);
                         $crKey = $field->onCreateField->key;
                         if ($field->onCreateField instanceof CheckboxField) {
-                            $creatingFields[$crKey] = empty($_POST[$crFieldKey]) ? false : true;
+                            $creatingFields[$crKey] = !empty($_POST[$crFieldKey]);
                         } else {
                             $creatingFields[$crKey] = $_POST[$crFieldKey];
                         }
@@ -222,7 +245,7 @@ class AvtTable extends SetModifier {
 
     public function getFieldsMap() : array {
         $fieldsMap = [];
-        foreach ($this->getPureFields() as $field){
+        foreach ($this->getAllTableFields() as $field){
             $fieldsMap[$field->key] = $field;
         }
         return $fieldsMap;
