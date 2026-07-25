@@ -24,6 +24,14 @@ class Styler {
         unset($this->classes[$className]);
     }
 
+    public function existStyle($styleKey) : bool {
+        return isset($this->styles[$styleKey]);
+    }
+
+    public function existClass($className) : bool {
+        return isset($this->classes[$className]);
+    }
+
     public function pushFontFaceStyle(string $fontFace){
         $this->styles["font-family"] = "'$fontFace', sans-serif";
     }

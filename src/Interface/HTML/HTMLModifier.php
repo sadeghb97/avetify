@@ -12,6 +12,10 @@ class HTMLModifier {
         unset($this->modifiers[$modifierKey]);
     }
 
+    public function existModifier($modifierKey) : bool {
+        return isset($this->modifiers[$modifierKey]);
+    }
+
     public function applyModifiers(){
         foreach ($this->modifiers as $modifierKey => $modifierValue){
             HTMLInterface::addAttribute($modifierKey, $modifierValue);

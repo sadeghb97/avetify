@@ -5,6 +5,7 @@ use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\WebModifier;
+use Avetify\Themes\Main\AvtClasses;
 
 class AbsoluteButton implements Placeable {
     public function __construct(public string $imageSrc,
@@ -13,6 +14,9 @@ class AbsoluteButton implements Placeable {
 
 
     public function place(?WebModifier $webModifier = null) {
+        if(!$webModifier) $webModifier = WebModifier::createInstance();
+        $webModifier->pushClass(AvtClasses::ImgIconButton);
+
         echo '<div ';
         Styler::classStartAttribute();
         HTMLInterface::appendClasses($webModifier);

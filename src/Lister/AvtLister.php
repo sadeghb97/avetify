@@ -7,6 +7,7 @@ use Avetify\Forms\FormUtils;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\JSInterface;
+use Avetify\Table\Fields\TableField;
 use Avetify\Themes\Green\GreenListerRenderer;
 use Avetify\Themes\Green\GreenTheme;
 use Avetify\Themes\Main\ListerRenderer;
@@ -336,7 +337,8 @@ abstract class AvtLister extends SetModifier {
         $allFieldIds = [];
         foreach ($this->getItemFields() as $field){
             foreach ($this->currentRecords as $item){
-                $allFieldIds[] = $field['key'] . "_" . $this->getItemId($item);
+                if($field instanceof TableField) $allFieldIds[] = $field->getElementIdentifier($item);
+                else $allFieldIds[] = $field['key'] . "_" . $this->getItemId($item);
             }
         }
 
@@ -371,9 +373,13 @@ abstract class AvtLister extends SetModifier {
 
             foreach (array_keys($itemsParams) as $itemPk){
                 foreach ($this->getItemFields() as $field){
-                    $fieldName = $field['key'] . '_' . $itemPk;
+                    $fieldKey = null;
+                    if($field instanceof TableField) $fieldKey = $field->key;
+                    else $fieldKey = $field['key'];
+
+                    $fieldName = $fieldKey . '_' . $itemPk;
                     if(isset($listerParams[$fieldName])){
-                        $itemsParams[$itemPk][$field['key']] = $listerParams[$fieldName];
+                        $itemsParams[$itemPk][$fieldKey] = $listerParams[$fieldName];
                     }
                 }
             }

@@ -47,12 +47,28 @@ class WebModifier {
     }
 
     public function popClass(string $className) : void {
+        if(!$this->styler) $this->styler = new Styler();
         $this->styler?->popClass($className);
     }
 
     public function popModifier(string $modifierKey) : void {
         if(!$this->htmlModifier) $this->htmlModifier = new HTMLModifier();
         $this->htmlModifier->popModifier($modifierKey);
+    }
+
+    public function existStyle(string $styleKey) : bool {
+        if(!$this->styler) $this->styler = new Styler();
+        return $this->styler->existStyle($styleKey);
+    }
+
+    public function existClass(string $className) : bool {
+        if(!$this->styler) $this->styler = new Styler();
+        return $this->styler->existClass($className);
+    }
+
+    public function existModifier(string $modifierKey) : bool {
+        if(!$this->htmlModifier) $this->htmlModifier = new HTMLModifier();
+        return $this->htmlModifier->existModifier($modifierKey);
     }
 
     public function merge(WebModifier | null $secondModifier) : WebModifier {

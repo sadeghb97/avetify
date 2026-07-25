@@ -5,6 +5,7 @@ use Avetify\Interface\CSS\CSS;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\Attrs;
 use Avetify\Interface\HTML\HTMLInterface;
+use Avetify\Table\Fields\TableField;
 use Avetify\Themes\Main\ListerRenderer;
 
 class GreenListerRenderer extends ListerRenderer {
@@ -104,12 +105,19 @@ class GreenListerRenderer extends ListerRenderer {
         if ($alt) echo '<span class="lister-item-rate"> (' . $alt . ')</span>';
         echo '</div>';
 
+        $tableFields = [];
         $plainFields = [];
         $dialogFields = [];
 
         foreach ($this->lister->getItemFields() as $field) {
-            if (isset($field['factory'])) $dialogFields[] = $field;
+            if($field instanceof TableField) $tableFields[] = $field;
+            else if (isset($field['factory'])) $dialogFields[] = $field;
             else $plainFields[] = $field;
+        }
+
+        foreach ($tableFields as $field) {
+            HTMLInterface::placeVerticalDivider(4);
+            $field->placeField($item);
         }
 
         foreach ($plainFields as $field) {
