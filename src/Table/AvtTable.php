@@ -7,20 +7,21 @@ use Avetify\Entities\Models\PaginationConfigs;
 use Avetify\Entities\SetModifier;
 use Avetify\Entities\Sorters\SortFactor;
 use Avetify\Interface\RecordFormTrait;
-use Avetify\Table\Fields\Containers\TableFieldsContainer;
 use Avetify\Table\Fields\EditableFields\CheckboxField;
 use Avetify\Table\Fields\EditableFields\EditableField;
 use Avetify\Table\Fields\TableField;
+use Avetify\Table\Fields\TableFieldWrapper;
 use Avetify\Table\Fields\TableSortField;
 use Avetify\Themes\Green\GreenTableRenderer;
 use Avetify\Themes\Green\GreenTheme;
 use Avetify\Themes\Main\SetRenderer;
+use Avetify\Themes\Main\ThemesManager;
 
 class AvtTable extends SetModifier {
     use RecordFormTrait;
 
     /** @var TableField[] $fields */
-    public array $fields;
+    public array $fields = [];
 
     public bool $enableSelectRecord = false;
     public bool $enableCreatingRow = false;
@@ -36,9 +37,8 @@ class AvtTable extends SetModifier {
         parent::__construct($key);
 
         $this->isEditable = $isEditable;
-        $this->renderer = $this->getTableRenderer();
-
         $this->setFields($fields);
+        $this->renderer = $this->getTableRenderer();
         $this->loadRawRecords($rawRecords);
         $this->renderer->limit = $this->recordsLimit();
     }
@@ -50,7 +50,7 @@ class AvtTable extends SetModifier {
     public function setFields(array $fields){
         $this->fields = $fields;
 
-        foreach ($this->getAllFields() as $field){
+        foreach ($this->getPureFields() as $field){
             if($field->isEditable()){
                 if($field instanceof EditableField) $field->namespace = $this->setKey;
                 $field->idGetter = $this;
@@ -64,26 +64,32 @@ class AvtTable extends SetModifier {
     }
 
     /** @return TableField[] */
-    public function getAllFields() : array {
+    public function getPureFields() : array {
         $pureFields = [];
-        foreach ($this->fields as $field){
-            if($field instanceof TableFieldsContainer){
-                if(property_exists($field->recordField, "childs")) {
-                    foreach ($field->recordField->childs as $pField) {
-                        $pureFields[] = $pField;
-                    }
-                }
-            }
-            else $pureFields[] = $field;
+        $rawFields = $this->fields;
+        foreach ($rawFields as $field){
+            $this->_extractPureFields($pureFields, $field);
         }
         return $pureFields;
+    }
+
+    private function _extractPureFields(array &$curFields, $field) : void {
+        if($field instanceof TableFieldWrapper){
+            if(property_exists($field->recordField, "childs")) {
+                foreach ($field->recordField->childs as $pField) {
+                    $this->_extractPureFields($curFields, $pField);
+                }
+            }
+            else $this->_extractPureFields($curFields, $field->recordField);
+        }
+        else $curFields[] = $field;
     }
 
     /** @return SortFactor[] An array of MyClass instances */
     public function getDefaultSortFactors() : array {
         if($this->_defaultSortFactors !== null) return $this->_defaultSortFactors;
         $this->_defaultSortFactors = [];
-        foreach ($this->getAllFields() as $field){
+        foreach ($this->getPureFields() as $field){
             if($field->isSortable){
                 $this->_defaultSortFactors[] = new TableSortField($field);
             }
@@ -105,7 +111,7 @@ class AvtTable extends SetModifier {
     public function getDefaultFilterFactors() : array {
         if($this->_defaultFilterFactors !== null) return $this->_defaultFilterFactors;
         $this->_defaultFilterFactors = [];
-        foreach ($this->getAllFields() as $field){
+        foreach ($this->getPureFields() as $field){
             if($field->isFilterable){
                 $clonedField = clone $field;
                 $clonedField->isReadonly = false;
@@ -139,8 +145,23 @@ class AvtTable extends SetModifier {
         return 5000;
     }
 
+    protected function createBaseTheme() : ThemesManager {
+        return new GreenTheme();
+    }
+
+    final protected function getFinalTheme() : ThemesManager {
+        $theme = $this->createBaseTheme();
+
+        $fields = $this->getPureFields();
+        foreach ($fields as $field){
+            $field->attachRequirementsToTheme($theme);
+        }
+
+        return $theme;
+    }
+
     protected function getTableRenderer() : SetRenderer {
-        return new GreenTableRenderer($this, new GreenTheme());
+        return new GreenTableRenderer($this, $this->getFinalTheme());
     }
 
     public function catchSubmittedFields(){
@@ -163,7 +184,7 @@ class AvtTable extends SetModifier {
         else if (isset($_POST[$tableRenderer->getFormFieldsName()])) {
             if($this->enableCreatingRow) {
                 $creatingFields = [];
-                foreach ($this->getAllFields() as $field) {
+                foreach ($this->getPureFields() as $field) {
                     if ($field->onCreateField != null) {
                         $crFieldKey = $field->onCreateField->getElementIdentifier(null);
                         $crKey = $field->onCreateField->key;
@@ -201,7 +222,7 @@ class AvtTable extends SetModifier {
 
     public function getFieldsMap() : array {
         $fieldsMap = [];
-        foreach ($this->getAllFields() as $field){
+        foreach ($this->getPureFields() as $field){
             $fieldsMap[$field->key] = $field;
         }
         return $fieldsMap;

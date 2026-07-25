@@ -11,6 +11,7 @@ use Avetify\Table\Fields\TableField;
 use Avetify\Themes\Green\GreenListerRenderer;
 use Avetify\Themes\Green\GreenTheme;
 use Avetify\Themes\Main\ListerRenderer;
+use Avetify\Themes\Main\ThemesManager;
 
 abstract class AvtLister extends SetModifier {
     use EntityManagerTrait;
@@ -101,10 +102,18 @@ abstract class AvtLister extends SetModifier {
         return null;
     }
 
+    protected function createBaseTheme() : ThemesManager {
+        return new GreenTheme();
+    }
+
+    final protected function getFinalTheme() : ThemesManager {
+        $theme = $this->createBaseTheme();
+        $theme->includesListerTools = true;
+        return $theme;
+    }
+
     function getListerRenderer() : ListerRenderer {
-        $th = new GreenTheme();
-        $th->includesListerTools = true;
-        return new GreenListerRenderer($this, $th);
+        return new GreenListerRenderer($this, $this->getFinalTheme());
     }
 
     function initLists(){

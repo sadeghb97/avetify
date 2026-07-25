@@ -51,15 +51,19 @@ abstract class EntitySearcher {
         return "__ENTITY_SEARCHER_PAYLOAD__";
     }
 
-    public function getTheme(): ThemesManager {
-        $theme = new GreenTheme();
+    protected function createBaseTheme() : ThemesManager {
+        return new GreenTheme();
+    }
+
+    final protected function getFinalTheme() : ThemesManager {
+        $theme = $this->createBaseTheme();
         $theme->includesBootstrap = true;
         $theme->includesEntitySearcherTools = true;
         return $theme;
     }
 
     public function getEntitySearcherRenderer(): EntitySearcherRenderer {
-        return new GreenEntitySearcherRenderer($this, $this->getTheme());
+        return new GreenEntitySearcherRenderer($this, $this->getFinalTheme());
     }
 
     public function buildPayload(): array {

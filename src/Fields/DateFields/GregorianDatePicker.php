@@ -5,6 +5,7 @@ use Avetify\Fields\BaseRecordField;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
+use Avetify\Themes\Main\ThemesManager;
 
 class GregorianDatePicker extends BaseRecordField {
     public bool $enableTime = false;
@@ -88,5 +89,11 @@ class GregorianDatePicker extends BaseRecordField {
 
     public function getUnixSpanIdentifier($item) : string {
         return $this->getElementIdentifier($item) . "_unix";
+    }
+
+    public function attachRequirementsToTheme(ThemesManager $theme): ThemesManager {
+        $theme = parent::attachRequirementsToTheme($theme);
+        $theme->includesCommonDateTimeUtils = true;
+        return $theme;
     }
 }

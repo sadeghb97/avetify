@@ -5,6 +5,7 @@ use Avetify\DB\DBConnection;
 use Avetify\Entities\Fields\Containers\EntityFieldsContainer;
 use Avetify\Entities\Fields\EntityAvatarField;
 use Avetify\Entities\Fields\EntityBooleanField;
+use Avetify\Entities\Fields\EntityFieldWrapper;
 use Avetify\Fields\JSDatalist;
 use Avetify\Files\Filer;
 use Avetify\Files\ImageUtils;
@@ -560,7 +561,7 @@ abstract class AvtEntity extends SetModifier {
         $record = $this->getCurrentRecordObject();
         $title = $record ? $this->getPageTitle($record) : ("Add " . $this->entityName);
 
-        $theme = $this->getTheme();
+        $theme = $this->getFinalTheme();
         $theme->placeHeader($title);
         $theme->loadHeaderElements();
     }
@@ -571,8 +572,19 @@ abstract class AvtEntity extends SetModifier {
         $this->printForm();
     }
 
-    public function getTheme() : ThemesManager {
+    protected function createBaseTheme() : ThemesManager {
         return new GreenTheme();
+    }
+
+    protected function getFinalTheme() : ThemesManager {
+        $theme = $this->createBaseTheme();
+
+        $fields = $this->getPureFields();
+        foreach ($fields as $field){
+            $field->attachRequirementsToTheme($theme);
+        }
+
+        return $theme;
     }
 
     public function getPageTitle($item) : string {
@@ -612,12 +624,13 @@ abstract class AvtEntity extends SetModifier {
     }
 
     private function _extractPureFields(array &$curFields, $field) : void {
-        if($field instanceof EntityFieldsContainer){
+        if($field instanceof EntityFieldWrapper){
             if(property_exists($field->recordField, "childs")) {
                 foreach ($field->recordField->childs as $pField) {
                     $this->_extractPureFields($curFields, $pField);
                 }
             }
+            else $this->_extractPureFields($curFields, $field->recordField);
         }
         else $curFields[] = $field;
     }

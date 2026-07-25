@@ -5,6 +5,7 @@ use Avetify\Components\Links\ModernLinkField;
 use Avetify\Fields\StructuredRecordValueField;
 use Avetify\Interface\Bootstrap\PlatformIcons;
 use Avetify\Interface\WebModifier;
+use Avetify\Themes\Main\ThemesManager;
 
 class EditableLinkField extends EditableField {
     use StructuredRecordValueField;
@@ -32,5 +33,11 @@ class EditableLinkField extends EditableField {
     public function setLabelModifier(WebModifier $modifier) : static {
         $this->labelModifier = $modifier;
         return $this;
+    }
+
+    public function attachRequirementsToTheme(ThemesManager $theme): ThemesManager {
+        $theme = parent::attachRequirementsToTheme($theme);
+        $theme->includesBootstrap = true;
+        return $theme;
     }
 }
