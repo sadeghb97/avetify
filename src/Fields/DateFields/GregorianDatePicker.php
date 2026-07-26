@@ -8,8 +8,8 @@ use Avetify\Interface\WebModifier;
 use Avetify\Themes\Main\ThemesManager;
 
 class GregorianDatePicker extends BaseRecordField {
-    public bool $enableTime = false;
-    public bool $enableUnix = false;
+    public bool $timeEnabled = false;
+    public bool $unixEnabled = false;
 
     public function presentValue($item, ?WebModifier $webModifier = null) : void {
         $time = intval($this->getValue($item));
@@ -33,7 +33,7 @@ class GregorianDatePicker extends BaseRecordField {
         HTMLInterface::closeTag();
 
         echo '<input ';
-        HTMLInterface::addAttribute("type", $this->enableTime ? "datetime-local" : "date");
+        HTMLInterface::addAttribute("type", $this->timeEnabled ? "datetime-local" : "date");
         HTMLInterface::addAttribute("id", $this->getFieldInputIdentifier($item));
         Styler::classStartAttribute();
         Styler::addClass('avt-timepicker__input');
@@ -42,7 +42,7 @@ class GregorianDatePicker extends BaseRecordField {
 
         echo '<button ';
         HTMLInterface::addAttribute("type", "button");
-        HTMLInterface::addAttribute("data-target", $this->enableTime ? "gregorian_datetime" : "gregorian_date");
+        HTMLInterface::addAttribute("data-target", $this->timeEnabled ? "gregorian_datetime" : "gregorian_date");
         Styler::classStartAttribute();
         Styler::addClass('avt-timepicker__clear-button');
         Styler::closeAttribute();
@@ -80,7 +80,7 @@ class GregorianDatePicker extends BaseRecordField {
     public function getInitJsString($item) : string {
         $time = intval($this->getValue($item));
         return "initGregorianField('" . $this->getElementIdentifier($item) . "', "
-            . ($this->enableTime ? "true" : "false") . ", " . $time . ");";
+            . ($this->timeEnabled ? "true" : "false") . ", " . $time . ");";
     }
 
     public function getFieldInputIdentifier($item) : string {
@@ -89,6 +89,16 @@ class GregorianDatePicker extends BaseRecordField {
 
     public function getUnixSpanIdentifier($item) : string {
         return $this->getElementIdentifier($item) . "_unix";
+    }
+
+    public function enableTime() : GregorianDatePicker {
+        $this->timeEnabled = true;
+        return $this;
+    }
+
+    public function enableUnix() : GregorianDatePicker {
+        $this->unixEnabled = true;
+        return $this;
     }
 
     public function attachRequirementsToTheme(ThemesManager $theme): ThemesManager {

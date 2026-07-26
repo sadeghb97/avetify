@@ -8,8 +8,8 @@ use Avetify\Interface\WebModifier;
 use Avetify\Themes\Main\ThemesManager;
 
 class JalaliDatePicker extends BaseRecordField {
-    public bool $enableTime = false;
-    public bool $enableUnix = false;
+    public bool $timeEnabled = false;
+    public bool $unixEnabled = false;
 
     public function presentValue($item, ?WebModifier $webModifier = null) : void {
         $time = intval($this->getValue($item));
@@ -45,7 +45,7 @@ class JalaliDatePicker extends BaseRecordField {
 
         echo '<button ';
         HTMLInterface::addAttribute("type", "button");
-        HTMLInterface::addAttribute("data-target", $this->enableTime ? "jalali_date" : "jalali_datetime");
+        HTMLInterface::addAttribute("data-target", $this->timeEnabled ? "jalali_date" : "jalali_datetime");
         Styler::classStartAttribute();
         Styler::addClass('avt-timepicker__clear-button');
         Styler::closeAttribute();
@@ -83,7 +83,7 @@ class JalaliDatePicker extends BaseRecordField {
     public function getInitJsString($item) : string {
         $time = intval($this->getValue($item));
         return "initJalaliField('" . $this->getElementIdentifier($item) . "', "
-            . ($this->enableTime ? "true" : "false") . ", " . $time . ");";
+            . ($this->timeEnabled ? "true" : "false") . ", " . $time . ");";
     }
 
     public function getFieldInputIdentifier($item) : string {
@@ -92,6 +92,16 @@ class JalaliDatePicker extends BaseRecordField {
 
     public function getUnixSpanIdentifier($item) : string {
         return $this->getElementIdentifier($item) . "_unix";
+    }
+
+    public function enableTime() : JalaliDatePicker {
+        $this->timeEnabled = true;
+        return $this;
+    }
+
+    public function enableUnix() : JalaliDatePicker {
+        $this->unixEnabled = true;
+        return $this;
     }
 
     public function attachRequirementsToTheme(ThemesManager $theme): ThemesManager {
