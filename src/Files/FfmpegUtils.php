@@ -322,12 +322,16 @@ class FfmpegUtils {
         if ($frameRate > 0) {
             $filterParts[] = "fps={$frameRate}";
         }
+        $filterParts[] = "format=yuv420p";
+
         $filter = "";
         if (count($filterParts) > 0) {
             $filter = "-vf \"" . implode(',', $filterParts) . "\"";
         }
 
-        $audioOption = $removeAudio ? "-an" : "-c:a aac -b:a 128k";
+        $audioOption = $removeAudio
+            ? "-an"
+            : "-c:a aac -ac 2 -b:a 128k";
 
         $tempDir = sys_get_temp_dir() . '/ffmpeg_compilation_' . uniqid();
         if (!mkdir($tempDir) && !is_dir($tempDir)) {
@@ -343,7 +347,7 @@ class FfmpegUtils {
             $tempFile = "{$tempDir}/part_{$index}.mp4";
             $tempFileEscaped = escapeshellarg($tempFile);
 
-            $cmd = "ffmpeg -ss {$start} -t {$dur} -i {$escapedVideo} {$filter} -c:v libx264 -preset veryfast -crf 23 {$audioOption} -movflags +faststart {$tempFileEscaped} -y";
+            $cmd = "ffmpeg -ss {$start} -t {$dur} -i {$escapedVideo} {$filter} -c:v libx264 -preset veryfast -crf 23 {$audioOption} -pix_fmt yuv420p -movflags +faststart {$tempFileEscaped} -y";
             exec($cmd . " 2>&1", $outputLines, $returnVar);
             if ($returnVar !== 0) {
                 Printer::errorPrint("Failed to extract piece {$index}: " . implode("\n", $outputLines) . Pout::br());
@@ -370,8 +374,11 @@ class FfmpegUtils {
         $concatListFileEscaped = escapeshellarg($concatListFile);
 
         // ✅ Final concat with re-encoding to fix timing/audio issues
-        $finalAudioOption = $removeAudio ? "-an" : "-c:a aac -b:a 128k";
-        $concatCmd = "ffmpeg -f concat -safe 0 -i {$concatListFileEscaped} -c:v libx264 -preset veryfast -crf 23 {$finalAudioOption} -movflags +faststart {$escapedOutput} -y";
+        $finalAudioOption = $removeAudio
+            ? "-an"
+            : "-c:a aac -ac 2 -b:a 128k";
+
+        $concatCmd = "ffmpeg -f concat -safe 0 -i {$concatListFileEscaped} -c:v libx264 -preset veryfast -crf 23 {$finalAudioOption} -pix_fmt yuv420p -movflags +faststart {$escapedOutput} -y";
         exec($concatCmd . " 2>&1", $outputLines, $returnVar);
         if ($returnVar !== 0) {
             Printer::errorPrint("Failed to concat pieces: " . implode("\n", $outputLines) . Pout::br());
