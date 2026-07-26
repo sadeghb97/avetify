@@ -1,16 +1,16 @@
 <?php
-namespace Avetify\Components\Buttons;
+namespace Avetify\Components\Buttons\Toggles;
 
 use Avetify\AvetifyManager;
-use Avetify\Interface\Placeable;
-use Avetify\Interface\WebModifier;
 use Avetify\Network\URLBuilder;
 use Avetify\Routing\Routing;
 
-class PageToggleButton implements Placeable {
+class UrlToggleButton extends ToggleButton {
     public string $nextPage = "";
 
-    public function __construct(public array $pages, public array $positionStyles) {
+    public function __construct(public array $pages, array $positionStyles) {
+        parent::__construct($positionStyles);
+        $this->imageSrc = AvetifyManager::imageUrl("view_alt.svg");
         $curScript = Routing::currentScriptName();
         $key = array_search($curScript, $this->pages);
 
@@ -27,18 +27,5 @@ class PageToggleButton implements Placeable {
     public function buildNextPageUrl() : string {
         $urlBuilder = URLBuilder::fromCurrent();
         return $urlBuilder->buildUrl($this->nextPage);
-    }
-
-    public function place(?WebModifier $webModifier = null) {
-        if(!$this->isToggleActive()) return;
-
-        $button = new LinkAbsoluteButton(AvetifyManager::imageUrl("view_alt.svg"),
-            $this->positionStyles, $this->buildNextPageUrl());
-        $button->isBlank = false;
-        $button->place($webModifier);
-    }
-
-    public function isToggleActive() : bool {
-        return true;
     }
 }

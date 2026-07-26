@@ -12,6 +12,7 @@ use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Routing\Routing;
+use Avetify\Themes\Main\ThemesManager;
 
 class EntityAvatarField extends EntityField {
     protected CroppingImage | null $croppingImage = null;
@@ -175,5 +176,11 @@ class EntityAvatarField extends EntityField {
         }
 
         $div->close();
+    }
+
+    public function attachRequirementsToTheme(ThemesManager $theme): ThemesManager {
+        $theme = parent::attachRequirementsToTheme($theme);
+        $theme->includesCropperTools = true;
+        return $theme;
     }
 }
