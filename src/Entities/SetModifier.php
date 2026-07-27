@@ -165,13 +165,10 @@ abstract class SetModifier implements EntityManager {
             $isQualified = true;
 
             foreach ($this->finalFilterFactors() as $filterFactor){
-                $filterKey = null;
-                if(method_exists($filterFactor, "getElementIdentifier")){
-                    $filterKey = $filterFactor->getElementIdentifier();
-                }
+                if(!$filterFactor instanceof FilterFactor) continue;
+                $filterValue = $filterFactor->getFilterValue();
 
-                if($filterKey && isset($_REQUEST[$filterKey])){
-                    $filterValue = $_REQUEST[$filterKey];
+                if($filterValue !== null){
                     if(!$filterFactor->isQualified($record, $filterValue)){
                         $isQualified = false;
                         break;
@@ -248,15 +245,10 @@ abstract class SetModifier implements EntityManager {
         }
 
         foreach ($this->finalFilterFactors() as $filterFactor){
-            if(!($filterFactor instanceof FilterFactor))
+            if(!($filterFactor instanceof FilterFactor)) continue;
+            $filterValue = $filterFactor->getFilterValue();
 
-            $filterKey = null;
-            if(method_exists($filterFactor, "getElementIdentifier")){
-                $filterKey = $filterFactor->getElementIdentifier();
-            }
-
-            if($filterKey && isset($_REQUEST[$filterKey])){
-                $filterValue = $_REQUEST[$filterKey];
+            if($filterValue !== null){
                 $dbFilter = $filterFactor->dbQualifyingFilter($filterValue);
                 if($dbFilter) $filterCollection->addFilter($dbFilter);
             }

@@ -14,8 +14,9 @@ class EditableField extends TableField implements IdentifiedElement {
 
     public function __construct(string $title, string $key,
                                 public EntityID | null $idGetter = null,
-                                public string | null $namespace = null){
+                                ?string $namespace = null){
         parent::__construct($title, $key);
+        $this->namespace = $namespace;
         $this->editable = true;
     }
 
