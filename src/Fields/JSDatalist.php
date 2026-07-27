@@ -3,6 +3,7 @@ namespace Avetify\Fields;
 
 use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
+use Avetify\Utils\StringUtils;
 
 class JSDatalist extends JSDataElement {
     public array $flatRecords = [];
@@ -12,7 +13,7 @@ class JSDatalist extends JSDataElement {
         parent::__construct($dataSetKey, $records, $primaryKey, $labelKey, $imageKey);
 
         foreach ($this->records as $record){
-            $this->flatRecords[] = $this->getItemTitle($record);
+            $this->flatRecords[] = StringUtils::normalizeSearch($this->getItemTitle($record));
         }
     }
 
@@ -40,7 +41,7 @@ class JSDatalist extends JSDataElement {
         foreach ($this->records as $record){
             $plcRecord = (array)($record);
             $plcRecord['main_jsdl_avatar'] = $this->getItemImage($record);
-            $plcRecord['main_jsdl_name'] = $this->getItemTitle($record);
+            $plcRecord['main_jsdl_name'] = StringUtils::normalizeSearch($this->getItemTitle($record));
             $plcRecord['main_jsdl_id'] = $this->getItemId($record);
 
             $plcNamesMap[strtolower($plcRecord['main_jsdl_name'])] = count($plcRecords);

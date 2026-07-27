@@ -24,4 +24,14 @@ class StringUtils {
 
         return $startStr . "..." . $endStr;
     }
+
+    public static function normalizeSearch(string $text): string {
+        static $transliterator = null;
+
+        if ($transliterator === null) {
+            $transliterator = \Transliterator::create('Any-Latin; Latin-ASCII');
+        }
+
+        return $transliterator->transliterate($text);
+    }
 }
