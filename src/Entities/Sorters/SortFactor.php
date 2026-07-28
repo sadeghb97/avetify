@@ -64,8 +64,9 @@ abstract class SortFactor implements Sorter {
 
         if(str_starts_with($tieBreak, "-")){
             $tieBreak = substr($tieBreak, 1);
-            $tbDesc = !$this->alterDirection;
+            $tbDesc = true;
         }
+        if($this->alterDirection) $tbDesc = !$tbDesc;
 
         if(str_starts_with($tieBreak, "#")){
             $tieBreak = substr($tieBreak, 1);
@@ -101,6 +102,11 @@ abstract class SortFactor implements Sorter {
         }
 
         return 0;
+    }
+
+    public function setDefaultSort() : SortFactor {
+        $this->isDefaultSort = true;
+        return $this;
     }
 }
 
