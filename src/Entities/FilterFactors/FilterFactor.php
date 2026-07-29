@@ -12,7 +12,7 @@ class FilterFactor extends BaseRecordField implements Qualifier {
         return !!$this->getValue($item);
     }
 
-    public function dbQualifyingFilter($param): DBFilterInterface | null {
+    public function dbQualifyingFilter($paramValue): DBFilterInterface | null {
         return null;
     }
 

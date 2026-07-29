@@ -137,13 +137,13 @@ abstract class DBConnection extends mysqli {
         return $columnItems;
     }
 
-    private function fetchTableQueryWithFilter(string $source, ?DBFilterInterface $filter = null): string {
+    private function fetchTableQueryWithFilter(string $source, ?DBFilterInterface $filter = null, string $selector = "*"): string {
         $source = trim($source);
         if (stripos($source, 'select') === 0) {
             $source = "($source) t";
         }
         $filterQuery = $filter?->toRawQuery();
-        return "SELECT * FROM $source " . ($filterQuery ? "WHERE $filterQuery " : "");
+        return "SELECT $selector FROM $source " . ($filterQuery ? "WHERE $filterQuery " : "");
     }
 
     public function fetchTableSize(string $source, ?DBFilterInterface $filter = null) : int {
@@ -157,8 +157,9 @@ abstract class DBConnection extends mysqli {
      * @return array
      */
     public function fetchTableSet(string $source, ?DBFilterInterface $filter = null,
-                                  string $orderBy = "", int $limit = 0, int $offset = 0) : array {
-        $sql = $this->fetchTableQueryWithFilter($source, $filter);
+                                  string $orderBy = "", int $limit = 0, int $offset = 0, string $selector = "*") : array {
+        if(!$selector) $selector = "*";
+        $sql = $this->fetchTableQueryWithFilter($source, $filter, $selector);
         if($orderBy) $sql .= (" ORDER BY " . $orderBy);
         if($limit > 0){
             $sql .= " LIMIT $limit";
@@ -171,8 +172,9 @@ abstract class DBConnection extends mysqli {
      * @return AvtEntityItem[]
      */
     public function fetchTable(string $className, string $source, ?DBFilterInterface $filter = null,
-                               string $orderBy = "", int $limit = 0, int $offset = 0) : array {
-        $set = $this->fetchTableSet($source, $filter, $orderBy, $limit, $offset);
+                               string $orderBy = "", int $limit = 0, int $offset = 0, string $selector = "*") : array {
+        if(!$selector) $selector = "*";
+        $set = $this->fetchTableSet($source, $filter, $orderBy, $limit, $offset, $selector);
         $out = [];
         foreach ($set as $result){
             $out[] = AvtEntityItem::createInstance($className, $result);

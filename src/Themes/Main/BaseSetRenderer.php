@@ -206,7 +206,7 @@ abstract class BaseSetRenderer {
 
             $currentFilter = $_GET[$filterKey] ?? null;
             foreach ($filter->discreteFilters as $discreteFilterTitle => $discreteFilterValue){
-                $alterStyle = $currentFilter && $currentFilter == $discreteFilterValue;
+                $alterStyle = $currentFilter !== null && $currentFilter == $discreteFilterValue;
                 $this->renderFilterLabel($discreteFilterTitle,
                     Routing::addParamToCurrentLink($filterKey, $discreteFilterValue), $alterStyle);
             }

@@ -322,6 +322,13 @@ class TimeUtils {
     public static function summaryFormatDuration(int $duration, string $imploder = ",", int $maxParts = 2): string {
         return self::summaryFormatDurationRT(self::getRecentTimeFromDuration($duration), $imploder, $maxParts);
     }
+
+    function formatHmsDuration(int $seconds): string {
+        $hours = intdiv($seconds, 3600);
+        $minutes = intdiv($seconds % 3600, 60);
+        $seconds = $seconds % 60;
+        return sprintf('%02d:%02d:%02d', $hours, $minutes, $seconds);
+    }
 }
 
 

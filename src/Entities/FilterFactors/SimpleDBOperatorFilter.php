@@ -10,9 +10,7 @@ class SimpleDBOperatorFilter extends FilterFactor {
         $this->isNumeric = $isNumeric;
     }
 
-    public function dbQualifyingFilter($param): DBFilterInterface|null {
-        $filterValue = $this->getFilterValue();
-        if($filterValue === null) return null;
-        return new DBFilter($this->key, $this->operator, $filterValue, $this->isNumeric);
+    public function dbQualifyingFilter($paramValue): DBFilterInterface|null {
+        return new DBFilter($this->key, $this->operator, $paramValue, $this->isNumeric);
     }
 }

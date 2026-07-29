@@ -21,12 +21,12 @@ class FilterField extends FilterFactor implements IdentifiedElement {
         return parent::isQualified($item, $param);
     }
 
-    public function dbQualifyingFilter($param): DBFilterInterface | null {
+    public function dbQualifyingFilter($paramValue): DBFilterInterface | null {
         if(method_exists($this->recordField, "dbQualifyingFilter")){
-            return $this->recordField->dbQualifyingFilter($param);
+            return $this->recordField->dbQualifyingFilter($paramValue);
         }
 
-        return parent::dbQualifyingFilter($param);
+        return parent::dbQualifyingFilter($paramValue);
     }
 
     public function getElementIdentifier($item = null) {

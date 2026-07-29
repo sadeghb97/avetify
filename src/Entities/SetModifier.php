@@ -203,6 +203,7 @@ abstract class SetModifier implements EntityManager {
         $filter = $this->createDBFilter();
         $fetchOrder = $this->createDBFetchOrder();
         $dbs = $this->dbSource();
+        $dbSelector = $this->dbSelector();
 
         $limit = 0;
         $offset = 0;
@@ -213,13 +214,17 @@ abstract class SetModifier implements EntityManager {
         }
 
         if($this->className){
-            return $this->conn->fetchTable($this->className, $dbs, $filter, $fetchOrder, $limit, $offset);
+            return $this->conn->fetchTable($this->className, $dbs, $filter, $fetchOrder, $limit, $offset, $dbSelector);
         }
-        return $this->conn->fetchTableSet($dbs, $filter, $fetchOrder, $limit, $offset);
+        return $this->conn->fetchTableSet($dbs, $filter, $fetchOrder, $limit, $offset, $dbSelector);
     }
 
     public function dbSource() : string {
         return $this->dbTableName;
+    }
+
+    public function dbSelector() : string {
+        return "*";
     }
 
     public function dbExtraFilters() : DBFilterInterface | null {

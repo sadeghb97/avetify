@@ -201,8 +201,8 @@ class TableField extends BaseRecordField implements Qualifier {
         return !!$this->getValue($item);
     }
 
-    public function dbQualifyingFilter($param): DBFilterInterface | null {
-        return new DBFilter($this->key, "=", $param, $this->isNumeric);
+    public function dbQualifyingFilter($paramValue): DBFilterInterface | null {
+        return new DBFilter($this->key, "=", $paramValue, $this->isNumeric);
     }
 
     public function sortQualified($item) : bool {

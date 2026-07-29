@@ -4,7 +4,7 @@ namespace Avetify\Table\Fields\DateFields;
 use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\TableSimpleField;
 
-class TimeDurationField extends TableSimpleField {
+class HMSDurationField extends TableSimpleField {
     public function __construct(string $title, string $key, public bool $isGlobal = true){
         parent::__construct($title, $key);
     }

@@ -26,9 +26,9 @@ class BaseSetSelectField extends EditableField {
         return true;
     }
 
-    public function dbQualifyingFilter($param): DBFilterInterface | null {
-        if(!$param) return null;
-        $targetList = explode(",", $param);
+    public function dbQualifyingFilter($paramValue): DBFilterInterface | null {
+        if(!$paramValue) return null;
+        $targetList = explode(",", $paramValue);
         $filterCollection = new DBFilterCollection();
         foreach ($targetList as $target){
             $filterCollection->addFilter(

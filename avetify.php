@@ -246,7 +246,7 @@ require_once "src/Table/Fields/NumberFields/MegaNumberField.php";
 require_once "src/Table/Fields/DateFields/RecentField.php";
 require_once "src/Table/Fields/DateFields/DurationField.php";
 require_once "src/Table/Fields/DateFields/IRDateField.php";
-require_once "src/Table/Fields/DateFields/TimeDurationField.php";
+require_once "src/Table/Fields/DateFields/HMSDurationField.php";
 
 require_once "src/Table/Fields/TextFields/TitleCaseField.php";
 
