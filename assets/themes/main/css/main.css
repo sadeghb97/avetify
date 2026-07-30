@@ -39,6 +39,7 @@ input.numeric-text {
 }
 
 .selbox-title{
+    color: black;
     font-weight: bold;
     border-radius: 6px;
     margin-left: 3px;

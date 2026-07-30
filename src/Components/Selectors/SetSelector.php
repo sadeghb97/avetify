@@ -53,6 +53,7 @@ class SetSelector implements Placeable, IdentifiedElement {
         $titleModifier->styler->pushStyle(CSS::fontWeight, "bold");
         $titleModifier->styler->pushStyle(CSS::marginTop, "8px");
         $titleModifier->styler->pushStyle(CSS::marginBottom, "6px");
+        $titleModifier->styler->pushStyle(CSS::color, "Black");
         HTMLInterface::placeDiv($this->label, $titleModifier);
         FormUtils::placeHiddenField($this->getElementIdentifier(), $this->initValue, !$this->useNameIdentifier);
 
