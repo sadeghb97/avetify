@@ -2,14 +2,8 @@
 namespace Avetify\Network;
 
 class ProxyFetcher extends NetworkFetcher {
-    public function __construct(public string $proxy){}
-
-    function enableProxy(){
-        stream_context_set_default(['http'=>['proxy' => $this->proxy]]);
-    }
-
-    function fetch($url) : string {
-        return $this->curlGetContents($url, $this->proxy);
+    public function __construct(string $proxy){
+        $this->proxy = $proxy;
     }
 
     function downloadFile($imageUrl, $targetFile) : bool {

@@ -293,13 +293,24 @@ abstract class AvtEntity extends SetModifier {
         return $this->conn->query($this->deleteRecordQuery($pk));
     }
 
-    public function printEntityLinkedName($record){
-        echo '<a href="' . $this->entityPage() . '?' .
-            $this->urlParamEntityKey . '=' . $this->getItemId($record) . '" target="_blank"';
-        echo ' style="text-decoration: none; font-weight: bold;" >';
-        echo '<span style="color: Black;">';
+    public function printEntityLinkedName($record) : void {
+        $link = $this->entityPage() . "?" . $this->urlParamEntityKey . '=' . $this->getItemId($record);
+        echo '<a ';
+        HTMLInterface::addAttribute("href", $link);
+        Styler::startAttribute();
+        Styler::addStyle('text-decoration', 'none');
+        Styler::addStyle('font-weight', 'bold');
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
+
+        echo '<span ';
+        Styler::startAttribute();
+        Styler::addStyle('color', 'Black');
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
         echo $this->getItemTitle($record);
-        echo '</sapn>';
+        echo '</span>';
+
         echo '</a>';
     }
 
@@ -442,27 +453,33 @@ abstract class AvtEntity extends SetModifier {
                         }
 
                         if($up){
-                            $extensionRequired = ($orgExtension && $orgExtension != $af->targetExt);
-                            $convertRequired = $extensionRequired;
-                            if(!$convertRequired && $af->maxImageSize){
-                                $curMaxSize = ImageUtils::getMaxDimSize($targetFilename);
-                                if($curMaxSize > $af->maxImageSize) $convertRequired = true;
+                            if(file_exists($targetFilename)) {
+                                $extensionRequired = ($orgExtension && $orgExtension != $af->targetExt);
+                                $convertRequired = $extensionRequired;
+                                if (!$convertRequired && $af->maxImageSize) {
+                                    $curMaxSize = ImageUtils::getMaxDimSize($targetFilename);
+                                    if ($curMaxSize > $af->maxImageSize) $convertRequired = true;
+                                }
+
+                                $finalWD = $avatarField->manualCrop ? 0 : $af->forcedWidthDimension;
+                                $finalHD = $avatarField->manualCrop ? 0 : $af->forcedHeightDimension;
+
+                                if (!$convertRequired && $finalWD > 0 && $finalHD > 0) {
+                                    $curDiff = ImageUtils::getRatioDiffWithDims($targetFilename,
+                                        $af->forcedWidthDimension, $af->forcedHeightDimension);
+                                    if ($curDiff > 0.01) $convertRequired = true;
+                                }
+
+
+                                if ($convertRequired) {
+                                    ImageUtils::magickConvert($targetFilename,
+                                        $extensionRequired ? $af->targetExt : null,
+                                        $af->maxImageSize, $finalWD, $finalHD);
+                                }
                             }
-
-                            $finalWD = $avatarField->manualCrop ? 0 : $af->forcedWidthDimension;
-                            $finalHD = $avatarField->manualCrop ? 0 : $af->forcedHeightDimension;
-
-                            if(!$convertRequired && $finalWD > 0 && $finalHD > 0){
-                                $curDiff = ImageUtils::getRatioDiffWithDims($targetFilename,
-                                    $af->forcedWidthDimension, $af->forcedHeightDimension);
-                                if($curDiff > 0.01) $convertRequired = true;
-                            }
-
-
-                            if($convertRequired) {
-                                ImageUtils::magickConvert($targetFilename,
-                                    $extensionRequired ? $af->targetExt : null,
-                                    $af->maxImageSize, $finalWD, $finalHD);
+                            else {
+                                Printer::warningPrint("Fail to store Avatar: ");
+                                echo $targetFilename . Pout::br();
                             }
                         }
                         else if($curRecordObject) {
