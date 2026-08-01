@@ -93,9 +93,12 @@ function action(menuId, arg, menuArgs){
 		const parentDiv = triggeredFile.parentElement
 		const parentDivId = parentDiv.id
 		const fullTier = parentDivId.substr(8)
-		if(fullTier <= 0) return
+    const reversed = jsArgs.list_order_reversed
 
-		const altListId = "gridDemo" + (fullTier - 1)
+    if(!reversed && fullTier <= 0) return
+    if(reversed && fullTier >= (menuArgs.lists_count - 1)) return
+
+		const altListId = "gridDemo" + (!reversed ? (fullTier - 1) : (parseInt(fullTier) + 1))
 		const altListDiv = document.getElementById(altListId)
 		parentDiv.removeChild(triggeredFile)
 		altListDiv.appendChild(triggeredFile);
@@ -105,9 +108,12 @@ function action(menuId, arg, menuArgs){
 		const parentDiv = triggeredFile.parentElement
 		const parentDivId = parentDiv.id
 		const fullTier = parentDivId.substr(8)
-		if(fullTier >= (menuArgs.lists_count - 1)) return
+    const reversed = jsArgs.list_order_reversed
 
-		const altListId = "gridDemo" + (parseInt(fullTier) + 1)
+		if(!reversed && fullTier >= (menuArgs.lists_count - 1)) return
+    if(reversed && fullTier <= 0) return
+
+		const altListId = "gridDemo" + (!reversed ? (parseInt(fullTier) + 1) : (fullTier - 1))
 		const altListDiv = document.getElementById(altListId)
 		parentDiv.removeChild(triggeredFile)
 		altListDiv.insertBefore(triggeredFile, altListDiv.firstChild);
@@ -155,6 +161,30 @@ function rearrangeRanks(){
 			}
 		}
 	})
+}
+
+function addNewList(){
+  const newListIndex = jsArgs.lists_count;
+  jsArgs.lists_count++;
+
+  const listerForm = document.getElementById("lister_form")
+  const zeroList = document.getElementById('msec_0');
+  const clonedList = zeroList.cloneNode(true);
+
+  clonedList.id = 'msec_' + newListIndex;
+  const inner = clonedList.querySelector('#gridDemo0');
+  inner.id = 'gridDemo' + newListIndex;
+  inner.innerHTML = '';
+  listerForm.prepend(clonedList);
+
+  grids[newListIndex] = document.getElementById('gridDemo' + newListIndex)
+  if(grids[newListIndex]) {
+    new Sortable(grids[newListIndex], {
+      animation: 150,
+      group: 'shared',
+      ghostClass: 'blue-background-class'
+    });
+  }
 }
 
 function transfer(menuId, tier){

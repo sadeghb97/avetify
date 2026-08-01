@@ -18,7 +18,10 @@ abstract class AvtLister extends SetModifier {
 
     public ?ListerRenderer $listerRenderer = null;
     public array $initItemsMap = [];
+    public bool $renderListsInReverseOrder = false;
     public bool $placeDefaultTriggers = true;
+    public bool $placeCreateListTrigger = false;
+    public bool $placeManageListTrigger = false;
     public string $menuId = "";
 
     public function __construct(string $key, array $items){
@@ -231,6 +234,7 @@ abstract class AvtLister extends SetModifier {
     function initJsArgs(){
         echo '<script>';
         echo 'const jsArgs = {' .
+            '"list_order_reversed": ' . ($this->renderListsInReverseOrder ? 'true' : 'false') . ', ' .
             '"lists_count": ' . count($this->getListTitles()) . ', ' .
             '"menu_width": ' . 0 . ', ' .
             '"menu_height": ' . 0 . ', ' .

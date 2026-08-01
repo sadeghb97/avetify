@@ -56,6 +56,15 @@ abstract class ListerRenderer extends BaseSetRenderer {
                     "rearrangeRanks()");
             }
 
+            if($this->lister->placeCreateListTrigger){
+                HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('add_box.svg'),
+                    [
+                        "inset-inline-start" => "20px",
+                        "bottom" => "80px"
+                    ],
+                    "addNewList()");
+            }
+
             $primaryButton = new PrimaryButton("listerSubmit(jsArgs); submitForm('lister_form');");
             $primaryButton->place();
         }
@@ -115,8 +124,10 @@ abstract class ListerRenderer extends BaseSetRenderer {
         $perm = $this->lister->getPermanentCategoriesCount();
         if($perm == null) $perm = count($categories);
 
-        for($i=0; count($categories)>$i; $i++){
-            $this->printCategorySection($categories[$i], $perm <= $i);
+        $cateCount = count($categories);
+        for($i=0; $cateCount>$i; $i++){
+            $categoryIndex = !$this->lister->renderListsInReverseOrder ? $i : ($cateCount - $i - 1);
+            $this->printCategorySection($categories[$categoryIndex], $perm <= $i);
         }
     }
 

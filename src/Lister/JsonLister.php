@@ -4,6 +4,7 @@ namespace Avetify\Lister;
 use Exception;
 
 abstract class JsonLister extends AvtLister {
+    public bool $renderListsInReverseOrder = true;
     public array $listerData;
 
     public function __construct(string $key, array $items) {
@@ -16,18 +17,23 @@ abstract class JsonLister extends AvtLister {
     public function ensureListerData() : void {
         $dataDilePath = $this->getJsonStorageFilePath();
         if(!file_exists($dataDilePath)){
-            $newData = [
-                "lists" => [],
-                "items" => []
-            ];
-
-            $ndRes = file_put_contents($dataDilePath, json_encode($newData));
-            if(!$ndRes) throw new Exception("Cant create data json file");
+            $this->storeData([], []);
             $this->ensureListerData();
         }
 
         $dataRawContents = file_get_contents($dataDilePath);
         $this->listerData = json_decode($dataRawContents, true);
+    }
+
+    public function storeData(array $lists, array $items) : void {
+        $dataDilePath = $this->getJsonStorageFilePath();
+        $newData = [
+            "lists" => $lists,
+            "items" => $items
+        ];
+
+        $ndRes = file_put_contents($dataDilePath, json_encode($newData));
+        if(!$ndRes) throw new Exception("Cant create data json file");
     }
 
     public function getItemCategoryOriginalPk($item) {
@@ -50,7 +56,7 @@ abstract class JsonLister extends AvtLister {
 
     public function getListTitles(): array {
         $listsData = $this->listerData['lists'];
-        $titles = ["unlisted"];
+        $titles = ["Unlisted"];
         foreach ($listsData as $ld){
             $titles[] = $ld['title'];
         }
@@ -58,8 +64,29 @@ abstract class JsonLister extends AvtLister {
     }
 
     public function handleSubmittedList(array $lists, array $itemsParams, $allFields) {
-        $listsCount = count($lists);
+        $freshListsCount = count($lists) - count($this->getListTitles());
+        $oldListsCount = count($lists) - $freshListsCount;
+        $allListsCount = $freshListsCount + $oldListsCount;
 
         $listsData = [];
+        for ($i=1; count($lists) > $i; $i++){
+            $listsData[] = [
+                "title" => "List " . $i,
+                "index" => $i
+            ];
+        }
+
+        $itemsData = [];
+        foreach ($lists as $listIndex => $list){
+            foreach ($list as $internalListIndex => $itemId){
+                $itemsData[$itemId] = [
+                    "list" => $listIndex,
+                    "priority" => $internalListIndex
+                ];
+            }
+        }
+
+        $this->storeData($listsData, $itemsData);
+        $this->ensureListerData();
     }
 }
