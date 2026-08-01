@@ -111,17 +111,16 @@ abstract class ListerRenderer extends BaseSetRenderer {
     }
 
     public function renderAllCategories(){
-        $cursor = 0;
         $categories = $this->lister->getCategories();
         $perm = $this->lister->getPermanentCategoriesCount();
         if($perm == null) $perm = count($categories);
 
         for($i=0; count($categories)>$i; $i++){
-            $this->printCategorySection($categories[$i], $cursor, $perm <= $i);
+            $this->printCategorySection($categories[$i], $perm <= $i);
         }
     }
 
-    public function printCategorySection(ListerCategory $category, &$cursor, $hide = false){
+    public function printCategorySection(ListerCategory $category, $hide = false){
         $categoryTitle = $category->title;
         $msecID = "msec_" . $category->index;
         $msecTitleID = "msec_title_" . $category->index;
@@ -138,19 +137,16 @@ abstract class ListerRenderer extends BaseSetRenderer {
         Styler::addStyle("justify-content", "center");
         Styler::closeAttribute();
         echo ' >';
-        $this->printCategoryCards($category, $cursor);
+        $this->printCategoryCards($category);
         echo '</div>';
         echo '<hr />';
         echo '</div>';
     }
 
-    public function printCategoryCards(ListerCategory $category, &$cursor){
-        $itemRank = 1;
-        while($cursor < count($this->lister->currentRecords) &&
-            $this->lister->initItemsMap[$this->lister->getItemId($this->lister->currentRecords[$cursor])] <= $category->index) {
-            $this->printItemCard($this->lister->currentRecords[$cursor], $category, $itemRank);
-            $cursor++;
-            $itemRank++;
+    public function printCategoryCards(ListerCategory $category){
+        foreach ($category->records as $recordIndex => $record){
+            $itemRank = $recordIndex + 1;
+            $this->printItemCard($record, $category, $itemRank);
         }
     }
 

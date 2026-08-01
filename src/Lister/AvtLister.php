@@ -84,6 +84,13 @@ abstract class AvtLister extends SetModifier {
         foreach ($listTitles as $listTitle){
             $categories[] = new ListerCategory($index++, $listTitle);
         }
+
+        foreach ($this->currentRecords as $record){
+            $recordId = $this->getItemId($record);
+            $listIndex = $this->initItemsMap[$recordId];
+            $categories[$listIndex]->records[] = $record;
+        }
+
         return $categories;
     }
 
@@ -224,7 +231,7 @@ abstract class AvtLister extends SetModifier {
     function initJsArgs(){
         echo '<script>';
         echo 'const jsArgs = {' .
-            '"lists_count": ' . count($this->getCategories()) . ', ' .
+            '"lists_count": ' . count($this->getListTitles()) . ', ' .
             '"menu_width": ' . 0 . ', ' .
             '"menu_height": ' . 0 . ', ' .
             '}';

@@ -4,6 +4,7 @@ namespace Avetify\Lister;
 class ListerCategory {
     public int $index = 0;
     public string $title = "";
+    public array $records = [];
 
     public function __construct($index, $title){
         $this->index = $index;
