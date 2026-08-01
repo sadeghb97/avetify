@@ -16,6 +16,14 @@ namespace Avetify\Interface\HTML;
          echo ' ';
      }
 
+     public static function normalizedAttributeValue($value) : string {
+         return $value ? htmlspecialchars($value, ENT_QUOTES, 'UTF-8') : "";
+     }
+
+     public static function addNormalizedAttribute($attr, $value = null) : void {
+         self::addAttribute($attr, $value !== null ? self::normalizedAttributeValue($value) : null);
+     }
+
      public static function copiableAttribute() : void {
          self::addAttribute("onclick", "avtCopyElementText(this);");
      }

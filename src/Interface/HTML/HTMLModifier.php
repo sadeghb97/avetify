@@ -8,6 +8,11 @@ class HTMLModifier {
         $this->modifiers[$modifierKey] = $modifierValue;
     }
 
+    public function pushNormalizedModifier($modifierKey, $modifierValue) : void {
+        $normalizedModifierValue = $modifierValue !== null ? HTMLInterface::normalizedAttributeValue($modifierValue) : null;
+        $this->pushModifier($modifierKey, $normalizedModifierValue);
+    }
+
     public function popModifier($modifierKey){
         unset($this->modifiers[$modifierKey]);
     }

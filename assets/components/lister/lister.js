@@ -53,7 +53,7 @@ function listerSubmit(moreArgs){
     const outIndex = listIndex - remCount
     outLists[outIndex] = {
       index: outIndex,
-      title: "Oveis",
+      title: grids[listIndex].parentElement.dataset.listTitle,
       ids: []
     }
 

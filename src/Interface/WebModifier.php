@@ -41,6 +41,11 @@ class WebModifier {
         $this->htmlModifier->pushModifier($modifierKey, $modifierValue);
     }
 
+    public function pushNormalizedModifier(string $modifierKey, string $modifierValue) : void {
+        if(!$this->htmlModifier) $this->htmlModifier = new HTMLModifier();
+        $this->htmlModifier->pushNormalizedModifier($modifierKey, $modifierValue);
+    }
+
     public function popStyle(string $styleKey) : void {
         if(!$this->styler) $this->styler = new Styler();
         $this->styler->popStyle($styleKey);

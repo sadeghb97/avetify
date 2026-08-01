@@ -136,6 +136,7 @@ abstract class ListerRenderer extends BaseSetRenderer {
         $msecID = "msec_" . $category->index;
         $msecTitleID = "msec_title_" . $category->index;
         echo '<div class="magham-section" id="' . $msecID . '" ';
+        HTMLInterface::addNormalizedAttribute('data-list-title', $categoryTitle);
         echo ' style="display: ' . (!$hide ? "block" : "none") . ';"';
         echo ' >';
         echo '<div class="magham-box">';
