@@ -1,6 +1,8 @@
 <?php
 namespace Avetify\Lister;
 
+use Avetify\Entities\EntityUtils;
+use Avetify\Interface\Pout;
 use Exception;
 
 abstract class JsonLister extends AvtLister {
@@ -65,18 +67,21 @@ abstract class JsonLister extends AvtLister {
 
     public function handleSubmittedList(array $lists, array $itemsParams, $allFields) {
         $outListsData = [];
-        for ($i=1; count($lists) > $i; $i++){
+        for ($i=0; (count($lists) - 1) > $i; $i++){
             $outListsData[] = [
                 "title" => $lists[$i]['title'],
-                "index" => $i
+                "index" => count($lists) - 1 - $i
             ];
         }
+        EntityUtils::simpleSort($outListsData, 'index', true);
 
         $itemsData = [];
         foreach ($lists as $listIndex => $listDetails){
             foreach ($listDetails['ids'] as $internalListIndex => $itemId){
+                $adjustedListIndex = count($lists) - 1 - $listIndex;
+
                 $itemsData[$itemId] = [
-                    "list" => $listIndex,
+                    "list" => $adjustedListIndex,
                     "priority" => $internalListIndex
                 ];
             }

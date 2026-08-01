@@ -69,12 +69,18 @@ abstract class ListerRenderer extends BaseSetRenderer {
             $primaryButton->place();
         }
 
-        ThemesManager::importJS(AvetifyManager::assetUrl('components/lister/init_lister.js'));
+        $this->initListers();
         $this->lister->initMenu();
         $this->lister->readyForm();
         $this->moreBodyContents();
 
         $this->closePage();
+    }
+
+    public function initListers() : void {
+        echo '<script>';
+        echo 'initListers()';
+        echo '</script>';
     }
 
     public function openCollection(?WebModifier $webModifier = null) {
@@ -135,14 +141,14 @@ abstract class ListerRenderer extends BaseSetRenderer {
         $categoryTitle = $category->title;
         $msecID = "msec_" . $category->index;
         $msecTitleID = "msec_title_" . $category->index;
-        echo '<div class="magham-section" id="' . $msecID . '" ';
+        echo '<div class="magham-section js__avt-lister" id="' . $msecID . '" ';
         HTMLInterface::addNormalizedAttribute('data-list-title', $categoryTitle);
         echo ' style="display: ' . (!$hide ? "block" : "none") . ';"';
         echo ' >';
         echo '<div class="magham-box">';
-        echo '<span class="magham-degree" id="' . $msecTitleID . '">' . $categoryTitle . '</span>';
+        echo '<span class="magham-degree js__avt-lister-title" id="' . $msecTitleID . '">' . $categoryTitle . '</span>';
         echo '</div>';
-        echo '<div id="gridDemo' . $category->index . '" class="row" ';
+        echo '<div class="row js__avt-grid" ';
         Styler::startAttribute();
         Styler::addStyle("overflow", "auto");
         Styler::addStyle("position", "relative");

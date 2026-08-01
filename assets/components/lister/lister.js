@@ -39,28 +39,65 @@ function initMenu(menuId, jsArgs){
 	});
 }
 
+function fetchPageListers(){
+  const pageListers = [];
+  const listersContainer = document.getElementById('lister_form');
+
+  for (const child of listersContainer.children) {
+    if (child.classList.contains('js__avt-lister')) {
+      pageListers.push(child);
+    }
+  }
+
+  return pageListers;
+}
+
+function fetchGridElementFromLister(lister){
+  return lister.querySelector('.js__avt-grid');
+}
+
+function fetchSpanTitleElementFromLister(lister){
+  return lister.querySelector('.js__avt-lister-title');
+}
+
+function fetchListersLegacyGrids(){
+  const pageListers = fetchPageListers();
+  const constLegacyGrids = [];
+
+  for (const lister of pageListers) {
+    const grid = fetchGridElementFromLister(lister);
+    constLegacyGrids.push(grid)
+  }
+
+  return constLegacyGrids;
+}
+
+function initListers(){
+  const legacyGrids = fetchListersLegacyGrids();
+  for (const grid of legacyGrids) {
+    new Sortable(grid, {
+      animation: 150,
+      group: 'shared', // set both lists to same group
+      ghostClass: 'blue-background-class'
+    });
+  }
+}
+
 function listerSubmit(moreArgs){
-	const maxListerGrids = moreArgs.lists_count
+  const legacyGrids = fetchListersLegacyGrids()
 	let outLists = []
 
-  let remCount = 0
-	for(let listIndex = 0; maxListerGrids > listIndex; listIndex++) {
-    if(!grids[listIndex].isConnected){
-      remCount++
-      continue;
-    }
-
-    const outIndex = listIndex - remCount
-    outLists[outIndex] = {
-      index: outIndex,
-      title: grids[listIndex].parentElement.dataset.listTitle,
+  for (let gIndex = 0; legacyGrids.length > gIndex; gIndex++) {
+    outLists[gIndex] = {
+      index: gIndex,
+      title: legacyGrids[gIndex].parentElement.dataset.listTitle,
       ids: []
     }
 
-		for (let i = 0; grids[listIndex].children.length > i; i++) {
-      outLists[outIndex].ids.push(grids[listIndex].children[i].id)
-		}
-	}
+    for (let i = 0; legacyGrids[gIndex].children.length > i; i++) {
+      outLists[gIndex].ids.push(legacyGrids[gIndex].children[i].id)
+    }
+  }
 
 	document.getElementById("newlist").value = JSON.stringify(outLists);
 	return true;
@@ -92,33 +129,25 @@ function action(menuId, arg, menuArgs){
 	}
 	else if(arg === 2) {
 		//promote
-		const parentDiv = triggeredFile.parentElement
-		const parentDivId = parentDiv.id
-		const fullTier = parentDivId.substr(8)
-    const reversed = jsArgs.list_order_reversed
+		const curGrid = triggeredFile.parentElement
+    const curLister = curGrid.parentElement
+    const targetLister = curLister.previousElementSibling
+    if(!targetLister) return;
+    const targetGrid = fetchGridElementFromLister(targetLister)
 
-    if(!reversed && fullTier <= 0) return
-    if(reversed && fullTier >= (menuArgs.lists_count - 1)) return
-
-		const altListId = "gridDemo" + (!reversed ? (fullTier - 1) : (parseInt(fullTier) + 1))
-		const altListDiv = document.getElementById(altListId)
-		parentDiv.removeChild(triggeredFile)
-		altListDiv.appendChild(triggeredFile);
+    curGrid.removeChild(triggeredFile)
+    targetGrid.appendChild(triggeredFile);
 	}
 	else if(arg === 3) {
 		//relegate
-		const parentDiv = triggeredFile.parentElement
-		const parentDivId = parentDiv.id
-		const fullTier = parentDivId.substr(8)
-    const reversed = jsArgs.list_order_reversed
+    const curGrid = triggeredFile.parentElement
+    const curLister = curGrid.parentElement
+    const targetLister = curLister.nextElementSibling
+    if(!targetLister) return;
+    const targetGrid = fetchGridElementFromLister(targetLister)
 
-		if(!reversed && fullTier >= (menuArgs.lists_count - 1)) return
-    if(reversed && fullTier <= 0) return
-
-		const altListId = "gridDemo" + (!reversed ? (parseInt(fullTier) + 1) : (fullTier - 1))
-		const altListDiv = document.getElementById(altListId)
-		parentDiv.removeChild(triggeredFile)
-		altListDiv.insertBefore(triggeredFile, altListDiv.firstChild);
+    curGrid.removeChild(triggeredFile)
+    targetGrid.insertBefore(triggeredFile, targetGrid.firstChild);
 	}
 	else if(arg === 4){
 		const parentDiv = triggeredFile.parentElement
@@ -151,7 +180,8 @@ function action(menuId, arg, menuArgs){
 }
 
 function rearrangeRanks(){
-	grids.forEach((grid, gridIndex) => {
+  const legacyGrids = fetchListersLegacyGrids()
+  legacyGrids.forEach((grid, gridIndex) => {
 		if(grid == null) return
 		for(let i=0; grid.children.length>i; i++){
 			const childSquareId = grid.children[i].id
@@ -166,27 +196,32 @@ function rearrangeRanks(){
 }
 
 function addNewList(){
-  const newListIndex = jsArgs.lists_count;
-  jsArgs.lists_count++;
+  const enteredTitle = prompt('Enter new list title:');
+  if(!enteredTitle) return;
+
+  const newListIndex = jsArgs.listers_safe_cursor;
+  jsArgs.listers_safe_cursor++;
 
   const listerForm = document.getElementById("lister_form")
-  const zeroList = document.getElementById('msec_0');
+  const zeroList = listerForm.lastElementChild;
   const clonedList = zeroList.cloneNode(true);
 
   clonedList.id = 'msec_' + newListIndex;
-  const inner = clonedList.querySelector('#gridDemo0');
-  inner.id = 'gridDemo' + newListIndex;
-  inner.innerHTML = '';
-  listerForm.prepend(clonedList);
+  clonedList.dataset.listTitle = enteredTitle;
 
-  grids[newListIndex] = document.getElementById('gridDemo' + newListIndex)
-  if(grids[newListIndex]) {
-    new Sortable(grids[newListIndex], {
-      animation: 150,
-      group: 'shared',
-      ghostClass: 'blue-background-class'
-    });
-  }
+  const clSpanTitle = fetchSpanTitleElementFromLister(clonedList);
+  clSpanTitle.id = "msec_title_" + newListIndex;
+  clSpanTitle.innerHTML = enteredTitle;
+
+  const innerGrid = fetchGridElementFromLister(clonedList);
+  innerGrid.innerHTML = '';
+
+  listerForm.insertBefore(clonedList, zeroList);
+  new Sortable(innerGrid, {
+    animation: 150,
+    group: 'shared',
+    ghostClass: 'blue-background-class'
+  });
 }
 
 function transfer(menuId, tier){
@@ -197,29 +232,6 @@ function transfer(menuId, tier){
 	grid.appendChild(triggeredFile)
 
 	hideContextMenu(menuId)
-}
-
-function shift(){
-	const id = parseInt(triggeredFile.id.split("_")[1])
-	console.log(id)
-	let lastEmpty = 0
-
-	for(let mval = 0; mval <= id; mval++){
-		const curChildren = document.getElementById("gridDemo" + mval).children
-		if(curChildren.length == 0) lastEmpty = mval;
-	}
-
-	for(let mval = lastEmpty + 1; mval <= id; mval++){
-		const curGrid = document.getElementById("gridDemo" + mval)
-		const targetGrid = document.getElementById("gridDemo" + (mval - 1))
-		const curChildren = curGrid.children
-		const targetGridFirstChild = targetGrid.firstChild
-		console.log(curGrid, targetGrid, curChildren)
-
-		while(curChildren.length > 0){
-			targetGrid.insertBefore(curChildren[0], targetGridFirstChild)
-		}
-	}
 }
 
 function showMenu(menuId, jsArgs){

@@ -114,7 +114,7 @@ abstract class AvtLister extends SetModifier {
     }
 
     public function getListsCount() : int {
-        return count($this->getCategories());
+        return count($this->createCategories());
     }
 
     abstract public function handleSubmittedList(array $lists, array $itemsParams, $allFields);
@@ -251,7 +251,7 @@ abstract class AvtLister extends SetModifier {
         echo '<script>';
         echo 'const jsArgs = {' .
             '"list_order_reversed": ' . ($this->renderListsInReverseOrder ? 'true' : 'false') . ', ' .
-            '"lists_count": ' . $this->getListsCount() . ', ' .
+            '"listers_safe_cursor": ' . $this->getListsCount() . ', ' .
             '"menu_width": ' . 0 . ', ' .
             '"menu_height": ' . 0 . ', ' .
             '}';
