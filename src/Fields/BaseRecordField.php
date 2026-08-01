@@ -15,6 +15,7 @@ class BaseRecordField implements IdentifiedElement {
     const DYNAMIC_IDENTIFIER = "*$*";
     public WebModifier | null $baseModifier = null;
     public ?string $namespace = null;
+    public bool $legacyGeneralNaming = false;
 
     public bool $isNumeric = false;
     public bool $nullOnEmpty = false;
@@ -39,6 +40,7 @@ class BaseRecordField implements IdentifiedElement {
     }
 
     public function getElementIdentifier($item = null) {
+        if($this->legacyGeneralNaming) return $this->key;
         $id = ($this->namespace ? $this->namespace . "_" : "") . $this->key;
         if($item instanceof AvtEntityItem){
             $itemId = $item->getItemId();

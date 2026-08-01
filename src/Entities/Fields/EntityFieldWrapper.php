@@ -14,5 +14,9 @@ class EntityFieldWrapper extends EntityField {
         if(property_exists($this->recordField, "useNameIdentifier")) {
             $this->recordField->useNameIdentifier = true;
         }
+
+        if(property_exists($this->recordField, "legacyGeneralNaming")) {
+            $this->recordField->legacyGeneralNaming = true;
+        }
     }
 }

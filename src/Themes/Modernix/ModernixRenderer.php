@@ -99,8 +99,9 @@ class ModernixRenderer extends SetRenderer {
             foreach ($allIconLinks as $iconLink) {
                 $iconLinkModifier = WebModifier::createInstance();
                 $iconLinkModifier->pushModifier("target", "_blank");
-                $iconLinkModifier->pushStyle("margin-left", "8px");
-                HTMLInterface::openLink($iconLink->link);
+                $iconLinkModifier->pushStyle("margin-left", "4px");
+                $iconLinkModifier->pushStyle("margin-right", "4px");
+                HTMLInterface::openLink($iconLink->link, $iconLinkModifier);
 
                 $imgModifier = WebModifier::createInstance();
                 $imgModifier->pushStyle("border-radius", "15px");
