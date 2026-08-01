@@ -41,26 +41,28 @@ function initMenu(menuId, jsArgs){
 
 function listerSubmit(moreArgs){
 	const maxListerGrids = moreArgs.lists_count
+	let outLists = []
 
-	let ids = []
-	for(let i=0; maxListerGrids>i; i++){
-		ids[i] = ""
-	}
-
+  let remCount = 0
 	for(let listIndex = 0; maxListerGrids > listIndex; listIndex++) {
+    if(!grids[listIndex].isConnected){
+      remCount++
+      continue;
+    }
+
+    const outIndex = listIndex - remCount
+    outLists[outIndex] = {
+      index: outIndex,
+      title: "Oveis",
+      ids: []
+    }
+
 		for (let i = 0; grids[listIndex].children.length > i; i++) {
-			if (ids[listIndex]) ids[listIndex] += ","
-			ids[listIndex] += grids[listIndex].children[i].id
+      outLists[outIndex].ids.push(grids[listIndex].children[i].id)
 		}
 	}
 
-	let out = ""
-	for(let listIndex = 0; maxListerGrids > listIndex; listIndex++) {
-		if(listIndex > 0) out += "##"
-		out += ids[listIndex]
-	}
-
-	document.getElementById("newlist").value = out
+	document.getElementById("newlist").value = JSON.stringify(outLists);
 	return true;
 }
 

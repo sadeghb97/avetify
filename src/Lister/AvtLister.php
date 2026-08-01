@@ -24,6 +24,9 @@ abstract class AvtLister extends SetModifier {
     public bool $placeManageListTrigger = false;
     public string $menuId = "";
 
+    /** @var ListerCategory[] | null $categoriesData */
+    protected ?array $categoriesData = null;
+
     public function __construct(string $key, array $items){
         parent::__construct($key);
         $this->paginationConfigs = null;
@@ -80,6 +83,17 @@ abstract class AvtLister extends SetModifier {
      * @return ListerCategory[] An array of MyClass instances
      */
     public function getCategories() : array {
+        if($this->categoriesData != null) return $this->categoriesData;
+
+        $this->categoriesData = $this->createCategories();
+        $this->loadCategories();
+        return $this->categoriesData;
+    }
+
+    /**
+     * @return ListerCategory[] An array of MyClass instances
+     */
+    protected function createCategories() : array {
         $listTitles = $this->getListTitles();
         $categories = [];
 
@@ -88,17 +102,19 @@ abstract class AvtLister extends SetModifier {
             $categories[] = new ListerCategory($index++, $listTitle);
         }
 
-        foreach ($this->currentRecords as $record){
-            $recordId = $this->getItemId($record);
-            $listIndex = $this->initItemsMap[$recordId];
-            $categories[$listIndex]->records[] = $record;
-        }
-
         return $categories;
     }
 
+    private function loadCategories() : void {
+        foreach ($this->currentRecords as $record){
+            $recordId = $this->getItemId($record);
+            $listIndex = $this->initItemsMap[$recordId];
+            $this->categoriesData[$listIndex]->records[] = $record;
+        }
+    }
+
     public function getListsCount() : int {
-        return count($this->getListTitles());
+        return count($this->getCategories());
     }
 
     abstract public function handleSubmittedList(array $lists, array $itemsParams, $allFields);
@@ -235,7 +251,7 @@ abstract class AvtLister extends SetModifier {
         echo '<script>';
         echo 'const jsArgs = {' .
             '"list_order_reversed": ' . ($this->renderListsInReverseOrder ? 'true' : 'false') . ', ' .
-            '"lists_count": ' . count($this->getListTitles()) . ', ' .
+            '"lists_count": ' . $this->getListsCount() . ', ' .
             '"menu_width": ' . 0 . ', ' .
             '"menu_height": ' . 0 . ', ' .
             '}';
@@ -373,17 +389,20 @@ abstract class AvtLister extends SetModifier {
 
     function catchNewList(){
         if(!empty($_POST['newlist'])){
-            $newList = $_POST['newlist'];
-            $allRawLists = explode("##", $newList);
-            $allLists = [];
+            $newListsRaw = $_POST['newlist'];
+            $newListsData = json_decode($newListsRaw, true);
+
+            foreach ($newListsData as &$listData){
+                foreach ($listData['ids'] as $ind => $fullId){
+                    $itemPk = substr($fullId, 12);
+                    $listData['ids'][$ind] = $itemPk;
+                }
+            }
+
             $itemsParams = [];
-
-            foreach ($allRawLists as $key => $raw){
-                $allLists[$key] = $raw ? explode(",", $raw) : [];
-
-                for($i=0; count($allLists[$key])>$i; $i++){
-                    $itemPk = substr($allLists[$key][$i], 12);
-                    $allLists[$key][$i] = $itemPk;
+            foreach ($newListsData as $nld){
+                for($i=0; count($nld['ids'])>$i; $i++){
+                    $itemPk = $nld['ids'][$i];
                     if(!isset($itemsParams[$itemPk])) $itemsParams[$itemPk] = [];
                 }
             }
@@ -404,7 +423,7 @@ abstract class AvtLister extends SetModifier {
                 }
             }
 
-            $this->handleSubmittedList($allLists, $itemsParams, $_POST);
+            $this->handleSubmittedList($newListsData, $itemsParams, $_POST);
         }
     }
 

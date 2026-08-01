@@ -64,10 +64,6 @@ abstract class JsonLister extends AvtLister {
     }
 
     public function handleSubmittedList(array $lists, array $itemsParams, $allFields) {
-        $freshListsCount = count($lists) - count($this->getListTitles());
-        $oldListsCount = count($lists) - $freshListsCount;
-        $allListsCount = $freshListsCount + $oldListsCount;
-
         $listsData = [];
         for ($i=1; count($lists) > $i; $i++){
             $listsData[] = [
@@ -77,8 +73,8 @@ abstract class JsonLister extends AvtLister {
         }
 
         $itemsData = [];
-        foreach ($lists as $listIndex => $list){
-            foreach ($list as $internalListIndex => $itemId){
+        foreach ($lists as $listIndex => $listData){
+            foreach ($listData['ids'] as $internalListIndex => $itemId){
                 $itemsData[$itemId] = [
                     "list" => $listIndex,
                     "priority" => $internalListIndex

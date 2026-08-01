@@ -93,7 +93,7 @@ class ManageGalleryLister extends AvtLister {
         return [];
     }
 
-    public function getCategories(): array {
+    public function createCategories(): array {
         $categories = [new ListerCategory(0, "Main")];
         foreach ($this->galleryRepo->virtualFolders as $vf){
             $categories[] = new ListerCategory($vf['index'], $vf['id']);
@@ -149,7 +149,7 @@ class ManageGalleryLister extends AvtLister {
 
             for ($i = 0; $galleriesCount > $i; $i++) {
                 $galId = $i > 0 ? $virtualFoldersMap[$i] : "";
-                foreach ($lists[$i] as $imageIndex => $image) {
+                foreach ($lists[$i]['ids'] as $imageIndex => $image) {
                     $galleriesItems[$image] = [
                         "gid" => $galId,
                         "ind" => $imageIndex

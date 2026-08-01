@@ -26,7 +26,9 @@ abstract class DBLister extends AvtLister {
     public function dbHandleLists(array $lists){
         if(!$this->dbListKey && !$this->dbPriorityKey) return;
 
-        foreach ($lists as $listIndex => $list){
+        foreach ($lists as $listIndex => $listData){
+            $list = $listData['ids'];
+
             foreach ($list as $priority => $itemPk){
                 $updatedValue = $this->listIndexToNewOrgPk($listIndex);
                 $sql = "UPDATE " . $this->tableName . " SET ";
