@@ -123,7 +123,7 @@ abstract class ListerRenderer extends BaseSetRenderer {
                     "inset-inline-end" => "20px",
                     "top" => $rightTopMargin . "px"
                 ],
-                "addNewList()");
+                "navigateBetweenLists(-1)");
             $rightTopMargin += $this->triggersGap;
 
             HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('key_arrow_down.svg'),
@@ -131,7 +131,7 @@ abstract class ListerRenderer extends BaseSetRenderer {
                     "inset-inline-end" => "20px",
                     "top" => $rightTopMargin . "px"
                 ],
-                "addNewList()");
+                "navigateBetweenLists(1)");
             $rightTopMargin += $this->triggersGap;
         }
 
@@ -209,6 +209,14 @@ abstract class ListerRenderer extends BaseSetRenderer {
         $categoryGridId = "grid_" . $categoryId;
         $msecID = "msec_" . $category->index;
         $msecTitleID = "msec_title_" . $category->index;
+
+        echo '<section ';
+        Styler::classStartAttribute();
+        Styler::addClass("js__avt-listers-section");
+        Styler::closeAttribute();
+        HTMLInterface::closeTag();
+        echo '</section>';
+
         echo '<div class="magham-section js__avt-lister" id="' . $msecID . '" ';
         HTMLInterface::addNormalizedAttribute('data-list-title', $categoryTitle);
         HTMLInterface::addNormalizedAttribute('data-list-id', $categoryId);

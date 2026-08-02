@@ -439,6 +439,33 @@ function resetLists(){
   }
 }
 
+function navigateBetweenLists(offset) {
+  const points = document.querySelectorAll('.js__avt-listers-section');
+
+  const middle = window.innerHeight / 2;
+  let current = 0;
+  let minDistance = Infinity;
+
+  points.forEach((point, index) => {
+    const distance = Math.abs(point.getBoundingClientRect().top - middle);
+
+    if (distance < minDistance) {
+      minDistance = distance;
+      current = index;
+    }
+  });
+
+  const next = current + offset;
+
+  if (next < 0 || next >= points.length)
+    return;
+
+  points[next].scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
+}
+
 function addVirtualGallery(){
 	const galCountElement = document.getElementById("galleries_count");
 	const vfDataElement = document.getElementById("virtual_folders");
