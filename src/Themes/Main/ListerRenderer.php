@@ -139,16 +139,20 @@ abstract class ListerRenderer extends BaseSetRenderer {
 
     public function printCategorySection(ListerCategory $category, $hide = false){
         $categoryTitle = $category->title;
+        $categoryId = $category->identifier;
+        $categoryGridId = "grid_" . $categoryId;
         $msecID = "msec_" . $category->index;
         $msecTitleID = "msec_title_" . $category->index;
         echo '<div class="magham-section js__avt-lister" id="' . $msecID . '" ';
         HTMLInterface::addNormalizedAttribute('data-list-title', $categoryTitle);
+        HTMLInterface::addNormalizedAttribute('data-list-id', $categoryId);
         echo ' style="display: ' . (!$hide ? "block" : "none") . ';"';
         echo ' >';
         echo '<div class="magham-box">';
         echo '<span class="magham-degree js__avt-lister-title" id="' . $msecTitleID . '">' . $categoryTitle . '</span>';
         echo '</div>';
         echo '<div class="row js__avt-grid" ';
+        HTMLInterface::addAttribute("id", $categoryGridId);
         Styler::startAttribute();
         Styler::addStyle("overflow", "auto");
         Styler::addStyle("position", "relative");

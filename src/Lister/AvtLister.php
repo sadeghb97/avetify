@@ -80,6 +80,13 @@ abstract class AvtLister extends SetModifier {
     abstract public function getListTitles() : array;
 
     /**
+     * @return string[] An array of MyClass instances
+     */
+    public function getListIds() : array {
+        return [];
+    }
+
+    /**
      * @return ListerCategory[] An array of MyClass instances
      */
     public function getCategories() : array {
@@ -95,11 +102,13 @@ abstract class AvtLister extends SetModifier {
      */
     protected function createCategories() : array {
         $listTitles = $this->getListTitles();
+        $listIds = $this->getListIds();
         $categories = [];
 
         $index = 0;
-        foreach ($listTitles as $listTitle){
-            $categories[] = new ListerCategory($index++, $listTitle);
+        foreach ($listTitles as $listIndex => $listTitle){
+            $listId = $listIds[$listIndex] ?? null;
+            $categories[] = new ListerCategory($index++, $listTitle, $listId);
         }
 
         return $categories;

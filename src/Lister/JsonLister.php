@@ -2,7 +2,6 @@
 namespace Avetify\Lister;
 
 use Avetify\Entities\EntityUtils;
-use Avetify\Interface\Pout;
 use Exception;
 
 abstract class JsonLister extends AvtLister {
@@ -21,10 +20,40 @@ abstract class JsonLister extends AvtLister {
         if(!file_exists($dataDilePath)){
             $this->storeData([], []);
             $this->ensureListerData();
+            return;
         }
 
         $dataRawContents = file_get_contents($dataDilePath);
-        $this->listerData = json_decode($dataRawContents, true);
+        $parsedListerData = json_decode($dataRawContents, true);
+
+        $normalizeIndexRequired = false;
+        foreach ($parsedListerData['lists'] as $listIndex => $listDetails){
+            if(($listIndex + 1) != $listDetails['index']){
+                $normalizeIndexRequired = true;
+                break;
+            }
+        }
+
+        if($normalizeIndexRequired){
+            $normalizedLists = self::normalizeListIndexes($parsedListerData['lists']);
+            $this->storeData($normalizedLists, $parsedListerData['items']);
+            $this->ensureListerData();
+            return;
+        }
+
+        $this->listerData = $parsedListerData;
+        $this->listerData['ls_map'] = [];
+        foreach ($this->listerData['lists'] as $listIndex => $list){
+            $this->listerData['ls_map'][$list['id']] = $listIndex;
+        }
+    }
+
+    private static function normalizeListIndexes($badListsData) : array {
+        EntityUtils::simpleSort($badListsData, "index", true);
+        for($i=0; count($badListsData) > $i; $i++){
+            $badListsData[$i]['index'] = $i + 1;
+        }
+        return $badListsData;
     }
 
     public function storeData(array $lists, array $items) : void {
@@ -44,7 +73,9 @@ abstract class JsonLister extends AvtLister {
     }
 
     public function catOrgPkToListIndex($item): int {
-        return $this->getItemCategoryOriginalPk($item);
+        $listId = $this->getItemCategoryOriginalPk($item);
+        if(!isset($this->listerData['ls_map'][$listId])) return 0;
+        return $this->listerData['lists'][$this->listerData['ls_map'][$listId]]['index'] ?? 0;
     }
 
     public function listIndexToNewOrgPk($listIndex): int {
@@ -65,12 +96,22 @@ abstract class JsonLister extends AvtLister {
         return $titles;
     }
 
+    public function getListIds(): array {
+        $listsData = $this->listerData['lists'];
+        $ids = ["avt_zero_list"];
+        foreach ($listsData as $ld){
+            $ids[] = $ld['id'];
+        }
+        return $ids;
+    }
+
     public function handleSubmittedList(array $lists, array $itemsParams, $allFields) {
         $outListsData = [];
         for ($i=0; (count($lists) - 1) > $i; $i++){
             $outListsData[] = [
+                "id" => $lists[$i]['id'],
                 "title" => $lists[$i]['title'],
-                "index" => count($lists) - 1 - $i
+                "index" => count($lists) - $i - 1
             ];
         }
         EntityUtils::simpleSort($outListsData, 'index', true);
@@ -78,10 +119,11 @@ abstract class JsonLister extends AvtLister {
         $itemsData = [];
         foreach ($lists as $listIndex => $listDetails){
             foreach ($listDetails['ids'] as $internalListIndex => $itemId){
-                $adjustedListIndex = count($lists) - 1 - $listIndex;
+                $targetOutListIndex = count($lists) - $listIndex - 2;
+                $listId = $targetOutListIndex >= 0 ? $outListsData[$targetOutListIndex]['id'] : "avt_zero_list";
 
                 $itemsData[$itemId] = [
-                    "list" => $adjustedListIndex,
+                    "list" => $listId,
                     "priority" => $internalListIndex
                 ];
             }

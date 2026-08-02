@@ -1,13 +1,13 @@
 <?php
 namespace Avetify\Lister;
 
-class ListerCategory {
-    public int $index = 0;
-    public string $title = "";
-    public array $records = [];
+use Avetify\Utils\StringUtils;
 
-    public function __construct($index, $title){
-        $this->index = $index;
-        $this->title = $title;
+class ListerCategory {
+    public array $records = [];
+    public string $identifier = "";
+
+    public function __construct(public int $index, public string $title, ?string $id = null){
+        $this->identifier = $id ?: StringUtils::generateUUID();
     }
 }

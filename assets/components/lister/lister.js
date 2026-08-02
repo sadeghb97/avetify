@@ -90,6 +90,7 @@ function listerSubmit(moreArgs){
   for (let gIndex = 0; legacyGrids.length > gIndex; gIndex++) {
     outLists[gIndex] = {
       index: gIndex,
+      id: legacyGrids[gIndex].parentElement.dataset.listId,
       title: legacyGrids[gIndex].parentElement.dataset.listTitle,
       ids: []
     }
@@ -202,18 +203,22 @@ function addNewList(){
   const newListIndex = jsArgs.listers_safe_cursor;
   jsArgs.listers_safe_cursor++;
 
-  const listerForm = document.getElementById("lister_form")
+  const newCategoryId = crypto.randomUUID();
+  const newCategoryGridId = "grid_" + newCategoryId;
+  const listerForm = document.getElementById("lister_form");
   const zeroList = listerForm.lastElementChild;
   const clonedList = zeroList.cloneNode(true);
 
   clonedList.id = 'msec_' + newListIndex;
   clonedList.dataset.listTitle = enteredTitle;
+  clonedList.dataset.listId = newCategoryId;
 
   const clSpanTitle = fetchSpanTitleElementFromLister(clonedList);
   clSpanTitle.id = "msec_title_" + newListIndex;
   clSpanTitle.innerHTML = enteredTitle;
 
   const innerGrid = fetchGridElementFromLister(clonedList);
+  innerGrid.id = newCategoryGridId;
   innerGrid.innerHTML = '';
 
   listerForm.insertBefore(clonedList, zeroList);
