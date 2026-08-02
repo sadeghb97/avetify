@@ -173,6 +173,7 @@ abstract class ListerRenderer extends BaseSetRenderer {
         echo '<div ';
         HTMLInterface::addAttribute(Attrs::id,'lister-item_' . $itemId);
         Styler::classStartAttribute();
+        Styler::addClass("js__avt-list-item");
         Styler::closeAttribute();
         Styler::startAttribute();
         $this->appendCardStyles();

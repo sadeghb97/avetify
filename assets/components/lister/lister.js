@@ -429,7 +429,24 @@ function setupManageModal(modal){
 }
 
 function deleteList(listToDeleteId, destListId){
-  console.log("Delete List", listToDeleteId, destListId)
+  const listToDelete = document.querySelector(
+    `[data-list-id="${listToDeleteId}"]`
+  );
+
+  const gridToDelete = fetchGridElementFromLister(listToDelete);
+  const delGridChildren = gridToDelete.querySelectorAll(':scope > .js__avt-list-item');
+
+  const destList = document.querySelector(
+    `[data-list-id="${destListId}"]`
+  );
+  const destGrid = fetchGridElementFromLister(destList);
+
+  delGridChildren.forEach(item => {
+    destGrid.appendChild(item)
+  })
+
+  listToDelete.remove();
+  rearrangeRanks()
 }
 
 function resetLists(){
