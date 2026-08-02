@@ -33,7 +33,7 @@ class APIMedalField extends JSInputField implements Placeable, IdentifiedElement
     public function place(?WebModifier $webModifier = null){
         $div = new NiceDiv(0);
         $div->baseOpen($webModifier);
-        HTMLInterface::addAttribute("onclick", $this->clickAction());
+        HTMLInterface::addNormalizedAttribute("onclick", $this->clickAction());
         HTMLInterface::closeTag();
 
         HTMLInterface::placeImageWithHeight($this->icon, 48);

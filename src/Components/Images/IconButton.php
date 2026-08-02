@@ -16,7 +16,7 @@ class IconButton implements Placeable {
         $webModifier->styler->pushStyle("height", $this->size . "px");
         if($this->onClickRaw) {
             if ($webModifier->htmlModifier == null) $webModifier->htmlModifier = new HTMLModifier();
-            $webModifier->htmlModifier->pushModifier("onclick", $this->onClickRaw);
+            $webModifier->htmlModifier->pushNormalizedModifier("onclick", $this->onClickRaw);
         }
 
         HTMLInterface::placeImage($this->src, $webModifier);

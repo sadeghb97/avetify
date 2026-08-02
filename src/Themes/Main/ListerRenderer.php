@@ -11,17 +11,20 @@ use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Lister\AvtLister;
 use Avetify\Lister\Components\ArrangeListsModal;
+use Avetify\Lister\Components\ManageListsModal;
 use Avetify\Lister\ListerCategory;
 use Avetify\Themes\Green\GreenTheme;
 
 abstract class ListerRenderer extends BaseSetRenderer {
     public AvtLister $lister;
-    public ?AvtModal $arrangeModal = null;
+    public ?ArrangeListsModal $arrangeModal = null;
+    public ?ManageListsModal $manageModal = null;
 
     public function postConstruct() {
         /** @var AvtLister $l */
         $l = $this->setModifier;
         $this->lister = $l;
+        $this->manageModal = new ManageListsModal();
         $this->arrangeModal = new ArrangeListsModal();
     }
 
@@ -69,7 +72,7 @@ abstract class ListerRenderer extends BaseSetRenderer {
                     "addNewList()");
             }
 
-            if($this->lister->placeManageListTrigger){
+            if($this->lister->placeReorderListTrigger){
                 $this->arrangeModal->attachTemplate();
                 HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('swap_vert.svg'),
                     [
@@ -77,6 +80,16 @@ abstract class ListerRenderer extends BaseSetRenderer {
                         "bottom" => "140px"
                     ],
                     $this->arrangeModal->openScript());
+            }
+
+            if($this->lister->placeManageListTrigger){
+                $this->manageModal->attachTemplate();
+                HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('delete_sweep.svg'),
+                    [
+                        "inset-inline-start" => "20px",
+                        "bottom" => "200px"
+                    ],
+                    $this->manageModal->openScript());
             }
 
             $primaryButton = new PrimaryButton("listerSubmit(jsArgs); submitForm('lister_form');");

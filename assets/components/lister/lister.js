@@ -337,6 +337,99 @@ function rearrangeLists(orders) {
   listersContainer.appendChild(fragment);
 }
 
+function setupManageModal(modal){
+  const container = modal.query(".content-container");
+  const pageListers = fetchPageListers();
+
+  const options = [];
+
+  for (const lister of pageListers) {
+    const listerId = lister.dataset.listId
+    const listerTitle = lister.dataset.listTitle
+    options.push({id: listerId, title: listerTitle})
+  }
+
+  const firstGroup = document.createElement('div');
+  firstGroup.className = 'modal-select-group';
+
+  const firstLabel = document.createElement('label');
+  firstLabel.textContent = 'List to Remove';
+
+  const firstSelect = document.createElement('select');
+  firstSelect.className = 'modal-select';
+
+  firstSelect.innerHTML = `
+  <option value="">Select list...</option>
+  ${options
+    .filter(item => item.id !== 'avt_zero_list')
+    .map(item => `
+      <option value="${item.id}">${item.title}</option>
+    `)
+    .join('')}
+`;
+
+  firstGroup.appendChild(firstLabel);
+  firstGroup.appendChild(firstSelect);
+
+
+  const secondGroup = document.createElement('div');
+  secondGroup.className = 'modal-select-group';
+  secondGroup.style.display = 'none';
+
+  const secondLabel = document.createElement('label');
+  secondLabel.textContent = 'Items Will Be Moved To';
+
+  const secondSelect = document.createElement('select');
+  secondSelect.className = 'modal-select';
+
+  secondGroup.appendChild(secondLabel);
+  secondGroup.appendChild(secondSelect);
+
+
+  firstSelect.addEventListener('change', () => {
+    const selectedId = firstSelect.value;
+
+    secondSelect.innerHTML = '';
+
+    if (!selectedId) {
+      secondGroup.style.display = 'none';
+      return;
+    }
+
+    options
+      .filter(item => item.id !== selectedId)
+      .forEach(item => {
+        secondSelect.insertAdjacentHTML(
+          'beforeend',
+          `<option value="${item.id}">${item.title}</option>`
+        );
+      });
+
+    secondGroup.style.display = 'block';
+  });
+
+  container.appendChild(firstGroup);
+  container.appendChild(secondGroup);
+
+
+  modal.query(".apply").onclick = () => {
+    const listToDeleteId = firstSelect.value;
+    const destListId = secondSelect.value;
+    if(!listToDeleteId || !destListId) return;
+
+    deleteList(listToDeleteId, destListId);
+    modal.close();
+  };
+
+  modal.query(".cancel").onclick = () => {
+    modal.close();
+  };
+}
+
+function deleteList(listToDeleteId, destListId){
+  console.log("Delete List", listToDeleteId, destListId)
+}
+
 function addVirtualGallery(){
 	const galCountElement = document.getElementById("galleries_count");
 	const vfDataElement = document.getElementById("virtual_folders");

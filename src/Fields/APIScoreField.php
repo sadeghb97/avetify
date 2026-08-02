@@ -18,7 +18,7 @@ class APIScoreField extends APIMedalField {
         Styler::addClass("number-label");
         HTMLInterface::appendClasses($webModifier);
         Styler::closeAttribute();
-        HTMLInterface::addAttribute("onclick", $this->clickAction());
+        HTMLInterface::addNormalizedAttribute("onclick", $this->clickAction());
         HTMLInterface::closeTag();
 
         echo '<sapn ';

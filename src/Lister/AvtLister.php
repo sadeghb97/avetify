@@ -21,6 +21,7 @@ abstract class AvtLister extends SetModifier {
     public bool $renderListsInReverseOrder = false;
     public bool $placeDefaultTriggers = true;
     public bool $placeCreateListTrigger = false;
+    public bool $placeReorderListTrigger = false;
     public bool $placeManageListTrigger = false;
     public string $menuId = "";
 
