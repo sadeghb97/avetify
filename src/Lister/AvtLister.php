@@ -21,8 +21,10 @@ abstract class AvtLister extends SetModifier {
     public bool $renderListsInReverseOrder = false;
     public bool $placeDefaultTriggers = true;
     public bool $placeCreateListTrigger = false;
-    public bool $placeReorderListTrigger = false;
-    public bool $placeManageListTrigger = false;
+    public bool $placeReorderListsTrigger = false;
+    public bool $placeManageListsTrigger = false;
+    public bool $placeResetListsTrigger = false;
+    public bool $placeNavListsTriggers = false;
     public string $menuId = "";
 
     /** @var ListerCategory[] | null $categoriesData */
@@ -145,7 +147,7 @@ abstract class AvtLister extends SetModifier {
     final protected function getFinalTheme() : ThemesManager {
         $theme = $this->createBaseTheme();
         $theme->includesListerTools = true;
-        if($this->placeManageListTrigger){
+        if($this->placeManageListsTrigger){
             $theme->includesModalTools = true;
         }
         return $theme;

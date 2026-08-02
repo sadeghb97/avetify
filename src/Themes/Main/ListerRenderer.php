@@ -19,6 +19,9 @@ abstract class ListerRenderer extends BaseSetRenderer {
     public AvtLister $lister;
     public ?ArrangeListsModal $arrangeModal = null;
     public ?ManageListsModal $manageModal = null;
+    public int $triggersMoreMarginTop = 0;
+    public int $triggersMoreMarginBottom = 0;
+    public int $triggersGap = 70;
 
     public function postConstruct() {
         /** @var AvtLister $l */
@@ -53,47 +56,83 @@ abstract class ListerRenderer extends BaseSetRenderer {
               <input type="hidden" id="lister_params" name="lister_params">
         </form>';
 
+        $leftBottomMargin = 20 + $this->triggersMoreMarginBottom;
+        $rightTopMargin = 20 + $this->triggersMoreMarginTop;
+
         if($this->lister->placeDefaultTriggers) {
             if ($this->lister->isPrintRankEnabled() && $this->lister->isRearrangeRanksEnabled()) {
                 HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('arrange.png'),
                     [
                         "inset-inline-start" => "20px",
-                        "bottom" => "20px"
+                        "bottom" => $leftBottomMargin . "px"
                     ],
                     "rearrangeRanks()");
-            }
-
-            if($this->lister->placeCreateListTrigger){
-                HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('add_box.svg'),
-                    [
-                        "inset-inline-start" => "20px",
-                        "bottom" => "80px"
-                    ],
-                    "addNewList()");
-            }
-
-            if($this->lister->placeReorderListTrigger){
-                $this->arrangeModal->attachTemplate();
-                HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('swap_vert.svg'),
-                    [
-                        "inset-inline-start" => "20px",
-                        "bottom" => "140px"
-                    ],
-                    $this->arrangeModal->openScript());
-            }
-
-            if($this->lister->placeManageListTrigger){
-                $this->manageModal->attachTemplate();
-                HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('delete_sweep.svg'),
-                    [
-                        "inset-inline-start" => "20px",
-                        "bottom" => "200px"
-                    ],
-                    $this->manageModal->openScript());
+                $leftBottomMargin += $this->triggersGap;
             }
 
             $primaryButton = new PrimaryButton("listerSubmit(jsArgs); submitForm('lister_form');");
             $primaryButton->place();
+        }
+
+        if($this->lister->placeCreateListTrigger){
+            HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('add_box.svg'),
+                [
+                    "inset-inline-start" => "20px",
+                    "bottom" => $leftBottomMargin . "px"
+                ],
+                "addNewList()");
+            $leftBottomMargin += $this->triggersGap;
+        }
+
+        if($this->lister->placeReorderListsTrigger){
+            $this->arrangeModal->attachTemplate();
+            HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('swap_vert.svg'),
+                [
+                    "inset-inline-start" => "20px",
+                    "bottom" => $leftBottomMargin . "px"
+                ],
+                $this->arrangeModal->openScript());
+            $leftBottomMargin += $this->triggersGap;
+        }
+
+        if($this->lister->placeManageListsTrigger){
+            $this->manageModal->attachTemplate();
+            HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('delete_sweep.svg'),
+                [
+                    "inset-inline-start" => "20px",
+                    "bottom" => $leftBottomMargin . "px"
+                ],
+                $this->manageModal->openScript());
+            $leftBottomMargin += $this->triggersGap;
+        }
+
+        if($this->lister->placeResetListsTrigger){
+            $this->manageModal->attachTemplate();
+            HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('remove_from_queue.svg'),
+                [
+                    "inset-inline-start" => "20px",
+                    "bottom" => $leftBottomMargin . "px"
+                ],
+                'resetLists()');
+            $leftBottomMargin += $this->triggersGap;
+        }
+
+        if($this->lister->placeNavListsTriggers){
+            HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('key_arrow_up.svg'),
+                [
+                    "inset-inline-end" => "20px",
+                    "top" => $rightTopMargin . "px"
+                ],
+                "addNewList()");
+            $rightTopMargin += $this->triggersGap;
+
+            HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('key_arrow_down.svg'),
+                [
+                    "inset-inline-end" => "20px",
+                    "top" => $rightTopMargin . "px"
+                ],
+                "addNewList()");
+            $rightTopMargin += $this->triggersGap;
         }
 
         $this->initListers();

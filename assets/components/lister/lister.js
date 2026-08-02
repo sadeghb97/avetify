@@ -430,6 +430,15 @@ function deleteList(listToDeleteId, destListId){
   console.log("Delete List", listToDeleteId, destListId)
 }
 
+function resetLists(){
+  if(confirm("All listing will be reset! are you sure?")){
+    const form = document.getElementById("lister_form");
+    const submitTypeElement = document.getElementById("submit_type");
+    submitTypeElement.value = "reset"
+    form.submit()
+  }
+}
+
 function addVirtualGallery(){
 	const galCountElement = document.getElementById("galleries_count");
 	const vfDataElement = document.getElementById("virtual_folders");
