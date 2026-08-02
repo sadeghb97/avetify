@@ -150,10 +150,11 @@ code {
 .lister-item-img {
 	height: 190px;
 	width: auto;
+    max-width: 190px;
 	display: block;
 	margin: auto;
-	object-fit: cover;
-	object-position: center top;
+	object-fit: contain;
+	object-position: center;
 
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
