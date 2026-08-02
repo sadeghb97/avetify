@@ -184,6 +184,8 @@ class ThemesManager {
         self::importListerStyles();
         self::importSortableJS();
         self::importJS(AvetifyManager::assetUrl("components/lister/lister.js"));
+        self::importJS(AvetifyManager::assetUrl("components/lister/menu.js"));
+        self::importJS(AvetifyManager::assetUrl("components/lister/modals.js"));
     }
 
     public static function importEntitySearcherTools(){

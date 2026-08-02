@@ -11,6 +11,7 @@ use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Lister\AvtLister;
 use Avetify\Lister\Components\ArrangeListsModal;
+use Avetify\Lister\Components\BatchTransferModal;
 use Avetify\Lister\Components\ManageListsModal;
 use Avetify\Lister\ListerCategory;
 use Avetify\Themes\Green\GreenTheme;
@@ -19,6 +20,7 @@ abstract class ListerRenderer extends BaseSetRenderer {
     public AvtLister $lister;
     public ?ArrangeListsModal $arrangeModal = null;
     public ?ManageListsModal $manageModal = null;
+    public ?BatchTransferModal $transferModal = null;
     public int $triggersGap = 70;
 
     public function postConstruct() {
@@ -27,6 +29,7 @@ abstract class ListerRenderer extends BaseSetRenderer {
         $this->lister = $l;
         $this->manageModal = new ManageListsModal();
         $this->arrangeModal = new ArrangeListsModal();
+        $this->transferModal = new BatchTransferModal();
     }
 
     public function getTitle(): string {
@@ -103,6 +106,17 @@ abstract class ListerRenderer extends BaseSetRenderer {
                     "bottom" => $leftBottomMargin . "px"
                 ],
                 $this->manageModal->openScript());
+            $leftBottomMargin += $this->triggersGap;
+        }
+
+        if($this->lister->placeBatchTransferTrigger){
+            $this->transferModal->attachTemplate();
+            HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('sync_alt.svg'),
+                [
+                    "inset-inline-start" => "20px",
+                    "bottom" => $leftBottomMargin . "px"
+                ],
+                $this->transferModal->openScript());
             $leftBottomMargin += $this->triggersGap;
         }
 

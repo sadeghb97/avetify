@@ -23,6 +23,7 @@ abstract class AvtLister extends SetModifier {
     public bool $placeCreateListTrigger = false;
     public bool $placeReorderListsTrigger = false;
     public bool $placeManageListsTrigger = false;
+    public bool $placeBatchTransferTrigger = false;
     public bool $placeResetListsTrigger = false;
     public bool $placeNavListsTriggers = true;
     public string $menuId = "";

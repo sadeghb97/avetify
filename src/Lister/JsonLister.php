@@ -9,6 +9,7 @@ abstract class JsonLister extends AvtLister {
     public bool $placeReorderListsTrigger = true;
     public bool $placeManageListsTrigger = true;
     public bool $placeResetListsTrigger = true;
+    public bool $placeBatchTransferTrigger = true;
     public bool $renderListsInReverseOrder = true;
     public array $listerData;
 
