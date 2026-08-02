@@ -24,6 +24,7 @@ class ThemesManager {
     public bool $includesJalaliDateTimeUtils = false;
     public bool $includesFontAwesome = false;
     public bool $includesStatsStyles = false;
+    public bool $includesModalTools = false;
     public ?NavigationRenderer $navigationRenderer = null;
 
     public function __construct(){
@@ -117,6 +118,7 @@ class ThemesManager {
         if($this->includesMarkdownTools) self::importMarkdownTools();
         if($this->includesCommonDateTimeUtils) self::importCommonDateTimeUtils();
         if($this->includesJalaliDateTimeUtils) self::importJalaliDateTimeUtils();
+        if($this->includesModalTools) self::importModalsUtils();
 
         if($this->navigationRenderer){
             $this->navigationRenderer->headImports();
@@ -281,6 +283,19 @@ class ThemesManager {
     public static function importJalaliDateTimeUtils() : void {
         self::importJalaliDateTimeCSSUtils();
         self::importJalaliDateTimeJSUtils();
+    }
+
+    public static function importModalsCSSUtils() : void {
+        self::importStyle(AvetifyManager::assetUrl("components/modals/modals.css"));
+    }
+
+    public static function importModalsJSUtils() : void {
+        self::importJS(AvetifyManager::assetUrl("components/modals/modals.js"));
+    }
+
+    public static function importModalsUtils() : void {
+        self::importModalsCSSUtils();
+        self::importModalsJSUtils();
     }
 
     public static function importFontAwesome(){

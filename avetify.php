@@ -196,6 +196,7 @@ require_once "src/Components/Charts/LinearCharts/AvtLinearChart.php";
 require_once "src/Components/Charts/LinearCharts/AvtLinearDataSet.php";
 require_once "src/Components/Charts/PieCharts/AvtPieChart.php";
 require_once "src/Components/Charts/AvtChartColors.php";
+require_once "src/Components/Modals/AvtModal.php";
 require_once "src/Components/Modifiers/ImageModifiers.php";
 
 require_once "src/Lister/AvtLister.php";
