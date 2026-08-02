@@ -110,6 +110,24 @@ abstract class JsonLister extends AvtLister {
         return $ids;
     }
 
+    public function resetLists() : void {
+        $dataDilePath = $this->getJsonStorageFilePath();
+        if(file_exists($dataDilePath)){
+            unlink($dataDilePath);
+        }
+        $this->ensureListerData();
+    }
+
+    public function catchNewList() {
+        $submitType = $_POST['submit_type'] ?? "";
+        if($submitType == "reset"){
+            $this->resetLists();
+            return;
+        }
+
+        parent::catchNewList();
+    }
+
     public function handleSubmittedList(array $lists, array $itemsParams, $allFields) {
         $outListsData = [];
         for ($i=0; (count($lists) - 1) > $i; $i++){

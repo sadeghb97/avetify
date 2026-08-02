@@ -32,7 +32,6 @@ class GreenGalleryRenderer extends GreenListerRenderer {
     public function formMoreFields(){
         $gcIdentifier = "galleries_count";
         $vfIdentifier = "virtual_folders";
-        $stIdentifier = "submit_type";
         $gcValue = $this->lister->getPermanentCategoriesCount();
 
         $vfValue = "";
@@ -46,9 +45,6 @@ class GreenGalleryRenderer extends GreenListerRenderer {
 
         echo '<input type="hidden" id="' . $vfIdentifier
             . '" name="' . $vfIdentifier . '" value="' . $vfValue . '">';
-
-        echo '<input type="hidden" id="' . $stIdentifier
-            . '" name="' . $stIdentifier . '" value="' . 'normal' . '">';
     }
 
     public function moreBodyContents(){

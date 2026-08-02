@@ -151,6 +151,10 @@ abstract class ListerRenderer extends BaseSetRenderer {
 
     public function openCollection(?WebModifier $webModifier = null) {
         echo '<form method="post" id="lister_form" name="lister_form">';
+
+        $stIdentifier = "submit_type";
+        echo '<input type="hidden" id="' . $stIdentifier
+            . '" name="' . $stIdentifier . '" value="' . 'normal' . '">';
     }
 
     public function closeCollection(?WebModifier $webModifier = null) {
