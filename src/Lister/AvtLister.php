@@ -144,6 +144,9 @@ abstract class AvtLister extends SetModifier {
     final protected function getFinalTheme() : ThemesManager {
         $theme = $this->createBaseTheme();
         $theme->includesListerTools = true;
+        if($this->placeManageListTrigger){
+            $theme->includesModalTools = true;
+        }
         return $theme;
     }
 

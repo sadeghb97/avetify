@@ -5,6 +5,8 @@ use Avetify\Entities\EntityUtils;
 use Exception;
 
 abstract class JsonLister extends AvtLister {
+    public bool $placeCreateListTrigger = true;
+    public bool $placeManageListTrigger = true;
     public bool $renderListsInReverseOrder = true;
     public array $listerData;
 

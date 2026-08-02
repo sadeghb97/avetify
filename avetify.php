@@ -203,6 +203,7 @@ require_once "src/Lister/AvtLister.php";
 require_once "src/Lister/ListerCategory.php";
 require_once "src/Lister/DBLister.php";
 require_once "src/Lister/JsonLister.php";
+require_once "src/Lister/Components/ArrangeListsModal.php";
 
 require_once "src/Searchers/models/EntitySearchItemView.php";
 require_once "src/Searchers/models/EntitySearchType.php";

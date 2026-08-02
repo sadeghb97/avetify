@@ -274,6 +274,69 @@ function showMenu(menuId, jsArgs){
 	});
 }
 
+function setupArrangeModal(modal){
+  const container = modal.query(".content-container");
+  const pageListers = fetchPageListers();
+
+  for (const lister of pageListers) {
+    const listerId = lister.dataset.listId
+    const listerTitle = lister.dataset.listTitle
+    if(listerId === 'avt_zero_list') continue;
+
+    const listerDiv = document.createElement("div");
+    listerDiv.style.cursor = "grab";
+    listerDiv.innerText = listerTitle;
+    listerDiv.dataset.itemTitle = listerTitle;
+    listerDiv.dataset.itemId = listerId;
+    container.appendChild(listerDiv);
+  }
+
+  new Sortable(container, {
+    animation: 150,
+    group: 'shared', // set both lists to same group
+    ghostClass: 'blue-background-class'
+  });
+
+  modal.query(".apply").onclick = () => {
+    const listerOrders = [];
+    for (const child of container.children) {
+      listerOrders.push(child.dataset.itemId);
+    }
+    listerOrders.push("avt_zero_list")
+
+    rearrangeLists(listerOrders)
+    modal.close();
+  };
+
+
+  modal.query(".cancel").onclick = () => {
+    modal.close();
+  };
+}
+
+function rearrangeLists(orders) {
+  const listersContainer = document.getElementById('lister_form');
+
+  const itemMap = new Map(
+    Array.from(listersContainer.children).map(item => [
+      String(item.dataset.listId),
+      item
+    ])
+  );
+
+  const fragment = document.createDocumentFragment();
+
+  orders.forEach(id => {
+    const item = itemMap.get(String(id));
+
+    if (item) {
+      fragment.appendChild(item);
+    }
+  });
+
+  listersContainer.appendChild(fragment);
+}
+
 function addVirtualGallery(){
 	const galCountElement = document.getElementById("galleries_count");
 	const vfDataElement = document.getElementById("virtual_folders");

@@ -30,7 +30,7 @@ class AbsoluteButton implements Placeable {
         HTMLInterface::appendStyles($webModifier);
         Styler::closeAttribute();
         HTMLInterface::addAttribute("class", "img-button");
-        if($this->rawOnclick) HTMLInterface::addAttribute("onclick", $this->rawOnclick);
+        if($this->rawOnclick) HTMLInterface::addNormalizedAttribute("onclick", $this->rawOnclick);
         HTMLInterface::applyModifiers($webModifier);
         HTMLInterface::closeTag();
         echo '<img src="' . $this->imageSrc . '" alt="Icon" style="width: 50px; height: 50px; border-radius: 50%;">';

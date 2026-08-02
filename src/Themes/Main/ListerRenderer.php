@@ -3,22 +3,26 @@ namespace Avetify\Themes\Main;
 
 use Avetify\AvetifyManager;
 use Avetify\Components\Buttons\PrimaryButton;
+use Avetify\Components\Modals\AvtModal;
 use Avetify\Interface\CSS\CSS;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\Attrs;
 use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Lister\AvtLister;
+use Avetify\Lister\Components\ArrangeListsModal;
 use Avetify\Lister\ListerCategory;
 use Avetify\Themes\Green\GreenTheme;
 
 abstract class ListerRenderer extends BaseSetRenderer {
     public AvtLister $lister;
+    public ?AvtModal $arrangeModal = null;
 
     public function postConstruct() {
         /** @var AvtLister $l */
         $l = $this->setModifier;
         $this->lister = $l;
+        $this->arrangeModal = new ArrangeListsModal();
     }
 
     public function getTitle(): string {
@@ -63,6 +67,16 @@ abstract class ListerRenderer extends BaseSetRenderer {
                         "bottom" => "80px"
                     ],
                     "addNewList()");
+            }
+
+            if($this->lister->placeManageListTrigger){
+                $this->arrangeModal->attachTemplate();
+                HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('swap_vert.svg'),
+                    [
+                        "inset-inline-start" => "20px",
+                        "bottom" => "140px"
+                    ],
+                    $this->arrangeModal->openScript());
             }
 
             $primaryButton = new PrimaryButton("listerSubmit(jsArgs); submitForm('lister_form');");
