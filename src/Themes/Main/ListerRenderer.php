@@ -210,6 +210,12 @@ abstract class ListerRenderer extends BaseSetRenderer {
         $msecID = "msec_" . $category->index;
         $msecTitleID = "msec_title_" . $category->index;
 
+        echo '<div class="magham-section js__avt-lister" id="' . $msecID . '" ';
+        HTMLInterface::addNormalizedAttribute('data-list-title', $categoryTitle);
+        HTMLInterface::addNormalizedAttribute('data-list-id', $categoryId);
+        echo ' style="display: ' . (!$hide ? "block" : "none") . ';"';
+        echo ' >';
+
         echo '<section ';
         Styler::classStartAttribute();
         Styler::addClass("js__avt-listers-section");
@@ -217,11 +223,6 @@ abstract class ListerRenderer extends BaseSetRenderer {
         HTMLInterface::closeTag();
         echo '</section>';
 
-        echo '<div class="magham-section js__avt-lister" id="' . $msecID . '" ';
-        HTMLInterface::addNormalizedAttribute('data-list-title', $categoryTitle);
-        HTMLInterface::addNormalizedAttribute('data-list-id', $categoryId);
-        echo ' style="display: ' . (!$hide ? "block" : "none") . ';"';
-        echo ' >';
         echo '<div class="magham-box">';
         echo '<span class="magham-degree js__avt-lister-title" id="' . $msecTitleID . '">' . $categoryTitle . '</span>';
         echo '</div>';

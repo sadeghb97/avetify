@@ -135,6 +135,8 @@ function action(menuId, arg, menuArgs){
     const targetLister = curLister.previousElementSibling
     if(!targetLister) return;
     const targetGrid = fetchGridElementFromLister(targetLister)
+    console.log("TL", targetLister)
+    console.log("TG", targetGrid)
 
     curGrid.removeChild(triggeredFile)
     targetGrid.appendChild(triggeredFile);
