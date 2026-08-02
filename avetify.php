@@ -203,6 +203,8 @@ require_once "src/Lister/AvtLister.php";
 require_once "src/Lister/ListerCategory.php";
 require_once "src/Lister/DBLister.php";
 require_once "src/Lister/JsonLister.php";
+require_once "src/Lister/DirectoryLister.php";
+require_once "src/Lister/Models/DirectoryImageItem.php";
 require_once "src/Lister/Components/ArrangeListsModal.php";
 require_once "src/Lister/Components/ManageListsModal.php";
 require_once "src/Lister/Components/BatchTransferModal.php";

@@ -97,6 +97,16 @@ class Filer {
         return self::dirSubFiles($path, "files");
     }
 
+    public static function subImages(string $path): array {
+        $files = self::subFiles($path);
+        $images = [];
+
+        foreach ($files as $file){
+            if(self::isImageExtension($file)) $images[] = $file;
+        }
+        return $images;
+    }
+
     public static function isImageExtension(string $filePath) : bool {
         $ext = self::getFileExtension($filePath);
         return in_array($ext, self::IMAGE_EXTENSIONS);
