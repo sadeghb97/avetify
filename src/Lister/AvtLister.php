@@ -349,24 +349,15 @@ abstract class AvtLister extends SetModifier {
         echo '</div>';
 
         if (count($directCategories) > 0) {
-            echo '<div style="border: none; height: 1px; background-color: white; margin-top: 1px; margin-bottom: 1px;">';
+            echo '<div id="menu_directs_separator" '
+                    . 'style="border: none; height: 1px; background-color: white; margin-top: 1px; margin-bottom: 1px;">';
             echo '</div>';
         }
 
         $colCount += ceil(count($directCategories) / $rowCount);
         echo '<div class="context-menu-row" id="menu_directs">';
-        for($i = 0; count($directCategories)>$i; $i++){
-            $isLast = count($directCategories) <= ($i + 1);
-            $isOddItem = ($i % 2) == 0;
-            $w = $isLast && $isOddItem ? ($fullWidth . "px") : ($halfWidth . "px");
-            echo '<div class="item" style="width: ' . $w . '; height: ' . $itemHeight
-                . 'px;" onclick="transfer(\'' . $this->menuId . '\', ' .
-                $directCategories[$i]->index . ')">';
-            echo  $directCategories[$i]->title;
-            echo '</div>';
-        }
-
         echo '</div>';
+
         echo '</div>';
 
         ?>
