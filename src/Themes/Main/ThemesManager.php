@@ -10,7 +10,11 @@ use Avetify\Themes\Main\Navigations\NavigationRenderer;
 
 class ThemesManager {
     public string $lang = "en";
+    public int $containerMarginTop = 0;
+    public int $containerMarginBottom = 0;
     public bool $noNavigationMenu = false;
+    public ?NavigationRenderer $navigationRenderer = null;
+
     public bool $includesListerTools = false;
     public bool $includesEntitySearcherTools = false;
     public bool $includesCropperTools = false;
@@ -25,7 +29,6 @@ class ThemesManager {
     public bool $includesFontAwesome = false;
     public bool $includesStatsStyles = false;
     public bool $includesModalTools = false;
-    public ?NavigationRenderer $navigationRenderer = null;
 
     public function __construct(){
         $navigationBar = $this->getNavigationBar();

@@ -19,8 +19,6 @@ abstract class ListerRenderer extends BaseSetRenderer {
     public AvtLister $lister;
     public ?ArrangeListsModal $arrangeModal = null;
     public ?ManageListsModal $manageModal = null;
-    public int $triggersMoreMarginTop = 0;
-    public int $triggersMoreMarginBottom = 0;
     public int $triggersGap = 70;
 
     public function postConstruct() {
@@ -56,8 +54,10 @@ abstract class ListerRenderer extends BaseSetRenderer {
               <input type="hidden" id="lister_params" name="lister_params">
         </form>';
 
-        $leftBottomMargin = 20 + $this->triggersMoreMarginBottom;
-        $rightTopMargin = 20 + $this->triggersMoreMarginTop;
+        $triggersMoreMarginBottom = $this->theme ? $this->theme->containerMarginBottom : 0;
+        $triggersMoreMarginTop = $this->theme ? $this->theme->containerMarginTop : 0;
+        $leftBottomMargin = 20 + $triggersMoreMarginBottom;
+        $rightTopMargin = 20 + $triggersMoreMarginTop;
 
         if($this->lister->placeDefaultTriggers) {
             if ($this->lister->isPrintRankEnabled() && $this->lister->isRearrangeRanksEnabled()) {
