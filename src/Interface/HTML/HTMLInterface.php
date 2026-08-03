@@ -304,9 +304,9 @@ namespace Avetify\Interface\HTML;
          self::applyClasses($modifier);
      }
 
-     public static function addAbsoluteIconButton(string $imageSrc, array $positionStyles, string $rawOnclick = ""){
+     public static function addAbsoluteIconButton(string $imageSrc, array $positionStyles, string $rawOnclick = "", ?WebModifier $modifier = null){
          $absButton = new AbsoluteButton($imageSrc, $positionStyles, $rawOnclick);
-         $absButton->place();
+         $absButton->place($modifier);
      }
 
      private static function _absPlace(Placeable $placeable, string $positionStyle,

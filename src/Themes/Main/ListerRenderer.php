@@ -131,6 +131,18 @@ abstract class ListerRenderer extends BaseSetRenderer {
             $leftBottomMargin += $this->triggersGap;
         }
 
+        if($this->lister->placeToggleUnlistedTrigger){
+            $modifier = WebModifier::createInstance();
+            $modifier->pushModifier("data-next-image", AvetifyManager::imageUrl("collapse_content.svg"));
+            HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('expand_content.svg'),
+                [
+                    "inset-inline-start" => "20px",
+                    "bottom" => $leftBottomMargin . "px"
+                ],
+                'toggleUnlisted(this)', $modifier);
+            $leftBottomMargin += $this->triggersGap;
+        }
+
         if($this->lister->placeNavListsTriggers){
             HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('key_arrow_up.svg'),
                 [

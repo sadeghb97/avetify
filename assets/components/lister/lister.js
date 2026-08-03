@@ -150,6 +150,24 @@ function resetLists(){
   }
 }
 
+function toggleUnlisted(el){
+  const zeroList = fetchPageListerByDatasetId("avt_zero_list");
+  const elImage = el.querySelector("img");
+  const curImageSrc = elImage.src;
+  const nextImageSrc = el.dataset.nextImage;
+  console.log(el, zeroList, curImageSrc, nextImageSrc);
+
+  if(zeroList.style.display !== "none"){
+    zeroList.style.display = "none";
+  }
+  else {
+    zeroList.style.display = "block";
+  }
+
+  zeroList.dataset.nextImage = curImageSrc;
+  elImage.src = nextImageSrc
+}
+
 function navigateBetweenLists(offset) {
   const points = document.querySelectorAll('.js__avt-listers-section');
 
