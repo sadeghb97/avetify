@@ -164,7 +164,7 @@ function toggleUnlisted(el){
     zeroList.style.display = "block";
   }
 
-  zeroList.dataset.nextImage = curImageSrc;
+  el.dataset.nextImage = curImageSrc;
   elImage.src = nextImageSrc
 }
 
