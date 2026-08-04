@@ -79,16 +79,6 @@ class TableField extends BaseRecordField implements Qualifier {
         self::closeTD();
     }
 
-    public function setNumeric() : TableField {
-        $this->isNumeric = true;
-        return $this;
-    }
-
-    public function setNullOnEmpty() : TableField {
-        $this->nullOnEmpty = true;
-        return $this;
-    }
-
     public function setDefaultSort() : TableField {
         $this->isDefaultSort = true;
         return $this;

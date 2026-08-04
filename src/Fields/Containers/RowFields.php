@@ -12,7 +12,7 @@ class RowFields extends FieldsContainer {
 
         for($i=0; count($this->childs) > $i; $i++){
             $this->childs[$i]->placeField($item);
-            if(!$this->childs[$i]->hidden && count($this->childs) > ($i + 1)) $niceDiv->separate();
+            if(!$this->childs[$i]->isHidden && count($this->childs) > ($i + 1)) $niceDiv->separate();
         }
 
         $niceDiv->close();

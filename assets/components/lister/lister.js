@@ -94,10 +94,11 @@ function listerSubmit(moreArgs){
     }
   }
 
+  const listerSettings = {};
+
   const unlistedLister = fetchUnlistedLister();
-  const hideUnlistedLister = unlistedLister.style.display === 'none';
-  const listerSettings = {
-    hide_unlisted: hideUnlistedLister
+  if(unlistedLister){
+    listerSettings.hide_unlisted = unlistedLister.style.display === 'none';
   }
 
 	document.getElementById("newlist").value = JSON.stringify(outLists);

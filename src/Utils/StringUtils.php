@@ -25,13 +25,14 @@ class StringUtils {
         return $startStr . "..." . $endStr;
     }
 
-    public static function normalizeSearch(string $text): string {
+    public static function transliterateToAscii(string $text): string {
         static $transliterator = null;
 
         if ($transliterator === null) {
             $transliterator = \Transliterator::create('Any-Latin; Latin-ASCII');
         }
 
+        $text = rawurldecode($text);
         return $transliterator->transliterate($text);
     }
 

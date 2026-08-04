@@ -9,6 +9,7 @@ use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\WebModifier;
 use Avetify\Themes\Main\ThemesManager;
+use Avetify\Utils\StringUtils;
 
 class BaseRecordField implements IdentifiedElement {
     use IdentifiedElementTrait;
@@ -18,8 +19,10 @@ class BaseRecordField implements IdentifiedElement {
     public bool $legacyGeneralNaming = false;
 
     public bool $isNumeric = false;
+    public bool $isHidden = false;
     public bool $nullOnEmpty = false;
-    public bool $hidden = false;
+    public bool $transliterateToAscii = false;
+    public bool $rawUrlDecode = false;
 
     public array $dbValueMappers = [];
 
@@ -57,7 +60,13 @@ class BaseRecordField implements IdentifiedElement {
         if($this->nullOnEmpty && !$value) return null;
         if($this->isNumeric && !$value) return "0";
 
-        if(!$this->isNumeric) return $conn->real_escape_string($value);
+        if(!$this->isNumeric){
+            $locString = $value;
+            if($this->transliterateToAscii) $locString = StringUtils::transliterateToAscii($locString);
+            else if($this->rawUrlDecode) $locString = rawurldecode($locString);
+
+            return $conn->real_escape_string($locString);
+        }
         return $value;
     }
 
@@ -68,6 +77,32 @@ class BaseRecordField implements IdentifiedElement {
 
     public function presentValue($item, ?WebModifier $webModifier = null){
         HTMLInterface::placeSpan($this->getValue($item), $webModifier);
+    }
+
+    public function setHidden() : static {
+        $this->isHidden = true;
+        $this->baseModifier->pushStyle("display", "none");
+        return $this;
+    }
+
+    public function setNumeric() : static {
+        $this->isNumeric = true;
+        return $this;
+    }
+
+    public function setNullOnEmpty() : static {
+        $this->nullOnEmpty = true;
+        return $this;
+    }
+
+    public function setTransliterateToAscii() : static {
+        $this->transliterateToAscii = true;
+        return $this;
+    }
+
+    public function setRawUrlDecode() : static {
+        $this->rawUrlDecode = true;
+        return $this;
     }
 
     public function removeBaseMargins(): static {

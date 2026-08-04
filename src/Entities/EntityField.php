@@ -53,12 +53,6 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
         return $this;
     }
 
-    public function setHidden() : EntityField {
-        $this->hidden = true;
-        $this->baseModifier->pushStyle("display", "none");
-        return $this;
-    }
-
     public function setWritable() : EntityField {
         $this->writable = true;
         return $this;
@@ -76,16 +70,6 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
 
     public function setRequired() : EntityField {
         $this->required = true;
-        return $this;
-    }
-
-    public function setNumeric() : EntityField {
-        $this->isNumeric = true;
-        return $this;
-    }
-
-    public function setNullOnEmpty() : EntityField {
-        $this->nullOnEmpty = true;
         return $this;
     }
 

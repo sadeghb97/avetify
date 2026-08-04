@@ -11,7 +11,7 @@ class ColumnFields extends FieldsContainer {
 
         for($i=0; count($this->childs) > $i; $i++){
             $this->childs[$i]->placeField($item);
-            if(!$this->childs[$i]->hidden && count($this->childs) > ($i + 1)) $vertDiv->separate();
+            if(!$this->childs[$i]->isHidden && count($this->childs) > ($i + 1)) $vertDiv->separate();
         }
 
         $vertDiv->close();
