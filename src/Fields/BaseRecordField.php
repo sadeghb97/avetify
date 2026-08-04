@@ -23,6 +23,7 @@ class BaseRecordField implements IdentifiedElement {
     public bool $nullOnEmpty = false;
     public bool $transliterateToAscii = false;
     public bool $rawUrlDecode = false;
+    public bool $trimming = false;
 
     public array $dbValueMappers = [];
 
@@ -60,12 +61,15 @@ class BaseRecordField implements IdentifiedElement {
         if($this->nullOnEmpty && !$value) return null;
         if($this->isNumeric && !$value) return "0";
 
-        if(!$this->isNumeric){
-            $locString = $value;
-            if($this->transliterateToAscii) $locString = StringUtils::transliterateToAscii($locString);
-            else if($this->rawUrlDecode) $locString = rawurldecode($locString);
+        if($this->isNumeric || $this->trimming){
+            $value = trim($value);
+        }
 
-            return $conn->real_escape_string($locString);
+        if(!$this->isNumeric){
+            if($this->transliterateToAscii) $value = StringUtils::transliterateToAscii($value);
+            else if($this->rawUrlDecode) $value = rawurldecode($value);
+
+            return $conn->real_escape_string($value);
         }
         return $value;
     }
@@ -102,6 +106,11 @@ class BaseRecordField implements IdentifiedElement {
 
     public function setRawUrlDecode() : static {
         $this->rawUrlDecode = true;
+        return $this;
+    }
+
+    public function setTrimming() : static {
+        $this->trimming = true;
         return $this;
     }
 
