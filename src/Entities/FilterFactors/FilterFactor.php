@@ -19,9 +19,4 @@ class FilterFactor extends BaseRecordField implements Qualifier {
     public function getFilterValue() {
         return $_REQUEST[$this->getElementIdentifier()] ?? null;
     }
-
-    public function setNumeric() : FilterFactor {
-        $this->isNumeric = true;
-        return $this;
-    }
 }
