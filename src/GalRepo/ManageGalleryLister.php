@@ -118,11 +118,11 @@ class ManageGalleryLister extends AvtLister {
     public function catchNewList(){
         parent::catchNewList();
         if(isset($_POST['submit_type']) && $_POST['submit_type'] == "reset"){
-            $this->handleSubmittedList([], [], $_POST);
+            $this->handleSubmittedList([], [], [], $_POST);
         }
     }
 
-    public function handleSubmittedList(array $lists, array $itemsParams, $allFields){
+    public function handleSubmittedList(array $lists, array $itemsParams, array $settings, $allFields){
         $submitType = $allFields['submit_type'];
         if($submitType == "reset"){
             $this->galleryRepo->resetConfigs();

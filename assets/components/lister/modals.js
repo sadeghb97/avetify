@@ -5,7 +5,7 @@ function setupArrangeModal(modal){
   for (const lister of pageListers) {
     const listerId = lister.dataset.listId
     const listerTitle = lister.dataset.listTitle
-    if(listerId === 'avt_zero_list') continue;
+    if(listerId === AVT_ZERO_LIST_ID) continue;
 
     const listerDiv = document.createElement("div");
     listerDiv.style.cursor = "grab";
@@ -26,7 +26,7 @@ function setupArrangeModal(modal){
     for (const child of container.children) {
       listerOrders.push(child.dataset.itemId);
     }
-    listerOrders.push("avt_zero_list")
+    listerOrders.push(AVT_ZERO_LIST_ID)
 
     rearrangeLists(listerOrders)
     modal.close();
@@ -77,7 +77,7 @@ function setupManageModal(modal){
   firstSelect.innerHTML = `
   <option value="">Select list...</option>
   ${options
-    .filter(item => item.id !== 'avt_zero_list')
+    .filter(item => item.id !== AVT_ZERO_LIST_ID)
     .map(item => `
       <option value="${item.id}">${item.title}</option>
     `)

@@ -24,7 +24,7 @@ abstract class JsonLister extends AvtLister {
     public function ensureListerData() : void {
         $dataDilePath = $this->getJsonStorageFilePath();
         if(!file_exists($dataDilePath)){
-            $this->storeData([], []);
+            $this->storeData(['hide_unlisted' => false], [], []);
             $this->ensureListerData();
             return;
         }
@@ -42,7 +42,7 @@ abstract class JsonLister extends AvtLister {
 
         if($normalizeIndexRequired){
             $normalizedLists = self::normalizeListIndexes($parsedListerData['lists']);
-            $this->storeData($normalizedLists, $parsedListerData['items']);
+            $this->storeData($parsedListerData['configs'], $normalizedLists, $parsedListerData['items']);
             $this->ensureListerData();
             return;
         }
@@ -52,6 +52,8 @@ abstract class JsonLister extends AvtLister {
         foreach ($this->listerData['lists'] as $listIndex => $list){
             $this->listerData['ls_map'][$list['id']] = $listIndex;
         }
+
+        $this->hideUnlistedList = $this->listerData['configs']['hide_unlisted'] ?? false;
     }
 
     private static function normalizeListIndexes($badListsData) : array {
@@ -62,9 +64,10 @@ abstract class JsonLister extends AvtLister {
         return $badListsData;
     }
 
-    public function storeData(array $lists, array $items) : void {
+    public function storeData(array $configs, array $lists, array $items) : void {
         $dataDilePath = $this->getJsonStorageFilePath();
         $newData = [
+            "configs" => $configs,
             "lists" => $lists,
             "items" => $items
         ];
@@ -104,7 +107,7 @@ abstract class JsonLister extends AvtLister {
 
     public function getListIds(): array {
         $listsData = $this->listerData['lists'];
-        $ids = ["avt_zero_list"];
+        $ids = [AvtLister::ZERO_LIST_ID];
         foreach ($listsData as $ld){
             $ids[] = $ld['id'];
         }
@@ -129,7 +132,7 @@ abstract class JsonLister extends AvtLister {
         parent::catchNewList();
     }
 
-    public function handleSubmittedList(array $lists, array $itemsParams, $allFields) {
+    public function handleSubmittedList(array $lists, array $itemsParams, $settings, $allFields) {
         $outListsData = [];
         for ($i=0; (count($lists) - 1) > $i; $i++){
             $outListsData[] = [
@@ -144,7 +147,7 @@ abstract class JsonLister extends AvtLister {
         foreach ($lists as $listIndex => $listDetails){
             foreach ($listDetails['ids'] as $internalListIndex => $itemId){
                 $targetOutListIndex = count($lists) - $listIndex - 2;
-                $listId = $targetOutListIndex >= 0 ? $outListsData[$targetOutListIndex]['id'] : "avt_zero_list";
+                $listId = $targetOutListIndex >= 0 ? $outListsData[$targetOutListIndex]['id'] : AvtLister::ZERO_LIST_ID;
 
                 $itemsData[$itemId] = [
                     "list" => $listId,
@@ -153,7 +156,11 @@ abstract class JsonLister extends AvtLister {
             }
         }
 
-        $this->storeData($outListsData, $itemsData);
+        $outConfigs = [
+            "hide_unlisted" => !empty($settings['hide_unlisted'])
+        ];
+
+        $this->storeData($outConfigs, $outListsData, $itemsData);
         $this->ensureListerData();
     }
 }

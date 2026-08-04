@@ -1,3 +1,5 @@
+const AVT_ZERO_LIST_ID = "avt_zero_list";
+
 function str_rot13(str) {
 	return (str + '').replace(/[a-z]/gi, function (s) {
 		return String.fromCharCode(s.charCodeAt(0) + (s.toLowerCase() < 'n' ? 13 : -13));
@@ -21,6 +23,10 @@ function fetchPageListerByDatasetId(listerId){
   return document.querySelector(
     `[data-list-id="${listerId}"]`
   );
+}
+
+function fetchUnlistedLister(){
+  return fetchPageListerByDatasetId(AVT_ZERO_LIST_ID);
 }
 
 function fetchGridElementFromLister(lister){
@@ -88,7 +94,14 @@ function listerSubmit(moreArgs){
     }
   }
 
+  const unlistedLister = fetchUnlistedLister();
+  const hideUnlistedLister = unlistedLister.style.display === 'none';
+  const listerSettings = {
+    hide_unlisted: hideUnlistedLister
+  }
+
 	document.getElementById("newlist").value = JSON.stringify(outLists);
+  document.getElementById("lister_settings").value = JSON.stringify(listerSettings);
 	return true;
 }
 
@@ -151,7 +164,7 @@ function resetLists(){
 }
 
 function toggleUnlisted(el){
-  const zeroList = fetchPageListerByDatasetId("avt_zero_list");
+  const zeroList = fetchUnlistedLister();
   const elImage = el.querySelector("img");
   const curImageSrc = elImage.src;
   const nextImageSrc = el.dataset.nextImage;

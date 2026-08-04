@@ -16,6 +16,8 @@ use Avetify\Themes\Main\ThemesManager;
 abstract class AvtLister extends SetModifier {
     use EntityManagerTrait;
 
+    const ZERO_LIST_ID = "avt_zero_list";
+
     public ?ListerRenderer $listerRenderer = null;
     public array $initItemsMap = [];
     public bool $renderListsInReverseOrder = false;
@@ -27,6 +29,7 @@ abstract class AvtLister extends SetModifier {
     public bool $placeResetListsTrigger = false;
     public bool $placeToggleUnlistedTrigger = false;
     public bool $placeNavListsTriggers = true;
+    public bool $hideUnlistedList = false;
     public string $menuId = "";
 
     /** @var ListerCategory[] | null $categoriesData */
@@ -131,7 +134,7 @@ abstract class AvtLister extends SetModifier {
         return count($this->createCategories());
     }
 
-    abstract public function handleSubmittedList(array $lists, array $itemsParams, $allFields);
+    abstract public function handleSubmittedList(array $lists, array $itemsParams, array $settings, $allFields);
 
     //key, title, ValueGetter
     public function getItemFields() : array {
@@ -398,6 +401,9 @@ abstract class AvtLister extends SetModifier {
             $newListsRaw = $_POST['newlist'];
             $newListsData = json_decode($newListsRaw, true);
 
+            $listerSettingsRaw = $_POST['lister_settings'];
+            $listerSettings = json_decode($listerSettingsRaw, true);
+
             foreach ($newListsData as &$listData){
                 foreach ($listData['ids'] as $ind => $fullId){
                     $itemPk = substr($fullId, 12);
@@ -429,7 +435,7 @@ abstract class AvtLister extends SetModifier {
                 }
             }
 
-            $this->handleSubmittedList($newListsData, $itemsParams, $_POST);
+            $this->handleSubmittedList($newListsData, $itemsParams, $listerSettings, $_POST);
         }
     }
 

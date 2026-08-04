@@ -49,7 +49,7 @@ abstract class DBLister extends AvtLister {
         }
     }
 
-    public function handleSubmittedList(array $lists, array $itemsParams, $allFields) {
+    public function handleSubmittedList(array $lists, array $itemsParams, array $settings, $allFields) {
         $this->dbHandleLists($lists);
         $this->updateItems();
     }

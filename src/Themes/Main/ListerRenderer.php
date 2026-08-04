@@ -54,6 +54,7 @@ abstract class ListerRenderer extends BaseSetRenderer {
     public function closeContainer() {
         $this->formMoreFields();
         echo '<input type="hidden" id="newlist" name="newlist">
+              <input type="hidden" id="lister_settings" name="lister_settings">
               <input type="hidden" id="lister_params" name="lister_params">
         </form>';
 
@@ -234,17 +235,18 @@ abstract class ListerRenderer extends BaseSetRenderer {
         }
     }
 
-    public function printCategorySection(ListerCategory $category, $hide = false){
+    public function printCategorySection(ListerCategory $category, $permHide = false){
         $categoryTitle = $category->title;
         $categoryId = $category->identifier;
         $categoryGridId = "grid_" . $categoryId;
         $msecID = "msec_" . $category->index;
         $msecTitleID = "msec_title_" . $category->index;
+        $hideUnlisted = $this->lister->hideUnlistedList && $categoryId == AvtLister::ZERO_LIST_ID;
 
         echo '<div class="magham-section js__avt-lister" id="' . $msecID . '" ';
         HTMLInterface::addNormalizedAttribute('data-list-title', $categoryTitle);
         HTMLInterface::addNormalizedAttribute('data-list-id', $categoryId);
-        echo ' style="display: ' . (!$hide ? "block" : "none") . ';"';
+        echo ' style="display: ' . ((!$permHide && !$hideUnlisted) ? "block" : "none") . ';"';
         echo ' >';
 
         echo '<section ';
