@@ -30,6 +30,13 @@ abstract class DatePicker extends BaseRecordField {
         if ($value === '' || !is_numeric($value)) return null;
 
         $time = (int) $value;
+        if ($time === 0) {
+            return match ($this->valueType) {
+                DateValueType::UNIX => "0",
+                DateValueType::MYSQL_DATE => "0000-00-00",
+                DateValueType::MYSQL_DATETIME => "0000-00-00 00:00:00",
+            };
+        }
 
         return match ($this->valueType) {
             DateValueType::UNIX =>
