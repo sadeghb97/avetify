@@ -319,3 +319,72 @@ input.numeric-text {
     font-family: monospace;
     color: #222;
 }
+
+/* Dark Mode */
+body.dark {
+    background: linear-gradient(to bottom, #202124 0%, #17181b 100%);
+    color: #d8d8d8;
+}
+
+.dark input {
+    background: #292c31;
+    color: #d8d8d8;
+}
+
+.dark .table {
+    border-collapse: collapse;
+}
+
+.dark .table td {
+    background: #25282e;
+    color: #d8d8d8;
+}
+
+.dark .table th {
+    background: #30343b;
+    color: #e0e0e0;
+}
+
+.dark .table td,
+.dark .table th {
+    border: 1px solid #454a54;
+}
+
+.dark .table tr:hover td {
+    background: #343941;
+}
+
+.dark .tables_panel {
+    background-color: #59616d;
+    border-color: #59616d;
+    padding: 4px;
+}
+
+.dark .avt_img_icon_buttons {
+    filter: invert(80%);
+}
+
+.dark .avt-grid-square {
+    background: #2b2d32;
+    border: 1px solid #3a3d44;
+}
+
+.dark .lister-item-name {
+    color: #ececec;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.dark a {
+    color: #8ab4f8;
+}
+
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+    color: #f2f2f2;
+    font-weight: 600;
+}

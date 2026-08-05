@@ -115,7 +115,7 @@ class GreenGalleryRenderer extends GreenListerRenderer {
     }
 
     public function printSubRepo(GalleryRepo $subRepo, $itemRank){
-        echo '<div class="grid-square" ';
+        echo '<div class="grid-square avt-grid-square" ';
         Styler::startAttribute();
         $this->appendCardStyles();
         $this->appendRecordCardStyles();

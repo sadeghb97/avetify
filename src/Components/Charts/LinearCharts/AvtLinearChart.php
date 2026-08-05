@@ -23,7 +23,7 @@ class AvtLinearChart implements PageRenderer {
         $theme = $this->getTheme();
         $theme->includesChartTools = true;
         $theme->placeHeader($title);
-
+        $theme->openBody();
         $this->renderBody();
     }
 

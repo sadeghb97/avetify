@@ -15,6 +15,7 @@ class AvetifyRenderer implements PageRenderer {
     public function renderPage($title = "Avetify") {
         $theme = $this->getTheme();
         $theme->placeHeader($title);
+        $theme->openBody();
         $this->renderBody();
     }
 

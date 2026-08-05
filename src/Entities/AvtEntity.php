@@ -581,6 +581,7 @@ abstract class AvtEntity extends SetModifier {
 
         $theme = $this->getFinalTheme();
         $theme->placeHeader($title);
+        $theme->openBody();
         $theme->loadHeaderElements();
     }
 

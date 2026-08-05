@@ -13,6 +13,7 @@ class ThemesManager {
     public int $containerMarginTop = 0;
     public int $containerMarginBottom = 0;
     public bool $noNavigationMenu = false;
+    public bool $darkMode = false;
     public ?NavigationRenderer $navigationRenderer = null;
 
     public bool $includesListerTools = false;
@@ -49,6 +50,9 @@ class ThemesManager {
 
     public function openBody(){
         echo '<body ';
+        Styler::classStartAttribute();
+        $this->appendBodyClasses();
+        Styler::closeAttribute();
         Styler::startAttribute();
         $this->appendBodyStyles();
         Styler::closeAttribute();
@@ -337,4 +341,8 @@ class ThemesManager {
     }
 
     public function appendBodyStyles(){}
+
+    public function appendBodyClasses() : void {
+        if($this->darkMode) Styler::addClass("dark");
+    }
 }

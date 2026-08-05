@@ -42,6 +42,7 @@ class GreenListerRenderer extends ListerRenderer {
         echo '<div ';
         Styler::classStartAttribute();
         Styler::addClass("grid-square");
+        Styler::addClass("avt-grid-square");
         Styler::closeAttribute();
         Styler::startAttribute();
         $this->appendRecordCardStyles();

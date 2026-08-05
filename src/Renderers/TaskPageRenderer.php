@@ -16,6 +16,7 @@ abstract class TaskPageRenderer implements PageRenderer {
         if(!Platform::isCli()) {
             $theme = $this->getTheme();
             $theme->placeHeader($title);
+            $theme->openBody();
             $theme->loadHeaderElements();
         }
     }

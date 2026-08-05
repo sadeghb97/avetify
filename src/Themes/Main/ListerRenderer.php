@@ -281,10 +281,10 @@ abstract class ListerRenderer extends BaseSetRenderer {
     }
 
     public function openPage(string $title = ""){
-        $finalTitle = $title ? $title : $this->getTitle();
+        $finalTitle = $title ?: $this->getTitle();
         if(!$this->theme) $this->theme = $this->defaultTheme();
         $this->theme->placeHeader($finalTitle);
-        echo '<body>';
+        $this->theme->openBody();
         $this->theme->loadHeaderElements();
     }
 

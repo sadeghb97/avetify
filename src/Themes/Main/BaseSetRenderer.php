@@ -59,6 +59,7 @@ abstract class BaseSetRenderer {
 
     public function openPage(){
         $this->theme->placeHeader($this->getTitle());
+        $this->theme->openBody();
         $this->theme->loadHeaderElements();
     }
 
