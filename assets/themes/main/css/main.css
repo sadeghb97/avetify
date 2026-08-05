@@ -8,8 +8,21 @@ input.numeric-text {
     -moz-appearance: textfield;
 }
 
+body {
+    margin: 4px !important;
+    padding: 4px !important;
+}
+
 a {
     color: black;
+}
+
+.nice-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4px;
 }
 
 .tables_panel{

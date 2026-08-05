@@ -10,13 +10,9 @@ use Avetify\Interface\WebModifier;
 class NiceDiv implements AvtContainer {
     private int $itemsCount = 0;
 
-    public array $styles = [
-        "display" => "flex",
-        "align-items" => "center",
-        "justify-content" => "center",
-        "flex-wrap" => "wrap",
-        "gap" => "4px"
-    ];
+    public array $classes = ["nice-div" => true];
+
+    public array $styles = [];
 
     public static function justOpen(?WebModifier $webModifier = null) {
         $niceDiv = new NiceDiv(0);
@@ -30,6 +26,9 @@ class NiceDiv implements AvtContainer {
     public function addStyle($key, $value){
         $this->styles[$key] = $value;
     }
+    public function addClass($className) : void {
+        $this->classes[$className] = true;
+    }
     public function addModifier($key, $value){
         $this->htmlModifiers[$key] = $value;
     }
@@ -42,17 +41,12 @@ class NiceDiv implements AvtContainer {
 
         foreach ($this->htmlModifiers as $modifierKey => $modifierValue){
             if(trim(strtolower($modifierKey)) != "class") HTMLInterface::addAttribute($modifierKey, $modifierValue);
-            else {
-                $classes = explode(" ", $modifierValue);
-                foreach ($classes as $class) {
-                    $webModifier->styler->pushClass($class);
-                }
-            }
         }
 
         HTMLInterface::applyModifiers($webModifier);
 
         Styler::classStartAttribute();
+        foreach ($this->classes as $key => $value) if($value) Styler::addClass($key);
         HTMLInterface::appendClasses($webModifier);
         Styler::closeAttribute();
 
