@@ -1,0 +1,77 @@
+<?php
+namespace Avetify\Fields\DateFields;
+
+use Avetify\DB\DBConnection;
+use Avetify\Fields\BaseRecordField;
+
+abstract class DatePicker extends BaseRecordField {
+    public bool $timeEnabled = false;
+    public bool $printUnix = false;
+    public DateValueType $valueType = DateValueType::MYSQL_DATE;
+
+    public function getValue($item): string {
+        $val = parent::getValue($item);
+        if ($val === '') return "0";
+
+
+        return match ($this->valueType) {
+            DateValueType::UNIX =>
+            (string) (int) $val,
+
+            DateValueType::MYSQL_DATE,
+            DateValueType::MYSQL_DATETIME =>
+            (($time = strtotime($val)) === false)
+                ? "0"
+                : (string) $time,
+        };
+    }
+
+    public function adjustDBValue(DBConnection $conn, string $value): string | null {
+        if ($value === '' || !is_numeric($value)) return null;
+
+        $time = (int) $value;
+
+        return match ($this->valueType) {
+            DateValueType::UNIX =>
+            (string) $time,
+
+            DateValueType::MYSQL_DATE =>
+            date('Y-m-d', $time),
+
+            DateValueType::MYSQL_DATETIME =>
+            date('Y-m-d H:i:s', $time),
+        };
+    }
+
+    public function initJs($item) : void {
+        echo '<script>';
+        echo $this->getInitJsString($item);
+        echo '</script>';
+    }
+
+    abstract public function getInitJsString($item) : string;
+
+    public function getFieldInputIdentifier($item) : string {
+        return $this->getElementIdentifier($item) . "_display";
+    }
+
+    public function getUnixSpanIdentifier($item) : string {
+        return $this->getElementIdentifier($item) . "_unix";
+    }
+
+    public function enableTime() : static {
+        $this->timeEnabled = true;
+        $this->setValueType(DateValueType::UNIX);
+        return $this;
+    }
+
+    public function setValueType(DateValueType $valueType) : static {
+        $this->valueType = $valueType;
+        return $this;
+    }
+
+    public function enableUnix() : static {
+        $this->printUnix = true;
+        return $this;
+    }
+}

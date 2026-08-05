@@ -1,16 +1,12 @@
 <?php
 namespace Avetify\Fields\DateFields;
 
-use Avetify\Fields\BaseRecordField;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Themes\Main\AvtTheme;
 
-class JalaliDatePicker extends BaseRecordField {
-    public bool $timeEnabled = false;
-    public bool $unixEnabled = false;
-
+class JalaliDatePicker extends DatePicker {
     public function presentValue($item, ?WebModifier $webModifier = null) : void {
         $time = intval($this->getValue($item));
 
@@ -45,7 +41,7 @@ class JalaliDatePicker extends BaseRecordField {
 
         echo '<button ';
         HTMLInterface::addAttribute("type", "button");
-        HTMLInterface::addAttribute("data-target", $this->timeEnabled ? "jalali_date" : "jalali_datetime");
+        HTMLInterface::addAttribute("data-target", $this->getElementIdentifier($item));
         Styler::classStartAttribute();
         Styler::addClass('avt-timepicker__clear-button');
         Styler::closeAttribute();
@@ -61,47 +57,25 @@ class JalaliDatePicker extends BaseRecordField {
         HTMLInterface::addAttribute('value', $time);
         HTMLInterface::closeTag();
 
-        echo '<div ';
-        HTMLInterface::addAttribute("id", $this->getUnixSpanIdentifier($item));
-        Styler::classStartAttribute();
-        Styler::addClass('avt-timepicker__output');
-        Styler::closeAttribute();
-        HTMLInterface::closeTag();
-        HTMLInterface::closeDiv();
+        if($this->printUnix) {
+            echo '<div ';
+            HTMLInterface::addAttribute("id", $this->getUnixSpanIdentifier($item));
+            Styler::classStartAttribute();
+            Styler::addClass('avt-timepicker__output');
+            Styler::closeAttribute();
+            HTMLInterface::closeTag();
+            HTMLInterface::closeDiv();
+        }
 
         HTMLInterface::closeDiv();
 
         $this->initJs($item);
     }
 
-    public function initJs($item) : void {
-        echo '<script>';
-        echo $this->getInitJsString($item);
-        echo '</script>';
-    }
-
     public function getInitJsString($item) : string {
         $time = intval($this->getValue($item));
         return "initJalaliField('" . $this->getElementIdentifier($item) . "', "
             . ($this->timeEnabled ? "true" : "false") . ", " . $time . ");";
-    }
-
-    public function getFieldInputIdentifier($item) : string {
-        return $this->getElementIdentifier($item) . "_display";
-    }
-
-    public function getUnixSpanIdentifier($item) : string {
-        return $this->getElementIdentifier($item) . "_unix";
-    }
-
-    public function enableTime() : JalaliDatePicker {
-        $this->timeEnabled = true;
-        return $this;
-    }
-
-    public function enableUnix() : JalaliDatePicker {
-        $this->unixEnabled = true;
-        return $this;
     }
 
     public function attachRequirementsToTheme(AvtTheme $theme): AvtTheme {

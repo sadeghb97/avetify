@@ -15,7 +15,7 @@ class EntitySelectField extends EntityField {
         $key = $this->key;
         $value = $this->getValue($item);
 
-        $sModifier = WebModifier::createInstance();
+        $sModifier = WebModifier::mergeModifiers($this->baseModifier, $webModifier);
         $sModifier->styler->pushStyle("margin-top", "8px");
         $sModifier->styler->pushStyle("margin-bottom", "8px");
         $selectField = new JSDynamicSelect($this->title, $key, $value, $this->dataSetKey);
