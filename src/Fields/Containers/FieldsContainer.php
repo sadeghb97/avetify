@@ -19,7 +19,7 @@ class FieldsContainer extends BaseRecordField {
         $this->childs = $childs;
     }
 
-    public function setSeparatorSize(int $sepSize): FieldsContainer {
+    public function setSeparatorSize(int $sepSize): static {
         $this->sepSize = $sepSize;
         return $this;
     }

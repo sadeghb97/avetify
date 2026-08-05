@@ -23,12 +23,12 @@ class URLBuilder {
     public function __construct(public null | string $baseUrl = null){
     }
 
-    public function addParam($param, $paramValue) : URLBuilder {
+    public function addParam($param, $paramValue) : static {
         $this->params[$param] = $paramValue;
         return $this;
     }
 
-    public function removeParam($param) : URLBuilder {
+    public function removeParam($param) : static {
         if(isset($this->params[$param])) unset($this->params[$param]);
         return $this;
     }

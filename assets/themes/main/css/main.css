@@ -8,6 +8,10 @@ input.numeric-text {
     -moz-appearance: textfield;
 }
 
+a {
+    color: black;
+}
+
 .tables_panel{
     border-style: solid;
     border-width: 2px;

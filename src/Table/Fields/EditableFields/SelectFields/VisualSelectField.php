@@ -32,12 +32,12 @@ class VisualSelectField extends EditableField {
         HTMLInterface::closeDiv();
     }
 
-    public function setMaxSelectorWidth(int $width) : VisualSelectField {
+    public function setMaxSelectorWidth(int $width) : static {
         $this->maxSelectorWidth = $width;
         return $this;
     }
 
-    public function enableAutoSubmit() : VisualSelectField {
+    public function enableAutoSubmit() : static {
         $this->disableAutoSubmit = false;
         return $this;
     }

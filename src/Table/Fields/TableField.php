@@ -79,106 +79,106 @@ class TableField extends BaseRecordField implements Qualifier {
         self::closeTD();
     }
 
-    public function setDefaultSort() : TableField {
+    public function setDefaultSort() : static {
         $this->isDefaultSort = true;
         return $this;
     }
 
-    public function setRtl() : TableField {
+    public function setRtl() : static {
         $this->rtl = true;
         return $this;
     }
 
-    public function noCentered() : TableField {
+    public function noCentered() : static {
         $this->isCentered = false;
         return $this;
     }
 
-    public function setUnbreakable() : TableField {
+    public function setUnbreakable() : static {
         $this->isUnbreakable = true;
         return $this;
     }
 
-    public function setSortable() : TableField {
+    public function setSortable() : static {
         $this->isSortable = true;
         return $this;
     }
 
-    public function setFilterable() : TableField {
+    public function setFilterable() : static {
         $this->isFilterable = true;
         return $this;
     }
 
-    public function setAscending() : TableField {
+    public function setAscending() : static {
         $this->isAscending = true;
         return $this;
     }
 
-    public function setTiebreaks(array $tieBreaks) : TableField {
+    public function setTiebreaks(array $tieBreaks) : static {
         $this->tieBreaks = $tieBreaks;
         return $this;
     }
 
-    public function setBackgroundColor(string | null $bg) : TableField {
+    public function setBackgroundColor(string | null $bg) : static {
         $this->backgroundColor = $bg;
         return $this;
     }
 
-    public function setColor(string | null $color) : TableField {
+    public function setColor(string | null $color) : static {
         $this->color = $color;
         return $this;
     }
 
-    public function setWidth(string $w) : TableField {
+    public function setWidth(string $w) : static {
         $this->width = $w;
         return $this;
     }
 
-    public function setMaxWidth(string $w) : TableField {
+    public function setMaxWidth(string $w) : static {
         $this->maxWidth = $w;
         return $this;
     }
 
-    public function setMinWidth(string $w) : TableField {
+    public function setMinWidth(string $w) : static {
         $this->minWidth = $w;
         return $this;
     }
 
-    public function setFontSize(string | null $fs) : TableField {
+    public function setFontSize(string | null $fs) : static {
         $this->fontSize = $fs;
         return $this;
     }
 
-    public function setFontWeight(string | null $fw) : TableField {
+    public function setFontWeight(string | null $fw) : static {
         $this->fontWeight = $fw;
         return $this;
     }
 
-    public function setSkipEmpties() : TableField {
+    public function setSkipEmpties() : static {
         $this->skipEmpties = true;
         return $this;
     }
 
-    public function setSubmitter() : TableField {
+    public function setSubmitter() : static {
         $this->submitter = true;
         return $this;
     }
 
-    public function bold() : TableField {
+    public function bold() : static {
        return $this->setFontWeight("bold");
     }
 
-    public function appendDBValueMapper($orgValue, $mappedValue) : TableField {
+    public function appendDBValueMapper($orgValue, $mappedValue) : static {
         $this->dbValueMappers[$orgValue] = $mappedValue;
         return $this;
     }
 
-    public function setMaxFieldCharacters(int $maxFieldCharacters) : TableField {
+    public function setMaxFieldCharacters(int $maxFieldCharacters) : static {
         $this->maxFieldCharacters = $maxFieldCharacters;
         return $this;
     }
 
-    public function setReadonly() : TableField {
+    public function setReadonly() : static {
         $this->isReadonly = true;
         return $this;
     }
@@ -240,9 +240,6 @@ class TableField extends BaseRecordField implements Qualifier {
             echo '<a ';
             HTMLInterface::addAttribute("target", "_blank");
             HTMLInterface::addAttribute("href", $link);
-            Styler::startAttribute();
-            Styler::addStyle("color", "black");
-            Styler::closeAttribute();
             HTMLInterface::closeTag();
         }
 

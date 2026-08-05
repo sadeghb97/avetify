@@ -63,27 +63,27 @@ class EntityAvatarField extends EntityField {
         return Routing::serverRootPath($this->getRelativeSrc($record));
     }
 
-    public function setPath(string $path) : EntityField {
+    public function setPath(string $path) : static {
         $this->path = $path;
         return $this;
     }
 
-    public function setManualCrop() : EntityAvatarField {
+    public function setManualCrop() : static {
         $this->manualCrop = true;
         return $this;
     }
 
-    public function setAutoSubmit() : EntityAvatarField {
+    public function setAutoSubmit() : static {
         $this->autoSubmit = true;
         return $this;
     }
 
-    public function setMaxImageSize(string $imageSize) : EntityField {
+    public function setMaxImageSize(string $imageSize) : static {
         $this->maxImageSize = $imageSize;
         return $this;
     }
 
-    public function setImageForcedRatio(int $widthDim, int $heightDim) : EntityField {
+    public function setImageForcedRatio(int $widthDim, int $heightDim) : static {
         $this->forcedWidthDimension = $widthDim;
         $this->forcedHeightDimension = $heightDim;
         return $this;

@@ -9,7 +9,7 @@ use Avetify\Themes\Main\AvtTheme;
 class EntityCodingField extends EntityField {
     public string $defWrapper = "";
 
-    public function setWrapper(string $wrapper) : EntityCodingField {
+    public function setWrapper(string $wrapper) : static {
         $this->defWrapper = $wrapper;
         return $this;
     }

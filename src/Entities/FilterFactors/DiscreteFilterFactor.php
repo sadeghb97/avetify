@@ -13,7 +13,7 @@ abstract class DiscreteFilterFactor extends FilterFactor implements IdentifiedEl
         $this->namespace = $namespace;
     }
 
-    public function addDiscreteFilter($filterTitle, $filterValue): DiscreteFilterFactor {
+    public function addDiscreteFilter($filterTitle, $filterValue): static {
         $this->discreteFilters[$filterTitle] = $filterValue;
         return $this;
     }

@@ -10,7 +10,7 @@ class NavigationLink extends Detailed {
 
     public function __construct(public string $title, public string $link, public bool $isActive = false) {}
 
-    public function addParam(string $key, string $value) : NavigationLink {
+    public function addParam(string $key, string $value) : static {
         $this->params[$key] = $value;
         return $this;
     }

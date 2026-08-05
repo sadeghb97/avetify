@@ -83,17 +83,17 @@ class NetworkFetcher {
         return $headersArray;
     }
 
-    public function setProxy(string $proxy) : NetworkFetcher {
+    public function setProxy(string $proxy) : static {
         $this->proxy = $proxy;
         return $this;
     }
 
-    public function setConnectTimeout(int $timeout) : NetworkFetcher {
+    public function setConnectTimeout(int $timeout) : static {
         $this->connectTimeout = $timeout;
         return $this;
     }
 
-    public function setWholeTimeout(int $timeout) : NetworkFetcher {
+    public function setWholeTimeout(int $timeout) : static {
         $this->wholeTimeout = $timeout;
         return $this;
     }

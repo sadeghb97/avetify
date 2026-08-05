@@ -38,7 +38,7 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
 
     public function postConstruct(){}
 
-    public function setRtl() : EntityField {
+    public function setRtl() : static {
         $this->baseModifier->popStyle("padding-top");
         $this->baseModifier->popStyle("padding-bottom");
         $this->baseModifier->pushStyle("direction", "rtl");
@@ -47,48 +47,48 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
         return $this;
     }
 
-    public function setInline() : EntityField {
+    public function setInline() : static {
         $this->baseModifier->popStyle("width");
         $this->rtl = true;
         return $this;
     }
 
-    public function setWritable() : EntityField {
+    public function setWritable() : static {
         $this->writable = true;
         return $this;
     }
 
-    public function setProtected() : EntityField {
+    public function setProtected() : static {
         $this->protected = true;
         return $this;
     }
 
-    public function setWritableOnCreate() : EntityField {
+    public function setWritableOnCreate() : static {
         $this->writable = "create";
         return $this;
     }
 
-    public function setRequired() : EntityField {
+    public function setRequired() : static {
         $this->required = true;
         return $this;
     }
 
-    public function setSpecial() : EntityField {
+    public function setSpecial() : static {
         $this->special = true;
         return $this;
     }
 
-    public function setAutoTimeCreate() : EntityField {
+    public function setAutoTimeCreate() : static {
         $this->autoTimeCreate = true;
         return $this;
     }
 
-    public function setAutoTimeUpdate() : EntityField {
+    public function setAutoTimeUpdate() : static {
         $this->autoTimeUpdate = true;
         return $this;
     }
 
-    public function appendDBValueMapper($orgValue, $mappedValue) : EntityField {
+    public function appendDBValueMapper($orgValue, $mappedValue) : static {
         $this->dbValueMappers[$orgValue] = $mappedValue;
         return $this;
     }

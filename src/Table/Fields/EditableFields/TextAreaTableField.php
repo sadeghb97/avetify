@@ -35,12 +35,12 @@ class TextAreaTableField extends EditableField {
         echo '</textarea>';
     }
 
-    public function setRows(int $rows) : TextAreaTableField {
+    public function setRows(int $rows) : static {
         $this->rows = $rows;
         return $this;
     }
 
-    public function setColumns(int $columns) : TextAreaTableField {
+    public function setColumns(int $columns) : static {
         $this->columns = $columns;
         return $this;
     }

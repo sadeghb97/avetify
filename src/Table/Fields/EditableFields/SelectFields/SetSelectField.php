@@ -38,17 +38,17 @@ class SetSelectField extends BaseSetSelectField {
         $this->setSelector->loadValueUsingJSStorage($key);
     }
 
-    public function setSelectorWidth(int $width) : SetSelectField {
+    public function setSelectorWidth(int $width) : static {
         $this->selectorWidth = $width;
         return $this;
     }
 
-    public function setTinyAvatars() : SetSelectField {
+    public function setTinyAvatars() : static {
         $this->tinyAvatars = true;
         return $this;
     }
 
-    public function enableAutoSubmit() : SetSelectField {
+    public function enableAutoSubmit() : static {
         $this->disableAutoSubmit = false;
         return $this;
     }

@@ -32,13 +32,18 @@ abstract class SortFactor implements Sorter {
         return true;
     }
 
-    public function setTiebreaks(array $tieBreaks) : SortFactor {
+    public function setTiebreaks(array $tieBreaks) : static {
         $this->tieBreaks = $tieBreaks;
         return $this;
     }
 
-    public function setRow(int $row) : SortFactor {
+    public function setRow(int $row) : static {
         $this->row = $row;
+        return $this;
+    }
+
+    public function setDefaultSort() : static {
+        $this->isDefaultSort = true;
         return $this;
     }
 
@@ -102,11 +107,6 @@ abstract class SortFactor implements Sorter {
         }
 
         return 0;
-    }
-
-    public function setDefaultSort() : SortFactor {
-        $this->isDefaultSort = true;
-        return $this;
     }
 }
 

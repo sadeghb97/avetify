@@ -40,7 +40,7 @@ abstract class TableLinkField extends TableField {
         if($link) echo '</a>';
     }
 
-    public function setBlank() : TableField {
+    public function setBlank() : static {
         $this->isBlank = true;
         return $this;
     }

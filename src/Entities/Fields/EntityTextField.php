@@ -8,8 +8,9 @@ use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 
 class EntityTextField extends EntityField {
-    public function setWritable(): EntityField {
+    public function setWritable(): static {
+        parent::setWritable();
         $this->baseModifier->pushStyle("height", "36px");
-        return parent::setWritable();
+        return $this;
     }
 }
