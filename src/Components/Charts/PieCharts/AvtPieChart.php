@@ -5,7 +5,7 @@ use Avetify\Components\Charts\AvtChartColors;
 use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\PageRenderer;
 use Avetify\Themes\Green\GreenTheme;
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 
 class AvtPieChart implements PageRenderer {
     public function __construct(
@@ -16,7 +16,7 @@ class AvtPieChart implements PageRenderer {
         public string $valueUnit
     ){}
 
-    public function getTheme(): ThemesManager {
+    public function getTheme(): AvtTheme {
         return new GreenTheme();
     }
 

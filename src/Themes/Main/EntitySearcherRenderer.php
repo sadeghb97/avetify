@@ -7,14 +7,14 @@ use Avetify\Interface\PageRenderer;
 abstract class EntitySearcherRenderer implements PageRenderer {
     public EntitySearcher $searcher;
 
-    public function __construct(EntitySearcher $searcher, public ThemesManager $theme){
+    public function __construct(EntitySearcher $searcher, public AvtTheme $theme){
         $this->searcher = $searcher;
         $this->postConstruct();
     }
 
     public function postConstruct(){}
 
-    public function getTheme(): ThemesManager {
+    public function getTheme(): AvtTheme {
         return $this->theme;
     }
 
@@ -22,7 +22,7 @@ abstract class EntitySearcherRenderer implements PageRenderer {
         $this->theme->openPage($title ?? $this->searcher->getPageTitle());
         $this->renderBody();
         $this->theme->lateImports();
-        ThemesManager::closeBody();
+        AvtTheme::closeBody();
     }
 
     abstract public function renderBody(): void;

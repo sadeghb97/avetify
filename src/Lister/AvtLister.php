@@ -2,7 +2,7 @@
 namespace Avetify\Lister;
 
 use Avetify\Entities\BasicProperties\Traits\EntityManagerTrait;
-use Avetify\Entities\SetModifier;
+use Avetify\Entities\SetManager;
 use Avetify\Forms\FormUtils;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
@@ -11,9 +11,9 @@ use Avetify\Table\Fields\TableField;
 use Avetify\Themes\Green\GreenListerRenderer;
 use Avetify\Themes\Green\GreenTheme;
 use Avetify\Themes\Main\ListerRenderer;
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 
-abstract class AvtLister extends SetModifier {
+abstract class AvtLister extends SetManager {
     use EntityManagerTrait;
 
     const ZERO_LIST_ID = "avt_zero_list";
@@ -145,11 +145,11 @@ abstract class AvtLister extends SetModifier {
         return null;
     }
 
-    protected function createBaseTheme() : ThemesManager {
+    protected function createBaseTheme() : AvtTheme {
         return new GreenTheme();
     }
 
-    final protected function getFinalTheme() : ThemesManager {
+    final protected function getFinalTheme() : AvtTheme {
         $theme = $this->createBaseTheme();
         $theme->includesListerTools = true;
         if($this->placeManageListsTrigger){

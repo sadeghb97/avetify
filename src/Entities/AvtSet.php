@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Entities;
 
-class SBSet extends SetModifier {
+class AvtSet extends SetManager {
     private array $map = [];
 
     public function __construct(array $set, public string $key = "set"){

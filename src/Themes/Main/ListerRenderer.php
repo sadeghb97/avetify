@@ -25,7 +25,7 @@ abstract class ListerRenderer extends BaseSetRenderer {
 
     public function postConstruct() {
         /** @var AvtLister $l */
-        $l = $this->setModifier;
+        $l = $this->setManager;
         $this->lister = $l;
         $this->manageModal = new ManageListsModal();
         $this->arrangeModal = new ArrangeListsModal();
@@ -294,7 +294,7 @@ abstract class ListerRenderer extends BaseSetRenderer {
         echo '</body>';
     }
 
-    public function defaultTheme() : ThemesManager {
+    public function defaultTheme() : AvtTheme {
         $theme = new GreenTheme();
         $theme->includesListerTools = true;
         return $theme;

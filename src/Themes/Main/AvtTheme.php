@@ -8,7 +8,7 @@ use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Themes\Main\Navigations\NavigationBar;
 use Avetify\Themes\Main\Navigations\NavigationRenderer;
 
-class ThemesManager {
+class AvtTheme {
     public string $lang = "en";
     public int $containerMarginTop = 0;
     public int $containerMarginBottom = 0;
@@ -333,7 +333,7 @@ class ThemesManager {
     }
 
     public static function importSortableJS(){
-        ThemesManager::importJS(AvetifyManager::assetUrl("components/lister/sortable.js"));
+        AvtTheme::importJS(AvetifyManager::assetUrl("components/lister/sortable.js"));
     }
 
     public static function importGeneralFonts(){

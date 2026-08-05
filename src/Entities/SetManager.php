@@ -18,7 +18,7 @@ use Avetify\Table\Fields\ConstField;
 use Avetify\Themes\Main\SetRenderer;
 use Avetify\Utils\StringUtils;
 
-abstract class SetModifier implements EntityManager {
+abstract class SetManager implements EntityManager {
     use EntityManagerTrait;
 
     public array $records = [];

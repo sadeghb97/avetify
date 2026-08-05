@@ -5,7 +5,7 @@ use Avetify\Components\Containers\NiceDiv;
 use Avetify\Components\Containers\VertDiv;
 use Avetify\Entities\BasicProperties\EntityImageRatio;
 use Avetify\Entities\ContextMenus\RecordContextMenu;
-use Avetify\Entities\SetModifier;
+use Avetify\Entities\SetManager;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
@@ -17,9 +17,9 @@ abstract class ModernRatioGallery extends SetRenderer implements EntityImageRati
 
     public ?WebModifier $linkModifier = null;
 
-    public function __construct(SetModifier $setModifier, ModernTheme $theme, string $title,
+    public function __construct(SetManager $setManager, ModernTheme $theme, string $title,
                                 public int $unitSize, public int $maxRowUnits){
-        parent::__construct($setModifier, $theme, $title);
+        parent::__construct($setManager, $theme, $title);
     }
 
     public function openRowDiv(){
@@ -32,11 +32,11 @@ abstract class ModernRatioGallery extends SetRenderer implements EntityImageRati
     }
 
     public function renderSet() {
-        if(count($this->setModifier->currentRecords) > 0){
+        if(count($this->setManager->currentRecords) > 0){
             $this->openRowDiv();
         }
         parent::renderSet();
-        if(count($this->setModifier->currentRecords) > 0){
+        if(count($this->setManager->currentRecords) > 0){
             HTMLInterface::closeDiv();
         }
     }
@@ -63,7 +63,7 @@ abstract class ModernRatioGallery extends SetRenderer implements EntityImageRati
         }
 
         echo '<img ';
-        HTMLInterface::addAttribute("src", $this->setModifier->getItemImage($item));
+        HTMLInterface::addAttribute("src", $this->setManager->getItemImage($item));
         Styler::startAttribute();
         Styler::addStyle("height", $this->unitSize . "px");
         Styler::addStyle("width", "auto");

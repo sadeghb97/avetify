@@ -36,7 +36,7 @@ Avetify is intentionally small and explicit:
 - **No magic router** — each screen is a PHP entry file (e.g. `records.php`, `item.php`).
 - **Server-rendered UI** — pages are built with PHP classes that echo HTML through `HTMLInterface` and theme renderers.
 - **MySQL-first** — `DBConnection` extends `mysqli` with helpers; `QueryBuilder` and filter collections compose SQL.
-- **Composable UI** — tables, entity forms, and listers share sorting, filtering, and pagination via `SetModifier`.
+- **Composable UI** — tables, entity forms, and listers share sorting, filtering, and pagination via `SetManager`.
 - **Extend in the host app** — domain logic, custom table fields, themes, and navigation live in the consuming project’s `lib/` tree.
 
 ---
@@ -113,7 +113,7 @@ your-project/
 │   ├── listers/          # DBLister subclasses
 │   ├── models/           # DataModel subclasses
 │   ├── fields/           # custom table/entity fields
-│   └── theme/            # ThemesManager subclass, navigation
+│   └── theme/            # AvtTheme subclass, navigation
 ├── records.php           # example page: table view
 ├── item.php              # example page: entity form
 └── .avtfiles/            # runtime uploads/backups (created by Routing)
@@ -207,9 +207,9 @@ You can add domain-specific query methods on your connection subclass (filtered 
 
 ## Core concepts
 
-### SetModifier — shared behavior
+### SetManager — shared behavior
 
-`AvtTable`, `AvtLister`, and entity/set views inherit from `SetModifier`, which handles:
+`AvtTable`, `AvtLister`, and entity/set views inherit from `SetManager`, which handles:
 
 - URL-driven **sorting** (`?{setKey}_sort=…`)
 - **Filtering** via filter factors and discrete qualifiers
@@ -237,12 +237,12 @@ Single-record create/edit forms with field metadata, validation hooks, image han
 
 Typical subclass responsibilities:
 
-| Method | Role |
-|--------|------|
-| `getTableName()` / `getSuperKey()` | DB mapping |
+| Method | Role                                                         |
+|--------|--------------------------------------------------------------|
+| `getTableName()` / `getSuperKey()` | DB mapping                                                   |
 | `dataFields()` | Writable `EntityTextField`, `EntitySelectField`, wrappers, … |
-| `getTheme()` | `ThemesManager` for layout and assets |
-| `renderEntityPage()` | Renders the full entity UI |
+| `getTheme()` | `AvtTheme` for layout and assets                             |
+| `renderEntityPage()` | Renders the full entity UI                                   |
 
 A detail page is usually a thin entry script: bootstrap, `new YourEntity($conn)`, then `renderEntityPage()`.
 
@@ -317,7 +317,7 @@ Built-in themes under `assets/themes/`:
 | **Modernix** | Compact icon-forward layouts |
 | **Classic** | Alternate navigation styling |
 
-`ThemesManager` controls optional includes: Bootstrap, Font Awesome, cropper, CodeMirror-style coding fields, markdown, charts, and more—enabled per theme subclass.
+`AvtTheme` controls optional includes: Bootstrap, Font Awesome, cropper, CodeMirror-style coding fields, markdown, charts, and more—enabled per theme subclass.
 
 Static assets are served from `AvetifyManager::assetUrl()`. Configure your web server so `/avetify/assets` resolves correctly for both clone and Composer layouts.
 

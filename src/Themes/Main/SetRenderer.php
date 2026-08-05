@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Themes\Main;
 
-use Avetify\Entities\SetModifier;
+use Avetify\Entities\SetManager;
 use Avetify\Forms\AvtForm;
 use Avetify\Forms\Buttons\DeleteFormButton;
 use Avetify\Forms\Buttons\FormButton;
@@ -25,10 +25,10 @@ abstract class SetRenderer extends BaseSetRenderer {
     public bool $useClassicButtons = false;
 
 
-    public function __construct(SetModifier $setModifier, null | ThemesManager $theme,
+    public function __construct(SetManager    $setManager, null | AvtTheme $theme,
                                 public string $title = "Set", bool|int $limit = 5000){
         if($theme == null) $theme = new GreenTheme();
-        parent::__construct($setModifier, $theme, $limit);
+        parent::__construct($setManager, $theme, $limit);
         $this->containerModifier = $this->getFormModifier();
     }
 
@@ -41,8 +41,8 @@ abstract class SetRenderer extends BaseSetRenderer {
         $this->form->addHiddenElement(new FormHiddenProperty($this->getFormFieldsName(), ""));
         $this->form->addHiddenElement(new FormHiddenProperty($this->getFormSelectorName(), ""));
 
-        if($this->setModifier instanceof AvtTable && $this->setModifier->isEditable) {
-            $deleteButtonRequired = $this->setModifier->enableSelectRecord;
+        if($this->setManager instanceof AvtTable && $this->setManager->isEditable) {
+            $deleteButtonRequired = $this->setManager->enableSelectRecord;
             if ($this->useClassicButtons) {
                 $this->addClassicUpdateTrigger($this->getFormIdentifier(), $this->getUpdateButtonID());
 
@@ -89,10 +89,10 @@ abstract class SetRenderer extends BaseSetRenderer {
     }
 
     public function placeFormJSUtils(){
-        if(!($this->setModifier instanceof AvtTable)) return;
+        if(!($this->setManager instanceof AvtTable)) return;
 
         /** @var AvtTable $sbTable */
-        $sbTable = $this->setModifier;
+        $sbTable = $this->setManager;
 
         if(!$sbTable->isEditable) return;
 
@@ -131,15 +131,15 @@ abstract class SetRenderer extends BaseSetRenderer {
     }
 
     public function openContainer() {
-        if($this->setModifier instanceof AvtTable) {
+        if($this->setManager instanceof AvtTable) {
             /** @var AvtTable $sbTable */
-            $sbTable = $this->setModifier;
+            $sbTable = $this->setManager;
 
             $this->initForm();
 
             if ($sbTable->isEditable) $sbTable->catchSubmittedFields();
 
-            foreach ($this->setModifier->fields as $field){
+            foreach ($this->setManager->fields as $field){
                 if($field instanceof EditableField){
                     $field->preLoad();
                 }
@@ -167,9 +167,9 @@ abstract class SetRenderer extends BaseSetRenderer {
     }
 
     public function closeContainer() {
-        if($this->setModifier instanceof AvtTable) {
+        if($this->setManager instanceof AvtTable) {
             /** @var AvtTable $sbTable */
-            $sbTable = $this->setModifier;
+            $sbTable = $this->setManager;
 
             if ($sbTable->isEditable) {
                 $this->form->placeTriggers();
@@ -189,22 +189,22 @@ abstract class SetRenderer extends BaseSetRenderer {
     public function renderCreatingElements(){}
 
     public function getFormFieldsName() : string {
-        return $this->setModifier->setKey . "_" . "table_fields";
+        return $this->setManager->setKey . "_" . "table_fields";
     }
 
     public function getFormSelectorName() : string {
-        return $this->setModifier->setKey . "_" . "selector_field";
+        return $this->setManager->setKey . "_" . "selector_field";
     }
 
     public function getJSArgsName() : string {
-        return $this->setModifier->setKey . "_" . "args";
+        return $this->setManager->setKey . "_" . "args";
     }
 
     public function getUpdateButtonID() : string {
-        return $this->setModifier->setKey . '_update';
+        return $this->setManager->setKey . '_update';
     }
 
     public function getDeleteButtonID() : string {
-        return $this->setModifier->setKey . '_delete';
+        return $this->setManager->setKey . '_delete';
     }
 }

@@ -7,7 +7,7 @@ use Avetify\Searchers\Utils\EntitySearcherUtils;
 use Avetify\Themes\Green\GreenEntitySearcherRenderer;
 use Avetify\Themes\Green\GreenTheme;
 use Avetify\Themes\Main\EntitySearcherRenderer;
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 
 abstract class EntitySearcher {
     public ?EntitySearcherRenderer $renderer = null;
@@ -51,11 +51,11 @@ abstract class EntitySearcher {
         return "__ENTITY_SEARCHER_PAYLOAD__";
     }
 
-    protected function createBaseTheme() : ThemesManager {
+    protected function createBaseTheme() : AvtTheme {
         return new GreenTheme();
     }
 
-    final protected function getFinalTheme() : ThemesManager {
+    final protected function getFinalTheme() : AvtTheme {
         $theme = $this->createBaseTheme();
         $theme->includesBootstrap = true;
         $theme->includesEntitySearcherTools = true;

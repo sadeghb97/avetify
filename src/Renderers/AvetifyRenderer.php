@@ -9,7 +9,7 @@ use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\PageRenderer;
 use Avetify\Interface\WebModifier;
 use Avetify\Themes\Green\GreenTheme;
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 
 class AvetifyRenderer implements PageRenderer {
     public function renderPage($title = "Avetify") {
@@ -52,7 +52,7 @@ class AvetifyRenderer implements PageRenderer {
         HTMLInterface::closeDiv();
     }
 
-    public function getTheme() : ThemesManager {
+    public function getTheme() : AvtTheme {
         return new class extends GreenTheme {
             public function appendBodyStyles() {
                 Styler::addStyle("display", "flex");

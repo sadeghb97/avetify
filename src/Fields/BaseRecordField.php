@@ -8,7 +8,7 @@ use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\IdentifiedElement;
 use Avetify\Interface\IdentifiedElementTrait;
 use Avetify\Interface\WebModifier;
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 use Avetify\Utils\StringUtils;
 
 class BaseRecordField implements IdentifiedElement {
@@ -171,7 +171,7 @@ class BaseRecordField implements IdentifiedElement {
         return WebModifier::mergeModifiers($this->baseModifier, $extraModifier);
     }
 
-    public function attachRequirementsToTheme(ThemesManager $theme) : ThemesManager {
+    public function attachRequirementsToTheme(AvtTheme $theme) : AvtTheme {
         return $theme;
     }
 }

@@ -2,7 +2,7 @@
 namespace Avetify\Themes\Main;
 
 use Avetify\Components\Containers\NiceDiv;
-use Avetify\Entities\SetModifier;
+use Avetify\Entities\SetManager;
 use Avetify\Forms\AvtForm;
 use Avetify\Forms\Buttons\ClearButton;
 use Avetify\Forms\Buttons\FormButton;
@@ -22,11 +22,11 @@ abstract class BaseSetRenderer {
     public int $marginBottom = 20;
     public PaginationRenderer | null $paginationRenderer = null;
 
-    public function __construct(public SetModifier $setModifier,
-                                public ThemesManager | null $theme,
-                                public bool | int $limit = false){
+    public function __construct(public SetManager      $setManager,
+                                public AvtTheme | null $theme,
+                                public bool | int      $limit = false){
         $this->containerModifier = WebModifier::createInstance();
-        $this->paginationRenderer = new GreenPaginationRenderer($this->setModifier->paginationConfigs);
+        $this->paginationRenderer = new GreenPaginationRenderer($this->setManager->paginationConfigs);
         $this->postConstruct();
     }
 
@@ -34,8 +34,8 @@ abstract class BaseSetRenderer {
 
     public function renderSet(){
         $this->openCollection();
-        $firstRowIndex = $this->setModifier->currentRecordsFirstRowIndex();
-        foreach ($this->setModifier->currentRecords as $itemIndex => $record){
+        $firstRowIndex = $this->setManager->currentRecordsFirstRowIndex();
+        foreach ($this->setManager->currentRecords as $itemIndex => $record){
             $recordIndex = $firstRowIndex + $itemIndex;
             $this->openRecord($record, $recordIndex);
             $this->renderRecordMain($record, $recordIndex);
@@ -68,22 +68,22 @@ abstract class BaseSetRenderer {
     }
 
     public function placePagination() : void {
-        if($this->setModifier->paginationConfigs->pageSize > 0 && $this->paginationRenderer){
+        if($this->setManager->paginationConfigs->pageSize > 0 && $this->paginationRenderer){
             $this->paginationRenderer->place();
         }
     }
 
     public function renderBody(){
-        if($this->setModifier instanceof AvtTable) {
-            $this->setModifier->placeFormDataLists();
+        if($this->setManager instanceof AvtTable) {
+            $this->setManager->placeFormDataLists();
         }
         $this->onRecordsAdjusted();
 
-        if($this->setModifier->isSortable){
-            $allSortFactors = $this->setModifier->finalSortFactors();
+        if($this->setManager->isSortable){
+            $allSortFactors = $this->setManager->finalSortFactors();
             if(count($allSortFactors) > 0) $this->renderSortLabels();
 
-            $allFilterFields = $this->setModifier->allFilterFields();
+            $allFilterFields = $this->setManager->allFilterFields();
             if(count($allFilterFields) > 0){
                 $this->initFiltersForm();
                 $this->renderFilterFields($this->makeFiltersFormData());
@@ -91,7 +91,7 @@ abstract class BaseSetRenderer {
             $this->renderFilterLabels();
         }
 
-        if($this->setModifier->paginationConfigs && !$this->setModifier->paginationConfigs->paginationOnBottom){
+        if($this->setManager->paginationConfigs && !$this->setManager->paginationConfigs->paginationOnBottom){
             $this->placePagination();
         }
 
@@ -101,7 +101,7 @@ abstract class BaseSetRenderer {
         $this->renderSet();
         $this->closeContainer();
 
-        if($this->setModifier->paginationConfigs && $this->setModifier->paginationConfigs->paginationOnBottom){
+        if($this->setManager->paginationConfigs && $this->setManager->paginationConfigs->paginationOnBottom){
             $this->placePagination();
         }
 
@@ -138,7 +138,7 @@ abstract class BaseSetRenderer {
     }
 
     public function renderSortLabels(){
-        $allSortFactors = $this->setModifier->finalSortFactors();
+        $allSortFactors = $this->setManager->finalSortFactors();
         if(count($allSortFactors) <= 0) return;
 
         $sortRows = [];
@@ -153,9 +153,9 @@ abstract class BaseSetRenderer {
         $div->open();
 
         $this->renderSortLabel("Clear",
-            Routing::removeParamFromCurrentLink($this->setModifier->getSortKey()), false);
+            Routing::removeParamFromCurrentLink($this->setManager->getSortKey()), false);
 
-        $currentSort = $_GET[$this->setModifier->getSortKey()] ?? null;
+        $currentSort = $_GET[$this->setManager->getSortKey()] ?? null;
         $startWithMinus = $currentSort && str_starts_with($currentSort, "-");
         $pureSort = null;
         if($currentSort != null){
@@ -182,7 +182,7 @@ abstract class BaseSetRenderer {
                 $finalSortFactor = ($nextDescending ? "-" : "") . $sortFactor->factorKey;
 
                 $this->renderSortLabel($finalTitle,
-                    Routing::addParamToCurrentLink($this->setModifier->getSortKey(), $finalSortFactor), $alterStyle);
+                    Routing::addParamToCurrentLink($this->setManager->getSortKey(), $finalSortFactor), $alterStyle);
             }
             $div->close();
 
@@ -193,7 +193,7 @@ abstract class BaseSetRenderer {
     }
 
     public function renderFilterLabels(){
-        $allFilters = $this->setModifier->allAutoDiscreteFactors();
+        $allFilters = $this->setManager->allAutoDiscreteFactors();
         if(count($allFilters) == 0) return;
 
         foreach ($allFilters as $filter){
@@ -217,7 +217,7 @@ abstract class BaseSetRenderer {
     }
 
     public function makeFiltersFormData() {
-        $filterFields = $this->setModifier->allFilterFields();
+        $filterFields = $this->setManager->allFilterFields();
         $formData = [];
 
         foreach ($filterFields as $filterField){
@@ -241,7 +241,7 @@ abstract class BaseSetRenderer {
         $filtersModifier->pushStyle("margin-bottom", "8px");
         $niceDiv->open($filtersModifier);
 
-        $filterFields = $this->setModifier->allAutoFilterFields();
+        $filterFields = $this->setManager->allAutoFilterFields();
         foreach ($filterFields as $filterField){
             $filterField->recordField->placeField($filtersFormData);
         }
@@ -254,7 +254,7 @@ abstract class BaseSetRenderer {
     }
 
     public function loadFilterFields($filtersFormData) : void {
-        $filterFields = $this->setModifier->allFilterFields();
+        $filterFields = $this->setManager->allFilterFields();
         foreach ($filterFields as $filterField){
             $filterKey = $filterField->recordField->getElementIdentifier();
             $globalStorageFilterKey = "filters_" . $filterKey;
@@ -274,7 +274,7 @@ abstract class BaseSetRenderer {
 
     public function rawFilterFieldsGlobalStorageKeys() : string {
         $out = "";
-        $filterFields = $this->setModifier->allFilterFields();
+        $filterFields = $this->setManager->allFilterFields();
         foreach ($filterFields as $filterField){
             $filterKey = $filterField->recordField->getElementIdentifier();
             $globalStorageFilterKey = "filters_" . $filterKey;
@@ -301,22 +301,22 @@ abstract class BaseSetRenderer {
     }
 
     public function getItemBoxIdentifier($record) : string {
-        return $this->setModifier->setKey . "__box__" . $this->setModifier->getItemId($record);
+        return $this->setManager->setKey . "__box__" . $this->setManager->getItemId($record);
     }
 
     public function getFiltersFormIdentifier() : string {
-        return $this->setModifier->setKey . "_" . "filters_form";
+        return $this->setManager->setKey . "_" . "filters_form";
     }
 
     public function getFormIdentifier() : string {
-        return $this->setModifier->setKey . "_" . "table_form";
+        return $this->setManager->setKey . "_" . "table_form";
     }
 
     public function getFiltersApplyButtonID() : string {
-        return $this->setModifier->setKey . '_filters_apply';
+        return $this->setManager->setKey . '_filters_apply';
     }
 
     public function getFiltersClearButtonID() : string {
-        return $this->setModifier->setKey . '_filters_clear';
+        return $this->setManager->setKey . '_filters_clear';
     }
 }

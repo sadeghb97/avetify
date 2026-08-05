@@ -21,9 +21,9 @@ use Avetify\Modules\Printer;
 use Avetify\Network\NetworkFetcher;
 use Avetify\Routing\Routing;
 use Avetify\Themes\Green\GreenTheme;
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 
-abstract class AvtEntity extends SetModifier {
+abstract class AvtEntity extends SetManager {
     use RecordFormTrait;
 
     public ?DBConnection $conn = null;
@@ -591,11 +591,11 @@ abstract class AvtEntity extends SetModifier {
         $this->printForm();
     }
 
-    protected function createBaseTheme() : ThemesManager {
+    protected function createBaseTheme() : AvtTheme {
         return new GreenTheme();
     }
 
-    protected function getFinalTheme() : ThemesManager {
+    protected function getFinalTheme() : AvtTheme {
         $theme = $this->createBaseTheme();
 
         $fields = $this->getPureFields();

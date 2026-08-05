@@ -3,7 +3,7 @@ namespace Avetify\Themes\Modernix;
 
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Components\Containers\VertDiv;
-use Avetify\Entities\SetModifier;
+use Avetify\Entities\SetManager;
 use Avetify\Interface\CSS\CSS;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
@@ -12,7 +12,7 @@ use Avetify\Modules\Printer;
 use Avetify\Table\AvtTable;
 use Avetify\Themes\Green\GreenTheme;
 use Avetify\Themes\Main\SetRenderer;
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 use Avetify\Themes\Modernix\Models\IconLink;
 
 class ModernixRenderer extends SetRenderer {
@@ -20,13 +20,13 @@ class ModernixRenderer extends SetRenderer {
     public ?WebModifier $cardModifiers = null;
     public ?string $imageAspectRatio = null;
 
-    public function __construct(SetModifier $setModifier, ThemesManager $theme,
-                                string $title = "Set", bool|int $limit = 5000){
-        parent::__construct($setModifier, $theme, $title, $limit);
+    public function __construct(SetManager $setManager, AvtTheme $theme,
+                                string     $title = "Set", bool|int $limit = 5000){
+        parent::__construct($setManager, $theme, $title, $limit);
     }
 
     public function renderRecordMain($item, $index) {
-        $avatar = $this->setModifier->getItemImage($item);
+        $avatar = $this->setManager->getItemImage($item);
         if($avatar) {
             echo '<div ';
             Styler::classStartAttribute();
@@ -48,9 +48,9 @@ class ModernixRenderer extends SetRenderer {
             echo '</div>';
         }
 
-        $link = $this->setModifier->getItemLink($item);
-        $title = $this->setModifier->getItemTitle($item);
-        $description = $this->setModifier->getItemDescription($item);
+        $link = $this->setManager->getItemLink($item);
+        $title = $this->setManager->getItemTitle($item);
+        $description = $this->setManager->getItemDescription($item);
 
         echo '<div class="card__body">';
 
@@ -114,8 +114,8 @@ class ModernixRenderer extends SetRenderer {
 
         $titleDiv->close();
 
-        if($this->setModifier instanceof AvtTable){
-            foreach ($this->setModifier->fields as $field){
+        if($this->setManager instanceof AvtTable){
+            foreach ($this->setManager->fields as $field){
                 $vertDiv = new VertDiv(0);
                 $vertDiv->open();
                 $field->placeField($item);
@@ -128,7 +128,7 @@ class ModernixRenderer extends SetRenderer {
         }
         echo '</div>';
 
-        $tags = $this->setModifier->getItemTags($item);
+        $tags = $this->setManager->getItemTags($item);
         if(count($tags) > 0) {
             echo '<div class="card__footer">';
             foreach ($tags as $tag) {
@@ -162,7 +162,7 @@ class ModernixRenderer extends SetRenderer {
         echo '</div>';
     }
 
-    public function getTheme() : ThemesManager {
+    public function getTheme() : AvtTheme {
         return new GreenTheme();
     }
 

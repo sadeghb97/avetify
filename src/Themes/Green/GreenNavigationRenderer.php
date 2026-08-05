@@ -9,7 +9,7 @@ use Avetify\Interface\WebModifier;
 use Avetify\Routing\Routing;
 use Avetify\Themes\Main\Navigations\NavigationLink;
 use Avetify\Themes\Main\Navigations\NavigationRenderer;
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 
 class GreenNavigationRenderer extends NavigationRenderer {
     public bool $autoActiveDetect = true;
@@ -22,8 +22,8 @@ class GreenNavigationRenderer extends NavigationRenderer {
     }
 
     public function headImports(){
-        ThemesManager::importStyle(AvetifyManager::assetUrl("themes/green/navbar/styles.css"));
-        ThemesManager::importJS(AvetifyManager::assetUrl("themes/green/navbar/init.js"));
+        AvtTheme::importStyle(AvetifyManager::assetUrl("themes/green/navbar/styles.css"));
+        AvtTheme::importJS(AvetifyManager::assetUrl("themes/green/navbar/init.js"));
     }
 
     public function openNavbar(){

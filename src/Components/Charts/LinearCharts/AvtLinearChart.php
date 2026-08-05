@@ -4,7 +4,7 @@ namespace Avetify\Components\Charts\LinearCharts;
 use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\PageRenderer;
 use Avetify\Themes\Green\GreenTheme;
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 
 class AvtLinearChart implements PageRenderer {
     public function __construct(
@@ -15,7 +15,7 @@ class AvtLinearChart implements PageRenderer {
         public float $max
     ){}
 
-    public function getTheme(): ThemesManager {
+    public function getTheme(): AvtTheme {
         return new GreenTheme();
     }
 

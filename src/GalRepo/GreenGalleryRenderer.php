@@ -18,7 +18,7 @@ class GreenGalleryRenderer extends GreenListerRenderer {
         parent::postConstruct();
 
         /** @var ManageGalleryLister $mgl */
-        $mgl = $this->setModifier;
+        $mgl = $this->setManager;
         $this->galleryLister = $mgl;
         $this->galRepo = $this->galleryLister->galleryRepo;
 

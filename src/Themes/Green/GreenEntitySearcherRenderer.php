@@ -3,7 +3,7 @@ namespace Avetify\Themes\Green;
 
 use Avetify\AvetifyManager;
 use Avetify\Themes\Main\EntitySearcherRenderer;
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 
 class GreenEntitySearcherRenderer extends EntitySearcherRenderer {
     public function renderBody(): void {
@@ -43,6 +43,6 @@ class GreenEntitySearcherRenderer extends EntitySearcherRenderer {
         echo json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         echo ';</script>';
 
-        ThemesManager::importJS(AvetifyManager::assetUrl("components/entity-searcher/entity-searcher.js"));
+        AvtTheme::importJS(AvetifyManager::assetUrl("components/entity-searcher/entity-searcher.js"));
     }
 }

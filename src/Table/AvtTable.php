@@ -4,7 +4,7 @@ namespace Avetify\Table;
 use Avetify\Entities\FilterFactors\FilterFactor;
 use Avetify\Entities\FilterFactors\FilterField;
 use Avetify\Entities\Models\PaginationConfigs;
-use Avetify\Entities\SetModifier;
+use Avetify\Entities\SetManager;
 use Avetify\Entities\Sorters\SortFactor;
 use Avetify\Fields\BaseRecordField;
 use Avetify\Interface\RecordFormTrait;
@@ -17,9 +17,9 @@ use Avetify\Table\Fields\TableSortField;
 use Avetify\Themes\Green\GreenTableRenderer;
 use Avetify\Themes\Green\GreenTheme;
 use Avetify\Themes\Main\SetRenderer;
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 
-class AvtTable extends SetModifier {
+class AvtTable extends SetManager {
     use RecordFormTrait;
 
     /** @var TableField[] $fields */
@@ -168,11 +168,11 @@ class AvtTable extends SetModifier {
         return 5000;
     }
 
-    protected function createBaseTheme() : ThemesManager {
+    protected function createBaseTheme() : AvtTheme {
         return new GreenTheme();
     }
 
-    final protected function getFinalTheme() : ThemesManager {
+    final protected function getFinalTheme() : AvtTheme {
         $theme = $this->createBaseTheme();
 
         $fields = $this->getPureFields();

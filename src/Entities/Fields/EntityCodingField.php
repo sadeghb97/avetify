@@ -4,7 +4,7 @@ namespace Avetify\Entities\Fields;
 use Avetify\Components\Coding\CodingField;
 use Avetify\Entities\EntityField;
 use Avetify\Interface\WebModifier;
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 
 class EntityCodingField extends EntityField {
     public string $defWrapper = "";
@@ -21,7 +21,7 @@ class EntityCodingField extends EntityField {
         $codingField->place();
     }
 
-    public function attachRequirementsToTheme(ThemesManager $theme): ThemesManager {
+    public function attachRequirementsToTheme(AvtTheme $theme): AvtTheme {
         $theme = parent::attachRequirementsToTheme($theme);
         $theme->includesCodingFieldTools = true;
         return $theme;

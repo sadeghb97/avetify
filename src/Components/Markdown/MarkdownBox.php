@@ -5,7 +5,7 @@ use Avetify\Components\Containers\VertDiv;
 use Avetify\Interface\Placeable;
 use Avetify\Interface\WebModifier;
 use Avetify\Themes\Main\ColorScheme;
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 
 class MarkdownBox implements Placeable {
     private static bool $cssEmitted = false;
@@ -18,7 +18,7 @@ class MarkdownBox implements Placeable {
 
     public static function importStyles(): void
     {
-        ThemesManager::importMarkdownTools();
+        AvtTheme::importMarkdownTools();
     }
 
     public static function extractTitle(string $markdown): string

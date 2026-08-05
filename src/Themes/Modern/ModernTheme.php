@@ -2,9 +2,9 @@
 namespace Avetify\Themes\Modern;
 
 use Avetify\AvetifyManager;
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 
-class ModernTheme extends ThemesManager {
+class ModernTheme extends AvtTheme {
     public function moreHeaderTags(){
         self::importStyle(AvetifyManager::assetUrl("themes/modern/styles.css"));
         self::importStyle(AvetifyManager::assetUrl("themes/modern/card_styles.css"));

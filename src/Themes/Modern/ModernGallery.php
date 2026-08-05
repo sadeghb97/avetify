@@ -11,9 +11,9 @@ class ModernGallery extends ModernSetRenderer {
     public bool $openMenuOnNormalClick = false;
 
     public function renderRecordMain($item, $index) {
-        $name = ($index + 1) . ": " . $this->setModifier->getItemTitle($item);
-        ModernThemeBadCards::printCard($this->setModifier->getItemImage($item), $name, "",
-            $this->setModifier->getItemLink($item),
+        $name = ($index + 1) . ": " . $this->setManager->getItemTitle($item);
+        ModernThemeBadCards::printCard($this->setManager->getItemImage($item), $name, "",
+            $this->setManager->getItemLink($item),
             $this->getCardOptions($item));
     }
 
@@ -27,9 +27,9 @@ class ModernGallery extends ModernSetRenderer {
         if($this->contextMenu != null){
             $options['context_menu'] = $this->contextMenu;
             $options['context_menu_on_click'] = $this->openMenuOnNormalClick;
-            $options['cmr_id'] = $this->setModifier->getItemId($item);
+            $options['cmr_id'] = $this->setManager->getItemId($item);
         }
-        $altLink = $this->setModifier->getItemAltLink($item);
+        $altLink = $this->setManager->getItemAltLink($item);
         $altLinkIcon = $this->getAltLinkIcon();
         if($altLink && $altLinkIcon){
             $options['icon_link'] = ["link" => $altLink, "icon" => $altLinkIcon];
@@ -53,7 +53,7 @@ class ModernGallery extends ModernSetRenderer {
         }
 
         $spanTexts = $this->getSpanTexts($item);
-        $recordId = $this->setModifier->getItemId($item);
+        $recordId = $this->setManager->getItemId($item);
         $options['span_texts'] = $spanTexts;
         $options['stpk'] = $recordId;
 

@@ -4,9 +4,9 @@ namespace Avetify\Themes\Green;
 use Avetify\AvetifyManager;
 use Avetify\Themes\Main\Navigations\NavigationBar;
 use Avetify\Themes\Main\Navigations\NavigationRenderer;
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 
-class GreenTheme extends ThemesManager {
+class GreenTheme extends AvtTheme {
     public function getNavigationRenderer(NavigationBar $navigationBar): ?NavigationRenderer {
         return new GreenNavigationRenderer($navigationBar);
     }

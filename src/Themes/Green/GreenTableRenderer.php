@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Themes\Green;
 
-use Avetify\Entities\SetModifier;
+use Avetify\Entities\SetManager;
 use Avetify\Interface\CSS\CSS;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
@@ -10,19 +10,19 @@ use Avetify\Table\AvtTable;
 use Avetify\Table\Fields\EditableFields\RecordSelectorField;
 use Avetify\Table\Fields\TableField;
 use Avetify\Themes\Main\SetRenderer;
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 
 class GreenTableRenderer extends SetRenderer {
-    public function __construct(SetModifier $setModifier, ThemesManager $theme,
-                                string $title = "Set", bool|int $limit = 5000){
-        parent::__construct($setModifier, $theme, $title, $limit);
+    public function __construct(SetManager $setManager, AvtTheme $theme,
+                                string     $title = "Set", bool|int $limit = 5000){
+        parent::__construct($setManager, $theme, $title, $limit);
     }
 
     public function renderCreatingElements() {
-        if(!($this->setModifier instanceof AvtTable)) return;
+        if(!($this->setManager instanceof AvtTable)) return;
 
         /** @var AvtTable $sbTable */
-        $sbTable = $this->setModifier;
+        $sbTable = $this->setManager;
 
         $this->openRecord(null, 0);
         if($this->printRowIndex) $this->placeEmptyTD();
@@ -38,7 +38,7 @@ class GreenTableRenderer extends SetRenderer {
 
     public function openCollection(?WebModifier $webModifier = null){
         /** @var AvtTable $sbTable */
-        $sbTable = $this->setModifier;
+        $sbTable = $this->setManager;
 
         echo '<div ';
         Styler::classStartAttribute();
@@ -76,7 +76,7 @@ class GreenTableRenderer extends SetRenderer {
 
     public function closeCollection(?WebModifier $webModifier = null){
         /** @var AvtTable $sbTable */
-        $sbTable = $this->setModifier;
+        $sbTable = $this->setManager;
 
         if($sbTable->enableCreatingRow && !$sbTable->creatingRowOnTop) $this->renderCreatingElements();
         echo '</table>';
@@ -95,7 +95,7 @@ class GreenTableRenderer extends SetRenderer {
 
     public function renderRecordMain($item, $index) {
         /** @var AvtTable $sbTable */
-        $sbTable = $this->setModifier;
+        $sbTable = $this->setManager;
 
         $this->openRecord($item, $index);
         if($this->printRowIndex){
@@ -119,7 +119,7 @@ class GreenTableRenderer extends SetRenderer {
         return $formModifier;
     }
 
-    public function getTheme() : ThemesManager {
+    public function getTheme() : AvtTheme {
         return new GreenTheme();
     }
 

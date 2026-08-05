@@ -2,18 +2,18 @@
 namespace Avetify\Themes\Modern;
 
 use Avetify\Components\Containers\VertDiv;
-use Avetify\Entities\SetModifier;
+use Avetify\Entities\SetManager;
 use Avetify\Interface\CSS\CSS;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Modules\Printer;
 use Avetify\Themes\Main\SetRenderer;
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 
 abstract class ModernSetRenderer extends SetRenderer {
-    public function __construct(SetModifier $setModifier, ThemesManager $theme,
-                                string $title = "Set", bool | int $limit = 5000){
-        parent::__construct($setModifier, $theme, $title, $limit);
+    public function __construct(SetManager $setManager, AvtTheme $theme,
+                                string     $title = "Set", bool | int $limit = 5000){
+        parent::__construct($setManager, $theme, $title, $limit);
     }
 
     public function openContainer() {

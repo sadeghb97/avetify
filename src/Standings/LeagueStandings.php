@@ -1,7 +1,7 @@
 <?php
 namespace Avetify\Standings;
 
-use Avetify\Themes\Main\ThemesManager;
+use Avetify\Themes\Main\AvtTheme;
 
 class LeagueStandings {
     /** @var Competitor[] $competitors */
@@ -12,7 +12,7 @@ class LeagueStandings {
     }
 
     public static function importStyles(){
-        ThemesManager::importStandingsTools();
+        AvtTheme::importStandingsTools();
     }
 
     public function sort(){
