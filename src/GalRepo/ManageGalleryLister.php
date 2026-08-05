@@ -16,9 +16,7 @@ class ManageGalleryLister extends AvtLister {
     }
 
     public function getListerRenderer(): ListerRenderer {
-        $th = new GreenTheme();
-        $th->includesListerTools = true;
-        return new GreenGalleryRenderer($this, $th);
+        return new GreenGalleryRenderer($this, $this->getFinalTheme());
     }
 
     public function getItemId($record): string {

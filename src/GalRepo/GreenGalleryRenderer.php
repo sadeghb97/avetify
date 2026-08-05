@@ -12,7 +12,6 @@ use Avetify\Themes\Green\GreenListerRenderer;
 class GreenGalleryRenderer extends GreenListerRenderer {
     public ?ManageGalleryLister $galleryLister = null;
     public ?GalleryRepo $galRepo = null;
-    public int $topButtonsMargin = 0;
 
     public function postConstruct() {
         parent::postConstruct();
@@ -55,40 +54,45 @@ class GreenGalleryRenderer extends GreenListerRenderer {
             $prevLink = Routing::addParamToCurrentLink("gp", $prevRepo);
 
             $prevButton = new AbsoluteButton(AvetifyManager::imageUrl("arrow_left.svg"),
-                ["top" => ($this->topButtonsMargin + 20) . "px", "left" => "20px"],
+                ["top" => ($this->leftTopTriggerLocation) . "px", "left" => "20px"],
                 "redir('" . $prevLink . "');");
             $prevButton->place();
+            $this->leftTopTriggerLocation += $this->triggersGap;
 
             $prevCloneButton = new AbsoluteButton(AvetifyManager::imageUrl("tab_duplicate.svg"),
-                ["top" => ($this->topButtonsMargin + 70) . "px", "left" => "20px"],
+                ["top" => ($this->leftTopTriggerLocation) . "px", "left" => "20px"],
                 "openTab('" . $prevLink . "');");
             $prevCloneButton->place();
+            $this->leftTopTriggerLocation += $this->triggersGap;
         }
 
         $toggleButton = new AbsoluteButton(AvetifyManager::imageUrl("view_alt.svg"),
-            ["top" => ($this->topButtonsMargin + 20) . "px", "right" => "20px"], $this->jsToggleGalleryMode());
+            ["top" => ($this->rightTopTriggerLocation) . "px", "right" => "20px"], $this->jsToggleGalleryMode());
         $toggleButton->place();
+        $this->rightTopTriggerLocation += $this->triggersGap;
 
         if(!$this->galRepo->readOnly) {
             $addButton = new AbsoluteButton(AvetifyManager::imageUrl("add_box.svg"),
-                ["bottom" => "20px", "left" => "20px"], "addVirtualGallery()");
+                ["bottom" => $this->leftBottomTriggerLocation . "px", "left" => "20px"], "addVirtualGallery()");
             $addButton->place();
 
             $updateButton = new AbsoluteButton(AvetifyManager::imageUrl("commit.svg"),
-                ["bottom" => "20px", "left" => "90px"], "updateGalleryConfigs(jsArgs)");
+                ["bottom" => $this->leftBottomTriggerLocation . "px", "left" => "90px"], "updateGalleryConfigs(jsArgs)");
             $updateButton->place();
 
             $submitButton = new AbsoluteButton(AvetifyManager::imageUrl("send.svg"),
-                ["bottom" => "20px", "right" => "20px"], "submitGalleries(jsArgs)");
+                ["bottom" => $this->leftBottomTriggerLocation . "px", "right" => "20px"], "submitGalleries(jsArgs)");
             $submitButton->place();
 
             $submitButton = new AbsoluteButton(AvetifyManager::imageUrl("pen.svg"),
-                ["bottom" => "20px", "right" => "90px"], "renameGalleries(jsArgs)");
+                ["bottom" => $this->leftBottomTriggerLocation . "px", "right" => "90px"], "renameGalleries(jsArgs)");
             $submitButton->place();
 
             $resetButton = new AbsoluteButton(AvetifyManager::imageUrl("layers_clear.svg"),
-                ["bottom" => "20px", "right" => "160px"], "resetGalleryConfigs()");
+                ["bottom" => $this->leftBottomTriggerLocation . "px", "right" => "160px"], "resetGalleryConfigs()");
             $resetButton->place();
+
+            $this->leftBottomTriggerLocation += $this->triggersGap;
         }
     }
 

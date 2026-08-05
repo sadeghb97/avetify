@@ -22,6 +22,10 @@ abstract class ListerRenderer extends BaseSetRenderer {
     public ?ManageListsModal $manageModal = null;
     public ?BatchTransferModal $transferModal = null;
     public int $triggersGap = 70;
+    public int $leftBottomTriggerLocation = 20;
+    public int $rightBottomTriggerLocation = 20;
+    public int $leftTopTriggerLocation = 20;
+    public int $rightTopTriggerLocation = 20;
 
     public function postConstruct() {
         /** @var AvtLister $l */
@@ -30,6 +34,13 @@ abstract class ListerRenderer extends BaseSetRenderer {
         $this->manageModal = new ManageListsModal();
         $this->arrangeModal = new ArrangeListsModal();
         $this->transferModal = new BatchTransferModal();
+
+        $triggersMoreMarginBottom = $this->theme ? $this->theme->containerMarginBottom : 0;
+        $triggersMoreMarginTop = $this->theme ? $this->theme->containerMarginTop : 0;
+        $this->leftBottomTriggerLocation = 20 + $triggersMoreMarginBottom;
+        $this->rightBottomTriggerLocation = 20 + $triggersMoreMarginBottom;
+        $this->leftTopTriggerLocation = 20 + $triggersMoreMarginTop;
+        $this->rightTopTriggerLocation = 20 + $triggersMoreMarginTop;
     }
 
     public function getTitle(): string {
@@ -58,20 +69,15 @@ abstract class ListerRenderer extends BaseSetRenderer {
               <input type="hidden" id="lister_params" name="lister_params">
         </form>';
 
-        $triggersMoreMarginBottom = $this->theme ? $this->theme->containerMarginBottom : 0;
-        $triggersMoreMarginTop = $this->theme ? $this->theme->containerMarginTop : 0;
-        $leftBottomMargin = 20 + $triggersMoreMarginBottom;
-        $rightTopMargin = 20 + $triggersMoreMarginTop;
-
         if($this->lister->placeDefaultTriggers) {
             if ($this->lister->isPrintRankEnabled() && $this->lister->isRearrangeRanksEnabled()) {
                 HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('arrange.png'),
                     [
                         "inset-inline-start" => "20px",
-                        "bottom" => $leftBottomMargin . "px"
+                        "bottom" => $this->leftBottomTriggerLocation . "px"
                     ],
                     "rearrangeRanks()");
-                $leftBottomMargin += $this->triggersGap;
+                $this->leftBottomTriggerLocation += $this->triggersGap;
             }
 
             $primaryButton = new PrimaryButton("listerSubmit(jsArgs); submitForm('lister_form');");
@@ -82,10 +88,10 @@ abstract class ListerRenderer extends BaseSetRenderer {
             HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('add_box.svg'),
                 [
                     "inset-inline-start" => "20px",
-                    "bottom" => $leftBottomMargin . "px"
+                    "bottom" => $this->leftBottomTriggerLocation . "px"
                 ],
                 "addNewList()");
-            $leftBottomMargin += $this->triggersGap;
+            $this->leftBottomTriggerLocation += $this->triggersGap;
         }
 
         if($this->lister->placeReorderListsTrigger){
@@ -93,10 +99,10 @@ abstract class ListerRenderer extends BaseSetRenderer {
             HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('swap_vert.svg'),
                 [
                     "inset-inline-start" => "20px",
-                    "bottom" => $leftBottomMargin . "px"
+                    "bottom" => $this->leftBottomTriggerLocation . "px"
                 ],
                 $this->arrangeModal->openScript());
-            $leftBottomMargin += $this->triggersGap;
+            $this->leftBottomTriggerLocation += $this->triggersGap;
         }
 
         if($this->lister->placeManageListsTrigger){
@@ -104,10 +110,10 @@ abstract class ListerRenderer extends BaseSetRenderer {
             HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('delete_sweep.svg'),
                 [
                     "inset-inline-start" => "20px",
-                    "bottom" => $leftBottomMargin . "px"
+                    "bottom" => $this->leftBottomTriggerLocation . "px"
                 ],
                 $this->manageModal->openScript());
-            $leftBottomMargin += $this->triggersGap;
+            $this->leftBottomTriggerLocation += $this->triggersGap;
         }
 
         if($this->lister->placeBatchTransferTrigger){
@@ -115,10 +121,10 @@ abstract class ListerRenderer extends BaseSetRenderer {
             HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('sync_alt.svg'),
                 [
                     "inset-inline-start" => "20px",
-                    "bottom" => $leftBottomMargin . "px"
+                    "bottom" => $this->leftBottomTriggerLocation . "px"
                 ],
                 $this->transferModal->openScript());
-            $leftBottomMargin += $this->triggersGap;
+            $this->leftBottomTriggerLocation += $this->triggersGap;
         }
 
         if($this->lister->placeResetListsTrigger){
@@ -126,10 +132,10 @@ abstract class ListerRenderer extends BaseSetRenderer {
             HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('remove_from_queue.svg'),
                 [
                     "inset-inline-start" => "20px",
-                    "bottom" => $leftBottomMargin . "px"
+                    "bottom" => $this->leftBottomTriggerLocation . "px"
                 ],
                 'resetLists()');
-            $leftBottomMargin += $this->triggersGap;
+            $this->leftBottomTriggerLocation += $this->triggersGap;
         }
 
         if($this->lister->placeToggleUnlistedTrigger){
@@ -138,28 +144,28 @@ abstract class ListerRenderer extends BaseSetRenderer {
             HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('expand_content.svg'),
                 [
                     "inset-inline-start" => "20px",
-                    "bottom" => $leftBottomMargin . "px"
+                    "bottom" => $this->leftBottomTriggerLocation . "px"
                 ],
                 'toggleUnlisted(this)', $modifier);
-            $leftBottomMargin += $this->triggersGap;
+            $this->leftBottomTriggerLocation += $this->triggersGap;
         }
 
         if($this->lister->placeNavListsTriggers){
             HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('key_arrow_up.svg'),
                 [
                     "inset-inline-end" => "20px",
-                    "top" => $rightTopMargin . "px"
+                    "top" => $this->rightTopTriggerLocation . "px"
                 ],
                 "navigateBetweenLists(-1)");
-            $rightTopMargin += $this->triggersGap;
+            $this->rightTopTriggerLocation += $this->triggersGap;
 
             HTMLInterface::addAbsoluteIconButton(AvetifyManager::imageUrl('key_arrow_down.svg'),
                 [
                     "inset-inline-end" => "20px",
-                    "top" => $rightTopMargin . "px"
+                    "top" => $this->rightTopTriggerLocation . "px"
                 ],
                 "navigateBetweenLists(1)");
-            $rightTopMargin += $this->triggersGap;
+            $this->rightTopTriggerLocation += $this->triggersGap;
         }
 
         $this->initListers();
