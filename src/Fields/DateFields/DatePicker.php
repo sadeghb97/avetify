@@ -9,6 +9,11 @@ abstract class DatePicker extends BaseRecordField {
     public bool $printUnix = false;
     public DateValueType $valueType = DateValueType::MYSQL_DATE;
 
+    public function __construct(string $key, string $title) {
+        parent::__construct($key, $title);
+        $this->setNullOnEmpty();
+    }
+
     public function getValue($item): string {
         $val = parent::getValue($item);
         if ($val === '') return "0";
@@ -26,10 +31,24 @@ abstract class DatePicker extends BaseRecordField {
         };
     }
 
-    public function adjustDBValue(DBConnection $conn, string $value): string | null {
+    public function getTimeValue($item) : ?int {
+        if(is_object($item) && property_exists($item, $this->key)){
+            $rawVal = $item->{$this->key};
+        }
+        else if(is_array($item) && isset($item[$this->key])){
+            $rawVal = $item[$this->key];
+        }
+        else $rawVal = $this->getValue($item);
+
+        if($rawVal === null) return null;
+        return intval($this->getValue($item));
+    }
+
+    public function adjustDBValue(DBConnection $conn, string $value): string|null {
         if ($value === '' || !is_numeric($value)) return null;
 
-        $time = (int) $value;
+        $time = (int)$value;
+
         if ($time === 0) {
             return match ($this->valueType) {
                 DateValueType::UNIX => "0",
@@ -40,13 +59,13 @@ abstract class DatePicker extends BaseRecordField {
 
         return match ($this->valueType) {
             DateValueType::UNIX =>
-            (string) $time,
+            (string)$time,
 
             DateValueType::MYSQL_DATE =>
-            date('Y-m-d', $time),
+            gmdate('Y-m-d', $time),
 
             DateValueType::MYSQL_DATETIME =>
-            date('Y-m-d H:i:s', $time),
+            gmdate('Y-m-d H:i:s', $time),
         };
     }
 

@@ -8,7 +8,7 @@ use Avetify\Themes\Main\AvtTheme;
 
 class JalaliDatePicker extends DatePicker {
     public function presentValue($item, ?WebModifier $webModifier = null) : void {
-        $time = intval($this->getValue($item));
+        $time = $this->getTimeValue($item);
 
         echo '<div ';
         Styler::classStartAttribute();
@@ -73,7 +73,9 @@ class JalaliDatePicker extends DatePicker {
     }
 
     public function getInitJsString($item) : string {
-        $time = intval($this->getValue($item));
+        $time = $this->getTimeValue($item);
+        if($time === null) $time = "null";
+
         return "initJalaliField('" . $this->getElementIdentifier($item) . "', "
             . ($this->timeEnabled ? "true" : "false") . ", " . $time . ");";
     }

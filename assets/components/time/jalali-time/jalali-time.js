@@ -26,20 +26,15 @@ function initJalaliField(baseId, hasTime, initialUnix = 0) {
     }
   });
 
-  if (initialUnix > 0) {
-    $display.val(new persianDate(initialUnix * 1000).format(format));
-    setHiddenUnix(baseId, initialUnix);
-    formatUnixOutput(baseId, initialUnix);
-  } else {
-    $display.val(placeholder);
-    setHiddenUnix(baseId, 0);
-    formatUnixOutput(baseId, 0);
-  }
+  if (initialUnix !== null) $display.val(new persianDate(initialUnix * 1000).format(format));
+  else $display.val(placeholder);
+  setHiddenUnix(baseId, initialUnix);
+  formatUnixOutput(baseId, initialUnix);
 
   bindClearButton(baseId, () => {
     $display.val(placeholder);
-    setHiddenUnix(baseId, 0);
-    formatUnixOutput(baseId, 0);
+    setHiddenUnix(baseId, null);
+    formatUnixOutput(baseId, null);
   });
 
   return picker;

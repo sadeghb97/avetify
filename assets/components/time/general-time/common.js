@@ -10,7 +10,7 @@ function setHiddenUnix(baseId, unix) {
   const ids = getFieldElementIds(baseId);
   const hiddenElement = document.getElementById(ids.hidden);
   if (hiddenElement) {
-    hiddenElement.value = unix > 0 ? unix : 0;
+    hiddenElement.value = unix !== null ? unix : '*';
   }
 }
 
@@ -18,7 +18,7 @@ function formatUnixOutput(baseId, unix) {
   const ids = getFieldElementIds(baseId);
   const outputElement = document.getElementById(ids.unixOutput);
   if (outputElement) {
-    outputElement.innerText = 'Unix time: ' + (unix > 0 ? unix : 0);
+    outputElement.innerText = 'Unix time: ' + (unix !== null ? unix : 'Null');
   }
 }
 
@@ -32,7 +32,7 @@ function bindClearButton(baseId, onClearCallback) {
 }
 
 function toGregorianValue(unix, hasTime = false) {
-  if (unix <= 0) return '';
+  if(unix === null) return "*";
   const d = new Date(unix * 1000);
   const yyyy = d.getFullYear();
   const mm = String(d.getMonth() + 1).padStart(2, '0');
@@ -47,16 +47,21 @@ function toGregorianValue(unix, hasTime = false) {
 }
 
 function parseGregorianValue(value, hasTime = false) {
-  if (!value) return 0;
-  const dateString = hasTime ? value : `${value}T00:00:00`;
-  const unix = Math.floor(new Date(dateString).getTime() / 1000);
+  if (value === null) return null;
+
+  const dateString = hasTime
+    ? `${value}Z`
+    : `${value}T00:00:00Z`;
+
+  const unix = Math.floor(Date.parse(dateString) / 1000);
+
   return Number.isFinite(unix) ? unix : 0;
 }
 
 function syncGregorianField(baseId, hasTime) {
   const ids = getFieldElementIds(baseId);
   const display = document.getElementById(ids.display);
-  const unix = display ? parseGregorianValue(display.value, hasTime) : 0;
+  const unix = display && display.value ? parseGregorianValue(display.value, hasTime) : null;
 
   setHiddenUnix(baseId, unix);
   formatUnixOutput(baseId, unix);
@@ -65,14 +70,9 @@ function syncGregorianField(baseId, hasTime) {
 function initGregorianField(baseId, hasTime, initialUnix = 0) {
   const ids = getFieldElementIds(baseId);
   const display = document.getElementById(ids.display);
-
   if (!display) return;
 
-  if (initialUnix > 0) {
-    display.value = toGregorianValue(initialUnix, hasTime);
-  } else {
-    display.value = '';
-  }
+  display.value = toGregorianValue(initialUnix, hasTime);
   syncGregorianField(baseId, hasTime);
 
   display.addEventListener('change', function() {
@@ -84,7 +84,7 @@ function initGregorianField(baseId, hasTime, initialUnix = 0) {
   });
 
   bindClearButton(baseId, function() {
-    display.value = '';
+    display.value = '*';
     syncGregorianField(baseId, hasTime);
   });
 }
