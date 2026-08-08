@@ -340,6 +340,7 @@ require_once "src/Forms/Buttons/DeleteFormButton.php";
 
 require_once "src/Renderers/AvetifyRenderer.php";
 require_once "src/Renderers/TaskPageRenderer.php";
+require_once "src/Renderers/AdvancedTaskPage.php";
 
 require_once "src/Repo/Countries/AvtCountry.php";
 require_once "src/Repo/Countries/WorldCountries.php";

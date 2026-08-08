@@ -7,7 +7,7 @@ use Avetify\Interface\Platform;
 
 class Printer {
     public function __construct(public string $fontSize = "1rem", public string $fontWeight = "normal",
-                                public string $color = "black", public string $bgColor = "",
+                                public ?string $color = null, public string $bgColor = "",
                                 public bool $inline = true){
     }
 
@@ -18,7 +18,7 @@ class Printer {
             Styler::addStyle("display", $this->inline ? "inline" : "block");
             Styler::addStyle("font-size", $this->fontSize);
             Styler::addStyle("font-weight", $this->fontWeight);
-            Styler::addStyle("color", $this->color);
+            if($this->color) Styler::addStyle("color", $this->color);
             if ($this->bgColor) Styler::addStyle("background-color", $this->bgColor);
             Styler::closeAttribute();
             HTMLInterface::closeTag();
