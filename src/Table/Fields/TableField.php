@@ -30,7 +30,6 @@ class TableField extends BaseRecordField implements Qualifier {
     public string | null $minWidth = null;
     public string | null $fontSize = null;
     public string | null $fontWeight = null;
-    public bool $isReadonly = false;
 
     public function __construct(string $title, string $key){
         parent::__construct($key, $title);
@@ -175,11 +174,6 @@ class TableField extends BaseRecordField implements Qualifier {
 
     public function setMaxFieldCharacters(int $maxFieldCharacters) : static {
         $this->maxFieldCharacters = $maxFieldCharacters;
-        return $this;
-    }
-
-    public function setReadonly() : static {
-        $this->isReadonly = true;
         return $this;
     }
 

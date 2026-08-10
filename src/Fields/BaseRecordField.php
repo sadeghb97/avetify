@@ -20,6 +20,7 @@ class BaseRecordField implements IdentifiedElement {
 
     public bool $isNumeric = false;
     public bool $isHidden = false;
+    public bool $isReadonly = false;
     public bool $nullOnEmpty = false;
     public bool $transliterateToAscii = false;
     public bool $rawUrlDecode = false;
@@ -96,6 +97,11 @@ class BaseRecordField implements IdentifiedElement {
 
     public function setNullOnEmpty() : static {
         $this->nullOnEmpty = true;
+        return $this;
+    }
+
+    public function setReadonly() : static {
+        $this->isReadonly = true;
         return $this;
     }
 

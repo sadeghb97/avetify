@@ -1,6 +1,7 @@
 <?php
 namespace Avetify\Components\Selectors;
 
+use Avetify\Components\Containers\VertDiv;
 use Avetify\Fields\JSDatalist;
 use Avetify\Forms\FormUtils;
 use Avetify\Interface\CSS\Styler;
@@ -13,6 +14,7 @@ use Avetify\Interface\WebModifier;
 class SingleSelector implements Placeable, IdentifiedElement {
     use IdentifiedElementTrait;
     public bool $disableAutoSubmit = false;
+    public bool $readOnly = false;
 
     public function __construct(public string $label,
                                 public string $key,
@@ -25,6 +27,22 @@ class SingleSelector implements Placeable, IdentifiedElement {
     public function place(?WebModifier $webModifier = null) {
         $record = ($this->initValue) ? $this->dlInfo->getRecordById($this->initValue) : null;
         $avatar = $record ? $this->dlInfo->getItemImage($record) : "";
+
+        if($this->readOnly){
+            $title = $record ? $this->dlInfo->getItemTitle($record) : "";
+
+            $div = new VertDiv(4);
+            $div->open();
+
+            $imgModifier = WebModifier::createInstance();
+            $imgModifier->pushModifier('title', $title);
+            $imgModifier->pushStyle("width", "100px");
+            $imgModifier->pushStyle("height", "auto");
+            HTMLInterface::placeImage($avatar, $imgModifier);
+
+            $div->close();
+            return;
+        }
 
         echo '<div ';
         Styler::classStartAttribute();

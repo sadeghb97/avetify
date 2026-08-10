@@ -22,6 +22,7 @@ class VisualSelectField extends EditableField {
 
         $selector = new SingleSelector($this->title,
             $this->getElementIdentifier($item), $value, $this->datalist);
+        $selector->readOnly = $this->isReadonly;
         $selector->useNameIdentifier = $this->useNameIdentifier;
         $selectorModifier = WebModifier::createInstance();
         if($this->maxSelectorWidth > 0){
