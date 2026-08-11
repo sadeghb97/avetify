@@ -34,14 +34,8 @@ class EditableField extends TableField implements IdentifiedElement {
         return $id;
     }
 
-    function setFieldIdentifiers($item){
-        if($this->idGetter != null) {
-            $this->placeElementIdAttributes($item);
-        }
-    }
-
     function appendMainAttributes($item){
-        $this->setFieldIdentifiers($item);
+        $this->placeElementIdAttributes($item);
     }
 
     function appendMainStyles($item){

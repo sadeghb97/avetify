@@ -21,6 +21,7 @@ class BaseRecordField implements IdentifiedElement {
     public bool $isNumeric = false;
     public bool $isHidden = false;
     public bool $isReadonly = false;
+    public bool $isLabelEnabled = false;
     public bool $nullOnEmpty = false;
     public bool $transliterateToAscii = false;
     public bool $rawUrlDecode = false;

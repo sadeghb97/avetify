@@ -18,5 +18,9 @@ class EntityFieldWrapper extends EntityField {
         if(property_exists($this->recordField, "legacyGeneralNaming")) {
             $this->recordField->legacyGeneralNaming = true;
         }
+
+        if(property_exists($this->recordField, "isLabelEnabled")) {
+            $this->recordField->isLabelEnabled = true;
+        }
     }
 }
