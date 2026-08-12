@@ -270,6 +270,7 @@ abstract class BaseSetRenderer {
         return '{const keysList = \'' . $rawKeys . '\'.split(\',\');' .
         'keysList.forEach((key) => {
             localStorage.removeItem(key);
+            document.cookie = \'avt_\' + key  + \'=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/\';
         })}';
     }
 
