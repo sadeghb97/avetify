@@ -146,8 +146,8 @@ abstract class DBConnection extends mysqli {
         return "SELECT $selector FROM $source " . ($filterQuery ? "WHERE $filterQuery " : "");
     }
 
-    public function fetchTableSize(string $source, ?DBFilterInterface $filter = null) : int {
-        $tableSql = $this->fetchTableQueryWithFilter($source, $filter);
+    public function fetchTableSize(string $source, string $selector, ?DBFilterInterface $filter = null) : int {
+        $tableSql = $this->fetchTableQueryWithFilter($source, $filter, $selector);
         $countSql = "SELECT COUNT(*) as count FROM ($tableSql) as t";
         $row = $this->fetchRow($countSql);
         return $row['count'] ?? 0;

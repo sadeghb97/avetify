@@ -3,10 +3,15 @@ namespace Avetify\Entities\FilterFactors;
 
 use Avetify\DB\Filters\DBFilterInterface;
 use Avetify\Fields\BaseRecordField;
+use Avetify\Interface\Cookies;
 
 //filter factor be surate mamul ui nadare. baraye dashtane ui bayad az filter field estefade beshe
 class FilterFactor extends BaseRecordField implements Qualifier {
     public bool $useManualInterface = false;
+
+    public static function getStorageIdentifier(string $filterKey) : string {
+        return "filters_" . $filterKey;
+    }
 
     public function isQualified($item, $param): bool {
         return !!$this->getValue($item);
@@ -17,6 +22,8 @@ class FilterFactor extends BaseRecordField implements Qualifier {
     }
 
     public function getFilterValue() {
-        return $_REQUEST[$this->getElementIdentifier()] ?? null;
+        $filterKey = $this->getElementIdentifier();
+        $storageKey = self::getStorageIdentifier($filterKey);
+        return $_REQUEST[$filterKey] ?? Cookies::getCookieValue($storageKey);
     }
 }

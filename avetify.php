@@ -19,6 +19,7 @@ require_once "src/Interface/PageRenderer.php";
 require_once "src/Interface/CSS/Styler.php";
 require_once "src/Interface/WebModifier.php";
 require_once "src/Interface/JSInterface.php";
+require_once "src/Interface/Cookies.php";
 require_once "src/Interface/RecordFormTrait.php";
 
 require_once "src/DB/DBConnection.php";

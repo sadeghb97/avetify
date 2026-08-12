@@ -46,22 +46,27 @@ class JSInterface {
         <?php
     }
 
-    public static function setLocalStorageValue(string $key, string $value) : void {
+    public static function setLocalStorageValue(string $key, string $value): void {
         ?>
         <script>
-            localStorage.setItem(
-                    <?php echo json_encode($key); ?>,
-                    <?php echo json_encode($value); ?>
-            );
+          localStorage.setItem(
+                  <?= json_encode($key) ?>,
+                  <?= json_encode($value) ?>
+          );
         </script>
         <?php
+        Cookies::setCookieValue($key, $value);
     }
 
-    public static function removeLocalStorageValue(string $key) : void {
+    public static function removeLocalStorageValue(string $key): void {
         ?>
         <script>
-            localStorage.removeItem(<?php echo json_encode($key); ?>);
+          localStorage.removeItem(<?= json_encode($key) ?>);
+
+          document.cookie =
+                  <?= json_encode($key . '=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/') ?>;
         </script>
         <?php
+        Cookies::removeCookieValue($key);
     }
 }

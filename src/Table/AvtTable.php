@@ -142,7 +142,7 @@ class AvtTable extends SetManager {
                     $clonedField->useNameIdentifier = true;
                 }
                 if(property_exists($clonedField, "namespace")){
-                    $clonedField->namespace = "filters_" . $clonedField->namespace;
+                    $clonedField->namespace = FilterFactor::getStorageIdentifier($clonedField->namespace);
                 }
                 $this->_defaultFilterFactors[] = new FilterField($clonedField);
             }

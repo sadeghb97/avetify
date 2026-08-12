@@ -2,6 +2,7 @@
 namespace Avetify\Themes\Main;
 
 use Avetify\Components\Containers\NiceDiv;
+use Avetify\Entities\FilterFactors\FilterFactor;
 use Avetify\Entities\SetManager;
 use Avetify\Forms\AvtForm;
 use Avetify\Forms\Buttons\ClearButton;
@@ -223,7 +224,7 @@ abstract class BaseSetRenderer {
         foreach ($filterFields as $filterField){
             if(!method_exists($filterField->recordField, "getElementIdentifier")) continue;
             $filterKey = $filterField->recordField->getElementIdentifier();
-            $globalStorageFilterKey = "filters_" . $filterKey;
+            $globalStorageFilterKey = FilterFactor::getStorageIdentifier($filterKey);
             if(isset($_POST[$filterKey])) {
                 JSInterface::setLocalStorageValue($globalStorageFilterKey, $_POST[$filterKey]);
                 $formData[$filterField->key] = $_POST[$filterKey];
@@ -257,7 +258,7 @@ abstract class BaseSetRenderer {
         $filterFields = $this->setManager->allFilterFields();
         foreach ($filterFields as $filterField){
             $filterKey = $filterField->recordField->getElementIdentifier();
-            $globalStorageFilterKey = "filters_" . $filterKey;
+            $globalStorageFilterKey = FilterFactor::getStorageIdentifier($filterKey);
             if(empty($filtersFormData[$filterField->key]) && method_exists($filterField->recordField, "loadValueUsingJSStorage")){
                 $filterField->recordField->loadValueUsingJSStorage($globalStorageFilterKey);
             }
@@ -277,7 +278,7 @@ abstract class BaseSetRenderer {
         $filterFields = $this->setManager->allFilterFields();
         foreach ($filterFields as $filterField){
             $filterKey = $filterField->recordField->getElementIdentifier();
-            $globalStorageFilterKey = "filters_" . $filterKey;
+            $globalStorageFilterKey = FilterFactor::getStorageIdentifier($filterKey);
             if($out) $out .= ",";
             $out .= $globalStorageFilterKey;
         }
