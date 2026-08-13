@@ -50,4 +50,10 @@ class World {
         if(self::$countriesDatalist == null) self::init();
         return self::$countriesDatalist;
     }
+
+    /** @return AvtCountry[] */
+    public static function getAllCountries() : array {
+        if(self::$countriesDatalist == null) self::init();
+        return self::$countriesDatalist->records;
+    }
 }
