@@ -3944,6 +3944,21 @@
     "subregion": "Southern Europe"
   },
   {
+    "alpha2": "XI",
+    "alpha3": "XIR",
+    "continent": "Asia",
+    "currency_code": "IRR",
+    "long_name": "Imperial State of Iran",
+    "short_name": "Iran",
+    "per_name": "ایران",
+    "languages": [
+      "fa"
+    ],
+    "nationality": "Iranian",
+    "region": "Asia",
+    "subregion": "Southern Asia"
+  },
+  {
     "alpha2": "XK",
     "alpha3": "XKX",
     "continent": "Europe",
@@ -3955,6 +3970,19 @@
     "nationality": "Kosovar",
     "region": "Europe",
     "subregion": "Southern Europe"
+  },
+  {
+    "alpha2": "XN",
+    "alpha3": "NIR",
+    "continent": "Europe",
+    "currency_code": "GBP",
+    "long_name": "Northern Ireland",
+    "short_name": "Northern Ireland",
+    "per_name": "ایرلند شمالی",
+    "languages": ["en"],
+    "nationality": "Northern Irish",
+    "region": "Europe",
+    "subregion": "Northern Europe"
   },
   {
     "alpha2": "XS",

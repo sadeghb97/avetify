@@ -24,7 +24,25 @@ class WorldCountries {
     }
 
     public function getCountryDetails($countryCode) : array | null {
-        if(isset($this->map[strtolower($countryCode)])) return $this->map[strtolower($countryCode)];
+        $finalCode = strtolower($countryCode);
+
+        // ISO 3166-2 → Chess.com code
+        if($finalCode == "gb-eng") $finalCode = "xe";
+        else if($finalCode == "gb-nir") $finalCode = "xn";
+        else if($finalCode == "gb-sct") $finalCode = "xs";
+        else if($finalCode == "gb-wls") $finalCode = "xw";
+        else if($finalCode == "es-ct") $finalCode = "xc";
+        else if($finalCode == "es-pv") $finalCode = "xb";
+        else if($finalCode == "es-ga") $finalCode = "xg";
+        else if($finalCode == "es-cn") $finalCode = "xa";
+
+        // Alternative country codes → Chess.com code
+        else if(in_array($finalCode, ["pse", "275", "ple"])) $finalCode = "ps";
+        else if(in_array($finalCode, ["xt", "twn", "158", "tpe"])) $finalCode = "tw";
+        else if(in_array($finalCode, ["xk", "xkx", "ks", "kos"])) $finalCode = "xk";
+
+        if(isset($this->map[$finalCode])) return $this->map[$finalCode];
+
         return null;
     }
 
