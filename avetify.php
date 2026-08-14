@@ -347,3 +347,7 @@ require_once "src/Repo/Countries/AvtCountry.php";
 require_once "src/Repo/Countries/WorldCountries.php";
 require_once "src/Repo/Countries/World.php";
 require_once "src/Repo/Countries/CountriesTable.php";
+
+require_once "src/Games/AvtTrivia/AvtTriviaConfig.php";
+require_once "src/Games/AvtTrivia/AvtTrivia.php";
+

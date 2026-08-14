@@ -52,4 +52,24 @@ class Pout {
         print_r($array);
         HTMLInterface::closeDiv();
     }
+
+    public static function checkMark() : string {
+        return "✅";
+    }
+
+    public static function crossMark() : string {
+        return "❌";
+    }
+
+    public static function exclamationMark() : string {
+        return "❓";
+    }
+
+    public static function questionMark() : string {
+        return "❗";
+    }
+
+    public static function heartMark() : string {
+        return "♥️";
+    }
 }
