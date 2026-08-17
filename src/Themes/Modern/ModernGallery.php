@@ -9,6 +9,7 @@ use Avetify\Fields\JSTextFields\APITextField;
 class ModernGallery extends ModernSetRenderer {
     public RecordContextMenu | null $contextMenu = null;
     public bool $openMenuOnNormalClick = false;
+    public bool $stopPropagationOnBody = false;
 
     public function renderRecordMain($item, $index) {
         $name = ($index + 1) . ": " . $this->setManager->getItemTitle($item);
@@ -22,6 +23,10 @@ class ModernGallery extends ModernSetRenderer {
         $nationsRaw = $this->getNationsRaw($item);
         if($nationsRaw){
             $options['nations'] = $nationsRaw;
+        }
+
+        if($this->stopPropagationOnBody){
+            $options['stop_propagation_on_body'] = true;
         }
 
         if($this->contextMenu != null){

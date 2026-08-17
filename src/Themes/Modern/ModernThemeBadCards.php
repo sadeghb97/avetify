@@ -41,7 +41,17 @@ class ModernThemeBadCards {
             echo '</div>';
         }
 
-        echo '<div class="card__body">';
+        echo '<div ';
+        Styler::classStartAttribute();
+        Styler::addClass("card__body");
+        Styler::closeAttribute();
+
+        if(!empty($options['stop_propagation_on_body'])) {
+            HTMLInterface::addAttribute("onclick", "event.stopPropagation()");
+            HTMLInterface::addAttribute("oncontextmenu", "event.stopPropagation()");
+        }
+
+        HTMLInterface::closeTag();
 
         if(isset($options['magham'])){
             echo '<div style="margin-top: -6px; font-weight: bold; font-size: 14px; color: firebrick">';

@@ -116,19 +116,18 @@ async function avtCopyElementText(element) {
   }
 }
 
-document.addEventListener('keydown', function (e) {
-    const target = e.target;
-    if (target.classList.contains('numeric-text')) {
-        const allowedKeys = [
-            'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End', 'Enter'
-        ];
+document.addEventListener('input', function (e) {
+  const target = e.target;
+  if (target.classList.contains('numeric-text')) {
+    let cleanValue = target.value.replace(/[^0-9.]/g, '');
 
-        const isOk = (e.key >= '0' && e.key <= '9') ||
-            allowedKeys.includes(e.key) ||
-            (e.key === '.' && !target.value.includes('.'))
-
-        if(!isOk) e.preventDefault()
+    const parts = cleanValue.split('.');
+    if (parts.length > 2) {
+      cleanValue = parts[0] + '.' + parts.slice(1).join('');
     }
+
+    target.value = cleanValue;
+  }
 });
 
 document.addEventListener('keydown', function (e) {
