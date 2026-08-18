@@ -247,7 +247,7 @@ abstract class BaseSetRenderer {
             $filterField->recordField->placeField($filtersFormData);
         }
         $niceDiv->separate();
-        $this->filtersForm->placeTriggers(0);
+        $this->filtersForm->placeTriggers(0, 0);
 
         $niceDiv->close();
         $this->filtersForm->closeForm();

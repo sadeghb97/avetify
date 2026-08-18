@@ -8,7 +8,7 @@ use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 
 class SetSelectField extends BaseSetSelectField {
-    public SetSelector $setSelector;
+    public ?SetSelector $setSelector = null;
     public int $selectorWidth = 0;
     public bool $tinyAvatars = false;
     public bool $disableAutoSubmit = false;
@@ -35,7 +35,9 @@ class SetSelectField extends BaseSetSelectField {
     }
 
     public function loadValueUsingJSStorage(string $key): void {
-        $this->setSelector->loadValueUsingJSStorage($key);
+        if($this->setSelector) {
+            $this->setSelector->loadValueUsingJSStorage($key);
+        }
     }
 
     public function setSelectorWidth(int $width) : static {
