@@ -284,3 +284,181 @@ function rawSelectorInit(boxId, inputId, hiddenId, rawString) {
     load(rawString);
     rawSelectorUpdateHidden(boxId, hiddenId);
 }
+
+function safeGetJSVar(varName) {
+    if (!varName) return null;
+    if (typeof window[varName] !== 'undefined') return window[varName];
+    try {
+        return eval(varName);
+    } catch (e) {
+        return null;
+    }
+}
+
+function updateTeamArrangeField(target, recordsList, recordsIdsMap) {
+    let textarea = null;
+    if (typeof target === 'string') {
+        textarea = document.getElementById(target);
+    } else if (target && target.nodeType) {
+        textarea = target;
+    }
+    if (!textarea) return;
+
+    const container = textarea.closest('.team-arrange-container') || textarea.parentElement;
+    if (!container) return;
+
+    const errorEl = container.querySelector('.team-arrange-error');
+    const schematic = container.querySelector('.team-arrange-schematic');
+    if (!errorEl || !schematic) return;
+
+    if (typeof recordsList === 'string') recordsList = safeGetJSVar(recordsList);
+    if (typeof recordsIdsMap === 'string') recordsIdsMap = safeGetJSVar(recordsIdsMap);
+
+    const val = textarea.value.trim();
+
+    if (!val) {
+        errorEl.style.display = "none";
+        errorEl.textContent = "";
+        schematic.innerHTML = "";
+        return;
+    }
+
+    const parts = val.split('##').map(p => p.trim()).filter(p => p.length > 0);
+    if (parts.length === 0) {
+        errorEl.style.display = "none";
+        errorEl.textContent = "";
+        schematic.innerHTML = "";
+        return;
+    }
+
+    let isValid = true;
+    const parsedTeams = [];
+
+    for (let i = 0; i < parts.length; i++) {
+        const part = parts[i];
+        const colonIndex = part.indexOf(':');
+        if (colonIndex === -1) {
+            isValid = false;
+            break;
+        }
+        const color = part.substring(0, colonIndex).trim();
+        const idsString = part.substring(colonIndex + 1).trim();
+        if (!color) {
+            isValid = false;
+            break;
+        }
+        const ids = idsString ? idsString.split(',').map(id => id.trim()).filter(id => id.length > 0) : [];
+        parsedTeams.push({ color, ids });
+    }
+
+    if (!isValid) {
+        errorEl.style.display = "block";
+        errorEl.style.color = "#dc3545";
+        errorEl.style.fontSize = "11px";
+        errorEl.style.fontWeight = "bold";
+        errorEl.style.marginTop = "3px";
+        errorEl.textContent = "Invalid format";
+        schematic.innerHTML = "";
+        return;
+    }
+
+    errorEl.style.display = "none";
+    errorEl.textContent = "";
+    schematic.innerHTML = "";
+
+    parsedTeams.forEach(team => {
+        const teamBox = document.createElement("div");
+        teamBox.className = "team-arrange-box";
+        teamBox.style.border = "1px solid " + team.color;
+        teamBox.style.borderRadius = "6px";
+        teamBox.style.padding = "4px 8px";
+        teamBox.style.backgroundColor = "rgba(0,0,0,0.015)";
+        teamBox.style.width = "100%";
+        teamBox.style.boxSizing = "border-box";
+        teamBox.style.display = "flex";
+        teamBox.style.flexDirection = "row";
+        teamBox.style.alignItems = "center";
+        teamBox.style.gap = "8px";
+
+        const header = document.createElement("div");
+        header.style.fontWeight = "bold";
+        header.style.fontSize = "11px";
+        header.style.color = team.color;
+        header.style.display = "flex";
+        header.style.alignItems = "center";
+        header.style.gap = "4px";
+        header.style.minWidth = "60px";
+
+        const dot = document.createElement("span");
+        dot.style.display = "inline-block";
+        dot.style.width = "6px";
+        dot.style.height = "6px";
+        dot.style.borderRadius = "50%";
+        dot.style.backgroundColor = team.color;
+
+        const titleSpan = document.createElement("span");
+        titleSpan.textContent = team.color;
+
+        header.appendChild(dot);
+        header.appendChild(titleSpan);
+        teamBox.appendChild(header);
+
+        const membersDiv = document.createElement("div");
+        membersDiv.style.display = "flex";
+        membersDiv.style.flexWrap = "wrap";
+        membersDiv.style.gap = "4px";
+        membersDiv.style.alignItems = "center";
+
+        team.ids.forEach(id => {
+            const lowerId = String(id).toLowerCase();
+            const recIndex = (recordsIdsMap && typeof recordsIdsMap[lowerId] !== 'undefined') ? recordsIdsMap[lowerId] : undefined;
+            if (recIndex !== undefined && recordsList && recordsList[recIndex]) {
+                const rec = recordsList[recIndex];
+                const avatarUrl = rec['main_jsdl_avatar'];
+                const name = rec['main_jsdl_name'] || id;
+
+                if (avatarUrl) {
+                    const img = document.createElement("img");
+                    img.src = avatarUrl;
+                    img.alt = name;
+                    img.title = name + " (" + id + ")";
+                    img.style.width = "40px";
+                    img.style.height = "auto";
+                    img.style.borderRadius = "4px";
+                    img.style.objectFit = "cover";
+                    img.style.border = "1px solid #eee";
+                    membersDiv.appendChild(img);
+                } else {
+                    const textCard = document.createElement("div");
+                    textCard.title = name + " (" + id + ")";
+                    textCard.textContent = name;
+                    textCard.style.width = "40px";
+                    textCard.style.padding = "2px 4px";
+                    textCard.style.fontSize = "9px";
+                    textCard.style.textAlign = "center";
+                    textCard.style.backgroundColor = "#f5f5f5";
+                    textCard.style.border = "1px solid #ddd";
+                    textCard.style.borderRadius = "4px";
+                    textCard.style.wordBreak = "break-word";
+                    membersDiv.appendChild(textCard);
+                }
+            } else {
+                const fallbackCard = document.createElement("div");
+                fallbackCard.title = id;
+                fallbackCard.textContent = id;
+                fallbackCard.style.width = "40px";
+                fallbackCard.style.padding = "2px 4px";
+                fallbackCard.style.fontSize = "9px";
+                fallbackCard.style.textAlign = "center";
+                fallbackCard.style.backgroundColor = "#fff";
+                fallbackCard.style.border = "1px dashed " + team.color;
+                fallbackCard.style.borderRadius = "4px";
+                fallbackCard.style.wordBreak = "break-word";
+                membersDiv.appendChild(fallbackCard);
+            }
+        });
+
+        teamBox.appendChild(membersDiv);
+        schematic.appendChild(teamBox);
+    });
+}

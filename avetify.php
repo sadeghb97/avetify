@@ -242,6 +242,7 @@ require_once "src/Table/Fields/EditableFields/SelectFields/SelectField.php";
 require_once "src/Table/Fields/EditableFields/SelectFields/SetSelectField.php";
 require_once "src/Table/Fields/EditableFields/SelectFields/VisualSelectField.php";
 require_once "src/Table/Fields/EditableFields/SelectFields/RawSetSelectField.php";
+require_once "src/Table/Fields/EditableFields/SelectFields/TeamArrangeField.php";
 
 require_once "src/Table/Fields/ImageFields/TableAvatarField.php";
 require_once "src/Table/Fields/ImageFields/ExtendedAvatarField.php";
