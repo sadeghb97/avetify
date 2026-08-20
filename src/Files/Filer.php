@@ -93,18 +93,41 @@ class Filer {
         return self::dirSubFiles($path, "all");
     }
 
-    public static function subFiles(string $path): array {
-        return self::dirSubFiles($path, "files");
+    public static function subFiles(string $path, ?array $targetExtensions = null): array {
+        $files = self::dirSubFiles($path, "files");
+        if($targetExtensions == null) return $files;
+
+        $chosenFiles = [];
+        foreach ($files as $file){
+            $ext = self::getFileExtension($file);
+            if(in_array($ext, $targetExtensions)) $chosenFiles[] = $file;
+        }
+        return $chosenFiles;
+    }
+
+    private static function _subFilesRecursive(array &$chosenFiles, string $path, ?array $targetExtensions = null): array {
+        $newFiles = self::subFiles($path, $targetExtensions);
+        $chosenFiles = array_merge($chosenFiles, $newFiles);
+
+        $subDirs = Filer::subDirs($path);
+        foreach ($subDirs as $subDir){
+            self::_subFilesRecursive($chosenFiles, $subDir, $targetExtensions);
+        }
+
+        return $chosenFiles;
+    }
+
+    public static function subFilesRecursive(string $path, ?array $targetExtensions = null): array {
+        $chosenFiles = [];
+        return self::_subFilesRecursive($chosenFiles, $path, $targetExtensions);
     }
 
     public static function subImages(string $path): array {
-        $files = self::subFiles($path);
-        $images = [];
+        return self::subFiles($path, self::IMAGE_EXTENSIONS);
+    }
 
-        foreach ($files as $file){
-            if(self::isImageExtension($file)) $images[] = $file;
-        }
-        return $images;
+    public static function subImagesRecursive(string $path): array {
+        return self::subFilesRecursive($path, self::IMAGE_EXTENSIONS);
     }
 
     public static function isImageExtension(string $filePath) : bool {
