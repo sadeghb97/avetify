@@ -103,8 +103,8 @@ class ModernGallery extends ModernSetRenderer {
         return "";
     }
 
-    public function getTitle(): string {
-        return $this->title;
+    public function getPageTitle(): string {
+        return $this->pageTitle;
     }
 
     public function getAltLinkIcon(): string {

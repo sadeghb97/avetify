@@ -8,6 +8,7 @@ use Avetify\Forms\AvtForm;
 use Avetify\Forms\Buttons\ClearButton;
 use Avetify\Forms\Buttons\FormButton;
 use Avetify\Interface\CSS\CSS;
+use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\JSInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Routing\Routing;
@@ -59,7 +60,7 @@ abstract class BaseSetRenderer {
     public function postConstruct(){}
 
     public function openPage(){
-        $this->theme->placeHeader($this->getTitle());
+        $this->theme->placeHeader($this->getPageTitle());
         $this->theme->openBody();
         $this->theme->loadHeaderElements();
     }
@@ -96,6 +97,7 @@ abstract class BaseSetRenderer {
             $this->placePagination();
         }
 
+        $this->renderTableTitle();
         $this->prepareContainerModifier();
         $this->openContainer();
         $this->renderLeadingItems();
@@ -107,6 +109,16 @@ abstract class BaseSetRenderer {
         }
 
         $this->renderFooter();
+    }
+
+    public function renderTableTitle() : void {
+        if(!$this->setManager->setName) return;
+        $tableName = $this->setManager->setName;
+
+        $titleModifier = WebModifier::createInstance();
+        $titleModifier->pushStyle("margin-top", "16px");
+        $titleModifier->pushStyle("font-weight", "bold");
+        HTMLInterface::placeDiv($tableName, $titleModifier);
     }
 
     public function renderPage(){
@@ -122,7 +134,7 @@ abstract class BaseSetRenderer {
 
     public function onRecordsAdjusted() : void {}
 
-    public abstract function getTitle() : string;
+    public abstract function getPageTitle() : string;
     public abstract function openContainer();
     public abstract function closeContainer();
     public abstract function renderRecordMain($item, int $index);

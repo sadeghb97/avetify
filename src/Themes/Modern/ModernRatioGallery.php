@@ -77,8 +77,8 @@ abstract class ModernRatioGallery extends SetRenderer implements EntityImageRati
         $this->curRowOffset += $itemWidthUnits;
     }
 
-    public function getTitle(): string {
-        return $this->title;
+    public function getPageTitle(): string {
+        return $this->pageTitle;
     }
 
     public function openContainer(){

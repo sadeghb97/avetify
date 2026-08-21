@@ -170,7 +170,7 @@ class ModernixRenderer extends SetRenderer {
         $niceDiv = new VertDiv(0);
         $niceDiv->addStyle("margin-top", "16px");
         $niceDiv->open();
-        Printer::boldPrint($this->getTitle());
+        Printer::boldPrint($this->getPageTitle());
         $niceDiv->close();
         echo '<div ';
         Styler::classStartAttribute();

@@ -26,14 +26,14 @@ abstract class SetRenderer extends BaseSetRenderer {
 
 
     public function __construct(SetManager    $setManager, null | AvtTheme $theme,
-                                public string $title = "Set", bool|int $limit = 5000){
+                                public string $pageTitle = "Set", bool|int $limit = 5000){
         if($theme == null) $theme = new GreenTheme();
         parent::__construct($setManager, $theme, $limit);
         $this->containerModifier = $this->getFormModifier();
     }
 
-    public function getTitle(): string {
-        return $this->title;
+    public function getPageTitle(): string {
+        return $this->pageTitle;
     }
 
     public function initForm(){

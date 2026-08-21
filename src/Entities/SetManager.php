@@ -21,6 +21,7 @@ use Avetify\Utils\StringUtils;
 abstract class SetManager implements EntityManager {
     use EntityManagerTrait;
 
+    public ?string $setName = null;
     public array $records = [];
     public array $currentRecords = [];
     public bool $isSortable = true;
@@ -325,7 +326,7 @@ abstract class SetManager implements EntityManager {
     }
 
     public function openPage(string $title = ""){
-        if($title) $this->renderer->title = $title;
+        if($title) $this->renderer->pageTitle = $title;
         $this->renderer->openPage();
     }
 
@@ -334,7 +335,7 @@ abstract class SetManager implements EntityManager {
     }
 
     public function renderPage(string $title = ""){
-        if($title) $this->renderer->title = $title;
+        if($title) $this->renderer->pageTitle = $title;
         $this->renderer->renderPage();
     }
 }

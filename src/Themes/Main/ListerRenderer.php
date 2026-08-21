@@ -43,7 +43,7 @@ abstract class ListerRenderer extends BaseSetRenderer {
         $this->rightTopTriggerLocation = 20 + $triggersMoreMarginTop;
     }
 
-    public function getTitle(): string {
+    public function getPageTitle(): string {
         return $this->lister->getPageTitle();
     }
 
@@ -287,7 +287,7 @@ abstract class ListerRenderer extends BaseSetRenderer {
     }
 
     public function openPage(string $title = ""){
-        $finalTitle = $title ?: $this->getTitle();
+        $finalTitle = $title ?: $this->getPageTitle();
         if(!$this->theme) $this->theme = $this->defaultTheme();
         $this->theme->placeHeader($finalTitle);
         $this->theme->openBody();
