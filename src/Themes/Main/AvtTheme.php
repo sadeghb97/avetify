@@ -107,6 +107,7 @@ class AvtTheme {
         $this->importMainJSInterface();
         $this->importAvtJSFields();
         self::importAvtJSDialogs();
+        self::importAvtJSForms();
         $this->importJoshButtons();
         $this->importGeneralFonts();
         $this->importContextMenuStyles();
@@ -246,6 +247,10 @@ class AvtTheme {
 
     public static function importAvtJSDialogs(){
         self::importJS(AvetifyManager::assetUrl("themes/main/js/dialogs.js"));
+    }
+
+    public static function importAvtJSForms(){
+        self::importJS(AvetifyManager::assetUrl("themes/main/js/forms.js"));
     }
 
     public static function importBootstrapCSS(){

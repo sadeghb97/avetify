@@ -11,10 +11,12 @@ use Avetify\Forms\FormUtils;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\JSInterface;
+use Avetify\Interface\Placeable;
 use Avetify\Interface\WebModifier;
 use Avetify\Table\AvtTable;
 use Avetify\Table\Fields\EditableFields\EditableField;
 use Avetify\Table\Fields\EditableFields\RecordSelectorField;
+use Avetify\Table\Meta\IntegratedPrimaryTrigger;
 use Avetify\Themes\Green\GreenTheme;
 
 abstract class SetRenderer extends BaseSetRenderer {
@@ -23,6 +25,7 @@ abstract class SetRenderer extends BaseSetRenderer {
     public bool $blankLink = true;
     public bool $printRowIndex = true;
     public bool $useClassicButtons = false;
+    public bool $useIntegratedAvtTablePrimaryTrigger = true;
 
 
     public function __construct(SetManager    $setManager, null | AvtTheme $theme,
@@ -51,7 +54,11 @@ abstract class SetRenderer extends BaseSetRenderer {
                 }
             }
             else {
-                $this->addUpdateTrigger($this->getFormIdentifier(), $this->getUpdateButtonID());
+                $primaryButton = new PrimaryFormButton($this->getFormIdentifier(), $this->getUpdateButtonID());
+                if($this->useIntegratedAvtTablePrimaryTrigger){
+                    $this->addAsAvtTableAutoTrigger($primaryButton);
+                }
+                else $this->form->addTrigger($primaryButton);
 
                 if ($deleteButtonRequired) {
                     $this->addDeleteTrigger($this->getFormIdentifier(), $this->getDeleteButtonID());
@@ -86,6 +93,25 @@ abstract class SetRenderer extends BaseSetRenderer {
 
     function getConfirmMessage() : string {
         return "Are you sure?";
+    }
+
+    public function addAsAvtTableAutoTrigger(Placeable $trigger) : void {
+        if($this->form && $trigger instanceof FormButton){
+            $trigger->formTriggerElementId = $this->form->getTriggerHiddenId();
+
+            ?>
+            <script>
+              globalThis.avt_global__table_primary_triggers ??= [];
+
+              globalThis.avt_global__table_primary_triggers.push({
+                formIdentifier: <?= json_encode($trigger->formIdentifier ?? '') ?>,
+                confirmMessage: <?= json_encode($trigger->confirmMessage ?? '') ?>,
+                formTriggerElementId: <?= json_encode($trigger->formTriggerElementId ?? '') ?>,
+                triggerIdentifier: <?= json_encode($trigger->triggerIdentifier ?? '') ?>
+              });
+            </script>
+            <?php
+        }
     }
 
     public function placeFormJSUtils(){
@@ -173,6 +199,9 @@ abstract class SetRenderer extends BaseSetRenderer {
 
             if ($sbTable->isEditable) {
                 $this->form->placeTriggers();
+                if($this->useIntegratedAvtTablePrimaryTrigger){
+                    IntegratedPrimaryTrigger::placeTrigger();
+                }
                 $this->form->closeForm();
                 $this->placeFormJSUtils();
             }

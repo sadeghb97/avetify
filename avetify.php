@@ -226,6 +226,7 @@ require_once "src/Table/Fields/TableField.php";
 require_once "src/Table/Fields/TableFieldWrapper.php";
 require_once "src/Table/Fields/TableSimpleField.php";
 require_once "src/Table/Fields/TableSortField.php";
+require_once "src/Table/Meta/IntegratedPrimaryTrigger.php";
 
 require_once "src/Table/Fields/LinkFields/TableLinkField.php";
 require_once "src/Table/Fields/LinkFields/TableMainLinkField.php";
