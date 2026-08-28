@@ -201,14 +201,14 @@ abstract class SetManager implements EntityManager {
     }
 
     public function fetchDBRecords() : array {
-        $filter = $this->createDBFilter();
-        $fetchOrder = $this->createDBFetchOrder();
+        $filter = $this->adjustDBMode ? $this->createDBFilter() : null;
+        $fetchOrder = $this->adjustDBMode ? $this->createDBFetchOrder() : "";
         $dbs = $this->dbSource();
         $dbSelector = $this->dbSelector();
 
         $limit = 0;
         $offset = 0;
-        if($this->paginationConfigs){
+        if($this->adjustDBMode && $this->paginationConfigs){
             $this->paginationConfigs->recordsCount = $this->conn->fetchTableSize($dbs, $dbSelector, $filter);
             $limit = $this->paginationConfigs->pageSize;
             $offset = $this->currentRecordsFirstRowIndex();

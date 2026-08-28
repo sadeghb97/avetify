@@ -13,13 +13,13 @@ use Avetify\Table\Fields\TableField;
 
 abstract class DBTable extends AvtTable {
     public bool $pkIsNumeric = true;
+    public bool $adjustDBMode = true;
 
     public function __construct(DBConnection $conn, string $dbTableName,
                                 public string $primaryKey, string $key){
 
         $this->conn = $conn;
         $this->dbTableName = $dbTableName;
-        $this->adjustDBMode = true;
         parent::__construct($this->makeTableFields(), [], $key, true);
         $this->dbUpdateRecords();
     }
