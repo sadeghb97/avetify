@@ -3,6 +3,7 @@ namespace Avetify\Table\Fields\EditableFields\SelectFields;
 
 use Avetify\Components\Containers\NiceDiv;
 use Avetify\Components\Selectors\SingleSelector;
+use Avetify\DB\Filters\DBFilterInterface;
 use Avetify\Fields\JSDatalist;
 use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
@@ -51,4 +52,9 @@ class VisualSelectField extends EditableField {
     }
 
     public function preLoad() {}
+
+    public function dbQualifyingFilter($paramValue): DBFilterInterface | null {
+        if(!$paramValue) return null;
+        return parent::dbQualifyingFilter($paramValue);
+    }
 }

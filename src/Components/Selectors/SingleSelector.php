@@ -35,11 +35,19 @@ class SingleSelector implements Placeable, IdentifiedElement {
             $div = new VertDiv(4);
             $div->open();
 
+            if($link){
+                echo '<a href="' . $link . '" target="_blank">';
+            }
+
             $imgModifier = WebModifier::createInstance();
             $imgModifier->pushModifier('title', $title);
             $imgModifier->pushStyle("width", "100px");
             $imgModifier->pushStyle("height", "auto");
             HTMLInterface::placeImage($avatar, $imgModifier);
+
+            if($link){
+                echo '</a>';
+            }
 
             $div->close();
             return;
