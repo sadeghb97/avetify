@@ -10,7 +10,7 @@ class FilterField extends FilterFactor implements IdentifiedElement {
     use IdentifiedElementTrait;
 
     public function __construct(public BaseRecordField $recordField){
-        parent::__construct($this->recordField->key, $this->recordField->title);
+        parent::__construct($this->recordField->getDbSelectorExpression(), $this->recordField->title);
     }
 
     public function isQualified($item, $param): bool {

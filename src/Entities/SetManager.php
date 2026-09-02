@@ -209,7 +209,7 @@ abstract class SetManager implements EntityManager {
         $limit = 0;
         $offset = 0;
         if($this->adjustDBMode && $this->paginationConfigs){
-            $this->paginationConfigs->recordsCount = $this->conn->fetchTableSize($dbs, $dbSelector, $filter);
+            $this->paginationConfigs->recordsCount = $this->conn->fetchTableSize($dbs, "*", $filter);
             $limit = $this->paginationConfigs->pageSize;
             $offset = $this->currentRecordsFirstRowIndex();
         }

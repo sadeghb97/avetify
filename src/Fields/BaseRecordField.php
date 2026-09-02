@@ -26,6 +26,7 @@ class BaseRecordField implements IdentifiedElement {
     public bool $transliterateToAscii = false;
     public bool $rawUrlDecode = false;
     public bool $trimming = false;
+    public string | null $dbSelectorName = null;
 
     public array $dbValueMappers = [];
 
@@ -124,6 +125,15 @@ class BaseRecordField implements IdentifiedElement {
     public function enableLabel() : static {
         $this->isLabelEnabled = true;
         return $this;
+    }
+
+    public function setDbSelectorName(string | null $sn) : static {
+        $this->dbSelectorName = $sn;
+        return $this;
+    }
+
+    public function getDbSelectorExpression() : string {
+        return $this->dbSelectorName ?? $this->key;
     }
 
     public function removeBaseMargins(): static {
