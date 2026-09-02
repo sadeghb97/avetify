@@ -47,6 +47,10 @@ abstract class SortFactor implements Sorter {
         return $this;
     }
 
+    public function getDbSelectorExpression() : string {
+        return $this->factorKey;
+    }
+
     abstract public function getValue($item) : float | string;
 
     public static function baseCompare($aValue, $bValue, bool $isNumeric, bool $isDescending): int {

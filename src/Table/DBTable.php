@@ -15,11 +15,12 @@ abstract class DBTable extends AvtTable {
     public bool $pkIsNumeric = true;
     public bool $adjustDBMode = true;
 
-    public function __construct(DBConnection $conn, string $dbTableName,
-                                public string $primaryKey, string $key){
+    public function __construct(DBConnection  $conn, string $dbTableName,
+                                string $dbPrimaryKey, string $key){
 
         $this->conn = $conn;
         $this->dbTableName = $dbTableName;
+        $this->dbPrimaryKey = $dbPrimaryKey;
         parent::__construct($this->makeTableFields(), [], $key, true);
         $this->dbUpdateRecords();
     }
@@ -28,7 +29,7 @@ abstract class DBTable extends AvtTable {
         $id = parent::getItemId($record);
         if($id) return $id;
 
-        return EntityUtils::getSimpleValue($record, $this->primaryKey);
+        return EntityUtils::getSimpleValue($record, $this->dbPrimaryKey);
     }
 
     public function handleSubmittedFields($itemsFields) {
@@ -73,7 +74,7 @@ abstract class DBTable extends AvtTable {
                     $queryBuilder->addField(time(), true, "updated_at");
                 }
 
-                $sql = $queryBuilder->createUpdate(new QueryField($itemPk, $this->pkIsNumeric, $this->primaryKey));
+                $sql = $queryBuilder->createUpdate(new QueryField($itemPk, $this->pkIsNumeric, $this->dbPrimaryKey));
                 if($this->conn->query($sql)) {
                     $this->printDBUpdateStatus($titlePrinter, $oldRecord, $messagePrinter, "Updated");
                     $queryDone = true;
@@ -96,7 +97,7 @@ abstract class DBTable extends AvtTable {
 
             foreach ($deletingFields as $itemPk) {
                 $oldRecord = $this->currentRecords[$indexesMap[$itemPk]];
-                $sql = $queryBuilder->createDelete(new QueryField($itemPk, $this->pkIsNumeric, $this->primaryKey));
+                $sql = $queryBuilder->createDelete(new QueryField($itemPk, $this->pkIsNumeric, $this->dbPrimaryKey));
 
                 if($this->conn->query($sql)) {
                     if($oldRecord instanceof AvtEntityItem){

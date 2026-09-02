@@ -33,6 +33,7 @@ abstract class SetManager implements EntityManager {
     public string | null $className = null;
     public DBConnection | null $conn = null;
     public string $dbTableName = "";
+    public string $dbPrimaryKey = "";
     public bool $adjustDBMode = false;
 
     public function __construct(public string $setKey){
@@ -209,7 +210,8 @@ abstract class SetManager implements EntityManager {
         $limit = 0;
         $offset = 0;
         if($this->adjustDBMode && $this->paginationConfigs){
-            $this->paginationConfigs->recordsCount = $this->conn->fetchTableSize($dbs, "*", $filter);
+            $countDBSelector = $this->dbTableName . '.' .$this->dbPrimaryKey;
+            $this->paginationConfigs->recordsCount = $this->conn->fetchTableSize($dbs, $countDBSelector, $filter);
             $limit = $this->paginationConfigs->pageSize;
             $offset = $this->currentRecordsFirstRowIndex();
         }
@@ -273,7 +275,7 @@ abstract class SetManager implements EntityManager {
 
         if($sortFactor instanceof SortFactor){
             $dir = $sortFactor->isDescending() ? "DESC" : "ASC";
-            $factorKey = $sortFactor->factorKey;
+            $factorKey = $sortFactor->getDbSelectorExpression();
             $dbOrder = "$factorKey $dir";
 
             if(count($sortFactor->tieBreaks) > 0){
