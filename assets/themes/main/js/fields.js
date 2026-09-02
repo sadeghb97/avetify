@@ -70,6 +70,7 @@ function applyField(recordId, medalKey, newValue, apiEndpoint, callback){
 
 function addLongClickEvent(elementId, longClickCallback, normalClickCallback) {
     const element = document.getElementById(elementId);
+    if(!element) return;
     let pressTimer = null;
     let wasLongPress = false;
 
@@ -219,17 +220,42 @@ function updateSingleSelector(acField, selectorKey, cData, selectedRecord){
 
     const selectedImageSrc = selectedRecord ? selectedRecord['main_jsdl_avatar'] : ""
     const selectedId = selectedRecord ? selectedRecord['main_jsdl_id'] : ""
+    const selectedLink = selectedRecord ? (selectedRecord['main_jsdl_link'] || "") : ""
     const disableAutoSubmit = cData && 'disable_auto_submit' in cData && cData['disable_auto_submit']
 
     if(selectedId) {
-        imageBox.style.display = "block"
-        imageElement.src = selectedImageSrc
-        valueElement.value = selectedId
+        if(imageBox) imageBox.style.display = "block"
+        if(imageElement) {
+            imageElement.src = selectedImageSrc
+            imageElement.dataset.link = selectedLink
+        }
+        if(valueElement) valueElement.value = selectedId
     }
 
     if(acField) {
         acField.value = ""
         if (disableAutoSubmit) acField.blur()
+    }
+}
+
+function clearSingleSelector(selectorKey){
+    const valueElement = document.getElementById(selectorKey)
+    const imageBox = document.getElementById(selectorKey + "_avatar_box")
+    const imageElement = document.getElementById(selectorKey + "_avatar")
+
+    if(valueElement) valueElement.value = ""
+    if(imageBox) imageBox.style.display = "none"
+    if(imageElement) {
+        imageElement.src = ""
+        imageElement.dataset.link = ""
+    }
+}
+
+function handleSingleSelectorImageClick(selectorKey){
+    const imageElement = document.getElementById(selectorKey + "_avatar")
+    const link = imageElement ? (imageElement.dataset.link || "") : ""
+    if(link && link.trim() !== ""){
+        window.open(link, '_blank')
     }
 }
 

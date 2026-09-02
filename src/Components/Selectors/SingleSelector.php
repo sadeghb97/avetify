@@ -27,6 +27,7 @@ class SingleSelector implements Placeable, IdentifiedElement {
     public function place(?WebModifier $webModifier = null) {
         $record = ($this->initValue) ? $this->dlInfo->getRecordById($this->initValue) : null;
         $avatar = $record ? $this->dlInfo->getItemImage($record) : "";
+        $link = $record ? $this->dlInfo->getItemLink($record) : "";
 
         if($this->readOnly){
             $title = $record ? $this->dlInfo->getItemTitle($record) : "";
@@ -70,6 +71,8 @@ class SingleSelector implements Placeable, IdentifiedElement {
         HTMLInterface::addAttribute("id", $this->getImageId());
         HTMLInterface::addAttribute("src", $avatar);
         HTMLInterface::addAttribute("alt", "Avatar");
+        HTMLInterface::addAttribute("draggable", "false");
+        if($link) HTMLInterface::addAttribute("data-link", $link);
         Styler::startAttribute();
         Styler::closeAttribute();
         HTMLInterface::closeSingleTag();
@@ -87,6 +90,16 @@ class SingleSelector implements Placeable, IdentifiedElement {
 
         FormUtils::placeHiddenField($this->getElementIdentifier(), $this->initValue, !$this->useNameIdentifier);
         HTMLInterface::closeDiv();
+
+        ?>
+        <script>
+            addLongClickEvent(
+                '<?php echo $this->getImageId(); ?>',
+                () => { clearSingleSelector('<?php echo $this->key; ?>'); },
+                () => { handleSingleSelectorImageClick('<?php echo $this->key; ?>'); }
+            );
+        </script>
+        <?php
     }
 
     public function selectorMoreData() : array {

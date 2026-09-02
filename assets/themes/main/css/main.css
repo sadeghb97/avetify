@@ -172,6 +172,9 @@ a {
     object-fit: cover;
     border-right: 1px solid #ccc;
     border-radius: 0;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .visual-select-box__input-wrapper {
