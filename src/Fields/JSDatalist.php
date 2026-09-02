@@ -43,6 +43,7 @@ class JSDatalist extends JSDataElement {
             $plcRecord['main_jsdl_avatar'] = $this->getItemImage($record);
             $plcRecord['main_jsdl_name'] = StringUtils::transliterateToAscii($this->getItemTitle($record));
             $plcRecord['main_jsdl_id'] = $this->getItemId($record);
+            $plcRecord['main_jsdl_link'] = $this->getItemLink($record);
 
             $plcNamesMap[strtolower($plcRecord['main_jsdl_name'])] = count($plcRecords);
             $plcIdsMap[strtolower($plcRecord['main_jsdl_id'])] = count($plcRecords);

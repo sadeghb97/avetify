@@ -4,11 +4,15 @@ namespace Avetify\Fields;
 use Avetify\Entities\AvtEntityItem;
 use Avetify\Entities\BasicProperties\EntityID;
 use Avetify\Entities\BasicProperties\EntityImage;
+use Avetify\Entities\BasicProperties\EntityManager;
 use Avetify\Entities\BasicProperties\EntityTitle;
+use Avetify\Entities\BasicProperties\Traits\EntityManagerTrait;
 use Avetify\Entities\EntityUtils;
 use Avetify\Interface\Placeable;
 
-abstract class JSDataElement implements Placeable, EntityID, EntityTitle, EntityImage {
+abstract class JSDataElement implements Placeable, EntityManager {
+    use EntityManagerTrait;
+
     public array $namesMap = [];
     public array $idsMap = [];
 
@@ -34,20 +38,5 @@ abstract class JSDataElement implements Placeable, EntityID, EntityTitle, Entity
     public function getRecordById($id) : AvtEntityItem|array|null {
         if(isset($this->idsMap[$id])) return $this->records[$this->idsMap[$id]];
         return null;
-    }
-
-    public function getItemId($record) : string {
-        if($record instanceof AvtEntityItem) return $record->getItemId();
-        return EntityUtils::getSimpleValue($record, $this->primaryKey);
-    }
-
-    public function getItemTitle($record) : string {
-        if($record instanceof AvtEntityItem) return $record->getItemTitle();
-        return EntityUtils::getSimpleValue($record, $this->labelKey);
-    }
-
-    public function getItemImage($record) : string {
-        if($record instanceof AvtEntityItem) return $record->getItemImage();
-        return EntityUtils::getSimpleValue($record, $this->imageKey);
     }
 }
