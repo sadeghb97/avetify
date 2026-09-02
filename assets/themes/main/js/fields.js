@@ -141,6 +141,7 @@ function addRecordToSelector(acField, selectorKey, cData, selectedRecord){
     const recordId = selectedRecord['main_jsdl_id']
     const recordName = selectedRecord['main_jsdl_name']
     const recordImage = selectedRecord['main_jsdl_avatar']
+    const recordLink = selectedRecord['main_jsdl_link'] || ""
     const imagesDiv = document.getElementById(selectorKey + "_images")
     const valueElement = document.getElementById(selectorKey)
     const recordElementId = selectorKey + "_item_" + recordId
@@ -159,6 +160,7 @@ function addRecordToSelector(acField, selectorKey, cData, selectedRecord){
             recordElement.id = recordElementId
             recordElement.src = recordImage
             recordElement.title = recordName
+            recordElement.draggable = false
             recordElement.classList.add("selbox-img")
 
             if (tinyAvatars) {
@@ -170,6 +172,7 @@ function addRecordToSelector(acField, selectorKey, cData, selectedRecord){
             recordElement = document.createElement("div")
             recordElement.id = recordElementId
             recordElement.innerHTML = "#" + recordName
+            recordElement.title = recordName
             recordElement.classList.add("selbox-title")
 
             if (tinyAvatars) {
@@ -178,15 +181,41 @@ function addRecordToSelector(acField, selectorKey, cData, selectedRecord){
             }
         }
 
+        if (recordLink) {
+            recordElement.dataset.link = recordLink
+        }
+
+        imagesDiv.appendChild(recordElement)
+
         if(!isReadonly) {
-            recordElement.onclick = function () {
-                if (window[selectedSetVarName].has(recordId)) {
-                    removeSelectorItem(selectorKey, recordId)
+            addLongClickEvent(
+                recordElementId,
+                () => {
+                    if (window[selectedSetVarName].has(recordId)) {
+                        removeSelectorItem(selectorKey, recordId)
+                    } else {
+                        addRecordToSelector(acField, selectorKey, cData, selectedRecord)
+                    }
+                },
+                () => {
+                    if (window[selectedSetVarName].has(recordId)) {
+                        const link = recordElement.dataset.link || ""
+                        if (link && link.trim() !== "") {
+                            window.open(link, '_blank')
+                        }
+                    } else {
+                        addRecordToSelector(null, selectorKey, cData, selectedRecord)
+                    }
                 }
-                else addRecordToSelector(acField, selectorKey, cData, selectedRecord)
+            );
+        } else {
+            recordElement.onclick = function () {
+                const link = recordElement.dataset.link || ""
+                if (link && link.trim() !== "") {
+                    window.open(link, '_blank')
+                }
             };
         }
-        imagesDiv.appendChild(recordElement)
     }
     else {
         recordElement.style.opacity = "1"
@@ -220,6 +249,7 @@ function updateSingleSelector(acField, selectorKey, cData, selectedRecord){
 
     const selectedImageSrc = selectedRecord ? selectedRecord['main_jsdl_avatar'] : ""
     const selectedId = selectedRecord ? selectedRecord['main_jsdl_id'] : ""
+    const selectedName = selectedRecord ? selectedRecord['main_jsdl_name'] : ""
     const selectedLink = selectedRecord ? (selectedRecord['main_jsdl_link'] || "") : ""
     const disableAutoSubmit = cData && 'disable_auto_submit' in cData && cData['disable_auto_submit']
 
@@ -227,6 +257,7 @@ function updateSingleSelector(acField, selectorKey, cData, selectedRecord){
         if(imageBox) imageBox.style.display = "block"
         if(imageElement) {
             imageElement.src = selectedImageSrc
+            imageElement.title = selectedName
             imageElement.dataset.link = selectedLink
         }
         if(valueElement) valueElement.value = selectedId
@@ -247,6 +278,7 @@ function clearSingleSelector(selectorKey){
     if(imageBox) imageBox.style.display = "none"
     if(imageElement) {
         imageElement.src = ""
+        imageElement.title = ""
         imageElement.dataset.link = ""
     }
 }
@@ -256,6 +288,21 @@ function handleSingleSelectorImageClick(selectorKey){
     const link = imageElement ? (imageElement.dataset.link || "") : ""
     if(link && link.trim() !== ""){
         window.open(link, '_blank')
+    }
+}
+
+function loadSingleSelector(selectorKey, records, map, sData, recordId){
+    if(!recordId){
+        clearSingleSelector(selectorKey);
+        return;
+    }
+    const lowerId = String(recordId).toLowerCase();
+    if(map && lowerId in map){
+        const recordIndex = map[lowerId];
+        const record = records[recordIndex];
+        if(record){
+            updateSingleSelector(null, selectorKey, sData, record);
+        }
     }
 }
 

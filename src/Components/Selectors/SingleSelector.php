@@ -71,6 +71,7 @@ class SingleSelector implements Placeable, IdentifiedElement {
         HTMLInterface::addAttribute("id", $this->getImageId());
         HTMLInterface::addAttribute("src", $avatar);
         HTMLInterface::addAttribute("alt", "Avatar");
+        if($title) HTMLInterface::addAttribute("title", $title);
         HTMLInterface::addAttribute("draggable", "false");
         if($link) HTMLInterface::addAttribute("data-link", $link);
         Styler::startAttribute();
@@ -91,6 +92,7 @@ class SingleSelector implements Placeable, IdentifiedElement {
         FormUtils::placeHiddenField($this->getElementIdentifier(), $this->initValue, !$this->useNameIdentifier);
         HTMLInterface::closeDiv();
 
+        $initVarJS = "singleSelectorFieldValue_" . $this->key;
         ?>
         <script>
             addLongClickEvent(
@@ -98,8 +100,21 @@ class SingleSelector implements Placeable, IdentifiedElement {
                 () => { clearSingleSelector('<?php echo $this->key; ?>'); },
                 () => { handleSingleSelectorImageClick('<?php echo $this->key; ?>'); }
             );
+            {
+                const <?php echo $initVarJS; ?> = "<?php echo $this->initValue; ?>";
+                <?php echo $this->loadValueUsingJS($initVarJS); ?>
+            }
         </script>
         <?php
+    }
+
+    public function loadValueUsingJS(string $valueVarName): string {
+        $cmdJson = json_encode($this->selectorMoreData());
+        return "loadSingleSelector('" . $this->key . "', "
+            . $this->dlInfo->getRecordsListJSVarName() . ", "
+            . $this->dlInfo->getRecordsIdsMapJSVarName() . ', '
+            . $cmdJson . ', '
+            . $valueVarName . ');';
     }
 
     public function selectorMoreData() : array {

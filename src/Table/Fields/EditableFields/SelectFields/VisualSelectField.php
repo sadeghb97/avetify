@@ -9,6 +9,7 @@ use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\EditableFields\EditableField;
 
 class VisualSelectField extends EditableField {
+    public ?SingleSelector $selector = null;
     public int $maxSelectorWidth = 0;
     public bool $disableAutoSubmit = true;
 
@@ -20,17 +21,23 @@ class VisualSelectField extends EditableField {
         NiceDiv::justOpen($webModifier);
         $value = $this->getValue($item);
 
-        $selector = new SingleSelector($this->title,
+        $this->selector = new SingleSelector($this->title,
             $this->getElementIdentifier($item), $value, $this->datalist);
-        $selector->readOnly = $this->isReadonly;
-        $selector->useNameIdentifier = $this->useNameIdentifier;
+        $this->selector->readOnly = $this->isReadonly;
+        $this->selector->useNameIdentifier = $this->useNameIdentifier;
         $selectorModifier = WebModifier::createInstance();
         if($this->maxSelectorWidth > 0){
             $selectorModifier->styler->pushStyle("max-width", $this->maxSelectorWidth . "px");
         }
-        $selector->disableAutoSubmit = $this->disableAutoSubmit;
-        $selector->place($selectorModifier);
+        $this->selector->disableAutoSubmit = $this->disableAutoSubmit;
+        $this->selector->place($selectorModifier);
         HTMLInterface::closeDiv();
+    }
+
+    public function loadValueUsingJSStorage(string $key): void {
+        if($this->selector) {
+            $this->selector->loadValueUsingJSStorage($key);
+        }
     }
 
     public function setMaxSelectorWidth(int $width) : static {
