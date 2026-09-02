@@ -33,8 +33,8 @@ class URLBuilder {
         return $this;
     }
 
-    public function getClone() : URLBuilder {
-        $urlBuilder = new URLBuilder($this->baseUrl);
+    public function getClone() : static {
+        $urlBuilder = new static($this->baseUrl);
         $urlBuilder->params = array_merge([], $this->params);
         return $urlBuilder;
     }

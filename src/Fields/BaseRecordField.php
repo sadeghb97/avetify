@@ -121,6 +121,11 @@ class BaseRecordField implements IdentifiedElement {
         return $this;
     }
 
+    public function enableLabel() : static {
+        $this->isLabelEnabled = true;
+        return $this;
+    }
+
     public function removeBaseMargins(): static {
         $this->baseModifier->popStyle("margin-bottom");
         $this->baseModifier->popStyle("margin-top");
