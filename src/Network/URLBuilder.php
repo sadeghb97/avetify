@@ -6,14 +6,14 @@ use Avetify\Routing\Routing;
 class URLBuilder {
     public array $params = [];
 
-    public static function fromCurrent() : URLBuilder {
-        $urlBuilder = new URLBuilder(Routing::currentPureLink());
+    public static function fromCurrent() : static {
+        $urlBuilder = new static(Routing::currentPureLink());
         $urlBuilder->params = array_merge([], $_GET);
         return $urlBuilder;
     }
 
-    public static function fromUrl(string $url) : URLBuilder {
-        $urlBuilder = new URLBuilder(Routing::getUrlPureLink($url));
+    public static function fromUrl(string $url) : static {
+        $urlBuilder = new static(Routing::getUrlPureLink($url));
         $urlParams = Routing::getUrlQuery($url);
         parse_str($urlParams, $queryParams);
         $urlBuilder->params = $queryParams;
