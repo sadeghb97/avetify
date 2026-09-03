@@ -11,8 +11,8 @@ class DBFilterCollection implements DBFilterInterface {
     public function __construct(public int $filterMode = self::AND_MODE){}
 
     /** @param DBFilterInterface[] $initFilters */
-    public static function create(array $initFilters, int $initFilterMode = self::AND_MODE) : DBFilterCollection {
-        $newFilterCollection = new DBFilterCollection($initFilterMode);
+    public static function create(array $initFilters, int $initFilterMode = self::AND_MODE) : static {
+        $newFilterCollection = new static($initFilterMode);
         $newFilterCollection->filters = $initFilters;
         return $newFilterCollection;
     }

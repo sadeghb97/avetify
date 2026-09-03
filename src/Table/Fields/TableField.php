@@ -196,14 +196,14 @@ class TableField extends BaseRecordField implements Qualifier {
         return true;
     }
 
-    public function setEditableOnCreate(bool $required, EditableField $editableField) : TableField {
+    public function setEditableOnCreate(bool $required, EditableField $editableField) : static {
         $this->onCreateField = $editableField;
         $this->onCreateField->requiredOnCreate = $required;
         $this->onCreateField->useNameIdentifier = true;
         return $this;
     }
 
-    public function autoEditableOnCreate(bool $required = false) : TableField {
+    public function autoEditableOnCreate(bool $required = false) : static {
 
         if($this instanceof EditableField) $this->onCreateField = clone $this;
         else $this->onCreateField = new EditableField($this->title, $this->key);

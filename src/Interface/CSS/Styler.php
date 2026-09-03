@@ -99,7 +99,7 @@ class Styler {
         self::addStyle("width", $size);
     }
 
-    public function merge(Styler | null $secondStyler) : Styler {
+    public function merge(Styler | null $secondStyler) : static {
         $outModifier = clone $this;
         if($secondStyler) {
             foreach ($secondStyler->styles as $secPropertyKey => $secPropertyValue) {

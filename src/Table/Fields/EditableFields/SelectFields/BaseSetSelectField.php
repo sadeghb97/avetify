@@ -4,7 +4,6 @@ namespace Avetify\Table\Fields\EditableFields\SelectFields;
 use Avetify\DB\Filters\DBFilterCollection;
 use Avetify\DB\Filters\DBFilterInterface;
 use Avetify\DB\Filters\RawSetFilter;
-use Avetify\Interface\Pout;
 use Avetify\Table\Fields\EditableFields\EditableField;
 
 class BaseSetSelectField extends EditableField {

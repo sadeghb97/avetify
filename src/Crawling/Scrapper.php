@@ -91,9 +91,9 @@ class Scrapper
      *
      * @return Scrapper
      */
-    public function pushClone(): Scrapper
+    public function pushClone(): static
     {
-        return new Scrapper($this->scrapped);
+        return new static($this->scrapped);
     }
 
     /**
@@ -153,7 +153,7 @@ class Scrapper
      * @param string $filterAttrValue Substring value to match inside the attribute.
      * @return Scrapper|null
      */
-    public function pursueSingleElement(string $elementName, string $filterAttrName, string $filterAttrValue): ?Scrapper
+    public function pursueSingleElement(string $elementName, string $filterAttrName, string $filterAttrValue): ?static
     {
         $start = "<$elementName";
         $end = ">";
@@ -166,7 +166,7 @@ class Scrapper
             }
             $curs = $this->altCursor;
 
-            $innerScrapper = new Scrapper($sResult);
+            $innerScrapper = new static($sResult);
             $innerScrapper->find($filterAttrName . '="', '"');
             if (!$innerScrapper->found) {
                 continue;
@@ -175,7 +175,7 @@ class Scrapper
             $wholeAttrValue = $innerScrapper->trs();
             if (str_contains($wholeAttrValue, $filterAttrValue)) {
                 $this->cursor = $curs;
-                return new Scrapper($sResult);
+                return new static($sResult);
             }
         }
     }
@@ -395,14 +395,14 @@ class Scrapper
      *
      * @return Scrapper
      */
-    public function innerClone(): Scrapper
+    public function innerClone(): static
     {
         $rem = $this->remains();
         $firstClosePos = strpos($rem, '>');
         $lastOpenPos = strrpos($rem, '<');
 
         if ($firstClosePos !== false && $lastOpenPos !== false && $lastOpenPos > $firstClosePos) {
-            return new Scrapper(substr($rem, $firstClosePos + 1, $lastOpenPos - $firstClosePos - 1));
+            return new static(substr($rem, $firstClosePos + 1, $lastOpenPos - $firstClosePos - 1));
         }
 
         return $this;

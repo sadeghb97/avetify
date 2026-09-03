@@ -10,8 +10,8 @@ class WebModifier {
                                 public Styler | null $styler = null){
     }
 
-    #[Pure] public static function createInstance() : WebModifier {
-        return new WebModifier(new HTMLModifier(), new Styler());
+    #[Pure] public static function createInstance() : static {
+        return new static(new HTMLModifier(), new Styler());
     }
 
     public function __clone() {
@@ -76,7 +76,7 @@ class WebModifier {
         return $this->htmlModifier->existModifier($modifierKey);
     }
 
-    public function merge(WebModifier | null $secondModifier) : WebModifier {
+    public function merge(WebModifier | null $secondModifier) : static {
         $outModifier = clone $this;
         if(!$outModifier->htmlModifier) $outModifier->htmlModifier = new HTMLModifier();
         if(!$outModifier->styler) $outModifier->styler = new Styler();
@@ -93,8 +93,8 @@ class WebModifier {
         return $outModifier;
     }
 
-    public static function mergeModifiers(WebModifier | null $firstModifier, WebModifier | null $secondModifier) : WebModifier {
-        $outModifier = $firstModifier ? clone $firstModifier : WebModifier::createInstance();
+    public static function mergeModifiers(WebModifier | null $firstModifier, WebModifier | null $secondModifier) : static {
+        $outModifier = $firstModifier ? clone $firstModifier : static::createInstance();
         return $outModifier->merge($secondModifier);
     }
 

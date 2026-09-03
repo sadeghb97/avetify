@@ -27,7 +27,7 @@ class HTMLModifier {
         }
     }
 
-    public function merge(HTMLModifier | null $secondModifier) : HTMLModifier {
+    public function merge(HTMLModifier | null $secondModifier) : static {
         $outModifier = clone $this;
         if($secondModifier) {
             foreach ($secondModifier->modifiers as $secAttrKey => $secAttrValue) {

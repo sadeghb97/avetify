@@ -2,12 +2,8 @@
 namespace Avetify\Fields;
 
 use Avetify\Entities\AvtEntityItem;
-use Avetify\Entities\BasicProperties\EntityID;
-use Avetify\Entities\BasicProperties\EntityImage;
 use Avetify\Entities\BasicProperties\EntityManager;
-use Avetify\Entities\BasicProperties\EntityTitle;
 use Avetify\Entities\BasicProperties\Traits\EntityManagerTrait;
-use Avetify\Entities\EntityUtils;
 use Avetify\Interface\Placeable;
 
 abstract class JSDataElement implements Placeable, EntityManager {
