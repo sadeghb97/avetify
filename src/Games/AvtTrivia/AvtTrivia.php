@@ -4,7 +4,8 @@ namespace Avetify\Games\AvtTrivia;
 use Avetify\Entities\AvtEntityItem;
 
 class AvtTrivia {
-    /** @var AvtEntityItem[] */
+    private AvtTriviaDatalist $datalist;
+    /** @var AvtTriviaItem[]|AvtEntityItem[] */
     private array $items = [];
     private AvtTriviaConfig $config;
     /** @var callable|null */
@@ -17,11 +18,12 @@ class AvtTrivia {
     private bool $submittedSuccess = false;
 
     /**
-     * @param AvtEntityItem[] $items
+     * @param AvtTriviaDatalist $datalist
      * @param array|AvtTriviaConfig $config
      */
-    public function __construct(array $items, array|AvtTriviaConfig $config = []) {
-        $this->items = array_values($items);
+    public function __construct(AvtTriviaDatalist $datalist, array|AvtTriviaConfig $config = []) {
+        $this->datalist = $datalist;
+        $this->items = array_values($datalist->records);
         
         if ($config instanceof AvtTriviaConfig) {
             $this->config = $config;
@@ -41,6 +43,22 @@ class AvtTrivia {
         $this->instanceId = 'avt_trivia_' . self::$instanceCounter;
 
         $this->handlePostRequest();
+    }
+
+    public function getDatalist(): AvtTriviaDatalist {
+        return $this->datalist;
+    }
+
+    public function getDatalistKey(): string {
+        return $this->datalist->key;
+    }
+
+    public function getMaxDifficulty(): int {
+        return 3;
+    }
+
+    public function getDefaultDifficulty(): int {
+        return 2;
     }
 
     public function onFinished(callable $callback): self {
@@ -68,6 +86,17 @@ class AvtTrivia {
                 'final_correct' => 'پاسخ درست',
                 'final_skips' => 'رد شده',
                 'play_again' => 'بازی مجدد',
+                'change_difficulty' => 'تغییر سطح سختی',
+                'select_difficulty' => 'انتخاب سطح سختی بازی',
+                'difficulty_desc' => 'سطح چالش مورد نظر خود را انتخاب کرده و بازی را آغاز کنید:',
+                'start_game' => 'شروع بازی 🚀',
+                'difficulty_1' => 'آسان',
+                'difficulty_1_sub' => 'سطح ۱ (پایه)',
+                'difficulty_2' => 'متوسط',
+                'difficulty_2_sub' => 'سطح ۲ (استاندارد)',
+                'difficulty_3' => 'سخت',
+                'difficulty_3_sub' => 'سطح ۳ (پیشرفته)',
+                'difficulty_label' => 'سطح سختی:',
                 'submit_result' => 'ثبت نتیجه',
                 'modal_title' => '🏆 ثبت رکورد نهایی',
                 'modal_desc' => 'جهت درج نام شما در لیست برترین‌ها، لطفا نام خود را وارد نمایید.',
@@ -95,6 +124,17 @@ class AvtTrivia {
             'final_correct' => 'Correct',
             'final_skips' => 'Skips',
             'play_again' => 'Play Again',
+            'change_difficulty' => 'Change Difficulty',
+            'select_difficulty' => 'Select Game Difficulty',
+            'difficulty_desc' => 'Choose your desired challenge level and start the game:',
+            'start_game' => 'Start Game 🚀',
+            'difficulty_1' => 'Easy',
+            'difficulty_1_sub' => 'Level 1 (Basic)',
+            'difficulty_2' => 'Medium',
+            'difficulty_2_sub' => 'Level 2 (Standard)',
+            'difficulty_3' => 'Hard',
+            'difficulty_3_sub' => 'Level 3 (Expert)',
+            'difficulty_label' => 'Difficulty:',
             'submit_result' => 'Submit Score',
             'modal_title' => '🏆 Register High Score',
             'modal_desc' => 'Enter your name to register your score on the leaderboard.',
@@ -119,6 +159,7 @@ class AvtTrivia {
                 $correct = (int)($_POST['correct'] ?? 0);
                 $skips = (int)($_POST['skips'] ?? 0);
                 $duration = (int)($_POST['duration'] ?? $this->config->duration);
+                $difficulty = (int)($_POST['difficulty'] ?? $this->getDefaultDifficulty());
 
                 // Generate secure random token
                 $token = 'trv_' . bin2hex(random_bytes(16));
@@ -128,6 +169,9 @@ class AvtTrivia {
                     'correct' => $correct,
                     'skips' => $skips,
                     'duration' => $duration,
+                    'difficulty' => $difficulty,
+                    'key' => $this->datalist->key,
+                    'datalist_key' => $this->datalist->key,
                     'finished_at' => date('Y-m-d H:i:s'),
                 ];
 
@@ -145,6 +189,9 @@ class AvtTrivia {
                     'success' => true,
                     'token' => $token,
                     'score' => $score,
+                    'difficulty' => $difficulty,
+                    'key' => $this->datalist->key,
+                    'datalist_key' => $this->datalist->key,
                 ]);
                 exit;
             }
@@ -159,7 +206,7 @@ class AvtTrivia {
 
                 // Execute programmer onRegister callback (associates token with username)
                 if (is_callable($this->onRegisterCallback)) {
-                    $customMsg = call_user_func($this->onRegisterCallback, $token, $username);
+                    $customMsg = call_user_func($this->onRegisterCallback, $token, $username, $this->datalist->key);
                     if (is_string($customMsg) && !empty($customMsg)) {
                         $message = $customMsg;
                     }
@@ -175,6 +222,8 @@ class AvtTrivia {
                         'message' => $message,
                         'token' => $token,
                         'username' => $username,
+                        'key' => $this->datalist->key,
+                        'datalist_key' => $this->datalist->key,
                     ]);
                     exit;
                 }
@@ -189,49 +238,24 @@ class AvtTrivia {
 
     protected function prepareItemData(): array {
         $extracted = [];
-        $lang = $this->config->lang;
+        $isFa = $this->config->lang === 'fa';
 
         foreach ($this->items as $item) {
-            if (!$item instanceof AvtEntityItem && !is_object($item)) {
+            if (!$item instanceof AvtEntityItem) {
                 continue;
             }
 
-            $id = '';
-            if (method_exists($item, 'getItemId')) {
-                $id = $item->getItemId();
-            } elseif (isset($item->id)) {
-                $id = $item->id;
-            } elseif (isset($item->alpha2)) {
-                $id = $item->alpha2;
-            }
-
-            $name = '';
-            if ($lang === 'fa' && !empty($item->per_name)) {
-                $name = $item->per_name;
-            } elseif (method_exists($item, 'getItemTitle')) {
-                $name = $item->getItemTitle();
-            } elseif (isset($item->name)) {
-                $name = $item->name;
-            } elseif (isset($item->short_name)) {
-                $name = $item->short_name;
-            } elseif (!empty($item->per_name)) {
-                $name = $item->per_name;
-            }
-
-            $image = '';
-            if (method_exists($item, 'getItemImage')) {
-                $image = $item->getItemImage();
-            } elseif (isset($item->image)) {
-                $image = $item->image;
-            } elseif (isset($item->flag)) {
-                $image = $item->flag;
-            }
+            $id = $item->getItemId();
+            $name = $isFa ? $item->getItemFaTitle() : $item->getItemTitle();
+            $image = $item->getItemImage();
+            $difficulty = method_exists($item, 'getDifficulty') ? (int)$item->getDifficulty() : 1;
 
             if (!empty($id) && !empty($name) && !empty($image)) {
                 $extracted[] = [
                     'id' => (string) $id,
                     'name' => (string) $name,
                     'image' => (string) $image,
+                    'difficulty' => $difficulty > 0 ? $difficulty : 1,
                 ];
             }
         }
@@ -340,6 +364,113 @@ class AvtTrivia {
 
             .avt-score-value {
                 color: #facc15;
+            }
+
+            /* Start Screen */
+            #<?php echo $id; ?>-startscreen {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 24px 12px 16px 12px;
+                animation: avt-fade-in 0.4s ease;
+            }
+
+            .avt-start-title {
+                font-size: 1.45rem;
+                font-weight: 800;
+                margin-bottom: 8px;
+                background: linear-gradient(90deg, #60a5fa, #a855f7);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            .avt-start-desc {
+                font-size: 0.92rem;
+                color: #94a3b8;
+                margin-bottom: 22px;
+                max-width: 440px;
+                line-height: 1.5;
+            }
+
+            .avt-difficulty-group {
+                display: flex;
+                gap: 12px;
+                width: 100%;
+                max-width: 460px;
+                margin-bottom: 24px;
+            }
+
+            .avt-difficulty-card {
+                flex: 1;
+                background: rgba(255, 255, 255, 0.05);
+                border: 2px solid rgba(255, 255, 255, 0.12);
+                border-radius: 16px;
+                padding: 14px 10px;
+                cursor: pointer;
+                transition: all 0.25s ease;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 6px;
+                user-select: none;
+            }
+
+            .avt-difficulty-card:hover {
+                background: rgba(99, 102, 241, 0.15);
+                border-color: rgba(99, 102, 241, 0.5);
+                transform: translateY(-2px);
+            }
+
+            .avt-difficulty-card.active {
+                background: linear-gradient(145deg, rgba(99, 102, 241, 0.35), rgba(168, 85, 247, 0.35));
+                border-color: #818cf8;
+                box-shadow: 0 0 20px rgba(99, 102, 241, 0.45);
+                transform: translateY(-2px);
+            }
+
+            .avt-difficulty-card .avt-diff-icon {
+                font-size: 1.5rem;
+            }
+
+            .avt-difficulty-card .avt-diff-name {
+                font-size: 0.95rem;
+                font-weight: 700;
+                color: #f8fafc;
+            }
+
+            .avt-difficulty-card .avt-diff-sub {
+                font-size: 0.72rem;
+                color: #94a3b8;
+            }
+
+            .avt-btn-start {
+                width: 100%;
+                max-width: 320px;
+                background: linear-gradient(135deg, #10b981, #059669);
+                border: none;
+                border-radius: 16px;
+                padding: 14px 28px;
+                color: #ffffff;
+                font-size: 1.1rem;
+                font-weight: 800;
+                cursor: pointer;
+                transition: all 0.25s ease;
+                box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .avt-btn-start:hover {
+                background: linear-gradient(135deg, #059669, #047857);
+                box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6);
+                transform: translateY(-2px);
+            }
+
+            .avt-btn-start:active {
+                transform: translateY(0);
             }
 
             /* Image Container - Smart Dynamic Height */
@@ -472,7 +603,7 @@ class AvtTrivia {
 
             /* Game Over Container */
             #<?php echo $id; ?>-gameover {
-                display: none;
+                display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
@@ -502,7 +633,7 @@ class AvtTrivia {
                 padding: 16px 20px;
                 margin: 16px 0 24px 0;
                 width: 100%;
-                max-width: 400px;
+                max-width: 440px;
                 display: flex;
                 justify-content: space-around;
                 gap: 8px;
@@ -527,19 +658,21 @@ class AvtTrivia {
 
             .avt-action-btns {
                 display: flex;
-                gap: 12px;
+                flex-wrap: wrap;
+                gap: 10px;
                 width: 100%;
-                max-width: 400px;
+                max-width: 460px;
             }
 
             .avt-btn-primary {
                 flex: 1;
+                min-width: 130px;
                 background: linear-gradient(135deg, #6366f1, #4f46e5);
                 color: #ffffff;
                 border: none;
                 border-radius: 14px;
-                padding: 14px 20px;
-                font-size: 1rem;
+                padding: 13px 18px;
+                font-size: 0.95rem;
                 font-weight: 700;
                 cursor: pointer;
                 transition: all 0.2s;
@@ -555,14 +688,38 @@ class AvtTrivia {
                 box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
             }
 
+            .avt-btn-neutral {
+                flex: 1;
+                min-width: 130px;
+                background: rgba(255, 255, 255, 0.08);
+                color: #ffffff;
+                border: 1px solid rgba(255, 255, 255, 0.18);
+                border-radius: 14px;
+                padding: 13px 18px;
+                font-size: 0.95rem;
+                font-weight: 700;
+                cursor: pointer;
+                transition: all 0.2s;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+            }
+
+            .avt-btn-neutral:hover {
+                background: rgba(255, 255, 255, 0.16);
+                border-color: rgba(255, 255, 255, 0.3);
+            }
+
             .avt-btn-secondary {
                 flex: 1;
+                min-width: 130px;
                 background: linear-gradient(135deg, #10b981, #059669);
                 color: #ffffff;
                 border: none;
                 border-radius: 14px;
-                padding: 14px 20px;
-                font-size: 1rem;
+                padding: 13px 18px;
+                font-size: 0.95rem;
                 font-weight: 700;
                 cursor: pointer;
                 transition: all 0.2s;
@@ -721,6 +878,15 @@ class AvtTrivia {
                 .avt-stat-value {
                     font-size: 1.05rem;
                 }
+                .avt-difficulty-group {
+                    flex-direction: column;
+                    gap: 8px;
+                }
+                .avt-difficulty-card {
+                    flex-direction: row;
+                    justify-content: space-between;
+                    padding: 10px 14px;
+                }
                 #<?php echo $id; ?>-img-container {
                     height: clamp(210px, 33vh, 280px);
                     margin-bottom: 14px;
@@ -764,10 +930,10 @@ class AvtTrivia {
                 <div class="avt-title-badge">
                     <span>🎮</span> <?php echo htmlspecialchars($config->title, ENT_QUOTES, 'UTF-8'); ?>
                 </div>
-                <div class="avt-stats-bar">
+                <div class="avt-stats-bar" id="<?php echo $id; ?>-stats-bar">
                     <div class="avt-stat-box">
                         <span class="avt-stat-label"><?php echo $t['time_remaining']; ?></span>
-                        <span class="avt-stat-value avt-timer-value" id="<?php echo $id; ?>-timer">120.0</span>
+                        <span class="avt-stat-value avt-timer-value" id="<?php echo $id; ?>-timer"><?php echo number_format($config->duration, 1); ?></span>
                     </div>
                     <div class="avt-stat-box">
                         <span class="avt-stat-label"><?php echo $t['score']; ?></span>
@@ -776,8 +942,36 @@ class AvtTrivia {
                 </div>
             </div>
 
-            <!-- Main Play Area -->
-            <div id="<?php echo $id; ?>-playarea">
+            <!-- Difficulty Selection / Start Screen -->
+            <div id="<?php echo $id; ?>-startscreen">
+                <div class="avt-start-title"><?php echo $t['select_difficulty']; ?></div>
+                <div class="avt-start-desc"><?php echo $t['difficulty_desc']; ?></div>
+
+                <div class="avt-difficulty-group" id="<?php echo $id; ?>-diff-group">
+                    <div class="avt-difficulty-card <?php echo $this->getDefaultDifficulty() === 1 ? 'active' : ''; ?>" data-level="1">
+                        <span class="avt-diff-icon">🟢</span>
+                        <span class="avt-diff-name"><?php echo $t['difficulty_1']; ?></span>
+                        <span class="avt-diff-sub"><?php echo $t['difficulty_1_sub']; ?></span>
+                    </div>
+                    <div class="avt-difficulty-card <?php echo $this->getDefaultDifficulty() === 2 ? 'active' : ''; ?>" data-level="2">
+                        <span class="avt-diff-icon">🟡</span>
+                        <span class="avt-diff-name"><?php echo $t['difficulty_2']; ?></span>
+                        <span class="avt-diff-sub"><?php echo $t['difficulty_2_sub']; ?></span>
+                    </div>
+                    <div class="avt-difficulty-card <?php echo $this->getDefaultDifficulty() === 3 ? 'active' : ''; ?>" data-level="3">
+                        <span class="avt-diff-icon">🔴</span>
+                        <span class="avt-diff-name"><?php echo $t['difficulty_3']; ?></span>
+                        <span class="avt-diff-sub"><?php echo $t['difficulty_3_sub']; ?></span>
+                    </div>
+                </div>
+
+                <button type="button" class="avt-btn-start" id="<?php echo $id; ?>-start-btn">
+                    <span><?php echo $t['start_game']; ?></span>
+                </button>
+            </div>
+
+            <!-- Main Play Area (Hidden until started) -->
+            <div id="<?php echo $id; ?>-playarea" style="display: none;">
                 <div id="<?php echo $id; ?>-img-container">
                     <img id="<?php echo $id; ?>-img" src="" alt="<?php echo htmlspecialchars($t['question_alt'], ENT_QUOTES, 'UTF-8'); ?>">
                 </div>
@@ -796,8 +990,8 @@ class AvtTrivia {
                 </div>
             </div>
 
-            <!-- Game Over View -->
-            <div id="<?php echo $id; ?>-gameover">
+            <!-- Game Over View (Hidden initially) -->
+            <div id="<?php echo $id; ?>-gameover" style="display: none;">
                 <div class="avt-gameover-title"><?php echo $t['gameover_title']; ?></div>
                 <p style="color:#cbd5e1; margin: 0 0 12px 0; font-size:0.92rem;"><?php echo $t['gameover_desc']; ?></p>
 
@@ -819,6 +1013,9 @@ class AvtTrivia {
                 <div class="avt-action-btns">
                     <button type="button" class="avt-btn-primary" id="<?php echo $id; ?>-retry-btn">
                         <span><?php echo $t['play_again']; ?></span> 🔄
+                    </button>
+                    <button type="button" class="avt-btn-neutral" id="<?php echo $id; ?>-change-diff-btn">
+                        <span><?php echo $t['change_difficulty']; ?></span> ⚙️
                     </button>
                     <button type="button" class="avt-btn-secondary" id="<?php echo $id; ?>-submit-modal-btn">
                         <span><?php echo $t['submit_result']; ?></span> 🏆
@@ -845,7 +1042,7 @@ class AvtTrivia {
                     </div>
 
                     <div style="background: rgba(255,255,255,0.05); padding: 10px 14px; border-radius: 10px; margin-bottom: 20px; font-size: 0.9rem; color: #facc15;">
-                        <?php echo $t['score_to_register']; ?> <strong id="<?php echo $id; ?>-modal-score-disp">0</strong> | <?php echo $t['duration_label']; ?> <?php echo $config->duration; ?> <?php echo $t['seconds']; ?>
+                        <?php echo $t['score_to_register']; ?> <strong id="<?php echo $id; ?>-modal-score-disp">0</strong> | <?php echo $t['difficulty_label']; ?> <strong id="<?php echo $id; ?>-modal-diff-disp"><?php echo $this->getDefaultDifficulty(); ?></strong> | <?php echo $t['duration_label']; ?> <?php echo $config->duration; ?> <?php echo $t['seconds']; ?>
                     </div>
 
                     <div style="display: flex; justify-content: flex-end; gap: 10px;">
@@ -870,6 +1067,8 @@ class AvtTrivia {
 
             const instanceId = '<?php echo $id; ?>';
             const postUrl = '<?php echo $postUrl; ?>';
+            const defaultDifficulty = <?php echo (int)$this->getDefaultDifficulty(); ?>;
+            const maxDifficulty = <?php echo (int)$this->getMaxDifficulty(); ?>;
             
             // DOM Elements
             const elTimer = document.getElementById(instanceId + '-timer');
@@ -878,6 +1077,10 @@ class AvtTrivia {
             const elOptions = document.getElementById(instanceId + '-options');
             const elSkipBtn = document.getElementById(instanceId + '-skip-btn');
             
+            const elStartScreen = document.getElementById(instanceId + '-startscreen');
+            const elStartBtn = document.getElementById(instanceId + '-start-btn');
+            const elDiffCards = document.querySelectorAll('#' + instanceId + '-diff-group .avt-difficulty-card');
+            
             const elPlayArea = document.getElementById(instanceId + '-playarea');
             const elGameOver = document.getElementById(instanceId + '-gameover');
             const elFinalScore = document.getElementById(instanceId + '-final-score');
@@ -885,6 +1088,7 @@ class AvtTrivia {
             const elFinalSkips = document.getElementById(instanceId + '-final-skips');
             
             const elRetryBtn = document.getElementById(instanceId + '-retry-btn');
+            const elChangeDiffBtn = document.getElementById(instanceId + '-change-diff-btn');
             const elSubmitModalBtn = document.getElementById(instanceId + '-submit-modal-btn');
             const elModalOverlay = document.getElementById(instanceId + '-modal-overlay');
             const elModalCloseBtn = document.getElementById(instanceId + '-modal-close-btn');
@@ -892,8 +1096,10 @@ class AvtTrivia {
             const elModalForm = document.getElementById(instanceId + '-modal-form');
             const elModalTokenInput = document.getElementById(instanceId + '-modal-token-input');
             const elModalScoreDisp = document.getElementById(instanceId + '-modal-score-disp');
+            const elModalDiffDisp = document.getElementById(instanceId + '-modal-diff-disp');
 
             // Game State & Anti-Cheat Session
+            let selectedDifficulty = defaultDifficulty;
             let timeLeft = config.duration;
             let score = 0;
             let correctCount = 0;
@@ -947,21 +1153,24 @@ class AvtTrivia {
             function nextQuestion() {
                 if (isGameOver || rawItems.length === 0) return;
 
-                // Ensure NO item is shown as correct answer twice
-                const availableItems = rawItems.filter(item => !usedItemIds.has(item.id));
+                // Ensure NO item is shown as correct answer twice, and filter main question item by difficulty <= selectedDifficulty
+                const availableItems = rawItems.filter(item => {
+                    const itemDiff = typeof item.difficulty === 'number' ? item.difficulty : 1;
+                    return !usedItemIds.has(item.id) && itemDiff <= selectedDifficulty;
+                });
 
-                // If all records in dataset have been used, end the game!
+                // If all records matching difficulty in dataset have been used, end the game!
                 if (availableItems.length === 0) {
                     endGame();
                     return;
                 }
 
-                // Pick 1 correct item randomly from remaining unused items
+                // Pick 1 correct item randomly from remaining eligible unused items
                 const correctIdx = Math.floor(Math.random() * availableItems.length);
                 currentItem = availableItems[correctIdx];
                 usedItemIds.add(currentItem.id);
 
-                // Pick distractors (different items from rawItems)
+                // Pick distractors (all items can be used for wrong options pool)
                 const distractors = [];
                 const pool = rawItems.filter(item => item.id !== currentItem.id);
                 const shuffledPool = shuffle(pool);
@@ -1066,6 +1275,7 @@ class AvtTrivia {
                 formData.append('correct', correctCount);
                 formData.append('skips', skipsCount);
                 formData.append('duration', config.duration);
+                formData.append('difficulty', selectedDifficulty);
 
                 fetch(postUrl, {
                     method: 'POST',
@@ -1087,7 +1297,7 @@ class AvtTrivia {
                 });
             }
 
-            function resetGame() {
+            function startGame() {
                 isGameOver = false;
                 timeLeft = config.duration;
                 score = 0;
@@ -1097,6 +1307,7 @@ class AvtTrivia {
                 secureToken = '';
                 elModalTokenInput.value = '';
 
+                elStartScreen.style.display = 'none';
                 elGameOver.style.display = 'none';
                 elPlayArea.style.display = 'block';
 
@@ -1105,9 +1316,24 @@ class AvtTrivia {
                 startTimer();
             }
 
+            function showStartScreen() {
+                clearInterval(timerInterval);
+                isGameOver = true;
+                elPlayArea.style.display = 'none';
+                elGameOver.style.display = 'none';
+                elStartScreen.style.display = 'flex';
+
+                timeLeft = config.duration;
+                score = 0;
+                updateUI();
+            }
+
             // Modal Handlers
             function openModal() {
                 elModalScoreDisp.textContent = score;
+                if (elModalDiffDisp) {
+                    elModalDiffDisp.textContent = selectedDifficulty;
+                }
                 elModalOverlay.style.display = 'flex';
                 document.getElementById(instanceId + '-username').focus();
             }
@@ -1116,9 +1342,20 @@ class AvtTrivia {
                 elModalOverlay.style.display = 'none';
             }
 
+            // Difficulty Cards Selection
+            elDiffCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    elDiffCards.forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                    selectedDifficulty = parseInt(card.dataset.level, 10) || defaultDifficulty;
+                });
+            });
+
             // Event Listeners
+            elStartBtn.addEventListener('click', startGame);
             elSkipBtn.addEventListener('click', handleSkip);
-            elRetryBtn.addEventListener('click', resetGame);
+            elRetryBtn.addEventListener('click', startGame);
+            elChangeDiffBtn.addEventListener('click', showStartScreen);
             elSubmitModalBtn.addEventListener('click', openModal);
             elModalCloseBtn.addEventListener('click', closeModal);
             elModalCancelBtn.addEventListener('click', closeModal);
@@ -1126,9 +1363,6 @@ class AvtTrivia {
             elModalOverlay.addEventListener('click', function(e) {
                 if (e.target === elModalOverlay) closeModal();
             });
-
-            // Initialize Game
-            resetGame();
         })();
         </script>
         <?php

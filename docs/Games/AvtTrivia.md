@@ -7,29 +7,48 @@
 ## 🌟 Key Features
 
 - **Single Method Invocation**: Instantiate `AvtTrivia` and call `$trivia->render()`. All HTML, CSS, and JS are rendered self-contained.
+- **Difficulty Selection System**: Interactive initial screen with 3 challenge levels (Easy, Medium, Hard).
+- **Difficulty-Based Question Filtering**: Only items with `difficulty <= selectedDifficulty` are chosen as questions, while all items serve as distractor options.
 - **Dataset Deduplication**: Guarantees no item is presented as the target question twice within the same round.
 - **Bilingual Localization**: Native support for **English (`'en'`)** and **Persian (`'fa'`)**. English is the default.
 - **Responsive & Touch-Optimized**: Smart viewport height scaling (`clamp`), anti-flicker option buttons, prominent skip button, and mobile-friendly side margins.
-- **Secure Anti-Cheat System**: Prevents client-side score forgery using a two-stage server token verification flow (`onFinished` and `onRegister`).
+- **Secure Anti-Cheat System**: Prevents client-side score forgery using a two-stage server token verification flow (`onFinished` and `onRegister`) with difficulty tracking.
 
 ---
 
-## 📦 Requirements & Datasets (`AvtEntityItem`)
+## 📦 Requirements & Datasets (`AvtTriviaDatalist`)
 
-The constructor accepts an array of objects implementing `AvtEntityItem` (or objects with equivalent properties/methods):
+The constructor accepts an instance of [AvtTriviaDatalist](file:///opt/lampp/htdocs/avetify/src/Games/AvtTrivia/AvtTriviaDatalist.php) containing your records and a dataset identifier `key`:
 
-| Required Data | Method / Property Fallbacks |
-| :--- | :--- |
-| **Identifier** | `$item->getItemId()`, `$item->id`, `$item->alpha2` |
-| **Name / Title** | `$item->getItemTitle()`, `$item->name`, `$item->short_name`, `$item->per_name` |
-| **Image URL** | `$item->getItemImage()`, `$item->image`, `$item->flag` |
-
-### Example Dataset (World Countries):
 ```php
+use Avetify\Games\AvtTrivia\AvtTriviaDatalist;
 use Avetify\Repo\Countries\World;
 
-$countries = World::getAllCountries(); // Returns array of AvtCountry objects
+// Create concrete datalist or anonymous instance extending AvtTriviaDatalist
+$countriesDatalist = new class(World::getAllCountries(), 'world_countries') extends AvtTriviaDatalist {};
+
+$trivia = new AvtTrivia($countriesDatalist, [
+    'lang' => 'en',
+    'duration' => 120,
+]);
 ```
+
+### Record Items (`AvtTriviaItem` / `AvtEntityItem`):
+Each item in `$datalist->records` extends [AvtTriviaItem](file:///opt/lampp/htdocs/avetify/src/Games/AvtTrivia/AvtTriviaItem.php) (recommended) or [AvtEntityItem](file:///opt/lampp/htdocs/avetify/src/Entities/AvtEntityItem.php):
+
+| Required Data | Source / Method | Fallback |
+| :--- | :--- | :--- |
+| **Identifier** | `$item->getItemId()` | `""` |
+| **Name / Title (EN)** | `$item->getItemTitle()` | `""` |
+| **Name / Title (FA)** | `$item->getItemFaTitle()` | `$item->getItemTitle()` |
+| **Image URL** | `$item->getItemImage()` | `""` |
+| **Difficulty Level** | `$item->getDifficulty()` | `1` (Easy) |
+
+### Key & Difficulty Methods on `AvtTrivia`:
+- `getDatalistKey(): string` - returns the dataset identifier `key` (e.g. `'world_countries'`)
+- `getDatalist(): AvtTriviaDatalist` - returns the datalist instance
+- `getMaxDifficulty(): int` - returns `3` (Hard / سخت)
+- `getDefaultDifficulty(): int` - returns `2` (Medium / متوسط)
 
 ---
 
@@ -40,7 +59,7 @@ You can pass configuration parameters as an associative array or an `AvtTriviaCo
 ```php
 use Avetify\Games\AvtTrivia\AvtTrivia;
 
-$trivia = new AvtTrivia($items, [
+$trivia = new AvtTrivia($datalist, [
     'lang' => 'en', // 'en' (default) or 'fa'
     'duration' => 120, // Game time limit in seconds (default: 120)
     'title' => 'Country Flags Trivia', // Custom header title
@@ -64,8 +83,8 @@ $trivia = new AvtTrivia($items, [
 │ Client JS Game  │ ────────────────────────> │ Server: onFinished     │
 │ Time Up/Finished│ <──────────────────────── │ - Generates Token      │
 └─────────────────┘       Token Response      │ - Saves Token => Score │
-         │                                    └────────────────────────┘
-         │ (User Submits Username + Token)
+         │                                    │   (includes key/diff)  │
+         │ (User Submits Username + Token)    └────────────────────────┘
          ▼
 ┌─────────────────┐       (POST Register)     ┌────────────────────────┐
 │ Leaderboard     │ ────────────────────────> │ Server: onRegister     │
@@ -79,12 +98,12 @@ $trivia = new AvtTrivia($items, [
 1. **`onFinished(callable $callback)`**:
    - **Signature**: `function(string $token, int $score, array $stats): void`
    - **Trigger**: Called server-side as soon as the client notifies the server that a game round finished.
-   - **Role**: Issues a secure random `$token` (`trv_...`) tied to the unalterable `$score`. Save this pair in your Database or Session.
+   - **Role**: Issues a secure random `$token` (`trv_...`) tied to the unalterable `$score`. The `$stats` array contains `'score'`, `'difficulty'`, `'key'`, `'duration'`, `'correct'`, and `'skips'`. Save this in your Database or Session.
 
 2. **`onRegister(callable $callback)`**:
-   - **Signature**: `function(string $token, string $username): ?string`
+   - **Signature**: `function(string $token, string $username, ?string $datalistKey = null): ?string`
    - **Trigger**: Called when the user enters their name into the leaderboard modal.
-   - **Role**: Receives ONLY `$token` and `$username` (no client score field is sent). Retrieve the score associated with `$token` from your storage and persist the record.
+   - **Role**: Receives `$token`, `$username`, and optional `$datalistKey`. Retrieve the score and stats associated with `$token` from your storage and persist the record.
 
 ---
 
@@ -97,6 +116,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/vendor/autoload.php';
 
 use Avetify\Games\AvtTrivia\AvtTrivia;
+use Avetify\Games\AvtTrivia\AvtTriviaDatalist;
 use Avetify\Repo\Countries\World;
 
 // Start session for demo score persistence
@@ -107,11 +127,12 @@ if (!isset($_SESSION['trivia_scores'])) {
     $_SESSION['trivia_scores'] = [];
 }
 
-// 1. Load dataset
+// 1. Load dataset & create datalist
 $countries = World::getAllCountries();
+$countriesDatalist = new class($countries, 'world_countries') extends AvtTriviaDatalist {};
 
 // 2. Initialize Game Engine
-$trivia = new AvtTrivia($countries, [
+$trivia = new AvtTrivia($countriesDatalist, [
     'lang' => 'en',
     'duration' => 120,
     'title' => 'Flag Trivia Challenge',
@@ -119,23 +140,27 @@ $trivia = new AvtTrivia($countries, [
 
 // 3. Register Anti-Cheat Server Hooks
 $trivia->onFinished(function (string $token, int $score, array $stats) {
-    // Save token => score mapping in Session/Database
+    // Save token => score mapping in Session/Database with difficulty & dataset key
     $_SESSION['trivia_scores'][$token] = [
         'score' => $score,
+        'difficulty' => $stats['difficulty'] ?? 2,
+        'key' => $stats['key'] ?? 'world_countries',
         'stats' => $stats,
     ];
 });
 
-$trivia->onRegister(function (string $token, string $username) {
+$trivia->onRegister(function (string $token, string $username, ?string $datalistKey = null) {
     $cleanName = htmlspecialchars($username);
 
     // Retrieve verified score using token
     if (isset($_SESSION['trivia_scores'][$token])) {
         $score = $_SESSION['trivia_scores'][$token]['score'];
+        $difficulty = $_SESSION['trivia_scores'][$token]['difficulty'] ?? 2;
+        $key = $datalistKey ?? $_SESSION['trivia_scores'][$token]['key'] ?? 'world_countries';
 
-        // Save $cleanName and $score to DB / Leaderboard here
+        // Save $cleanName, $score, $difficulty and $key to DB / Leaderboard here
         
-        return "Thank you $cleanName! Your score of $score has been registered securely.";
+        return "Thank you $cleanName! Your score of $score (Level $difficulty on '$key') has been registered securely.";
     }
 
     return "Score registration completed.";

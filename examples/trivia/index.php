@@ -4,10 +4,12 @@ declare(strict_types=1);
 require_once dirname(__DIR__) . '/bootstrap.php';
 
 use Avetify\Games\AvtTrivia\AvtTrivia;
+use Avetify\Games\AvtTrivia\AvtTriviaDatalist;
 use Avetify\Repo\Countries\World;
 
-// 1. Fetch countries dataset (array of AvtCountry objects)
+// 1. Fetch countries dataset and wrap into AvtTriviaDatalist
 $countries = World::getAllCountries();
+$datalist = new class($countries, 'world_countries') extends AvtTriviaDatalist {};
 
 // In-memory session score storage for demonstration
 if (session_status() === PHP_SESSION_NONE) {
@@ -17,32 +19,36 @@ if (!isset($_SESSION['trivia_scores'])) {
     $_SESSION['trivia_scores'] = [];
 }
 
-// 2. Instantiate AvtTrivia with English language configuration (default)
-$trivia = new AvtTrivia($countries, [
-    'lang' => 'en',
+// 2. Instantiate AvtTrivia with Datalist and configuration
+$trivia = new AvtTrivia($datalist, [
+    'lang' => 'fa',
     'duration' => 120,
     'title' => 'Country Flags Trivia',
 ]);
 
-// 3. Register onFinished callback (Secure: receives server-issued token + score)
+// 3. Register onFinished callback (Secure: receives server-issued token + score + stats containing difficulty & key)
 $trivia->onFinished(function (string $token, int $score, array $stats) {
     // Save score server-side tied to unique token (cannot be tampered by client)
     $_SESSION['trivia_scores'][$token] = [
         'score' => $score,
+        'difficulty' => $stats['difficulty'] ?? 2,
+        'key' => $stats['key'] ?? 'world_countries',
         'stats' => $stats,
         'username' => null,
     ];
 });
 
-// 4. Register onRegister callback (Secure: receives token + username only)
-$trivia->onRegister(function (string $token, string $username) {
+// 4. Register onRegister callback (Secure: receives token + username + dataset key)
+$trivia->onRegister(function (string $token, string $username, ?string $datalistKey = null) {
     $cleanName = htmlspecialchars($username);
 
     // Retrieve verified score from server storage using token
     if (isset($_SESSION['trivia_scores'][$token])) {
         $_SESSION['trivia_scores'][$token]['username'] = $cleanName;
         $score = $_SESSION['trivia_scores'][$token]['score'];
-        return "Thank you $cleanName! Your score of $score has been registered securely.";
+        $difficulty = $_SESSION['trivia_scores'][$token]['difficulty'] ?? 2;
+        $key = $datalistKey ?? $_SESSION['trivia_scores'][$token]['key'] ?? 'unknown';
+        return "Thank you $cleanName! Your score of $score (Level $difficulty on '$key') has been registered securely.";
     }
 
     return "Thank you $cleanName! Your submission was recorded.";

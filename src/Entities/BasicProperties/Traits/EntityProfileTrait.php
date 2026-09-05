@@ -16,6 +16,14 @@ trait EntityProfileTrait {
         return "";
     }
 
+    public function getItemFaTitle(): string {
+        if(property_exists($this, "per_name")) return $this->per_name;
+        if(property_exists($this, "fa_name")) return $this->fa_name;
+        if(property_exists($this, "per_title")) return $this->per_title;
+        if(property_exists($this, "fa_title")) return $this->fa_title;
+        return $this->getItemTitle();
+    }
+
     public function getItemAltLink(): string {
         return "";
     }
@@ -27,5 +35,15 @@ trait EntityProfileTrait {
 
     public function getItemTags(): array {
         return [];
+    }
+
+    public function getItemLink() : string {
+        if(property_exists($this, "link")) return $this->link;
+        return "";
+    }
+
+    public function getItemImage() : string {
+        if(property_exists($this, "image")) return $this->image;
+        return "";
     }
 }
