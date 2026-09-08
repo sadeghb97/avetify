@@ -276,6 +276,7 @@ a {
     /* متن تایپ‌شده داخل اینپوت — اندازه و رنگ را اینجا عوض کنید */
     --link-field-input-font-size: 0.75rem;
     --link-field-input-color: var(--bs-body-color, #212529);
+    --link-field-input-disabled-color: #6c757d;
     /* برچسب شناور (جایگزین placeholder) — فقط باید از متن ورودی متمایز باشد؛ رنگ را بعداً تنظیم کنید */
     --link-field-label-color: #5f7c8e;
 }
@@ -283,6 +284,10 @@ a {
 .link-field .form-floating > .form-control.link-field-input {
     font-size: var(--link-field-input-font-size);
     color: var(--link-field-input-color);
+}
+
+.link-field .form-floating > .form-control.link-field-input:disabled {
+    color: var(--link-field-input-disabled-color, #6c757d);
 }
 
 /* یکسان نگه داشتن اندازه و رنگ برچسب در حالت وسط و حالت شناور (بدون scale اضافهٔ بوت‌استرپ).
@@ -352,9 +357,19 @@ body.dark {
     color: #d8d8d8;
 }
 
-.dark input {
-    background: #292c31;
-    color: #d8d8d8;
+.dark input,
+.dark .form-control {
+    background-color: #292c31 !important;
+    color: #d8d8d8 !important;
+    border-color: #454a54;
+}
+
+.dark .form-control:focus,
+.dark input:focus {
+    background-color: #2f333a !important;
+    color: #ffffff !important;
+    border-color: #0d6efd !important;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
 }
 
 .dark .table {
@@ -413,4 +428,38 @@ body.dark {
 .dark h6 {
     color: #f2f2f2;
     font-weight: 600;
+}
+
+.dark .link-field {
+    --link-field-input-color: #d8d8d8;
+    --link-field-input-disabled-color: #79828c;
+    --link-field-label-color: #8da2b0;
+    --link-field-label-disabled-color: #636e78;
+}
+
+.dark .link-field .form-floating > .form-control.link-field-input {
+    background-color: #292c31 !important;
+    color: var(--link-field-input-color, #d8d8d8) !important;
+    border-color: #454a54;
+}
+
+.dark .link-field .form-floating > .form-control.link-field-input:focus {
+    background-color: #2f333a !important;
+    color: #ffffff !important;
+    border-color: #0d6efd !important;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+}
+
+.dark .link-field .form-floating > .form-control.link-field-input:disabled {
+    background-color: #1e2024 !important;
+    color: var(--link-field-input-disabled-color, #79828c) !important;
+    border-color: #3a3d44 !important;
+}
+
+.dark .link-icon {
+    color: #8a939d;
+}
+
+.dark .link-icon:hover {
+    color: #8ab4f8;
 }
