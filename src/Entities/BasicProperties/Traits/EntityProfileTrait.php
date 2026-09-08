@@ -7,12 +7,14 @@ trait EntityProfileTrait {
         if(property_exists($this, "id")) return $this->id;
         if(property_exists($this, "pk")) return $this->pk;
         if(property_exists($this, "slug")) return $this->slug;
+        if(property_exists($this, "key")) return $this->key;
         return "";
     }
 
     public function getItemTitle(): string {
         if(property_exists($this, "name")) return $this->name;
         if(property_exists($this, "title")) return $this->title;
+        if(property_exists($this, "label")) return $this->label;
         return "";
     }
 

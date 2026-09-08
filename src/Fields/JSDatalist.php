@@ -7,10 +7,8 @@ use Avetify\Utils\StringUtils;
 
 class JSDatalist extends JSDataElement {
     public array $flatRecords = [];
-    public function __construct(string $dataSetKey, array $records,
-                                string $primaryKey = "",
-                                string $labelKey = "", string $imageKey = ""){
-        parent::__construct($dataSetKey, $records, $primaryKey, $labelKey, $imageKey);
+    public function __construct(string $dataSetKey, array $records){
+        parent::__construct($dataSetKey, $records);
 
         foreach ($this->records as $record){
             $this->flatRecords[] = StringUtils::transliterateToAscii($this->getItemTitle($record));

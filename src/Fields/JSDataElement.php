@@ -12,9 +12,7 @@ abstract class JSDataElement implements Placeable, EntityManager {
     public array $namesMap = [];
     public array $idsMap = [];
 
-    public function __construct(public string $dataSetKey, public array $records,
-                                public string $primaryKey = "",
-                                public string $labelKey = "", public string $imageKey = ""){
+    public function __construct(public string $dataSetKey, public array $records){
         $this->namesMap = [];
         $this->idsMap = [];
         foreach ($this->records as $recordIndex => $record){

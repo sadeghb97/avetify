@@ -8,12 +8,12 @@ use Avetify\Entities\EntityUtils;
 trait EntityManagerTrait {
     public function getItemId($record) : string {
         if($record instanceof EntityProfile) return $record->getItemId();
-        return EntityUtils::getMultiChoiceValue($record, ["id", "pk", "slug"]);
+        return EntityUtils::getMultiChoiceValue($record, ["id", "pk", "slug", "key"]);
     }
 
     public function getItemTitle($record) : string {
         if($record instanceof EntityProfile) return $record->getItemTitle();
-        return EntityUtils::getMultiChoiceValue($record, ["name", "title"]);
+        return EntityUtils::getMultiChoiceValue($record, ["name", "title", "label"]);
     }
 
     public function getItemImage($record) : string {

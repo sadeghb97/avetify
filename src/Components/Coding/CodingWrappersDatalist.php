@@ -9,7 +9,7 @@ class CodingWrappersDatalist extends JSDatalist {
 
     public function __construct(){
         $records = self::wrappersList();
-        parent::__construct(self::DATALIST_KEY, $records, "slug", "title");
+        parent::__construct(self::DATALIST_KEY, $records);
     }
 
     public static function wrappersList() : array {
