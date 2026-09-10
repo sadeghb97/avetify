@@ -12,6 +12,14 @@ class TimeUtils {
         return date('Y-m-d H:i:s', $timestamp);
     }
 
+    public static function formattedDate(?int $timestamp = null): string {
+        if ($timestamp === null) {
+            $timestamp = time();
+        }
+
+        return date('Y-m-d', $timestamp);
+    }
+
     public static function getShamsiYear(int $time): int {
         return JDF::jdate("Y", $time, '', 'Asia/Tehran', 'en');
     }

@@ -35,15 +35,19 @@ abstract class AvtEntityItem extends DataModel implements EntityProfile {
     }
 
     public function placeLink(bool $blank = true, ?WebModifier $modifier = null) : void {
+        $this->placeManualLink($this->getItemLink(), $blank, $modifier);
+    }
+
+    public function placeManualLink(string $link, bool $blank = true, ?WebModifier $modifier = null) : void {
         if(!Platform::isCli()) {
             $insertLinkModifier = $modifier ?? WebModifier::createInstance();
             if($blank) $insertLinkModifier->pushModifier("target", "_blank");
             $insertLinkModifier->pushStyle("display", "contents");
             $insertLinkModifier->pushStyle("font-weight", "bold");
-            HTMLInterface::placeLink($this->getItemLink(), $this->getItemTitle(), $insertLinkModifier);
+            HTMLInterface::placeLink($link, $this->getItemTitle(), $insertLinkModifier);
         }
         else {
-            echo $this->getItemTitle() . ' (' . $this->getItemLink() . ')';
+            echo $this->getItemTitle() . ' (' . $link . ')';
         }
     }
 

@@ -1,14 +1,16 @@
 <?php
 namespace Avetify\Table\Fields\LinkFields;
 
+use Avetify\Fields\Links\LinkFieldTrait;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
 use Avetify\Interface\WebModifier;
 use Avetify\Table\Fields\TableField;
 
 abstract class TableLinkField extends TableField {
+    use LinkFieldTrait;
+
     public null | string $color = "Black";
-    public bool $isBlank = false;
 
     public function __construct(string $title, string $key){
         parent::__construct($title, $key);
@@ -38,10 +40,5 @@ abstract class TableLinkField extends TableField {
         echo $title;
 
         if($link) echo '</a>';
-    }
-
-    public function setBlank() : static {
-        $this->isBlank = true;
-        return $this;
     }
 }

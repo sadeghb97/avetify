@@ -138,7 +138,7 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
 
     public function presentReadonlyField($item, ?WebModifier $webModifier = null) {
         $cloneModifier = clone $webModifier;
-        $value = $this->getValue($item);
+        $value = $this->formattedValue($item);
         if(strlen($value) > 0) {
             echo '<div ';
             $cloneModifier->htmlModifier->applyModifiers();

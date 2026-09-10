@@ -129,6 +129,7 @@ require_once "src/Entities/Fields/EntityTextField.php";
 require_once "src/Entities/Fields/Containers/EntityFieldsContainer.php";
 require_once "src/Entities/Fields/Containers/EntityRowFields.php";
 require_once "src/Entities/Fields/Containers/EntityColumnFields.php";
+require_once "src/Entities/Fields/DateFields/UnixTimeField.php";
 require_once "src/Entities/Fields/DateFields/CreatedAtField.php";
 require_once "src/Entities/Fields/DateFields/UpdatedAtField.php";
 require_once "src/Entities/Fields/FlagFields/EntityFlagField.php";
@@ -153,6 +154,8 @@ require_once "src/Fields/DateFields/DateValueType.php";
 require_once "src/Fields/DateFields/DatePicker.php";
 require_once "src/Fields/DateFields/GregorianDatePicker.php";
 require_once "src/Fields/DateFields/JalaliDatePicker.php";
+require_once "src/Fields/Links/LinkFieldTrait.php";
+require_once "src/Fields/Links/IconLinkField.php";
 
 require_once "src/Components/PlaceableTextField.php";
 require_once "src/Components/JSField.php";

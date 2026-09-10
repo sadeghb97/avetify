@@ -46,6 +46,10 @@ class BaseRecordField implements IdentifiedElement {
         return substr($foundValue, 0, $this->maxFieldCharacters) . " ...";
     }
 
+    public function formattedValue($item) : string {
+        return $this->getValue($item);
+    }
+
     public function getElementIdentifier($item = null) {
         if($this->legacyGeneralNaming) return $this->key;
         $id = ($this->namespace ? $this->namespace . "_" : "") . $this->key;
