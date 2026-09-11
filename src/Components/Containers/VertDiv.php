@@ -4,12 +4,11 @@ namespace Avetify\Components\Containers;
 use Avetify\Interface\WebModifier;
 
 class VertDiv extends NiceDiv {
-    public function __construct(string $sepSize){
-        parent::__construct($sepSize);
-        $this->classes = [];
+    protected function initBaseModifier() : void {
+        $this->baseModifier = WebModifier::createInstance();
     }
 
-    public function separate(?WebModifier $webModifier = null){
+    public function separate(?WebModifier $webModifier = null) : void {
         $this->separateWith("height");
     }
 }

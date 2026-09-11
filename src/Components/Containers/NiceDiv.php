@@ -8,68 +8,62 @@ use Avetify\Interface\Placeable;
 use Avetify\Interface\WebModifier;
 
 class NiceDiv implements AvtContainer {
+    protected WebModifier $baseModifier;
     private int $itemsCount = 0;
 
-    public array $classes = ["nice-div" => true];
-
-    public array $styles = [];
-
-    public static function justOpen(?WebModifier $webModifier = null) {
+    public static function justOpen(?WebModifier $webModifier = null) : void {
         $niceDiv = new NiceDiv(0);
         $niceDiv->open($webModifier);
     }
 
-    public array $htmlModifiers = [];
+    public function __construct(public string $sepSize = "0px"){
+        $this->initBaseModifier();
+    }
 
-    public function __construct(public string $sepSize = "0px"){}
+    protected function initBaseModifier() : void {
+        $this->baseModifier = WebModifier::createInstance();
+        $this->baseModifier->pushClass("nice-div");
+    }
 
-    public function addStyle($key, $value){
-        $this->styles[$key] = $value;
+    public function addStyle($key, $value) : void{
+        $this->baseModifier->pushStyle($key, $value);
     }
     public function addClass($className) : void {
-        $this->classes[$className] = true;
+        $this->baseModifier->pushClass($className);
     }
-    public function addModifier($key, $value){
-        $this->htmlModifiers[$key] = $value;
+    public function addModifier($key, $value) : void {
+        $this->baseModifier->pushModifier($key, $value);
     }
 
-    public function baseOpen(?WebModifier $webModifier = null){
-        if($webModifier == null) $webModifier = WebModifier::createInstance();
-        if($webModifier->styler == null) $webModifier->styler = new Styler();
+    public function baseOpen(?WebModifier $webModifier = null) : void {
+        $finalModifier = WebModifier::mergeModifiers($this->baseModifier, $webModifier);
 
         echo '<div ';
-
-        foreach ($this->htmlModifiers as $modifierKey => $modifierValue){
-            if(trim(strtolower($modifierKey)) != "class") HTMLInterface::addAttribute($modifierKey, $modifierValue);
-        }
-
-        HTMLInterface::applyModifiers($webModifier);
+        $finalModifier->htmlModifier->applyModifiers();
 
         Styler::classStartAttribute();
-        foreach ($this->classes as $key => $value) if($value) Styler::addClass($key);
-        HTMLInterface::appendClasses($webModifier);
+        $finalModifier->styler->appendClasses();
         Styler::closeAttribute();
 
         Styler::startAttribute();
-        foreach ($this->styles as $key => $value) Styler::addStyle($key, $value);
-        HTMLInterface::appendStyles($webModifier);
+        $finalModifier->styler->appendStyles();
         Styler::closeAttribute();
     }
 
-    public function open(?WebModifier $webModifier = null){
+    public function open(?WebModifier $webModifier = null) : void {
         $this->baseOpen($webModifier);
         echo ' >';
     }
 
-    public function close(){
+    public function close() : void {
         echo '</div>';
     }
 
-    public function separate(?WebModifier $webModifier = null){
+    public function separate(?WebModifier $webModifier = null) : void {
         if($this->sepSize > 0) $this->separateWith("width");
     }
 
-    protected function separateWith($sepType){
+    protected function separateWith($sepType) : void {
         $element = $sepType == "width" ? "span" : "div";
         echo '<' . $element . ' ';
         Styler::startAttribute();
@@ -79,14 +73,14 @@ class NiceDiv implements AvtContainer {
         echo '</' . $element . '>';
     }
 
-    public function placeItem(Placeable $placeable, WebModifier | null $webModifier = null){
+    public function placeItem(Placeable $placeable, WebModifier | null $webModifier = null) : void {
         if($this->itemsCount > 0) $this->separate();
         if($webModifier != null) $placeable->place($webModifier);
         else $placeable->place();
         $this->itemsCount++;
     }
 
-    public function resetItemsCount(){
+    public function resetItemsCount() : void {
         $this->itemsCount = 0;
     }
 }
