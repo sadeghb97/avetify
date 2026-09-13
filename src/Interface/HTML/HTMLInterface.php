@@ -101,6 +101,7 @@ namespace Avetify\Interface\HTML;
          self::addAttribute("src", $src);
          self::applyModifiers($modifier);
          self::applyStyles($modifier);
+         self::applyClasses($modifier);
          self::closeTag();
      }
 
@@ -112,6 +113,10 @@ namespace Avetify\Interface\HTML;
          Styler::imageWithWidth($width);
          self::appendStyles($modifier);
          Styler::closeAttribute();
+
+         Styler::classStartAttribute();
+         self::appendClasses($modifier);
+         Styler::closeAttribute();
          self::closeTag();
      }
 
@@ -122,6 +127,10 @@ namespace Avetify\Interface\HTML;
          Styler::startAttribute();
          Styler::imageWithHeight($height);
          self::appendStyles($modifier);
+         Styler::closeAttribute();
+
+         Styler::classStartAttribute();
+         self::appendClasses($modifier);
          Styler::closeAttribute();
          self::closeTag();
      }

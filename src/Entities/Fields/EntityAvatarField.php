@@ -2,6 +2,7 @@
 namespace Avetify\Entities\Fields;
 
 use Avetify\Components\Containers\NiceDiv;
+use Avetify\Components\Containers\VertDiv;
 use Avetify\Components\Images\Croppables\CroppingImage;
 use Avetify\Entities\AvtEntity;
 use Avetify\Entities\AvtEntityItem;
@@ -176,6 +177,19 @@ class EntityAvatarField extends EntityField {
         }
 
         $div->close();
+    }
+
+    public function presentReadonlyField($item, ?WebModifier $webModifier = null) {
+        $avExists = false;
+        if($item){
+            $avServerSrc = $this->getServerSrc($item);
+            $avBrowserSrc = $this->getBrowserSrc($item);
+            if(file_exists($avServerSrc)){
+                $avExists = true;
+            }
+        }
+        if(!$avExists) return;
+        HTMLInterface::placeImageWithWidth($avBrowserSrc, "110px", $webModifier);
     }
 
     public function attachRequirementsToTheme(AvtTheme $theme): AvtTheme {

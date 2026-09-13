@@ -88,6 +88,12 @@ class EntityField extends BaseRecordField implements IdentifiedElement {
         return $this;
     }
 
+    public function setReadonly() : static {
+        parent::setReadonly();
+        $this->writable = false;
+        return $this;
+    }
+
     public function appendDBValueMapper($orgValue, $mappedValue) : static {
         $this->dbValueMappers[$orgValue] = $mappedValue;
         return $this;

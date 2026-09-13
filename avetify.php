@@ -156,6 +156,7 @@ require_once "src/Fields/DateFields/GregorianDatePicker.php";
 require_once "src/Fields/DateFields/JalaliDatePicker.php";
 require_once "src/Fields/Links/LinkFieldTrait.php";
 require_once "src/Fields/Links/IconLinkField.php";
+require_once "src/Fields/Buttons/IconJSField.php";
 
 require_once "src/Components/PlaceableTextField.php";
 require_once "src/Components/JSField.php";

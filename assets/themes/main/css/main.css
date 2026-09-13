@@ -351,6 +351,14 @@ a {
     color: #222;
 }
 
+.avt_img_icon_buttons {
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+.avt_img_icon_buttons:active {
+    transform: scale(0.95);
+}
+
 /* Dark Mode */
 body.dark {
     background: linear-gradient(to bottom, #202124 0%, #17181b 100%);
