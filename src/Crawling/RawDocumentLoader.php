@@ -2,6 +2,7 @@
 namespace Avetify\Crawling;
 
 
+use Avetify\Interface\Pout;
 use Avetify\Network\NetworkFetcher;
 
 class RawDocumentLoader {
@@ -13,6 +14,9 @@ class RawDocumentLoader {
     public int $status = 0;
     public string $contents = "";
     public bool $freshLoad = false;
+
+    public $postData = null;
+    public array $headers = [];
 
     public function __construct(
         public string $remote,
@@ -54,7 +58,12 @@ class RawDocumentLoader {
 
         if(!$localOnly) {
             if ($this->fetcher != null) {
-                $rc = $this->fetcher->fetch($this->remote);
+                if($this->postData){
+                    $rc = $this->fetcher->post($this->remote, $this->postData, $this->headers);
+                }
+                else {
+                    $rc = $this->fetcher->fetch($this->remote, $this->headers);
+                }
             }
             else $rc = file_get_contents($this->remote);
 

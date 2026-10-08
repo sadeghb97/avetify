@@ -6,7 +6,7 @@ use Avetify\Utils\CliUtils;
 class ManualNetFetcher extends NetworkFetcher {
     public function __construct(public bool $autoOpenUrl = false) {}
 
-    function fetch($url) : string {
+    function fetch($url, $headers = []) : string {
         if($this->autoOpenUrl){
             shell_exec('xdg-open ' . escapeshellarg($url) . ' > /dev/null 2>&1 &');
         }

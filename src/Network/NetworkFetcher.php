@@ -9,16 +9,29 @@ class NetworkFetcher {
     public int $connectTimeout = 0;
     public int $wholeTimeout = 0;
 
-    public function fetch($url) : string {
-        return $this->curlGetContents($url, $this->proxy);
+    public function fetch($url, $headers = []) : string {
+        return $this->curlGetContents($url, $this->proxy, $headers);
     }
 
-    protected function curlGetContents($url, $proxy = null) : string | bool {
+    public function post($url, $postData = null, $headers = []) : string {
+        return $this->curlGetContents($url, $this->proxy, $headers, $postData);
+    }
+
+    protected function curlGetContents($url, $proxy = null, $headers = [], $postData = null) : string | bool {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3");
         curl_setopt($ch, CURLOPT_ENCODING, "");
+
+        if ($postData !== null) {
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+        }
+
+        if (!empty($headers)) {
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        }
 
         if($proxy) curl_setopt($ch, CURLOPT_PROXY, $proxy);
         if($this->connectTimeout > 0) curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->connectTimeout);

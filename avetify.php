@@ -64,8 +64,6 @@ require_once "src/Utils/Fluent.php";
 require_once "src/Network/URLBuilder.php";
 require_once "src/Network/NetworkFetcher.php";
 require_once "src/Network/ProxyFetcher.php";
-require_once "src/Network/HeadersFetcher.php";
-require_once "src/Network/ProxyHeadersFetcher.php";
 require_once "src/Network/ManualNetFetcher.php";
 
 require_once "src/Fields/BaseRecordField.php";
