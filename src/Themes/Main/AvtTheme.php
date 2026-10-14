@@ -5,6 +5,7 @@ use Avetify\AvetifyManager;
 use Avetify\Components\AvtDialog;
 use Avetify\Interface\CSS\Styler;
 use Avetify\Interface\HTML\HTMLInterface;
+use Avetify\Themes\Green\GreenNavigationRenderer;
 use Avetify\Themes\Main\Navigations\NavigationBar;
 use Avetify\Themes\Main\Navigations\NavigationRenderer;
 
@@ -153,7 +154,9 @@ class AvtTheme {
     }
 
     public function getNavigationRenderer(NavigationBar $navigationBar) : ?NavigationRenderer {
-        return null;
+        $navigationBar = $this->getNavigationBar();
+        if(!$navigationBar) return null;
+        return new GreenNavigationRenderer($navigationBar);
     }
 
     public static function importFavicon($path, $type = "image/png", $sizes = "32x32"){

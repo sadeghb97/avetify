@@ -2,9 +2,6 @@
 namespace Avetify\Themes\Modernix;
 
 use Avetify\AvetifyManager;
-use Avetify\Themes\Green\GreenNavigationRenderer;
-use Avetify\Themes\Main\Navigations\NavigationBar;
-use Avetify\Themes\Main\Navigations\NavigationRenderer;
 use Avetify\Themes\Main\AvtTheme;
 
 class ModernixTheme extends AvtTheme {
@@ -12,9 +9,5 @@ class ModernixTheme extends AvtTheme {
         self::importStyle(AvetifyManager::assetUrl("themes/modern/styles.css"));
         self::importStyle(AvetifyManager::assetUrl("themes/modern/card_styles.css"));
         self::importJS(AvetifyManager::assetUrl("themes/modern/scripts.js"));
-    }
-
-    public function getNavigationRenderer(NavigationBar $navigationBar): ?NavigationRenderer {
-        return new GreenNavigationRenderer($navigationBar);
     }
 }
